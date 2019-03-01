@@ -1,0 +1,269 @@
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/VersionadorEPN/!svn/ver/2023/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/beans
+END
+GestionDocumentacionDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/VersionadorEPN/!svn/ver/1756/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/beans/GestionDocumentacionDAO.java
+END
+PedidoDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/VersionadorEPN/!svn/ver/2021/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/beans/PedidoDAO.java
+END
+CorreosNotificacionesDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/beans/CorreosNotificacionesDAO.java
+END
+RelacionDependenciaDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svn/VersionadorEPN/!svn/ver/1440/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/beans/RelacionDependenciaDAOImplement.java
+END
+titulosDocenteDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/beans/titulosDocenteDAOImplement.java
+END
+RelacionDedicacionDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/svn/VersionadorEPN/!svn/ver/1440/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/beans/RelacionDedicacionDAOImplement.java
+END
+SecuenciaPedidoDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svn/VersionadorEPN/!svn/ver/2203/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/beans/SecuenciaPedidoDAOImplement.java
+END
+TipoContratoDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/beans/TipoContratoDAOImplement.java
+END
+PensumDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/VersionadorEPN/!svn/ver/2022/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/beans/PensumDAO.java
+END
+CorreoesNotificacionesDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/beans/CorreoesNotificacionesDAOImplement.java
+END
+SecuenciaPedidoDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/VersionadorEPN/!svn/ver/2203/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/beans/SecuenciaPedidoDAO.java
+END
+documentoDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/VersionadorEPN/!svn/ver/1450/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/beans/documentoDAO.java
+END
+CargaAcademicaDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/beans/CargaAcademicaDAOImplement.java
+END
+ProyectoPedidoDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn/VersionadorEPN/!svn/ver/597/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/beans/ProyectoPedidoDAOImplement.java
+END
+RelacionDependenciaDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/VersionadorEPN/!svn/ver/1440/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/beans/RelacionDependenciaDAO.java
+END
+EstadoDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/beans/EstadoDAOImplement.java
+END
+PedidoDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/VersionadorEPN/!svn/ver/2203/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/beans/PedidoDAOImplement.java
+END
+AuditoriaPedidoDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svn/VersionadorEPN/!svn/ver/491/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/beans/AuditoriaPedidoDAOImplement.java
+END
+EstadoDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/beans/EstadoDAO.java
+END
+partidasLibresDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/beans/partidasLibresDAOImplement.java
+END
+DedicacionDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/VersionadorEPN/!svn/ver/1440/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/beans/DedicacionDAO.java
+END
+ProyectoPedidoDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/VersionadorEPN/!svn/ver/597/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/beans/ProyectoPedidoDAO.java
+END
+ActividadesDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/beans/ActividadesDAO.java
+END
+CargaAcademicaDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/beans/CargaAcademicaDAO.java
+END
+documentoDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/VersionadorEPN/!svn/ver/1664/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/beans/documentoDAOImplement.java
+END
+CategoriaDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/VersionadorEPN/!svn/ver/1391/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/beans/CategoriaDAOImplement.java
+END
+PensumDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/VersionadorEPN/!svn/ver/2022/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/beans/PensumDAOImplement.java
+END
+Recorrido_PedidoDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/beans/Recorrido_PedidoDAO.java
+END
+ReporteDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/VersionadorEPN/!svn/ver/532/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/beans/ReporteDAOImplement.java
+END
+TipoContratoDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/beans/TipoContratoDAO.java
+END
+ReporteDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/VersionadorEPN/!svn/ver/532/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/beans/ReporteDAO.java
+END
+Recorrido_PedidoDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/beans/Recorrido_PedidoDAOImplement.java
+END
+CategoriaDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/VersionadorEPN/!svn/ver/1391/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/beans/CategoriaDAO.java
+END
+RelacionDedicacionDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/VersionadorEPN/!svn/ver/1440/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/beans/RelacionDedicacionDAO.java
+END
+ActividadesDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/VersionadorEPN/!svn/ver/129/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/beans/ActividadesDAOImplement.java
+END
+DedicacionDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/VersionadorEPN/!svn/ver/1440/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/beans/DedicacionDAOImplement.java
+END
+titulosDocenteDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/beans/titulosDocenteDAO.java
+END
+AuditoriaPedidoDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/VersionadorEPN/!svn/ver/490/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/beans/AuditoriaPedidoDAO.java
+END
+partidasLibresDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/beans/partidasLibresDAO.java
+END
+GestionDocumentacionDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/svn/VersionadorEPN/!svn/ver/1756/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/beans/GestionDocumentacionDAOImplement.java
+END
+PartidasDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/VersionadorEPN/!svn/ver/1765/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/beans/PartidasDAO.java
+END
+PedidosAutorizacionDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/beans/PedidosAutorizacionDAO.java
+END
+PartidasDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/VersionadorEPN/!svn/ver/1765/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/beans/PartidasDAOImplement.java
+END
+PedidosAutorizacionDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/beans/PedidosAutorizacionDAOImplement.java
+END

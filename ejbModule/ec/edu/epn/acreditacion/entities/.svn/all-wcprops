@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/VersionadorEPN/!svn/ver/1306/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/entities
+END
+Indicador.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/VersionadorEPN/!svn/ver/1306/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/entities/Indicador.java
+END
+Subcriterio.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/VersionadorEPN/!svn/ver/965/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/entities/Subcriterio.java
+END
+Criterio.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/VersionadorEPN/!svn/ver/925/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/entities/Criterio.java
+END
+CriterioDetalle.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/VersionadorEPN/!svn/ver/929/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/entities/CriterioDetalle.java
+END
+SubcriterioDetalle.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/VersionadorEPN/!svn/ver/929/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/entities/SubcriterioDetalle.java
+END
+UsuarioCarrera.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/VersionadorEPN/!svn/ver/1028/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/entities/UsuarioCarrera.java
+END
+IndicadorDetalle.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/VersionadorEPN/!svn/ver/965/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/entities/IndicadorDetalle.java
+END
+Evidencia.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/VersionadorEPN/!svn/ver/909/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/entities/Evidencia.java
+END
+EvidenciaDetalle.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/VersionadorEPN/!svn/ver/1306/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/entities/EvidenciaDetalle.java
+END

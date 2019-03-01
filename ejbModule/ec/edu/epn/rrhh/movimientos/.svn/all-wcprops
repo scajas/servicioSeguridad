@@ -1,0 +1,137 @@
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/VersionadorEPN/!svn/ver/1957/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/movimientos
+END
+UsuarioaccionPK.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/VersionadorEPN/!svn/ver/1448/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/movimientos/UsuarioaccionPK.java
+END
+UsuarioRrhh.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/VersionadorEPN/!svn/ver/1448/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/movimientos/UsuarioRrhh.java
+END
+NominacionCatalogo.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/VersionadorEPN/!svn/ver/1448/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/movimientos/NominacionCatalogo.java
+END
+Clase.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/VersionadorEPN/!svn/ver/1448/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/movimientos/Clase.java
+END
+AccionP.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/VersionadorEPN/!svn/ver/1499/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/movimientos/AccionP.java
+END
+Designacion.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/VersionadorEPN/!svn/ver/1692/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/movimientos/Designacion.java
+END
+Accionespersonalbtn.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/VersionadorEPN/!svn/ver/1448/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/movimientos/Accionespersonalbtn.java
+END
+Dependencia.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/VersionadorEPN/!svn/ver/1585/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/movimientos/Dependencia.java
+END
+AccionPPK.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/VersionadorEPN/!svn/ver/1448/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/movimientos/AccionPPK.java
+END
+Docadjunto.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/VersionadorEPN/!svn/ver/1448/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/movimientos/Docadjunto.java
+END
+TipoRelacion.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/VersionadorEPN/!svn/ver/1736/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/movimientos/TipoRelacion.java
+END
+HistoriaLaboral.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/VersionadorEPN/!svn/ver/1719/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/movimientos/HistoriaLaboral.java
+END
+DesignacionCatalogo.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/VersionadorEPN/!svn/ver/1448/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/movimientos/DesignacionCatalogo.java
+END
+Distributivo.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/VersionadorEPN/!svn/ver/1448/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/movimientos/Distributivo.java
+END
+SubtipoAccion.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/VersionadorEPN/!svn/ver/1448/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/movimientos/SubtipoAccion.java
+END
+TipoAccion.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/VersionadorEPN/!svn/ver/1448/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/movimientos/TipoAccion.java
+END
+DocuContrato.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/VersionadorEPN/!svn/ver/1690/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/movimientos/DocuContrato.java
+END
+HistoriaLaboralPK.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/VersionadorEPN/!svn/ver/1448/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/movimientos/HistoriaLaboralPK.java
+END
+Cargosm.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/VersionadorEPN/!svn/ver/1735/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/movimientos/Cargosm.java
+END
+PartidaGeneral.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/VersionadorEPN/!svn/ver/1957/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/movimientos/PartidaGeneral.java
+END
+Nominacion.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/VersionadorEPN/!svn/ver/1893/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/movimientos/Nominacion.java
+END
+Usuarioaccion.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/VersionadorEPN/!svn/ver/1448/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/movimientos/Usuarioaccion.java
+END

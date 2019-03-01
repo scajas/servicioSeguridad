@@ -1,0 +1,121 @@
+10
+
+dir
+2094
+http://desarrollo-gr:8085/svn/VersionadorEPN/ServiciosSeguridadEPN/ejbModule/ec/edu/epn
+http://desarrollo-gr:8085/svn/VersionadorEPN
+
+
+
+2018-11-21T13:47:23.785311Z
+2093
+jose
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+a9d79fb9-c079-a241-bfa4-b8ec989a5a0d
+
+acreditacion
+dir
+
+atencionmedica
+dir
+
+calibracionequipos
+dir
+
+catalogos
+dir
+
+conexion
+dir
+
+contratos
+dir
+
+convenios
+dir
+
+estore
+dir
+
+facturacion
+dir
+
+ftp
+dir
+
+generic
+dir
+
+gestioDocente
+dir
+
+gestionDocente
+dir
+
+graduados
+dir
+
+infoepn
+dir
+
+infraestructura
+dir
+
+jdbc
+dir
+
+laboratorios
+dir
+
+mail
+dir
+
+medicos
+dir
+
+movimientos
+dir
+
+plantrabajo
+dir
+
+proyectos
+dir
+
+publik
+dir
+
+rrhh
+dir
+
+saew
+dir
+
+seguridad
+dir
+
+silabo
+dir
+
+sugerencias
+dir
+
+viaticos
+dir
+
+voto
+dir
+

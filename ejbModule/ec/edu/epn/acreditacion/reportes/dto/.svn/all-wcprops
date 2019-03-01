@@ -1,0 +1,137 @@
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/VersionadorEPN/!svn/ver/1295/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/reportes/dto
+END
+DocenteDistributivoDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/svn/VersionadorEPN/!svn/ver/1006/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/reportes/dto/DocenteDistributivoDTO.java
+END
+E112ADTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/VersionadorEPN/!svn/ver/1075/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/reportes/dto/E112ADTO.java
+END
+E112BDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/VersionadorEPN/!svn/ver/1082/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/reportes/dto/E112BDTO.java
+END
+E112CDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/VersionadorEPN/!svn/ver/1057/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/reportes/dto/E112CDTO.java
+END
+ReporteLibrosCapitulosDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 133
+/svn/VersionadorEPN/!svn/ver/1006/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/reportes/dto/ReporteLibrosCapitulosDTO.java
+END
+CapacitacionPlanificadaDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/svn/VersionadorEPN/!svn/ver/1006/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/reportes/dto/CapacitacionPlanificadaDTO.java
+END
+ReporteDistributivoAcademicoDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 139
+/svn/VersionadorEPN/!svn/ver/1028/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/reportes/dto/ReporteDistributivoAcademicoDTO.java
+END
+E21ADTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/VersionadorEPN/!svn/ver/1090/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/reportes/dto/E21ADTO.java
+END
+TotalesE111DTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/svn/VersionadorEPN/!svn/ver/1075/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/reportes/dto/TotalesE111DTO.java
+END
+ReportePonenciasDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/svn/VersionadorEPN/!svn/ver/1006/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/reportes/dto/ReportePonenciasDTO.java
+END
+E142XTipoBecaDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svn/VersionadorEPN/!svn/ver/1084/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/reportes/dto/E142XTipoBecaDTO.java
+END
+TotalDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/VersionadorEPN/!svn/ver/1100/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/reportes/dto/TotalDTO.java
+END
+ReporteCapacitacionEjecutadaDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 139
+/svn/VersionadorEPN/!svn/ver/1006/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/reportes/dto/ReporteCapacitacionEjecutadaDTO.java
+END
+PeriodosSAEWDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn/VersionadorEPN/!svn/ver/1090/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/reportes/dto/PeriodosSAEWDTO.java
+END
+E142DTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/VersionadorEPN/!svn/ver/1075/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/reportes/dto/E142DTO.java
+END
+CargaAcademicaDistributivoDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 137
+/svn/VersionadorEPN/!svn/ver/1006/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/reportes/dto/CargaAcademicaDistributivoDTO.java
+END
+DistributivoAcademicoDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/svn/VersionadorEPN/!svn/ver/1006/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/reportes/dto/DistributivoAcademicoDTO.java
+END
+E111DTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/VersionadorEPN/!svn/ver/1075/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/reportes/dto/E111DTO.java
+END
+ReporteChartDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn/VersionadorEPN/!svn/ver/1295/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/reportes/dto/ReporteChartDTO.java
+END
+ReporteProdCientificaDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/svn/VersionadorEPN/!svn/ver/1006/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/reportes/dto/ReporteProdCientificaDTO.java
+END
+E112BXFactorRendimientoDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/svn/VersionadorEPN/!svn/ver/1110/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/reportes/dto/E112BXFactorRendimientoDTO.java
+END
+ReporteDistribucionHorariaDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 137
+/svn/VersionadorEPN/!svn/ver/1006/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/reportes/dto/ReporteDistribucionHorariaDTO.java
+END

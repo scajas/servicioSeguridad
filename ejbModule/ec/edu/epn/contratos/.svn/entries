@@ -1,0 +1,40 @@
+10
+
+dir
+2094
+http://desarrollo-gr:8085/svn/VersionadorEPN/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos
+http://desarrollo-gr:8085/svn/VersionadorEPN
+
+
+
+2018-10-15T19:09:46.032358Z
+2038
+wilson
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+a9d79fb9-c079-a241-bfa4-b8ec989a5a0d
+
+DTO
+dir
+
+beans
+dir
+
+entities
+dir
+
+webservices
+dir
+

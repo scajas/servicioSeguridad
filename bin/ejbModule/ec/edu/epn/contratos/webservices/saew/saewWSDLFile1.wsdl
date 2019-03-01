@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+	xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="https://saew.epn.edu.ec/saewscont/"
+	xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+	xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="https://saew.epn.edu.ec/saewscont/"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+	<wsdl:types>
+		<s:schema elementFormDefault="qualified"
+			targetNamespace="https://saew.epn.edu.ec/saewscont/">
+			<s:element name="ConsultaEstudiante">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="0" maxOccurs="1" name="identificacion"
+							type="s:string" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="ConsultaEstudianteResponse">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="0" maxOccurs="1"
+							name="ConsultaEstudianteResult" type="tns:ArrayOfContrato" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:complexType name="ArrayOfContrato">
+				<s:sequence>
+					<s:element minOccurs="0" maxOccurs="unbounded" name="Contrato"
+						nillable="true" type="tns:Contrato" />
+				</s:sequence>
+			</s:complexType>
+			<s:complexType name="Contrato">
+				<s:sequence>
+					<s:element minOccurs="0" maxOccurs="1" name="Codigo"
+						type="s:string" />
+					<s:element minOccurs="0" maxOccurs="1" name="Estudiante"
+						type="s:string" />
+					<s:element minOccurs="0" maxOccurs="1" name="Cedula"
+						type="s:string" />
+					<s:element minOccurs="0" maxOccurs="1" name="Mensaje"
+						type="s:string" />
+				</s:sequence>
+			</s:complexType>
+			<s:element name="ConsultaMateria">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="0" maxOccurs="1" name="identificacion"
+							type="s:string" />
+						<s:element minOccurs="0" maxOccurs="1" name="materia"
+							type="s:string" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="ConsultaMateriaResponse">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="0" maxOccurs="1"
+							name="ConsultaMateriaResult" type="tns:ArrayOfContrato" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="ChequeoAyudanteBeca">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="0" maxOccurs="1" name="identificacion"
+							type="s:string" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="ChequeoAyudanteBecaResponse">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="0" maxOccurs="1"
+							name="ChequeoAyudanteBecaResult" type="s:string" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+		</s:schema>
+	</wsdl:types>
+	<wsdl:message name="ConsultaEstudianteSoapIn">
+		<wsdl:part name="parameters" element="tns:ConsultaEstudiante" />
+	</wsdl:message>
+	<wsdl:message name="ConsultaEstudianteSoapOut">
+		<wsdl:part name="parameters" element="tns:ConsultaEstudianteResponse" />
+	</wsdl:message>
+	<wsdl:message name="ConsultaMateriaSoapIn">
+		<wsdl:part name="parameters" element="tns:ConsultaMateria" />
+	</wsdl:message>
+	<wsdl:message name="ConsultaMateriaSoapOut">
+		<wsdl:part name="parameters" element="tns:ConsultaMateriaResponse" />
+	</wsdl:message>
+	<wsdl:message name="ChequeoAyudanteBecaSoapIn">
+		<wsdl:part name="parameters" element="tns:ChequeoAyudanteBeca" />
+	</wsdl:message>
+	<wsdl:message name="ChequeoAyudanteBecaSoapOut">
+		<wsdl:part name="parameters" element="tns:ChequeoAyudanteBecaResponse" />
+	</wsdl:message>
+	<wsdl:portType name="ContratoWSSoap">
+		<wsdl:operation name="ConsultaEstudiante">
+			<wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Consulta Básica de
+				Estudiante para Ayudantía Laboratorio-Investigación
+			</wsdl:documentation>
+			<wsdl:input message="tns:ConsultaEstudianteSoapIn" />
+			<wsdl:output message="tns:ConsultaEstudianteSoapOut" />
+		</wsdl:operation>
+		<wsdl:operation name="ConsultaMateria">
+			<wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Consulta Estudiante
+				para Ayudantía Laboratorio-Investigación con análisis de Materia
+			</wsdl:documentation>
+			<wsdl:input message="tns:ConsultaMateriaSoapIn" />
+			<wsdl:output message="tns:ConsultaMateriaSoapOut" />
+		</wsdl:operation>
+		<wsdl:operation name="ChequeoAyudanteBeca">
+			<wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Chequeo estudiante
+				con Beca para Renuncia</wsdl:documentation>
+			<wsdl:input message="tns:ChequeoAyudanteBecaSoapIn" />
+			<wsdl:output message="tns:ChequeoAyudanteBecaSoapOut" />
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="ContratoWSSoap" type="tns:ContratoWSSoap">
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="ConsultaEstudiante">
+			<soap:operation
+				soapAction="https://saew.epn.edu.ec/saewscont/ConsultaEstudiante"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="ConsultaMateria">
+			<soap:operation soapAction="https://saew.epn.edu.ec/saewscont/ConsultaMateria"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="ChequeoAyudanteBeca">
+			<soap:operation
+				soapAction="https://saew.epn.edu.ec/saewscont/ChequeoAyudanteBeca"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:binding name="ContratoWSSoap12" type="tns:ContratoWSSoap">
+		<soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="ConsultaEstudiante">
+			<soap12:operation
+				soapAction="https://saew.epn.edu.ec/saewscont/ConsultaEstudiante"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="ConsultaMateria">
+			<soap12:operation soapAction="https://saew.epn.edu.ec/saewscont/ConsultaMateria"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="ChequeoAyudanteBeca">
+			<soap12:operation
+				soapAction="https://saew.epn.edu.ec/saewscont/ChequeoAyudanteBeca"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="ContratoWS">
+		<wsdl:port name="ContratoWSSoap" binding="tns:ContratoWSSoap">
+			<soap:address location="https://saew.epn.edu.ec/saewscont/ContratoWS.asmx" />
+		</wsdl:port>
+		<wsdl:port name="ContratoWSSoap12" binding="tns:ContratoWSSoap12">
+			<soap12:address location="https://saew.epn.edu.ec/saewscont/ContratoWS.asmx" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

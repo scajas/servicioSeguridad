@@ -1,0 +1,197 @@
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/VersionadorEPN/!svn/ver/1648/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/beans
+END
+ProvinciaCatalogoDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/VersionadorEPN/!svn/ver/306/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/beans/ProvinciaCatalogoDAO.java
+END
+DepartamentoDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/VersionadorEPN/!svn/ver/1224/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/beans/DepartamentoDAO.java
+END
+ActividadesAcademicasDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/VersionadorEPN/!svn/ver/532/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/beans/ActividadesAcademicasDAO.java
+END
+ProyectoCatalogoDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svn/VersionadorEPN/!svn/ver/594/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/beans/ProyectoCatalogoDAOImplement.java
+END
+facultadDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/VersionadorEPN/!svn/ver/434/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/beans/facultadDAOImplement.java
+END
+LaboratorioCDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/svn/VersionadorEPN/!svn/ver/1029/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/beans/LaboratorioCDAOImplement.java
+END
+CategoriaPlanTrabajoDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/VersionadorEPN/!svn/ver/1648/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/beans/CategoriaPlanTrabajoDAO.java
+END
+LineasInvestigacionCDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/svn/VersionadorEPN/!svn/ver/1224/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/beans/LineasInvestigacionCDAOImplement.java
+END
+IdiomaCDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/VersionadorEPN/!svn/ver/158/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/beans/IdiomaCDAO.java
+END
+MateriaServiceBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/VersionadorEPN/!svn/ver/595/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/beans/MateriaServiceBean.java
+END
+PlanifDocenteDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn/VersionadorEPN/!svn/ver/1564/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/beans/PlanifDocenteDAOImplement.java
+END
+DocumentacionContratosDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/beans/DocumentacionContratosDAOImplement.java
+END
+CategoriaPlanTrabajoDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/svn/VersionadorEPN/!svn/ver/1648/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/beans/CategoriaPlanTrabajoDAOImplement.java
+END
+PreguntasEvaluacionDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/VersionadorEPN/!svn/ver/594/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/beans/PreguntasEvaluacionDAO.java
+END
+LaboratorioCDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/VersionadorEPN/!svn/ver/1029/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/beans/LaboratorioCDAO.java
+END
+MaterialRubrosEspaciosDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/svn/VersionadorEPN/!svn/ver/1648/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/beans/MaterialRubrosEspaciosDAOImplement.java
+END
+ProyectoCatalogoDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/VersionadorEPN/!svn/ver/594/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/beans/ProyectoCatalogoDAO.java
+END
+ProvinciaCatalogoDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/svn/VersionadorEPN/!svn/ver/306/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/beans/ProvinciaCatalogoDAOImplement.java
+END
+MateriaService.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/beans/MateriaService.java
+END
+CarrerasDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/VersionadorEPN/!svn/ver/1391/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/beans/CarrerasDAOImplement.java
+END
+PreguntasEvaluacionDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/svn/VersionadorEPN/!svn/ver/594/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/beans/PreguntasEvaluacionDAOImplement.java
+END
+PlanifDocenteDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/VersionadorEPN/!svn/ver/939/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/beans/PlanifDocenteDAO.java
+END
+DocumentacionContratosDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/beans/DocumentacionContratosDAO.java
+END
+IdiomaCDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/VersionadorEPN/!svn/ver/235/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/beans/IdiomaCDAOImplement.java
+END
+MaterialesRubrosEspaciosDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svn/VersionadorEPN/!svn/ver/1648/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/beans/MaterialesRubrosEspaciosDAO.java
+END
+LineasInvestigacionCDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/VersionadorEPN/!svn/ver/1224/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/beans/LineasInvestigacionCDAO.java
+END
+facultadDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/VersionadorEPN/!svn/ver/434/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/beans/facultadDAO.java
+END
+DepartamentoDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/svn/VersionadorEPN/!svn/ver/1224/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/beans/DepartamentoDAOImplement.java
+END
+CarrerasDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/VersionadorEPN/!svn/ver/926/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/beans/CarrerasDAO.java
+END
+ActividadesAcademicasDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/svn/VersionadorEPN/!svn/ver/532/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/beans/ActividadesAcademicasDAOImplement.java
+END
+RubrosEspaciosDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/VersionadorEPN/!svn/ver/1648/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/beans/RubrosEspaciosDAO.java
+END
+RubrosEspaciosDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svn/VersionadorEPN/!svn/ver/1648/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/beans/RubrosEspaciosDAOImplement.java
+END

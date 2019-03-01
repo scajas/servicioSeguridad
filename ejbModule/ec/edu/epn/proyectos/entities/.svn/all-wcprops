@@ -1,0 +1,317 @@
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/VersionadorEPN/!svn/ver/2092/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/proyectos/entities
+END
+Idi.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/VersionadorEPN/!svn/ver/1603/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/proyectos/entities/Idi.java
+END
+ActividadProyectoP.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/VersionadorEPN/!svn/ver/1360/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/proyectos/entities/ActividadProyectoP.java
+END
+AnexoInforme.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/VersionadorEPN/!svn/ver/1929/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/proyectos/entities/AnexoInforme.java
+END
+Recursoavance.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/VersionadorEPN/!svn/ver/1547/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/proyectos/entities/Recursoavance.java
+END
+HistoriaEstadoP.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/VersionadorEPN/!svn/ver/1208/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/proyectos/entities/HistoriaEstadoP.java
+END
+Disciplina.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/VersionadorEPN/!svn/ver/1204/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/proyectos/entities/Disciplina.java
+END
+SeguimientoPr.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/VersionadorEPN/!svn/ver/1360/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/proyectos/entities/SeguimientoPr.java
+END
+EstadoProyecto.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/VersionadorEPN/!svn/ver/1221/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/proyectos/entities/EstadoProyecto.java
+END
+CierrePeriodo.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/VersionadorEPN/!svn/ver/2092/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/proyectos/entities/CierrePeriodo.java
+END
+MontoEjecutado.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/VersionadorEPN/!svn/ver/1603/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/proyectos/entities/MontoEjecutado.java
+END
+IesPublica.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/VersionadorEPN/!svn/ver/1603/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/proyectos/entities/IesPublica.java
+END
+ResultadoP.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/VersionadorEPN/!svn/ver/1207/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/proyectos/entities/ResultadoP.java
+END
+Producto.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/VersionadorEPN/!svn/ver/1360/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/proyectos/entities/Producto.java
+END
+InformeTecnico.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/VersionadorEPN/!svn/ver/1929/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/proyectos/entities/InformeTecnico.java
+END
+Comision.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/VersionadorEPN/!svn/ver/1204/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/proyectos/entities/Comision.java
+END
+RolProyectoP.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/VersionadorEPN/!svn/ver/1209/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/proyectos/entities/RolProyectoP.java
+END
+Cdetallado.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/VersionadorEPN/!svn/ver/1603/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/proyectos/entities/Cdetallado.java
+END
+Parametro.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/VersionadorEPN/!svn/ver/1204/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/proyectos/entities/Parametro.java
+END
+Moneda.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/VersionadorEPN/!svn/ver/1603/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/proyectos/entities/Moneda.java
+END
+Presupuesto.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/VersionadorEPN/!svn/ver/1204/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/proyectos/entities/Presupuesto.java
+END
+Lineasproy.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/VersionadorEPN/!svn/ver/1204/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/proyectos/entities/Lineasproy.java
+END
+Camplio.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/VersionadorEPN/!svn/ver/1603/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/proyectos/entities/Camplio.java
+END
+TipoObjetivo.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/VersionadorEPN/!svn/ver/1204/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/proyectos/entities/TipoObjetivo.java
+END
+Cronogramaavance.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/VersionadorEPN/!svn/ver/1547/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/proyectos/entities/Cronogramaavance.java
+END
+ProyectoP.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/VersionadorEPN/!svn/ver/1809/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/proyectos/entities/ProyectoP.java
+END
+Cronograma.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/VersionadorEPN/!svn/ver/1378/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/proyectos/entities/Cronograma.java
+END
+TipoActividad.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/VersionadorEPN/!svn/ver/1221/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/proyectos/entities/TipoActividad.java
+END
+Hss.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/VersionadorEPN/!svn/ver/1360/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/proyectos/entities/Hss.java
+END
+Restringerecurso.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/VersionadorEPN/!svn/ver/1204/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/proyectos/entities/Restringerecurso.java
+END
+Fondoadicional.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/VersionadorEPN/!svn/ver/1603/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/proyectos/entities/Fondoadicional.java
+END
+Informeobservacione.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/VersionadorEPN/!svn/ver/1603/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/proyectos/entities/Informeobservacione.java
+END
+Entregable.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/VersionadorEPN/!svn/ver/1204/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/proyectos/entities/Entregable.java
+END
+ObservacionProyecto.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/VersionadorEPN/!svn/ver/1204/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/proyectos/entities/ObservacionProyecto.java
+END
+RecursohPr.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/VersionadorEPN/!svn/ver/1618/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/proyectos/entities/RecursohPr.java
+END
+Comentario.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/VersionadorEPN/!svn/ver/1547/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/proyectos/entities/Comentario.java
+END
+ObjetivoProyecto.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/VersionadorEPN/!svn/ver/1378/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/proyectos/entities/ObjetivoProyecto.java
+END
+AuspicianteProyecto.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/VersionadorEPN/!svn/ver/1204/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/proyectos/entities/AuspicianteProyecto.java
+END
+InvestigadorObservacione.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svn/VersionadorEPN/!svn/ver/1204/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/proyectos/entities/InvestigadorObservacione.java
+END
+ProyectoObjetivo.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/VersionadorEPN/!svn/ver/1204/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/proyectos/entities/ProyectoObjetivo.java
+END
+Objetivoavance.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/VersionadorEPN/!svn/ver/1547/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/proyectos/entities/Objetivoavance.java
+END
+InvestigadorLinv.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/VersionadorEPN/!svn/ver/1204/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/proyectos/entities/InvestigadorLinv.java
+END
+ItemP.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/VersionadorEPN/!svn/ver/1204/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/proyectos/entities/ItemP.java
+END
+Auspiciante.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/VersionadorEPN/!svn/ver/1204/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/proyectos/entities/Auspiciante.java
+END
+EjecucionPresupuestaria.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svn/VersionadorEPN/!svn/ver/1204/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/proyectos/entities/EjecucionPresupuestaria.java
+END
+Objetivo.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/VersionadorEPN/!svn/ver/1204/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/proyectos/entities/Objetivo.java
+END
+Cespecifico.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/VersionadorEPN/!svn/ver/1603/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/proyectos/entities/Cespecifico.java
+END
+RecorridoCierre.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/VersionadorEPN/!svn/ver/1547/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/proyectos/entities/RecorridoCierre.java
+END
+Miembro.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/VersionadorEPN/!svn/ver/1204/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/proyectos/entities/Miembro.java
+END
+Investigador.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/VersionadorEPN/!svn/ver/1204/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/proyectos/entities/Investigador.java
+END
+TipoProyectoP.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/VersionadorEPN/!svn/ver/1618/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/proyectos/entities/TipoProyectoP.java
+END
+Convocatoria.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/VersionadorEPN/!svn/ver/1204/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/proyectos/entities/Convocatoria.java
+END
+DisciplinaProyecto.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/VersionadorEPN/!svn/ver/1204/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/proyectos/entities/DisciplinaProyecto.java
+END

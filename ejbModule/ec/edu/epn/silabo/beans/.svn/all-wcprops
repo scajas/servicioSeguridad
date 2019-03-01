@@ -1,0 +1,257 @@
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/VersionadorEPN/!svn/ver/1460/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/beans
+END
+BibliografiaDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/VersionadorEPN/!svn/ver/1415/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/beans/BibliografiaDAOImplement.java
+END
+UbicacionDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/VersionadorEPN/!svn/ver/619/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/beans/UbicacionDAOImplement.java
+END
+MetodologiaDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/VersionadorEPN/!svn/ver/619/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/beans/MetodologiaDAOImplement.java
+END
+ResultadoPeaDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/VersionadorEPN/!svn/ver/1460/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/beans/ResultadoPeaDAOImplement.java
+END
+PoliticasDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/VersionadorEPN/!svn/ver/619/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/beans/PoliticasDAO.java
+END
+CapituloDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/VersionadorEPN/!svn/ver/619/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/beans/CapituloDAOImplement.java
+END
+MateriasnuevoDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/VersionadorEPN/!svn/ver/619/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/beans/MateriasnuevoDAO.java
+END
+ActividadesVDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/VersionadorEPN/!svn/ver/619/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/beans/ActividadesVDAO.java
+END
+PeaDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/VersionadorEPN/!svn/ver/1460/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/beans/PeaDAO.java
+END
+SubCapituloPEADAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/VersionadorEPN/!svn/ver/1460/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/beans/SubCapituloPEADAOImplement.java
+END
+SubCapituloPEADAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/VersionadorEPN/!svn/ver/1460/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/beans/SubCapituloPEADAO.java
+END
+ActividadesVDAOImplemet.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/VersionadorEPN/!svn/ver/619/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/beans/ActividadesVDAOImplemet.java
+END
+SilaboDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/VersionadorEPN/!svn/ver/1174/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/beans/SilaboDAO.java
+END
+MateriasnuevoDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/VersionadorEPN/!svn/ver/619/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/beans/MateriasnuevoDAOImplement.java
+END
+CronosubcapituloDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/VersionadorEPN/!svn/ver/957/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/beans/CronosubcapituloDAO.java
+END
+AutorizacionretrasoDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/VersionadorEPN/!svn/ver/782/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/beans/AutorizacionretrasoDAO.java
+END
+CapituloDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/VersionadorEPN/!svn/ver/619/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/beans/CapituloDAO.java
+END
+PracticasDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/VersionadorEPN/!svn/ver/619/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/beans/PracticasDAO.java
+END
+SubaCapituloDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/VersionadorEPN/!svn/ver/619/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/beans/SubaCapituloDAO.java
+END
+ResultadoPeaDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/VersionadorEPN/!svn/ver/1460/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/beans/ResultadoPeaDAO.java
+END
+PermisosSaewDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/VersionadorEPN/!svn/ver/782/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/beans/PermisosSaewDAO.java
+END
+BibliografiaDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/VersionadorEPN/!svn/ver/1415/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/beans/BibliografiaDAO.java
+END
+UbicacionDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/VersionadorEPN/!svn/ver/619/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/beans/UbicacionDAO.java
+END
+PermisosSaewDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/VersionadorEPN/!svn/ver/782/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/beans/PermisosSaewDAOImplement.java
+END
+PracticasDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/VersionadorEPN/!svn/ver/619/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/beans/PracticasDAOImplement.java
+END
+SubaCapituloDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/VersionadorEPN/!svn/ver/619/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/beans/SubaCapituloDAOImplement.java
+END
+CronosubcapituloDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/svn/VersionadorEPN/!svn/ver/957/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/beans/CronosubcapituloDAOImplement.java
+END
+AutorizacionretrasoDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svn/VersionadorEPN/!svn/ver/782/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/beans/AutorizacionretrasoDAOImplement.java
+END
+SilaboDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/VersionadorEPN/!svn/ver/1460/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/beans/SilaboDAOImplement.java
+END
+CronogramaDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/VersionadorEPN/!svn/ver/785/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/beans/CronogramaDAO.java
+END
+BibliografiaPEADAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/VersionadorEPN/!svn/ver/1460/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/beans/BibliografiaPEADAO.java
+END
+EvaluacionDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/VersionadorEPN/!svn/ver/619/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/beans/EvaluacionDAO.java
+END
+ResultadoDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/VersionadorEPN/!svn/ver/619/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/beans/ResultadoDAO.java
+END
+CapituloPeaDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/VersionadorEPN/!svn/ver/1460/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/beans/CapituloPeaDAOImplement.java
+END
+CapituloPeaDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/VersionadorEPN/!svn/ver/1460/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/beans/CapituloPeaDAO.java
+END
+ResultadoDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/VersionadorEPN/!svn/ver/619/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/beans/ResultadoDAOImplement.java
+END
+BibliografiaPEADAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/svn/VersionadorEPN/!svn/ver/1460/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/beans/BibliografiaPEADAOImplement.java
+END
+EvaluacionDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/VersionadorEPN/!svn/ver/619/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/beans/EvaluacionDAOImplement.java
+END
+PeaDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/VersionadorEPN/!svn/ver/1460/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/beans/PeaDAOImplement.java
+END
+CronogramaDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/VersionadorEPN/!svn/ver/619/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/beans/CronogramaDAOImplement.java
+END
+PoliticasDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/VersionadorEPN/!svn/ver/619/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/beans/PoliticasDAOImplement.java
+END
+MetodologiaDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/VersionadorEPN/!svn/ver/619/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/beans/MetodologiaDAO.java
+END

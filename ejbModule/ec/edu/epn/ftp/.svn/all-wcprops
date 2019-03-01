@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/VersionadorEPN/!svn/ver/1392/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/ftp
+END
+Ftp2.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/VersionadorEPN/!svn/ver/1392/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/ftp/Ftp2.java
+END
+datosFTPFotos.properties
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/VersionadorEPN/!svn/ver/1392/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/ftp/datosFTPFotos.properties
+END
+FTPServerProperties.properties
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/VersionadorEPN/!svn/ver/624/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/ftp/FTPServerProperties.properties
+END
+FTPConnectionManagement.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/VersionadorEPN/!svn/ver/624/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/ftp/FTPConnectionManagement.java
+END

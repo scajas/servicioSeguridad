@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/VersionadorEPN/!svn/ver/1655/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/publik/beans
+END
+PerfilDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/VersionadorEPN/!svn/ver/578/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/publik/beans/PerfilDAOImplement.java
+END
+UsuarioService.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/VersionadorEPN/!svn/ver/1548/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/publik/beans/UsuarioService.java
+END
+UsuarioServiceBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/VersionadorEPN/!svn/ver/1548/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/publik/beans/UsuarioServiceBean.java
+END
+AdministracionService.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/VersionadorEPN/!svn/ver/1655/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/publik/beans/AdministracionService.java
+END
+AdministracionServiceBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/VersionadorEPN/!svn/ver/1655/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/publik/beans/AdministracionServiceBean.java
+END
+PerfilDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/VersionadorEPN/!svn/ver/578/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/publik/beans/PerfilDAO.java
+END

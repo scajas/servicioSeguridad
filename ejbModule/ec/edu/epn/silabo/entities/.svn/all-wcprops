@@ -1,0 +1,131 @@
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/VersionadorEPN/!svn/ver/1460/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/entities
+END
+PracticasLaboratorio.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/VersionadorEPN/!svn/ver/619/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/entities/PracticasLaboratorio.java
+END
+Resultado.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/VersionadorEPN/!svn/ver/619/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/entities/Resultado.java
+END
+BibliografiaPea.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/VersionadorEPN/!svn/ver/1460/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/entities/BibliografiaPea.java
+END
+Evaluacion.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/VersionadorEPN/!svn/ver/619/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/entities/Evaluacion.java
+END
+Pea.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/VersionadorEPN/!svn/ver/1460/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/entities/Pea.java
+END
+ResultadosPea.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/VersionadorEPN/!svn/ver/1460/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/entities/ResultadosPea.java
+END
+MetodologiaDeEnsenanza.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/VersionadorEPN/!svn/ver/619/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/entities/MetodologiaDeEnsenanza.java
+END
+UbicacionHorario.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/VersionadorEPN/!svn/ver/619/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/entities/UbicacionHorario.java
+END
+Bibliografia.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/VersionadorEPN/!svn/ver/1416/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/entities/Bibliografia.java
+END
+PermisosSaew.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/VersionadorEPN/!svn/ver/619/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/entities/PermisosSaew.java
+END
+MateriaSilabo.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/VersionadorEPN/!svn/ver/1460/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/entities/MateriaSilabo.java
+END
+ActividadesVinculacion.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/VersionadorEPN/!svn/ver/619/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/entities/ActividadesVinculacion.java
+END
+Subcapitulo.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/VersionadorEPN/!svn/ver/957/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/entities/Subcapitulo.java
+END
+Capitulo.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/VersionadorEPN/!svn/ver/619/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/entities/Capitulo.java
+END
+Cronosubcapitulo.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/VersionadorEPN/!svn/ver/957/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/entities/Cronosubcapitulo.java
+END
+Autorizacionretraso.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/VersionadorEPN/!svn/ver/782/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/entities/Autorizacionretraso.java
+END
+PiliticasDesarrollo.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/VersionadorEPN/!svn/ver/619/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/entities/PiliticasDesarrollo.java
+END
+CronogramaDesarrollo.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/VersionadorEPN/!svn/ver/957/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/entities/CronogramaDesarrollo.java
+END
+Silabo.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/VersionadorEPN/!svn/ver/957/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/entities/Silabo.java
+END
+CapituloPea.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/VersionadorEPN/!svn/ver/1460/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/entities/CapituloPea.java
+END
+SubcapituloPea.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/VersionadorEPN/!svn/ver/1460/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/silabo/entities/SubcapituloPea.java
+END

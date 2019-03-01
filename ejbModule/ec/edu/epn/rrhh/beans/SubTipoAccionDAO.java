@@ -1,0 +1,22 @@
+package ec.edu.epn.rrhh.beans;
+
+import java.util.List;
+
+import javax.ejb.Remote;
+
+import ec.edu.epn.generic.DAO.DaoGenerico;
+import ec.edu.epn.rrhh.movimientos.SubtipoAccion;
+
+@Remote
+public interface SubTipoAccionDAO extends DaoGenerico<SubtipoAccion> {
+	//Nuevo m�todo
+	public SubtipoAccion findSubTipoAccionPorNombre(String nombreSubTipoAccion);
+	
+	public int findIdSubTipoAccionPorNombre(String nombreSubTipoAccion);
+
+	public List<SubtipoAccion> findSubTipoAccionPorAccion(String nombreAccion);
+	
+	public SubtipoAccion findSubtipoByID(Integer stpId);
+
+	public SubtipoAccion findSubTipoAccionPorNombreYTipo(String nombreSubTipoAccion, String tipoAccion);
+}

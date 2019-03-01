@@ -1,0 +1,371 @@
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/VersionadorEPN/!svn/ver/1848/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities
+END
+Dep.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/VersionadorEPN/!svn/ver/983/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/Dep.java
+END
+Ecivil.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/Ecivil.java
+END
+Puesto.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/Puesto.java
+END
+Clasemp.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/VersionadorEPN/!svn/ver/462/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/Clasemp.java
+END
+PubliPart.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/VersionadorEPN/!svn/ver/311/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/PubliPart.java
+END
+DeclarJur.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/DeclarJur.java
+END
+Unomb.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/VersionadorEPN/!svn/ver/229/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/Unomb.java
+END
+Vaca.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/VersionadorEPN/!svn/ver/1848/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/Vaca.java
+END
+Escsal.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/Escsal.java
+END
+HorasmProf.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/HorasmProf.java
+END
+Anesc.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/Anesc.java
+END
+Trabant.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/Trabant.java
+END
+Evidencia.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/VersionadorEPN/!svn/ver/780/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/Evidencia.java
+END
+Tcont.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/VersionadorEPN/!svn/ver/446/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/Tcont.java
+END
+SolicitudEquipo.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/SolicitudEquipo.java
+END
+Cadic.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/Cadic.java
+END
+Equipo.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/VersionadorEPN/!svn/ver/532/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/Equipo.java
+END
+Instruccion.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/VersionadorEPN/!svn/ver/311/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/Instruccion.java
+END
+Eventocapac.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/VersionadorEPN/!svn/ver/85/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/Eventocapac.java
+END
+EstadoSolicitud.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/EstadoSolicitud.java
+END
+Thmayo.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/Thmayo.java
+END
+Partgen.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/Partgen.java
+END
+Aper.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/VersionadorEPN/!svn/ver/1658/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/Aper.java
+END
+Comfincont.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/Comfincont.java
+END
+DetalleVacacionCatalogo.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/VersionadorEPN/!svn/ver/1763/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/DetalleVacacionCatalogo.java
+END
+Estudio.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/VersionadorEPN/!svn/ver/85/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/Estudio.java
+END
+Ekey.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/VersionadorEPN/!svn/ver/1661/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/Ekey.java
+END
+EmpExt.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/EmpExt.java
+END
+Vac.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/Vac.java
+END
+MateriaCompartida.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/MateriaCompartida.java
+END
+Liqhab.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/Liqhab.java
+END
+DetBeca.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/DetBeca.java
+END
+ModeloAcreditacion.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/VersionadorEPN/!svn/ver/570/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/ModeloAcreditacion.java
+END
+Genero.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/Genero.java
+END
+Taper.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/VersionadorEPN/!svn/ver/927/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/Taper.java
+END
+Nac.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/Nac.java
+END
+Partind.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/VersionadorEPN/!svn/ver/311/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/Partind.java
+END
+Cargosc.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/Cargosc.java
+END
+Deteventocapac.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/Deteventocapac.java
+END
+NombTemp.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/VersionadorEPN/!svn/ver/1659/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/NombTemp.java
+END
+Tnomb.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/VersionadorEPN/!svn/ver/462/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/Tnomb.java
+END
+IngresosSalida.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/IngresosSalida.java
+END
+Prov.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/Prov.java
+END
+Emp.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/VersionadorEPN/!svn/ver/1728/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/Emp.java
+END
+Restaurante.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/VersionadorEPN/!svn/ver/532/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/Restaurante.java
+END
+Hijo.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/Hijo.java
+END
+TipoRelacionXcargo.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/VersionadorEPN/!svn/ver/1737/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/TipoRelacionXcargo.java
+END
+Vehiculo.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/VersionadorEPN/!svn/ver/1660/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/Vehiculo.java
+END
+HistoriaEstado.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/VersionadorEPN/!svn/ver/462/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/HistoriaEstado.java
+END
+Dep1.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/Dep1.java
+END
+Estemp.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/Estemp.java
+END
+Beca.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/Beca.java
+END
+Funcione.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/Funcione.java
+END
+Familiare.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/VersionadorEPN/!svn/ver/66/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/Familiare.java
+END
+Evalde.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/Evalde.java
+END
+Datosok.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/Datosok.java
+END
+Controlpago.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/Controlpago.java
+END
+EkeyPK.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/VersionadorEPN/!svn/ver/1661/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/EkeyPK.java
+END
+TipoEquipo.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/VersionadorEPN/!svn/ver/1241/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/TipoEquipo.java
+END
+Cont.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/VersionadorEPN/!svn/ver/647/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/Cont.java
+END
+Nescal.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/rrhh/entities/Nescal.java
+END

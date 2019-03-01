@@ -1,0 +1,137 @@
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/VersionadorEPN/!svn/ver/1390/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/beans
+END
+ReporteDocenteDistributivoDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 139
+/svn/VersionadorEPN/!svn/ver/1172/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/beans/ReporteDocenteDistributivoDAOImplement.java
+END
+IndicadorDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/VersionadorEPN/!svn/ver/964/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/beans/IndicadorDAOImplement.java
+END
+EquiposDocenteDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/svn/VersionadorEPN/!svn/ver/1223/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/beans/EquiposDocenteDAOImplement.java
+END
+EvidenciaADAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn/VersionadorEPN/!svn/ver/1304/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/beans/EvidenciaADAOImplement.java
+END
+UsuarioCarreraDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/VersionadorEPN/!svn/ver/919/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/beans/UsuarioCarreraDAO.java
+END
+IndicadorDetalleDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/svn/VersionadorEPN/!svn/ver/907/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/beans/IndicadorDetalleDAOImplement.java
+END
+CriterioDetalleDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/VersionadorEPN/!svn/ver/1390/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/beans/CriterioDetalleDAO.java
+END
+SubCriterioDetalleDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/svn/VersionadorEPN/!svn/ver/1304/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/beans/SubCriterioDetalleDAO.java
+END
+SubcriterioDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/VersionadorEPN/!svn/ver/964/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/beans/SubcriterioDAO.java
+END
+CriterioDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/VersionadorEPN/!svn/ver/907/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/beans/CriterioDAO.java
+END
+EvidenciaDetalleDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svn/VersionadorEPN/!svn/ver/1304/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/beans/EvidenciaDetalleDAOImplement.java
+END
+EvidenciaDetalleDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/VersionadorEPN/!svn/ver/1304/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/beans/EvidenciaDetalleDAO.java
+END
+SubcriterioDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn/VersionadorEPN/!svn/ver/964/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/beans/SubcriterioDAOImplement.java
+END
+CriterioDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/VersionadorEPN/!svn/ver/924/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/beans/CriterioDAOImplement.java
+END
+CriterioDetalleDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/svn/VersionadorEPN/!svn/ver/1390/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/beans/CriterioDetalleDAOImplement.java
+END
+SubCriterioDetalleDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/svn/VersionadorEPN/!svn/ver/1304/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/beans/SubCriterioDetalleDAOImplement.java
+END
+IndicadorDetalleDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/VersionadorEPN/!svn/ver/907/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/beans/IndicadorDetalleDAO.java
+END
+UsuarioCarreraDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/svn/VersionadorEPN/!svn/ver/919/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/beans/UsuarioCarreraDAOImplement.java
+END
+EvidenciaADAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/VersionadorEPN/!svn/ver/1304/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/beans/EvidenciaADAO.java
+END
+EquiposDocenteDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/VersionadorEPN/!svn/ver/1223/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/beans/EquiposDocenteDAO.java
+END
+ReporteDocenteDistributivoDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/svn/VersionadorEPN/!svn/ver/1145/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/beans/ReporteDocenteDistributivoDAO.java
+END
+IndicadorDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/VersionadorEPN/!svn/ver/964/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/acreditacion/beans/IndicadorDAO.java
+END

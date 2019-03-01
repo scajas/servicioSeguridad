@@ -1,0 +1,683 @@
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/VersionadorEPN/!svn/ver/2014/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans
+END
+NivelDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/VersionadorEPN/!svn/ver/94/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/NivelDAO.java
+END
+PlanTrabajoDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svn/VersionadorEPN/!svn/ver/440/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/PlanTrabajoDAOImplement.java
+END
+PaisDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/VersionadorEPN/!svn/ver/256/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/PaisDAOImplement.java
+END
+CarreDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/VersionadorEPN/!svn/ver/577/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/CarreDAO.java
+END
+ActAcademicaDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/VersionadorEPN/!svn/ver/931/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/ActAcademicaDAO.java
+END
+EstudioEnCursoDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/svn/VersionadorEPN/!svn/ver/784/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/EstudioEnCursoDAOImplement.java
+END
+TipoPublicacionDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/VersionadorEPN/!svn/ver/455/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/TipoPublicacionDAO.java
+END
+ActividadEvaluacionDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svn/VersionadorEPN/!svn/ver/1326/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/ActividadEvaluacionDAO.java
+END
+SubactividadEvaluacionDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/svn/VersionadorEPN/!svn/ver/973/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/SubactividadEvaluacionDAO.java
+END
+RecodificacionDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/VersionadorEPN/!svn/ver/455/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/RecodificacionDAO.java
+END
+ActividadDocenciaDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/svn/VersionadorEPN/!svn/ver/373/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/ActividadDocenciaDAOImplement.java
+END
+CargaAcademicaSaeDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/svn/VersionadorEPN/!svn/ver/1403/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/CargaAcademicaSaeDAO.java
+END
+RecategorizacionDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/VersionadorEPN/!svn/ver/350/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/RecategorizacionDAO.java
+END
+TitulosFormacionAcademicaDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 139
+/svn/VersionadorEPN/!svn/ver/1652/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/TitulosFormacionAcademicaDAOImplement.java
+END
+CompromisoEvaluacionDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/svn/VersionadorEPN/!svn/ver/1254/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/CompromisoEvaluacionDAOImplement.java
+END
+PremioDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/VersionadorEPN/!svn/ver/254/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/PremioDAO.java
+END
+TitulosSenescytDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/svn/VersionadorEPN/!svn/ver/225/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/TitulosSenescytDAOImplement.java
+END
+EvaluacionAcademicaDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 133
+/svn/VersionadorEPN/!svn/ver/1989/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/EvaluacionAcademicaDAOImplement.java
+END
+EmpleadoPublicaDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/svn/VersionadorEPN/!svn/ver/455/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/EmpleadoPublicaDAOImplement.java
+END
+CargaAcademicaSaeDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/svn/VersionadorEPN/!svn/ver/1404/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/CargaAcademicaSaeDAOImplement.java
+END
+ActividadDocenciaDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/VersionadorEPN/!svn/ver/373/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/ActividadDocenciaDAO.java
+END
+ActividadEjecucionDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn/VersionadorEPN/!svn/ver/1406/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/ActividadEjecucionDAO.java
+END
+SubactividadEjecucionDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/svn/VersionadorEPN/!svn/ver/1406/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/SubactividadEjecucionDAO.java
+END
+CarreDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/VersionadorEPN/!svn/ver/577/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/CarreDAOImplement.java
+END
+PaisDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/VersionadorEPN/!svn/ver/256/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/PaisDAO.java
+END
+PlanfActAcademicaDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/svn/VersionadorEPN/!svn/ver/931/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/PlanfActAcademicaDAOImplement.java
+END
+Actividades_PlanHorarioDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/svn/VersionadorEPN/!svn/ver/223/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/Actividades_PlanHorarioDAOImplement.java
+END
+Actividades_PlanDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/Actividades_PlanDAO.java
+END
+UniversidadDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/VersionadorEPN/!svn/ver/96/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/UniversidadDAO.java
+END
+ActividadProyectoDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/svn/VersionadorEPN/!svn/ver/1562/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/ActividadProyectoDAOImplement.java
+END
+CalculoEvalDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svn/VersionadorEPN/!svn/ver/600/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/CalculoEvalDAOImplement.java
+END
+TipoPlanifActAcadDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/svn/VersionadorEPN/!svn/ver/599/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/TipoPlanifActAcadDAOImplement.java
+END
+TesisCalificadaDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/VersionadorEPN/!svn/ver/290/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/TesisCalificadaDAO.java
+END
+IjubiladoDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/svn/VersionadorEPN/!svn/ver/224/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/IjubiladoDAOImplement.java
+END
+CapacitacionDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/VersionadorEPN/!svn/ver/600/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/CapacitacionDAO.java
+END
+MateriaDocenteSaeDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/svn/VersionadorEPN/!svn/ver/1562/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/MateriaDocenteSaeDAO.java
+END
+DocumentoDAOGDImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svn/VersionadorEPN/!svn/ver/221/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/DocumentoDAOGDImplement.java
+END
+ResultadoEvalDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/VersionadorEPN/!svn/ver/599/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/ResultadoEvalDAO.java
+END
+ReglamentoEvaluacionDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/svn/VersionadorEPN/!svn/ver/1329/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/ReglamentoEvaluacionDAOImplement.java
+END
+ActividadTecnicaDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/VersionadorEPN/!svn/ver/600/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/ActividadTecnicaDAO.java
+END
+HorasExigiblesEvalDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn/VersionadorEPN/!svn/ver/1405/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/HorasExigiblesEvalDAO.java
+END
+PremioDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/VersionadorEPN/!svn/ver/254/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/PremioDAOImplement.java
+END
+AreaConocimientoDocenteDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/svn/VersionadorEPN/!svn/ver/254/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/AreaConocimientoDocenteDAO.java
+END
+PeriodoDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/VersionadorEPN/!svn/ver/1357/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/PeriodoDAOImplement.java
+END
+ReglamentoEvaluacionDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svn/VersionadorEPN/!svn/ver/940/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/ReglamentoEvaluacionDAO.java
+END
+TipoActividadEvaluacionDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/svn/VersionadorEPN/!svn/ver/931/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/TipoActividadEvaluacionDAO.java
+END
+EstudioEnCursoDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/VersionadorEPN/!svn/ver/784/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/EstudioEnCursoDAO.java
+END
+ActAcademicaDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svn/VersionadorEPN/!svn/ver/931/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/ActAcademicaDAOImplement.java
+END
+PregResultadoEvalDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/svn/VersionadorEPN/!svn/ver/599/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/PregResultadoEvalDAOImplement.java
+END
+LinkDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/VersionadorEPN/!svn/ver/331/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/LinkDAO.java
+END
+TesisCalificadaDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/svn/VersionadorEPN/!svn/ver/291/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/TesisCalificadaDAOImplement.java
+END
+TipoPlanifActAcadDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/VersionadorEPN/!svn/ver/599/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/TipoPlanifActAcadDAO.java
+END
+RecorridoEvaluacionDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 133
+/svn/VersionadorEPN/!svn/ver/1261/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/RecorridoEvaluacionDAOImplement.java
+END
+ActividadExtensionDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/svn/VersionadorEPN/!svn/ver/830/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/ActividadExtensionDAOImplement.java
+END
+OportunidadMejoraEvaluacionDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 141
+/svn/VersionadorEPN/!svn/ver/1258/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/OportunidadMejoraEvaluacionDAOImplement.java
+END
+AreaConocimientoDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svn/VersionadorEPN/!svn/ver/455/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/AreaConocimientoDAOImplement.java
+END
+actualizarFacturas.xhtml
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/VersionadorEPN/!svn/ver/1562/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/actualizarFacturas.xhtml
+END
+RecorridoEvaluacionDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svn/VersionadorEPN/!svn/ver/1260/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/RecorridoEvaluacionDAO.java
+END
+ActividadExtensionDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/svn/VersionadorEPN/!svn/ver/600/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/ActividadExtensionDAO.java
+END
+CorteEvaluacionDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/VersionadorEPN/!svn/ver/1562/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/CorteEvaluacionDAO.java
+END
+Actividades_PlanDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/svn/VersionadorEPN/!svn/ver/63/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/Actividades_PlanDAOImplement.java
+END
+PlanfActAcademicaDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/VersionadorEPN/!svn/ver/931/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/PlanfActAcademicaDAO.java
+END
+Actividades_PlanHorarioDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/Actividades_PlanHorarioDAO.java
+END
+ActividadAdministrativaDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/svn/VersionadorEPN/!svn/ver/340/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/ActividadAdministrativaDAO.java
+END
+LinkDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/VersionadorEPN/!svn/ver/331/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/LinkDAOImplement.java
+END
+PublicacionesDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/VersionadorEPN/!svn/ver/2014/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/PublicacionesDAO.java
+END
+TipoActividadEvaluacionDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/svn/VersionadorEPN/!svn/ver/931/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/TipoActividadEvaluacionDAOImplement.java
+END
+TesisDirigidasDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/VersionadorEPN/!svn/ver/289/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/TesisDirigidasDAO.java
+END
+EvaluacionAcademicaDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svn/VersionadorEPN/!svn/ver/1985/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/EvaluacionAcademicaDAO.java
+END
+EmpleadoPublicaDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/VersionadorEPN/!svn/ver/455/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/EmpleadoPublicaDAO.java
+END
+PeriodoDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/VersionadorEPN/!svn/ver/1357/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/PeriodoDAO.java
+END
+InfoactividadDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/VersionadorEPN/!svn/ver/332/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/InfoactividadDAO.java
+END
+AreaConocimientoDocenteDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/svn/VersionadorEPN/!svn/ver/254/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/AreaConocimientoDocenteDAOImplement.java
+END
+CompromisoEvaluacionDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svn/VersionadorEPN/!svn/ver/1254/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/CompromisoEvaluacionDAO.java
+END
+InfoactividadDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/svn/VersionadorEPN/!svn/ver/332/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/InfoactividadDAOImplement.java
+END
+ActividadTecnicaDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svn/VersionadorEPN/!svn/ver/830/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/ActividadTecnicaDAOImplement.java
+END
+RecategorizacionDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svn/VersionadorEPN/!svn/ver/350/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/RecategorizacionDAOImplement.java
+END
+TesisSaewDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/svn/VersionadorEPN/!svn/ver/333/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/TesisSaewDAOImplement.java
+END
+PublicacionesDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/svn/VersionadorEPN/!svn/ver/2014/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/PublicacionesDAOImplement.java
+END
+MateriaDocenteSaeDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/svn/VersionadorEPN/!svn/ver/1562/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/MateriaDocenteSaeDAOImplement.java
+END
+TipoPublicacionDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/svn/VersionadorEPN/!svn/ver/455/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/TipoPublicacionDAOImplement.java
+END
+ExperienciaProfesionalExternaDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 142
+/svn/VersionadorEPN/!svn/ver/830/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/ExperienciaProfesionalExternaDAOImplement.java
+END
+ActividadAdministrativaDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/svn/VersionadorEPN/!svn/ver/830/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/ActividadAdministrativaDAOImplement.java
+END
+TipoEvaluacionDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/svn/VersionadorEPN/!svn/ver/931/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/TipoEvaluacionDAOImplement.java
+END
+ActividadProyectoDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/VersionadorEPN/!svn/ver/296/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/ActividadProyectoDAO.java
+END
+UniversidadDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svn/VersionadorEPN/!svn/ver/254/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/UniversidadDAOImplement.java
+END
+PatenteDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/VersionadorEPN/!svn/ver/1259/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/PatenteDAOImplement.java
+END
+IdiomaDocenteDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/svn/VersionadorEPN/!svn/ver/254/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/IdiomaDocenteDAOImplement.java
+END
+ActividadEjecucionDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/svn/VersionadorEPN/!svn/ver/1406/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/ActividadEjecucionDAOImplement.java
+END
+SubactividadEjecucionDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/svn/VersionadorEPN/!svn/ver/1406/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/SubactividadEjecucionDAOImplement.java
+END
+PregResultadoEvalDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/VersionadorEPN/!svn/ver/599/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/PregResultadoEvalDAO.java
+END
+ExperienciaProfesionalExternaDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 133
+/svn/VersionadorEPN/!svn/ver/319/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/ExperienciaProfesionalExternaDAO.java
+END
+TesisSaewDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/VersionadorEPN/!svn/ver/333/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/TesisSaewDAO.java
+END
+TitulosSenescytDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/VersionadorEPN/!svn/ver/225/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/TitulosSenescytDAO.java
+END
+TitulosFormacionAcademicaDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/svn/VersionadorEPN/!svn/ver/1652/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/TitulosFormacionAcademicaDAO.java
+END
+HorasExigiblesEvalDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/svn/VersionadorEPN/!svn/ver/1406/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/HorasExigiblesEvalDAOImplement.java
+END
+TesisDirigidasDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/svn/VersionadorEPN/!svn/ver/287/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/TesisDirigidasDAOImplement.java
+END
+ResultadoEvalDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/svn/VersionadorEPN/!svn/ver/599/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/ResultadoEvalDAOImplement.java
+END
+ActividadEvaluacionDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 133
+/svn/VersionadorEPN/!svn/ver/1326/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/ActividadEvaluacionDAOImplement.java
+END
+SubactividadEvaluacionDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/svn/VersionadorEPN/!svn/ver/973/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/SubactividadEvaluacionDAOImplement.java
+END
+RecodificacionDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/svn/VersionadorEPN/!svn/ver/455/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/RecodificacionDAOImplement.java
+END
+DocumentoDAOGD.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/VersionadorEPN/!svn/ver/221/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/DocumentoDAOGD.java
+END
+CapacitacionDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svn/VersionadorEPN/!svn/ver/846/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/CapacitacionDAOImplement.java
+END
+IjubiladoDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/IjubiladoDAO.java
+END
+CorteEvaluacionDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svn/VersionadorEPN/!svn/ver/1562/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/CorteEvaluacionDAOImplement.java
+END
+PatenteDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/VersionadorEPN/!svn/ver/348/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/PatenteDAO.java
+END
+IdiomaDocenteDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/VersionadorEPN/!svn/ver/237/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/IdiomaDocenteDAO.java
+END
+PlanTrabajoDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/PlanTrabajoDAO.java
+END
+CalculoEvalDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/VersionadorEPN/!svn/ver/600/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/CalculoEvalDAO.java
+END
+NivelDAOImplement.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/VersionadorEPN/!svn/ver/165/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/NivelDAOImplement.java
+END
+OportunidadMejoraEvaluacionDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/svn/VersionadorEPN/!svn/ver/1258/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/OportunidadMejoraEvaluacionDAO.java
+END
+AreaConocimientoDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/VersionadorEPN/!svn/ver/455/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/AreaConocimientoDAO.java
+END
+TipoEvaluacionDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/VersionadorEPN/!svn/ver/931/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/gestioDocente/beans/TipoEvaluacionDAO.java
+END

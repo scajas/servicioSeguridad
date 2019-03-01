@@ -1,0 +1,161 @@
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/VersionadorEPN/!svn/ver/1649/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/entities
+END
+ActividadesAcademica.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/VersionadorEPN/!svn/ver/435/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/entities/ActividadesAcademica.java
+END
+LineasInvestigacion.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/VersionadorEPN/!svn/ver/1225/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/entities/LineasInvestigacion.java
+END
+Provincia.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/VersionadorEPN/!svn/ver/307/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/entities/Provincia.java
+END
+Laboratorio.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/VersionadorEPN/!svn/ver/982/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/entities/Laboratorio.java
+END
+CategoriaPlantrabajo.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/VersionadorEPN/!svn/ver/478/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/entities/CategoriaPlantrabajo.java
+END
+FacultadCatalogos.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/VersionadorEPN/!svn/ver/525/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/entities/FacultadCatalogos.java
+END
+Materia.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/VersionadorEPN/!svn/ver/129/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/entities/Materia.java
+END
+Departamento.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/VersionadorEPN/!svn/ver/981/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/entities/Departamento.java
+END
+SubareaUnesco.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/entities/SubareaUnesco.java
+END
+TipoRubrosEspacio.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/VersionadorEPN/!svn/ver/1649/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/entities/TipoRubrosEspacio.java
+END
+MaterialesRubrosEspacio.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svn/VersionadorEPN/!svn/ver/1649/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/entities/MaterialesRubrosEspacio.java
+END
+Jefesdepartamento.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/entities/Jefesdepartamento.java
+END
+Edificio.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/entities/Edificio.java
+END
+NivelTitulo.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/VersionadorEPN/!svn/ver/921/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/entities/NivelTitulo.java
+END
+ProyectoCatalogo.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/VersionadorEPN/!svn/ver/596/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/entities/ProyectoCatalogo.java
+END
+AreasUnesco.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/entities/AreasUnesco.java
+END
+TipoLaboratorio.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/VersionadorEPN/!svn/ver/436/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/entities/TipoLaboratorio.java
+END
+Ciudad.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/entities/Ciudad.java
+END
+Unidad.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/entities/Unidad.java
+END
+Carrera.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/VersionadorEPN/!svn/ver/921/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/entities/Carrera.java
+END
+PreguntasEvaluacion.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/VersionadorEPN/!svn/ver/596/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/entities/PreguntasEvaluacion.java
+END
+Idioma.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/VersionadorEPN/!svn/ver/236/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/entities/Idioma.java
+END
+UniversidadCatalogo.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/VersionadorEPN/!svn/ver/192/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/entities/UniversidadCatalogo.java
+END
+DocumentacionContratacionDocente.java
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/svn/VersionadorEPN/!svn/ver/129/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/entities/DocumentacionContratacionDocente.java
+END
+RubrosEspacio.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/VersionadorEPN/!svn/ver/1649/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/entities/RubrosEspacio.java
+END
+PaisCatalogo.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/VersionadorEPN/!svn/ver/192/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/catalogos/entities/PaisCatalogo.java
+END

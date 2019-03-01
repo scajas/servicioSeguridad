@@ -1,0 +1,203 @@
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/VersionadorEPN/!svn/ver/1983/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/entities
+END
+TipoContrato.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/VersionadorEPN/!svn/ver/1391/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/entities/TipoContrato.java
+END
+DedicacionContratos.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/VersionadorEPN/!svn/ver/1391/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/entities/DedicacionContratos.java
+END
+CargaAcademica.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/VersionadorEPN/!svn/ver/1651/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/entities/CargaAcademica.java
+END
+Secuenciales.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/VersionadorEPN/!svn/ver/2203/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/entities/Secuenciales.java
+END
+GestionDocumentacionSolicitada.java
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/svn/VersionadorEPN/!svn/ver/1391/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/entities/GestionDocumentacionSolicitada.java
+END
+ProyectoPedido.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/VersionadorEPN/!svn/ver/1391/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/entities/ProyectoPedido.java
+END
+Estado.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/VersionadorEPN/!svn/ver/1391/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/entities/Estado.java
+END
+Pedido.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/VersionadorEPN/!svn/ver/1651/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/entities/Pedido.java
+END
+Nombramiento.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/entities/Nombramiento.java
+END
+CategoriaContratos.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/VersionadorEPN/!svn/ver/1437/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/entities/CategoriaContratos.java
+END
+ActividadeWS.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/VersionadorEPN/!svn/ver/1391/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/entities/ActividadeWS.java
+END
+Escala.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/VersionadorEPN/!svn/ver/1391/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/entities/Escala.java
+END
+FechasW.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/entities/FechasW.java
+END
+EstudioContratos.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/VersionadorEPN/!svn/ver/1391/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/entities/EstudioContratos.java
+END
+AuditoriaPedido.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/VersionadorEPN/!svn/ver/489/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/entities/AuditoriaPedido.java
+END
+RecorridoPedido.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/VersionadorEPN/!svn/ver/1391/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/entities/RecorridoPedido.java
+END
+CorreosPedidosNotificacione.java
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/svn/VersionadorEPN/!svn/ver/1391/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/entities/CorreosPedidosNotificacione.java
+END
+PartidasLibre.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/VersionadorEPN/!svn/ver/1391/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/entities/PartidasLibre.java
+END
+TitulosDocente.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/VersionadorEPN/!svn/ver/1391/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/entities/TitulosDocente.java
+END
+Pensum.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/VersionadorEPN/!svn/ver/2203/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/entities/Pensum.java
+END
+Docente.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/entities/Docente.java
+END
+RelacionDedicacionPK.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/VersionadorEPN/!svn/ver/1391/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/entities/RelacionDedicacionPK.java
+END
+Actividades.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/VersionadorEPN/!svn/ver/437/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/entities/Actividades.java
+END
+Actividade.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/VersionadorEPN/!svn/ver/1391/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/entities/Actividade.java
+END
+CargaAcademicaWS.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/VersionadorEPN/!svn/ver/1391/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/entities/CargaAcademicaWS.java
+END
+GestionDocumentacionSolicitadaPK.java
+K 25
+svn:wc:ra_dav:version-url
+V 133
+/svn/VersionadorEPN/!svn/ver/1391/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/entities/GestionDocumentacionSolicitadaPK.java
+END
+PedidoWS.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/VersionadorEPN/!svn/ver/1391/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/entities/PedidoWS.java
+END
+Ayfinal.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/entities/Ayfinal.java
+END
+Cargo.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/VersionadorEPN/!svn/ver/6/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/entities/Cargo.java
+END
+RelacionActual.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/VersionadorEPN/!svn/ver/1391/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/entities/RelacionActual.java
+END
+RelacionDedicacion.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/VersionadorEPN/!svn/ver/1391/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/entities/RelacionDedicacion.java
+END
+Documento.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/VersionadorEPN/!svn/ver/1391/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/entities/Documento.java
+END
+Partida.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/VersionadorEPN/!svn/ver/1391/ServiciosSeguridadEPN/ejbModule/ec/edu/epn/contratos/entities/Partida.java
+END
