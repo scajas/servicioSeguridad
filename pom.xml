@@ -112,7 +112,7 @@
 			<version>3.1.10</version>
 		</dependency>
 
-
+<!-- cambio pom dese f01 para petocion push a master -->
 		
 		<dependency>
 			<groupId>org.jasig.cas</groupId>
