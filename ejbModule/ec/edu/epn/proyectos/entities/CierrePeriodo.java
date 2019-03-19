@@ -1,7 +1,11 @@
 package ec.edu.epn.proyectos.entities;
 
 import java.io.Serializable;
+
+import javax.ejb.EJB;
 import javax.persistence.*;
+
+import ec.edu.epn.contratos.entities.Pensum;
 
 /**
  * The persistent class for the "cierrePeriodo" database table.
@@ -11,6 +15,7 @@ import javax.persistence.*;
 @Table(name = "\"cierrePeriodo\"", catalog = "bddcorpepn", schema = "`Proyectos`")
 @NamedQuery(name = "CierrePeriodo.findAll", query = "SELECT c FROM CierrePeriodo c")
 public class CierrePeriodo implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -26,6 +31,9 @@ public class CierrePeriodo implements Serializable {
 	private String meses;
 
 	private String tipo;
+	
+	@Transient
+	private Pensum pensum;
 
 	private String path;
 	private Integer idRhPr;
@@ -34,7 +42,7 @@ public class CierrePeriodo implements Serializable {
 	private String pathfirmajd;
 	private String ncedjd;
 	private String enviadoalf;
-	private String iddocalf,observaciones,
+	private String iddocalf,observaciones,revisado,
 	  pathmodifica;
 
 	@ManyToOne
@@ -170,6 +178,28 @@ public class CierrePeriodo implements Serializable {
 
 	public void setIdRhPr(Integer idRhPr) {
 		this.idRhPr = idRhPr;
+	}
+
+	/**
+	 * @return the pensum
+	 */
+	public Pensum getPensum() {
+		return pensum;
+	}
+
+	/**
+	 * @param pensum the pensum to set
+	 */
+	public void setPensum(Pensum pensum) {
+		this.pensum = pensum;
+	}
+
+	public String getRevisado() {
+		return revisado;
+	}
+
+	public void setRevisado(String revisado) {
+		this.revisado = revisado;
 	}
 
 }

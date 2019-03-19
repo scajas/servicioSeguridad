@@ -8,7 +8,6 @@ import javax.persistence.Query;
 
 import ec.edu.epn.generic.DAO.DaoGenericoImplement;
 import ec.edu.epn.proyectos.entities.ObjetivoProyecto;
-import ec.edu.epn.proyectos.entities.Objetivoavance;
 
 /**
  * Session Bean implementation class ObjetivoProyectoDAOImplement
@@ -30,5 +29,9 @@ public class ObjetivoProyectoDAOImplement extends DaoGenericoImplement<ObjetivoP
 		return query.getResultList();
 
 	}
+	
+	
+	
+	
 
 }

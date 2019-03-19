@@ -59,6 +59,26 @@ public class RecursoProyectoDAOImplement extends DaoGenericoImplement<RecursohPr
 	}
 
 	@Override
+	public RecursohPr findDirectorbycedula(String cedula) {
+		Query qUsuario = getEntityManager().createQuery(
+				"select reh from RecursohPr reh where reh.nced = ?1  and reh.rolProyecto.idRolProy = ?2 and reh.estadoPr = ?3 ");
+		qUsuario.setParameter(1, cedula);
+		qUsuario.setParameter(2, 1);
+		qUsuario.setParameter(3, "VINCULADO");
+
+		try {
+			RecursohPr r = (RecursohPr) qUsuario.getSingleResult();
+
+			return r;
+		} catch (NoResultException nre) {
+			return null;
+		} catch (NonUniqueResultException nure) {
+			return null;
+		}
+
+	}
+
+	@Override
 	public List<RecursohPr> findrecProyExiste(Integer idproy, Integer idtipoRec) {
 		Query qUsuario = getEntityManager().createQuery("select rec from RecursohPr rec where rec.proyecto.idProy = ?1 "
 				+ " and rec.rolProyecto.idRolProy = ?2");
@@ -85,6 +105,25 @@ public class RecursoProyectoDAOImplement extends DaoGenericoImplement<RecursohPr
 				"select rec from RecursohPr rec where rec.proyecto.idProy = ?1 and rec.estadoPr = 'VINCULADO' order by rec.rolProyecto.idRolProy");
 		qUsuario.setParameter(1, idproy);
 		return qUsuario.getResultList();
+
+	}
+
+	@Override
+	public List<RecursohPr> findAllDirectores() {
+		Query qUsuario = getEntityManager().createQuery(
+				"select reh from RecursohPr reh where  reh.rolProyecto.idRolProy = ?1 and reh.estadoPr = ?2 ");
+
+		qUsuario.setParameter(1, 1);
+		qUsuario.setParameter(2, "VINCULADO");
+
+		try {
+			return qUsuario.getResultList();
+
+		} catch (NoResultException nre) {
+			return null;
+		} catch (NonUniqueResultException nure) {
+			return null;
+		}
 
 	}
 

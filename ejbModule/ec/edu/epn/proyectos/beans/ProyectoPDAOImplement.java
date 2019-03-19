@@ -3,12 +3,19 @@
  */
 package ec.edu.epn.proyectos.beans;
 
+import java.sql.Array;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.Query;
 
 import ec.edu.epn.generic.DAO.DaoGenericoImplement;
+import ec.edu.epn.proyectos.DTO.ProyectoDTO;
 import ec.edu.epn.proyectos.entities.Convocatoria;
 import ec.edu.epn.proyectos.entities.ProyectoP;
 
@@ -229,6 +236,135 @@ public class ProyectoPDAOImplement extends
 		return (ProyectoP) qUsuario.getSingleResult();
 
 	}
+	
+	
+	@Override
+	public List<ProyectoDTO> listProyectoPlanificacion(String cedula) throws SQLException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		
+				
+
+		try {
+			con = getDataSource().getConnection();
+			if (con != null) {
+				ps = con.prepareStatement(
+						"SELECT p.id_proy, p.codigo_pr, p.nombre_pr, rp.rol_proy, r.nro_horas, p.fechaini, (p.fechaf -p.fechaini) AS estimado, r.idpensum "+
+						"FROM \"Proyectos\".proyecto p, \"Proyectos\".recursoh_pr r, \"Proyectos\".rol_proyecto rp "+
+						"WHERE p.id_proy= r.id_proy "+
+						"AND r.id_rol_proy=rp.id_rol_proy "+
+						"AND p.estado IN ('En ejecución', 'Prórroga Ordinaria', 'Prórroga Extraordinaria') "+
+						"AND r.nced=?");
+		
+				ps.setString(1, cedula);
+				
+
+				ResultSet rs = ps.executeQuery();
+				List<ProyectoDTO> listProyectoDtos = new ArrayList<ProyectoDTO>();
+
+				while (rs.next()) {
+					ProyectoDTO dto = new ProyectoDTO();
+					dto.setIdProyecto(rs.getInt(1));
+					dto.setCodidoProy(rs.getString(2)==null?"":rs.getString(2));
+					dto.setNombreProyecto(rs.getString(3)==null?"":rs.getString(3));
+					dto.setRol(rs.getString(4)==null?"":rs.getString(4));
+					dto.setHoras(rs.getString(5)==null?"":rs.getString(5));
+					dto.setFechaInicio(rs.getString(6)==null?"":rs.getString(6));
+					dto.setTiempoEstimado(rs.getString(7)==null?"":rs.getString(7));
+					dto.setIdPensum((rs.getString(8)==null || rs.getString(8).equals(""))?0: rs.getInt(8));
+
+					listProyectoDtos.add(dto);
+				}
+				return listProyectoDtos;
+			} else {
+				return null;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			con.close();
+			ps.close();
+		}
+
+	}
+
+	
+	
+	@Override
+	public String findDirectorXProyecto(Integer idProyecto) {
+		
+		StringBuilder queryString = new StringBuilder(
+				"SELECT MAX(rp.nced) FROM ProyectoP pr ,RecursohPr rp WHERE rp.proyecto.idProy = pr.idProy AND rp.rolProyecto.idRolProy = 1 AND pr.idProy=?0 ");
+
+		
+		Query qUsuario = getEntityManager().createQuery(queryString.toString());
+		qUsuario.setParameter(0, idProyecto);
+		return (String) qUsuario.getSingleResult();
+	}
+
+	
+	@Override
+	public List<ProyectoP> findproyectosActivos(String coddep, String nombre, String cedula) {
+
+
+
+
+		StringBuilder queryString = new StringBuilder(
+				"select pr from ProyectoP pr ");
+
+		if (cedula != null) {
+			queryString.append(" ,RecursohPr rp   ");
+		}
+		
+		queryString.append(" where pr.estado IN ('En ejecución', 'Prórroga Ordinaria', 'Prórroga Extraordinaria','Proceso de cierre','Suspendido') ");
+		
+		if (cedula != null) {
+			queryString.append(" and rp.proyecto.idProy = pr.idProy   ");
+		}
+		
+		
+		if (coddep != null) {
+			queryString.append(" and pr.codigoPr  = ?1 ");
+		}
+		
+		if (nombre != null) {
+			queryString.append(" and pr.nombrePr  like ?2 ");
+		}
+		
+		if (cedula != null) {
+			queryString.append(" and rp.nced = ?3   ");
+		}
+		
+		
+		if (cedula != null) {
+			queryString.append(" and rp.rolProyecto.idRolProy = 1   ");
+		}
+		
+		
+		queryString.append(" order by pr.codigoPr ");
+
+		Query qUsuario = getEntityManager().createQuery(queryString.toString());
+
+		
+		
+		if (coddep != null) {
+			qUsuario.setParameter(1, coddep);
+		}
+		
+		if (nombre != null) {
+			qUsuario.setParameter(2,"%"+ nombre+"%");
+		}
+		
+		if (cedula != null) {
+			qUsuario.setParameter(3, cedula);
+		}
+
+		return qUsuario.getResultList();
+
+	}
+
+	
 
 	
 }

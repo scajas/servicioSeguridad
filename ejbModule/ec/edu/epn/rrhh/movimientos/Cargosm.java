@@ -7,19 +7,18 @@ import ec.edu.epn.rrhh.entities.TipoRelacionXcargo;
 
 import java.util.List;
 
-
 /**
  * The persistent class for the cargosm database table.
  * 
  */
 @Entity
 @Table(name = "cargosm", catalog = "bddcorpepn", schema = "\"Rrhh\"")
-@NamedQuery(name="Cargosm.findAll", query="SELECT c FROM Cargosm c")
+@NamedQuery(name = "Cargosm.findAll", query = "SELECT c FROM Cargosm c")
 public class Cargosm implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="id_cargo")
+	@Column(name = "id_cargo")
 	private Integer idCargo;
 
 	private String dedicacion;
@@ -32,28 +31,31 @@ public class Cargosm implements Serializable {
 
 	private String grupo;
 
-	@Column(name="nivel_estudios")
+	@Column(name = "nivel_estudios")
 	private String nivelEstudios;
 
-	@Column(name="nombre_cargo")
+	@Column(name = "nombre_cargo")
 	private String nombreCargo;
-	//wqeqweq
-	
-	@Column(name="horas")
+	// wqeqweq
+
+	@Column(name = "horas")
 	private Integer horas;
 
-	private Double   remun;
+	private Double remun;
 
-	//bi-directional many-to-one association to HistoriaLaboral
-	@OneToMany(mappedBy="cargosm")
+	// bi-directional many-to-one association to HistoriaLaboral
+	@OneToMany(mappedBy = "cargosm")
 	private List<HistoriaLaboral> historiaLaborals;
-	
-	//bi-directional many-to-one association to TipoRelacionXcargo
-	@OneToMany(mappedBy="cargosm")
+
+	// bi-directional many-to-one association to SubtipoCargo
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "idsubtipo")
+	private SubtipoCargo subtipoCargo;
+
+	// bi-directional many-to-one association to TipoRelacionXcargo
+	@OneToMany(mappedBy = "cargosm")
 	private List<TipoRelacionXcargo> tipoRelacionXcargos;
-	
-	
-	
+
 	public List<TipoRelacionXcargo> getTipoRelacionXcargos() {
 		return tipoRelacionXcargos;
 	}
@@ -61,7 +63,7 @@ public class Cargosm implements Serializable {
 	public void setTipoRelacionXcargos(List<TipoRelacionXcargo> tipoRelacionXcargos) {
 		this.tipoRelacionXcargos = tipoRelacionXcargos;
 	}
-	
+
 	public TipoRelacionXcargo addTipoRelacionXcargo(TipoRelacionXcargo tipoRelacionXcargo) {
 		getTipoRelacionXcargos().add(tipoRelacionXcargo);
 		tipoRelacionXcargo.setCargosm(this);
@@ -150,7 +152,6 @@ public class Cargosm implements Serializable {
 	public void setRemun(Double remun) {
 		this.remun = remun;
 	}
-	
 
 	public Integer getHoras() {
 		return horas;
@@ -162,6 +163,14 @@ public class Cargosm implements Serializable {
 
 	public List<HistoriaLaboral> getHistoriaLaborals() {
 		return this.historiaLaborals;
+	}
+	
+	public SubtipoCargo getSubtipoCargo() {
+		return subtipoCargo;
+	}
+
+	public void setSubtipoCargo(SubtipoCargo subtipoCargo) {
+		this.subtipoCargo = subtipoCargo;
 	}
 
 	public void setHistoriaLaborals(List<HistoriaLaboral> historiaLaborals) {

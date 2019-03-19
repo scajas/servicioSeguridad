@@ -18,5 +18,9 @@ public interface SubTipoAccionDAO extends DaoGenerico<SubtipoAccion> {
 	
 	public SubtipoAccion findSubtipoByID(Integer stpId);
 
+	public List<SubtipoAccion> getAllSubtipoRectificaciones();
+	
 	public SubtipoAccion findSubTipoAccionPorNombreYTipo(String nombreSubTipoAccion, String tipoAccion);
+	
+	public List<SubtipoAccion> findAccionesAdministrablesPlantilla();
 }

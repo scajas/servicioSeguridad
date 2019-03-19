@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.Query;
 
 import ec.edu.epn.generic.DAO.DaoGenericoImplement;
@@ -20,18 +21,29 @@ import ec.edu.epn.rrhh.entities.Dep;
 public class DepDAOImplement extends DaoGenericoImplement<Dep> implements DepDAO {
 
 	@Override
-	public Dep findDepbyCodigo(String cod_dep) throws NoResultException,Exception {
+	public Dep findDepbyCodigo(String cod_dep) throws NoResultException, Exception {
 
 		Dep dep = new Dep();
 		try {
 
-			Query q = getEntityManager().createQuery("Select dep from Dep dep where dep.codDep = ?1 ");
+			Query q = super.getEntityManager().createQuery("Select dep from Dep dep where dep.codDep = ?1 ");
 			q.setParameter(1, cod_dep);
 
 			dep = (Dep) q.getSingleResult();
 		} catch (NoResultException e) {
+
+			dep = null;
 			throw new NoResultException("No se encontró departamentos por la facultad buscada");
-		} catch (Exception e) {
+		}
+
+		catch (NonUniqueResultException e) {
+
+			dep = null;
+			throw new NonUniqueResultException("Varios departamento con el mismo codigo");
+		}
+
+		catch (Exception e) {
+			dep = null;
 			e.printStackTrace();
 			throw new Exception("Error al buscar los departamentos");
 		}

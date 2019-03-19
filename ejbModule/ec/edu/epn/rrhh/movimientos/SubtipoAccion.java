@@ -26,6 +26,9 @@ public class SubtipoAccion implements Serializable {
 
 	@Column(name="nombre_subaccion")
 	private String nombreSubaccion;
+	
+	@Column(name="plantillamotivo")
+	private String plantillaMotivo;
 
 	//bi-directional many-to-one association to AccionP
 	@OneToMany(mappedBy="subtipoAccion")
@@ -92,5 +95,15 @@ public class SubtipoAccion implements Serializable {
 	public void setTipoAccion(TipoAccion tipoAccion) {
 		this.tipoAccion = tipoAccion;
 	}
+
+	public String getPlantillaMotivo() {
+		return plantillaMotivo;
+	}
+
+	public void setPlantillaMotivo(String plantillaMotivo) {
+		this.plantillaMotivo = plantillaMotivo;
+	}
+	
+	
 
 }

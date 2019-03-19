@@ -5,11 +5,15 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.IdClass;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.hibernate.Hibernate;
 
+
+
+import ec.edu.epn.voto.beans.ConvocatoriaServices;
 import ec.edu.epn.voto.entities.Consejo;
 import ec.edu.epn.voto.entities.ConvocatoriaVoto;
 import ec.edu.epn.voto.entities.OrdenDia;

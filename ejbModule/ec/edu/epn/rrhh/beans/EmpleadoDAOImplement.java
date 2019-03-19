@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
@@ -19,6 +20,8 @@ import javax.sql.DataSource;
 
 import ec.edu.epn.acreditacion.reportes.dto.ReporteChartDTO;
 import ec.edu.epn.acreditacion.reportes.dto.ReporteDistributivoAcademicoDTO;
+import ec.edu.epn.contratos.beans.PensumDAO;
+import ec.edu.epn.contratos.entities.Pensum;
 import ec.edu.epn.generic.DAO.DaoGenericoImplement;
 import ec.edu.epn.gestionDocente.DTO.NombramientoDTO;
 import ec.edu.epn.rrhh.DTO.DocenteDTO;
@@ -35,6 +38,12 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 
 	@Resource(mappedName = "java:jboss/datasources/SeguridadEPNDS")
 	private DataSource dataSource;
+
+	@EJB(lookup = "java:global/ServiciosSeguridadEPN/PensumDAOImplement!ec.edu.epn.contratos.beans.PensumDAO")
+	private PensumDAO pensumDAO;
+
+	@EJB(lookup = "java:global/ServiciosSeguridadEPN/DepDAOImplement!ec.edu.epn.rrhh.beans.DepDAO")
+	private DepDAO depDao;
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -69,8 +78,6 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 	@Override
 	public Emp buscaremp(String nced) throws Exception {
 
-		Connection con = null;
-		PreparedStatement ps = null;
 		try {
 			Emp empleado = new Emp();
 			StringBuilder queryString = new StringBuilder("SELECT e from Emp e where e.nced = ?1 ");
@@ -79,7 +86,8 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 
 			empleado = (Emp) query.getSingleResult();
 
-			
+			Connection con = null;
+			PreparedStatement ps = null;
 			con = dataSource.getConnection();
 			if (empleado != null && con != null) {
 				String qry = "SELECT "
@@ -106,8 +114,6 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 
 		catch (NonUniqueResultException n) {
 			return null;
-		} finally {
-			super.cerrarConexion(con, ps);
 		}
 
 	}
@@ -159,24 +165,24 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 
 		try {
 			con = super.getDataSource().getConnection();
-			if (con != null && perfilUsuario.equals("Docente") || perfilUsuario.equals("Empleado") || perfilUsuario.equals("Profesores")) {
-				
-				String qry = "SELECT  e.NCED, e.nom, e.apel, "+ 
-						"CASE cod_tiporelacionlab WHEN 1 THEN (SELECT p.cargo FROM \"Rrhh\".nomb_temp n, \"Rrhh\".partind p WHERE n.cod_pind= p.cod_pind AND n.frige_nomb = (SELECT MAX(frige_nomb) FROM \"Rrhh\".nomb_temp WHERE nced=e.nced) AND n.nced=e.nced) "+ 
-						"WHEN 2 THEN (SELECT MAX(cargoc) FROM \"Rrhh\".cont c WHERE c.frige_cont=  (SELECT MAX(frige_cont) FROM \"Rrhh\".cont WHERE nced = e.nced) AND c.nced = e.nced) END, "+
-						"d.nom_dep, to_date(e.fec_ingepn,'yyyy-MM-dd'), e.ext, e.email1, e.email2, e.fec_ingsp "+
-						"FROM \"Rrhh\".EMP E, \"Rrhh\".DEP D , usuario u "+
-						"WHERE E.COD_DEP = D.COD_DEP "+ 
-						"AND u.cedula= e.nced "+ 
-						"AND e.cod_clase = '1' "+ 
-						//"AND COD_EST IN ('1', '3', '4', '5', '6', '7')
+			if (con != null && perfilUsuario.equals("Docente") || perfilUsuario.equals("Empleado")
+					|| perfilUsuario.equals("Profesores")) {
+
+				String qry = "SELECT  e.NCED, e.nom, e.apel, "
+						+ "CASE cod_tiporelacionlab WHEN 1 THEN (SELECT p.cargo FROM \"Rrhh\".nomb_temp n, \"Rrhh\".partind p WHERE n.cod_pind= p.cod_pind AND n.frige_nomb = (SELECT MAX(frige_nomb) FROM \"Rrhh\".nomb_temp WHERE nced=e.nced) AND n.nced=e.nced) "
+						+ "WHEN 2 THEN (SELECT MAX(cargoc) FROM \"Rrhh\".cont c WHERE c.frige_cont=  (SELECT MAX(frige_cont) FROM \"Rrhh\".cont WHERE nced = e.nced) AND c.nced = e.nced) END, "
+						+ "d.nom_dep, to_date(e.fec_ingepn,'yyyy-MM-dd'), e.ext, e.email1, e.email2, e.fec_ingsp "
+						+ "FROM \"Rrhh\".EMP E, \"Rrhh\".DEP D , usuario u " + "WHERE E.COD_DEP = D.COD_DEP "
+						+ "AND u.cedula= e.nced " + "AND e.cod_clase = '1' " +
+						// "AND COD_EST IN ('1', '3', '4', '5', '6', '7')
 						"AND u.id_usuario=? ";
 
 				ps = con.prepareStatement(qry);
 
 				ps.setLong(1, idUser);
-				/*ps.setLong(2, idUser);
-				ps.setLong(3, idUser);*/
+				/*
+				 * ps.setLong(2, idUser); ps.setLong(3, idUser);
+				 */
 				ResultSet rs = ps.executeQuery();
 
 				ArrayList<DocenteDTO> listaDocenteCI = new ArrayList<DocenteDTO>();
@@ -230,28 +236,21 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 					|| perfilUsuario.equals("Revisor 1 Talento Humano") || perfilUsuario.equals("Decano")
 					|| perfilUsuario.equals("Jefe Departamento") || perfilUsuario.equals("Rector")
 					|| (perfilUsuario.equals("Planificacion")))) {
-				String qry = "SELECT  e.NCED, e.nom, e.apel, " +
-						"CASE cod_tiporelacionlab WHEN 1 THEN (SELECT MAX(p.cargo) FROM \"Rrhh\".nomb_temp n, \"Rrhh\".partind p WHERE n.cod_pind= p.cod_pind AND n.frige_nomb = (SELECT MAX(frige_nomb) FROM \"Rrhh\".nomb_temp WHERE nced=e.nced) AND n.nced=e.nced) "+ 
-						"WHEN 2 THEN (SELECT MAX(cargoc) FROM \"Rrhh\".cont c WHERE c.frige_cont=  (SELECT MAX(frige_cont) FROM \"Rrhh\".cont WHERE nced = e.nced) AND c.nced = e.nced) END, "+
-						"d.nom_dep, to_date(e.fec_ingepn,'yyyy-MM-dd'), " +
-						"CASE cod_tiporelacionlab WHEN 1 THEN 'NOMBRAMIENTO' WHEN 2 THEN 'CONTRATO' END "+
-						"FROM \"Rrhh\".EMP E, \"Rrhh\".DEP D " +  
-						"WHERE E.COD_DEP = D.COD_DEP " +
-						//"AND COD_EST IN ('1', '3', '4', '5', '6', '7') "+										
-						"AND e.cod_clase = '1' "+
-						"AND e.nced like ? "+
-						"AND e.nom like ? "+
-						"AND e.apel like ? ";
-						
-				
-				String aux2="";
-				if(auxDep.equals("%%")){
-					aux2= "AND D.COD_DEP like ? ORDER BY e.apel";
-				}else{
-					aux2= "AND D.COD_DEP = ? ORDER BY e.apel";					
+				String qry = "SELECT  e.NCED, e.nom, e.apel, "
+						+ "CASE cod_tiporelacionlab WHEN 1 THEN (SELECT MAX(p.cargo) FROM \"Rrhh\".nomb_temp n, \"Rrhh\".partind p WHERE n.cod_pind= p.cod_pind AND n.frige_nomb = (SELECT MAX(frige_nomb) FROM \"Rrhh\".nomb_temp WHERE nced=e.nced) AND n.nced=e.nced) "
+						+ "WHEN 2 THEN (SELECT MAX(cargoc) FROM \"Rrhh\".cont c WHERE c.frige_cont=  (SELECT MAX(frige_cont) FROM \"Rrhh\".cont WHERE nced = e.nced) AND c.nced = e.nced) END, "
+						+ "d.nom_dep, to_date(e.fec_ingepn,'yyyy-MM-dd'), "
+						+ "CASE cod_tiporelacionlab WHEN 1 THEN 'NOMBRAMIENTO' WHEN 2 THEN 'CONTRATO' END "
+						+ "FROM \"Rrhh\".EMP E, \"Rrhh\".DEP D " + "WHERE E.COD_DEP = D.COD_DEP " +
+						// "AND COD_EST IN ('1', '3', '4', '5', '6', '7') "+
+						"AND e.cod_clase = '1' " + "AND e.nced like ? " + "AND e.nom like ? " + "AND e.apel like ? ";
+
+				String aux2 = "";
+				if (auxDep.equals("%%")) {
+					aux2 = "AND D.COD_DEP like ? ORDER BY e.apel";
+				} else {
+					aux2 = "AND D.COD_DEP = ? ORDER BY e.apel";
 				}
-				
-				
 
 				ps = con.prepareStatement(qry + " " + aux2);
 
@@ -556,8 +555,6 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 
 				ArrayList<DocenteDTO> listaDocentes = new ArrayList<DocenteDTO>();
 
-				DepDAOImplement dep = new DepDAOImplement();
-
 				while (rs.next()) {
 
 					DocenteDTO docen = new DocenteDTO();
@@ -589,7 +586,7 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 
 						Dep depa = new Dep();
 
-						depa = dep.findDepbyCodigo(coddep.substring(0, 4));
+						depa = depDao.findDepbyCodigo(coddep.substring(0, 4));
 
 						docen.setNomFacultad(depa.getNomDep());
 
@@ -767,7 +764,7 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 
 						Dep depa = new Dep();
 
-						depa = dep.findDepbyCodigo(coddep.substring(0, 4));
+						depa = depDao.findDepbyCodigo(coddep.substring(0, 4));
 
 						docen.setNomFacultad(depa.getNomDep());
 
@@ -860,7 +857,6 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 				ResultSet rs = ps.executeQuery();
 
 				ArrayList<DocenteDTO> listaDocentes = new ArrayList<DocenteDTO>();
-				DepDAOImplement dep = new DepDAOImplement();
 
 				while (rs.next()) {
 
@@ -893,7 +889,7 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 
 						Dep depa = new Dep();
 
-						depa = dep.findDepbyCodigo(coddep.substring(0, 4));
+						depa = depDao.findDepbyCodigo(coddep.substring(0, 4));
 
 						docen.setNomFacultad(depa.getNomDep());
 
@@ -1007,7 +1003,7 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 
 						Dep depa = new Dep();
 
-						depa = dep.findDepbyCodigo(coddep.substring(0, 4));
+						depa = depDao.findDepbyCodigo(coddep.substring(0, 4));
 
 						docen.setNomFacultad(depa.getNomDep());
 
@@ -1256,33 +1252,37 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 		}
 		return listEmpDTO;
 	}
-	
+
 	@Override
-	public ArrayList<DocenteDTO> listDocenteDepartamento(Long idUser, String auxCIDoc, String auxNomDoc, String auxApelDoc, String auxDep, String perfilUsuario) throws SQLException {
+	public ArrayList<DocenteDTO> listDocenteDepartamento(Long idUser, String auxCIDoc, String auxNomDoc,
+			String auxApelDoc, String auxDep, String perfilUsuario) throws SQLException {
 
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
 			con = dataSource.getConnection();
-			if (con != null && perfilUsuario.contains("Docente") || perfilUsuario.equals("Empleado") || perfilUsuario.equals("Profesores")) {				
-				
-				String qry = "SELECT  e.NCED, e.nom, e.apel, '',"+ 
-						//"CASE cod_tiporelacionlab WHEN 1 THEN (SELECT p.cargo FROM \"Rrhh\".nomb_temp n, \"Rrhh\".partind p WHERE n.cod_pind= p.cod_pind AND n.frige_nomb = (SELECT MAX(frige_nomb) FROM \"Rrhh\".nomb_temp WHERE nced=e.nced) AND n.nced=e.nced) "+ 
-						//"WHEN 2 THEN (SELECT MAX(cargoc) FROM \"Rrhh\".cont c WHERE c.frige_cont=  (SELECT MAX(frige_cont) FROM \"Rrhh\".cont WHERE nced = e.nced) AND c.nced = e.nced) END, "+
-						"d.nom_dep, to_date(e.fec_ingepn,'yyyy-MM-dd'), e.ext, e.email1, "+
-						"CASE cod_tiporelacionlab WHEN 1 THEN 'NOMBRAMIENTO' WHEN 2 THEN 'CONTRATO' END, "+ 
-						"e.fec_ingsp, d.cod_dep "+
-						"FROM \"Rrhh\".EMP E, \"Rrhh\".DEP D , usuario u "+
-						"WHERE E.COD_DEP = D.COD_DEP "+ 
-						"AND u.cedula= e.nced "+ 
-						"AND e.cod_clase = '1' "+ 
-						//"AND COD_EST IN ('1', '3', '4', '5', '6', '7')
-						"AND u.id_usuario=? "; 
+			if (con != null && perfilUsuario.contains("Docente") || perfilUsuario.equals("Empleado")
+					|| perfilUsuario.equals("Profesores")) {
+
+				String qry = "SELECT  e.NCED, e.nom, e.apel, ''," +
+				// "CASE cod_tiporelacionlab WHEN 1 THEN (SELECT p.cargo FROM
+				// \"Rrhh\".nomb_temp n, \"Rrhh\".partind p WHERE n.cod_pind=
+				// p.cod_pind AND n.frige_nomb = (SELECT MAX(frige_nomb) FROM
+				// \"Rrhh\".nomb_temp WHERE nced=e.nced) AND n.nced=e.nced) "+
+				// "WHEN 2 THEN (SELECT MAX(cargoc) FROM \"Rrhh\".cont c WHERE
+				// c.frige_cont= (SELECT MAX(frige_cont) FROM \"Rrhh\".cont
+				// WHERE nced = e.nced) AND c.nced = e.nced) END, "+
+						"d.nom_dep, to_date(e.fec_ingepn,'yyyy-MM-dd'), e.ext, e.email1, "
+						+ "CASE cod_tiporelacionlab WHEN 1 THEN 'NOMBRAMIENTO' WHEN 2 THEN 'CONTRATO' END, "
+						+ "e.fec_ingsp, d.cod_dep " + "FROM \"Rrhh\".EMP E, \"Rrhh\".DEP D , usuario u "
+						+ "WHERE E.COD_DEP = D.COD_DEP " + "AND u.cedula= e.nced " + "AND e.cod_clase = '1' " +
+						// "AND COD_EST IN ('1', '3', '4', '5', '6', '7')
+						"AND u.id_usuario=? ";
 
 				ps = con.prepareStatement(qry);
 
 				ps.setLong(1, idUser);
-				
+
 				ResultSet rs = ps.executeQuery();
 
 				ArrayList<DocenteDTO> listaDocenteCI = new ArrayList<DocenteDTO>();
@@ -1291,20 +1291,18 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 
 					DocenteDTO dto = new DocenteDTO();
 					dto.setnCed(rs.getString(1));
-					dto.setNombre(rs.getString(2));					
+					dto.setNombre(rs.getString(2));
 					dto.setApel(rs.getString(3));
-					dto.setCargo(rs.getString(4));	
+					dto.setCargo(rs.getString(4));
 					dto.setNomDepartamento(rs.getString(5));
 					dto.setTipoDocente(rs.getString(9));
 					dto.setIdDepartamento(rs.getString(11));
 
 					if (rs.getString(6) == null || rs.getString(6).trim() == "") {
-						dto.setAuxFechaIngresoEPN("  ");						
+						dto.setAuxFechaIngresoEPN("  ");
 					} else {
-						dto.setAuxFechaIngresoEPN(rs.getString(6));						
-					}				
-
-					
+						dto.setAuxFechaIngresoEPN(rs.getString(6));
+					}
 
 					listaDocenteCI.add(dto);
 
@@ -1317,21 +1315,17 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 			}
 
 			if (con != null
-					&& (perfilUsuario.equals("Vicerrectorado Docencia") || perfilUsuario.equals("Jefe Departamento"))) {				
-				
-				String qry = "SELECT  e.NCED, e.nom, e.apel, "+
-				"CASE cod_tiporelacionlab WHEN 1 THEN (SELECT p.cargo FROM \"Rrhh\".nomb_temp n, \"Rrhh\".partind p WHERE n.cod_pind= p.cod_pind AND n.frige_nomb = (SELECT MAX(frige_nomb) FROM \"Rrhh\".nomb_temp WHERE nced=e.nced) AND n.nced=e.nced) "+ 
-				"WHEN 2 THEN (SELECT MAX(cargoc) FROM \"Rrhh\".cont c WHERE c.frige_cont=  (SELECT MAX(frige_cont) FROM \"Rrhh\".cont WHERE nced = e.nced) AND c.nced = e.nced) END, "+
-				"d.nom_dep, to_date(e.fec_ingepn,'yyyy-MM-dd'), "+
-				"CASE cod_tiporelacionlab WHEN 1 THEN 'NOMBRAMIENTO' WHEN 2 THEN 'CONTRATO' END "+
-				"FROM \"Rrhh\".EMP E, \"Rrhh\".DEP D " +  
-				"WHERE E.COD_DEP = D.COD_DEP " +
-				"AND COD_EST IN ('1', '3', '4', '5', '6', '7') "+										
-				"AND e.cod_clase = '1' "+
-				"AND e.nced like ? "+
-				"AND e.nom like ? "+
-				"AND e.apel like ? "+
-				"AND D.COD_DEP like ? ORDER BY e.apel";
+					&& (perfilUsuario.equals("Vicerrectorado Docencia") || perfilUsuario.equals("Jefe Departamento"))) {
+
+				String qry = "SELECT  e.NCED, e.nom, e.apel, "
+						+ "CASE cod_tiporelacionlab WHEN 1 THEN (SELECT p.cargo FROM \"Rrhh\".nomb_temp n, \"Rrhh\".partind p WHERE n.cod_pind= p.cod_pind AND n.frige_nomb = (SELECT MAX(frige_nomb) FROM \"Rrhh\".nomb_temp WHERE nced=e.nced) AND n.nced=e.nced) "
+						+ "WHEN 2 THEN (SELECT MAX(cargoc) FROM \"Rrhh\".cont c WHERE c.frige_cont=  (SELECT MAX(frige_cont) FROM \"Rrhh\".cont WHERE nced = e.nced) AND c.nced = e.nced) END, "
+						+ "d.nom_dep, to_date(e.fec_ingepn,'yyyy-MM-dd'), "
+						+ "CASE cod_tiporelacionlab WHEN 1 THEN 'NOMBRAMIENTO' WHEN 2 THEN 'CONTRATO' END "
+						+ "FROM \"Rrhh\".EMP E, \"Rrhh\".DEP D " + "WHERE E.COD_DEP = D.COD_DEP "
+						+ "AND COD_EST IN ('1', '3', '4', '5', '6', '7') " + "AND e.cod_clase = '1' "
+						+ "AND e.nced like ? " + "AND e.nom like ? " + "AND e.apel like ? "
+						+ "AND D.COD_DEP like ? ORDER BY e.apel";
 
 				ps = con.prepareStatement(qry);
 
@@ -1348,20 +1342,18 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 
 					DocenteDTO dto = new DocenteDTO();
 					dto.setnCed(rs.getString(1));
-					dto.setNombre(rs.getString(2));					
+					dto.setNombre(rs.getString(2));
 					dto.setApel(rs.getString(3));
-					dto.setCargo(rs.getString(4));	
+					dto.setCargo(rs.getString(4));
 					dto.setNomDepartamento(rs.getString(5));
-					
 
 					if (rs.getString(6) == null || rs.getString(6).trim() == "") {
-						dto.setAuxFechaIngresoEPN("  ");						
+						dto.setAuxFechaIngresoEPN("  ");
 					} else {
-						dto.setAuxFechaIngresoEPN(rs.getString(6));						
-					}			
-					
-					dto.setTipoDocente(rs.getString(7));
+						dto.setAuxFechaIngresoEPN(rs.getString(6));
+					}
 
+					dto.setTipoDocente(rs.getString(7));
 
 					listaDocentes.add(dto);
 
@@ -1373,50 +1365,42 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 				return listaDocentes;
 			}
 
-			
-
 			else {
 				System.out.println("Error en la conexion");
 				return null;
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();			
+			e.printStackTrace();
 			return null;
 		} finally {
 			ps.close();
 			con.close();
 		}
 	}
-	
+
 	@Override
-	public ArrayList<DocenteDTO> calculoEvaluacionXCedulaDoc(String auxCIDoc, String auxNomDoc, String auxApelDoc, String auxDep, String perfilUsuario,  Integer idPensum) throws SQLException {
+	public ArrayList<DocenteDTO> calculoEvaluacionXCedulaDoc(String auxCIDoc, String auxNomDoc, String auxApelDoc,
+			String auxDep, String perfilUsuario, Integer idPensum) throws SQLException {
 
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
 			con = dataSource.getConnection();
-			if (con != null) {				
-				
-				String qry = "SELECT DISTINCT MAX(e.NCED), e.nom, e.apel, "+
-								"CASE cod_tiporelacionlab WHEN 1 THEN (SELECT p.cargo FROM \"Rrhh\".nomb_temp n, \"Rrhh\".partind p WHERE n.cod_pind= p.cod_pind AND n.frige_nomb = (SELECT MAX(frige_nomb) FROM \"Rrhh\".nomb_temp WHERE nced=e.nced) AND n.nced=e.nced) "+ 
-								"WHEN 2 THEN (SELECT MAX(cargoc) FROM \"Rrhh\".cont c WHERE c.frige_cont=  (SELECT MAX(frige_cont) FROM \"Rrhh\".cont WHERE nced = e.nced) AND c.nced = e.nced) END as cargook, "+
-								"d.nom_dep, id_periodo, "+
-								"(SELECT CASE max(r.tipo_eval) WHEN 'EVAL' THEN 'AutoEvaluación' ELSE '' END  FROM \"GestionDocente\".resultado_eval  r WHERE  r.nced=  MAX(e.NCED)) AS auto, "+
-								"(SELECT CASE min(r.tipo_eval) WHEN 'COEV' THEN 'CoEvaluación' ELSE '' END  FROM \"GestionDocente\".resultado_eval  r WHERE  r.nced=  MAX(e.NCED)) AS coe "+															
-								"FROM \"Rrhh\".EMP E, \"Rrhh\".DEP D, \"GestionDocente\".resultado_eval reval, \"GestionDocente\".periodo p "+								 
-								"WHERE E.COD_DEP = D.COD_DEP "+ 								
-								"AND reval.nced= E.nced "+ 
-								"AND COD_EST IN ('1', '3', '4', '5', '6', '7') "+ 
-								"AND e.cod_clase = '1' "+ 
-								"AND p.id_pensum= reval.id_pensum "+								
-								"AND e.nced LIKE ? "+ 
-								"AND e.nom LIKE ? "+ 
-								"AND e.apel LIKE ? "+ 
-								"AND D.COD_DEP LIKE ? "+ 
-								"AND reval.id_pensum = ? "+
-								"GROUP BY  e.nom, e.apel, cargook, d.nom_dep, tipo_eval, id_periodo "+
-								"ORDER BY e.apel";
+			if (con != null) {
+
+				String qry = "SELECT DISTINCT MAX(e.NCED), e.nom, e.apel, "
+						+ "CASE cod_tiporelacionlab WHEN 1 THEN (SELECT p.cargo FROM \"Rrhh\".nomb_temp n, \"Rrhh\".partind p WHERE n.cod_pind= p.cod_pind AND n.frige_nomb = (SELECT MAX(frige_nomb) FROM \"Rrhh\".nomb_temp WHERE nced=e.nced) AND n.nced=e.nced) "
+						+ "WHEN 2 THEN (SELECT MAX(cargoc) FROM \"Rrhh\".cont c WHERE c.frige_cont=  (SELECT MAX(frige_cont) FROM \"Rrhh\".cont WHERE nced = e.nced) AND c.nced = e.nced) END as cargook, "
+						+ "d.nom_dep, id_periodo, "
+						+ "(SELECT CASE max(r.tipo_eval) WHEN 'EVAL' THEN 'AutoEvaluación' ELSE '' END  FROM \"GestionDocente\".resultado_eval  r WHERE  r.nced=  MAX(e.NCED)) AS auto, "
+						+ "(SELECT CASE min(r.tipo_eval) WHEN 'COEV' THEN 'CoEvaluación' ELSE '' END  FROM \"GestionDocente\".resultado_eval  r WHERE  r.nced=  MAX(e.NCED)) AS coe "
+						+ "FROM \"Rrhh\".EMP E, \"Rrhh\".DEP D, \"GestionDocente\".resultado_eval reval, \"GestionDocente\".periodo p "
+						+ "WHERE E.COD_DEP = D.COD_DEP " + "AND reval.nced= E.nced "
+						+ "AND COD_EST IN ('1', '3', '4', '5', '6', '7') " + "AND e.cod_clase = '1' "
+						+ "AND p.id_pensum= reval.id_pensum " + "AND e.nced LIKE ? " + "AND e.nom LIKE ? "
+						+ "AND e.apel LIKE ? " + "AND D.COD_DEP LIKE ? " + "AND reval.id_pensum = ? "
+						+ "GROUP BY  e.nom, e.apel, cargook, d.nom_dep, tipo_eval, id_periodo " + "ORDER BY e.apel";
 
 				ps = con.prepareStatement(qry);
 				ps.setString(1, auxCIDoc);
@@ -1433,73 +1417,64 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 
 					DocenteDTO dto = new DocenteDTO();
 					dto.setnCed(rs.getString(1));
-					dto.setNombre(rs.getString(2));					
+					dto.setNombre(rs.getString(2));
 					dto.setApel(rs.getString(3));
-					dto.setCargo(rs.getString(4));	
+					dto.setCargo(rs.getString(4));
 					dto.setNomDepartamento(rs.getString(5));
 					dto.setPeriodo(rs.getString(6));
 					dto.setTipoEval(rs.getString(7));
 					dto.setTipoCoEval(rs.getString(8));
-					
+
 					listaDocentes.add(dto);
-					
+
 				}
 
 				ps.close();
 				con.close();
 
 				return listaDocentes;
-			}		
+			}
 
-			else {				
+			else {
 				return null;
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();			
+			e.printStackTrace();
 			return null;
 		} finally {
 			ps.close();
 			con.close();
 		}
 	}
-	
-	
+
 	@Override
-	public ArrayList<DocenteDTO> docenteCIPersonalEvaluacion(String auxCIDoc, String auxNomDoc, String auxApelDoc, String auxDep, String perfilUsuario, String tipoEval, Integer idPensum) throws SQLException {
+	public ArrayList<DocenteDTO> docenteCIPersonalEvaluacion(String auxCIDoc, String auxNomDoc, String auxApelDoc,
+			String auxDep, String perfilUsuario, String tipoEval, Integer idPensum) throws SQLException {
 
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
 			con = dataSource.getConnection();
-			if (con != null
-					&& (perfilUsuario.equals("Supervisor Talento Humano")
-							|| perfilUsuario.equals("Revisor 1 Talento Humano")
-							|| perfilUsuario.equals("Decano")
-							|| perfilUsuario.equals("Jefe Departamento")
-							|| perfilUsuario.equals("Rector") || (perfilUsuario
-								.equals("Planificacion")))) {				
-				
-				String qry = "SELECT  e.NCED, e.nom, e.apel, "+
-								"CASE cod_tiporelacionlab WHEN 1 THEN (SELECT p.cargo FROM \"Rrhh\".nomb_temp n, \"Rrhh\".partind p WHERE n.cod_pind= p.cod_pind AND n.frige_nomb = (SELECT MAX(frige_nomb) FROM \"Rrhh\".nomb_temp WHERE nced=e.nced) AND n.nced=e.nced) "+ 
-								"WHEN 2 THEN (SELECT MAX(cargoc) FROM \"Rrhh\".cont c WHERE c.frige_cont=  (SELECT MAX(frige_cont) FROM \"Rrhh\".cont WHERE nced = e.nced) AND c.nced = e.nced) END as cargook, "+
-								"d.nom_dep, to_date(e.fec_ingepn,'yyyy-MM-dd'), "+ 
-							"CASE tipo_eval WHEN 'EVAL' THEN 'AutoEvaluación' WHEN 'COEV' THEN 'CoEvaluación' END "+ 
-								"FROM \"Rrhh\".EMP E, \"Rrhh\".DEP D, \"GestionDocente\".resultado_eval reval "+
-								"WHERE E.COD_DEP = D.COD_DEP "+
-								"AND reval.nced= E.nced "+
-								"AND COD_EST IN ('1', '3', '4', '5', '6', '7') "+
-								"AND e.cod_clase = '1' "+
-								"AND reval.tipo_eval LIKE ? "+
-								"AND e.nced LIKE ? "+
-								"AND e.nom LIKE ? "+
-								"AND e.apel LIKE ? "+								
-								"AND D.COD_DEP LIKE ? " +
-								"AND reval.id_pensum = ? "+
-								"ORDER BY e.apel";
+			if (con != null && (perfilUsuario.equals("Supervisor Talento Humano")
+					|| perfilUsuario.equals("Revisor 1 Talento Humano") || perfilUsuario.equals("Decano")
+					|| perfilUsuario.equals("Jefe Departamento") || perfilUsuario.equals("Rector")
+					|| (perfilUsuario.equals("Planificacion")))) {
+
+				String qry = "SELECT  e.NCED, e.nom, e.apel, "
+						+ "CASE cod_tiporelacionlab WHEN 1 THEN (SELECT p.cargo FROM \"Rrhh\".nomb_temp n, \"Rrhh\".partind p WHERE n.cod_pind= p.cod_pind AND n.frige_nomb = (SELECT MAX(frige_nomb) FROM \"Rrhh\".nomb_temp WHERE nced=e.nced) AND n.nced=e.nced) "
+						+ "WHEN 2 THEN (SELECT MAX(cargoc) FROM \"Rrhh\".cont c WHERE c.frige_cont=  (SELECT MAX(frige_cont) FROM \"Rrhh\".cont WHERE nced = e.nced) AND c.nced = e.nced) END as cargook, "
+						+ "d.nom_dep, to_date(e.fec_ingepn,'yyyy-MM-dd'), "
+						+ "CASE tipo_eval WHEN 'EVAL' THEN 'AutoEvaluación' WHEN 'COEV' THEN 'CoEvaluación' END "
+						+ "FROM \"Rrhh\".EMP E, \"Rrhh\".DEP D, \"GestionDocente\".resultado_eval reval "
+						+ "WHERE E.COD_DEP = D.COD_DEP " + "AND reval.nced= E.nced "
+						+ "AND COD_EST IN ('1', '3', '4', '5', '6', '7') " + "AND e.cod_clase = '1' "
+						+ "AND reval.tipo_eval LIKE ? " + "AND e.nced LIKE ? " + "AND e.nom LIKE ? "
+						+ "AND e.apel LIKE ? " + "AND D.COD_DEP LIKE ? " + "AND reval.id_pensum = ? "
+						+ "ORDER BY e.apel";
 
 				ps = con.prepareStatement(qry);
-				
+
 				ps.setString(1, tipoEval);
 				ps.setString(2, auxCIDoc);
 				ps.setString(3, auxNomDoc + "%");
@@ -1515,17 +1490,17 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 
 					DocenteDTO dto = new DocenteDTO();
 					dto.setnCed(rs.getString(1));
-					dto.setNombre(rs.getString(2));					
+					dto.setNombre(rs.getString(2));
 					dto.setApel(rs.getString(3));
-					dto.setCargo(rs.getString(4));	
-					dto.setNomDepartamento(rs.getString(5));					
+					dto.setCargo(rs.getString(4));
+					dto.setNomDepartamento(rs.getString(5));
 
 					if (rs.getString(6) == null || rs.getString(6).trim() == "") {
-						dto.setAuxFechaIngresoEPN("  ");						
+						dto.setAuxFechaIngresoEPN("  ");
 					} else {
-						dto.setAuxFechaIngresoEPN(rs.getString(6));						
-					}	
-					
+						dto.setAuxFechaIngresoEPN(rs.getString(6));
+					}
+
 					dto.setTipoEval(rs.getString(7));
 					listaDocentes.add(dto);
 				}
@@ -1534,74 +1509,64 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 				con.close();
 
 				return listaDocentes;
-			}		
+			}
 
-			else {				
+			else {
 				return null;
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();			
+			e.printStackTrace();
 			return null;
 		} finally {
 			ps.close();
 			con.close();
 		}
 	}
-	
+
 	@Override
-	public Long countEmpxCed(String nced) throws Exception {		
-		Query q = getEntityManager()
-				.createQuery(
-						"SELECT count(e) FROM Emp e WHERE e.nced like ?");
-		
+	public Long countEmpxCed(String nced) throws Exception {
+		Query q = getEntityManager().createQuery("SELECT count(e) FROM Emp e WHERE e.nced like ?");
+
 		q.setParameter(1, nced);
 		return (Long) q.getSingleResult();
 	}
-	
+
 	@Override
-	public ArrayList<DocenteDTO> docenteCIPlanifActividades(String auxCIDoc, String auxNomDoc, String auxApelDoc, String auxDep, Integer idPensum) throws SQLException {
+	public ArrayList<DocenteDTO> docenteCIPlanifActividades(String auxCIDoc, String auxNomDoc, String auxApelDoc,
+			String auxDep, Integer idPensum) throws SQLException {
 
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
 			con = dataSource.getConnection();
-			if (con != null) {				
-				
-				String qry = "SELECT e.nced, e.apel, e.nom, d.nom_dep, COALESCE(UPPER(e.cargook), ''),COALESCE(e.\"COD_DEDICACION\", ''), " +
-									"to_char((coev + autoev + heteroev), '990.09') AS notaFinal, "+		
-									"(SELECT to_char((((pre.valor * 16) + (pre.valor_2 * 8)) * 100)/960, '990.09') "+ 
-										"FROM \"Catalogos\".preguntas_evaluacion pe, \"GestionDocente\".preg_resultado_eval pre, \"GestionDocente\".resultado_eval re "+ 
-										"WHERE pe.id_preguntas_eval= pre.id_preguntas_eval "+
-										"AND pre.id_resultado_eval= re.id_resultado_eval "+
-										"AND pe.tipo= 'COEV' "+
-										"AND pe.asignacion ='HORAS' AND re.nced LIKE  e.nced "+
-										"AND re.id_pensum = ce.id_pensum AND upper(pe.detalle) like  '%DOCENCIA%') as docencia, "+
-									"(SELECT to_char((((pre.valor * 16) + (pre.valor_2 * 8)) * 100)/960, '990.09') "+ 
-										"FROM \"Catalogos\".preguntas_evaluacion pe, \"GestionDocente\".preg_resultado_eval pre, \"GestionDocente\".resultado_eval re "+ 
-										"WHERE pe.id_preguntas_eval= pre.id_preguntas_eval "+
-										"AND pre.id_resultado_eval= re.id_resultado_eval "+
-										"AND pe.tipo= 'COEV' "+
-										"AND pe.asignacion ='HORAS' AND re.nced LIKE  e.nced "+
-										"AND re.id_pensum = ce.id_pensum AND upper(pe.detalle) like  'INVEST%') AS investigacion, "+
-									"(SELECT to_char((((pre.valor * 16) + (pre.valor_2 * 8)) * 100)/960, '990.09') "+ 
-										"FROM \"Catalogos\".preguntas_evaluacion pe, \"GestionDocente\".preg_resultado_eval pre, \"GestionDocente\".resultado_eval re "+ 
-										"WHERE pe.id_preguntas_eval= pre.id_preguntas_eval "+
-										"AND pre.id_resultado_eval= re.id_resultado_eval "+
-										"AND pe.tipo= 'COEV' "+
-										"AND pe.asignacion ='HORAS' AND re.nced LIKE  e.nced "+
-										"AND re.id_pensum = ce.id_pensum AND upper(pe.detalle) like  'GEST%') as gestion, "+
-										"CONCAT(\"año_pensum\", '-',  numero_pensum), '' "+
-								"FROM \"GestionDocente\".calculo_eval ce, \"Rrhh\".emp e, \"Rrhh\".dep d, \"Contratos\".pensum p "+
-								"WHERE ce.nced= e.nced "+
-								"AND e.cod_dep= d.cod_dep "+
-								"AND ce.id_pensum= p.id_pensum "+
-								"AND e.nced LIKE ? "+ 
-								"AND e.nom LIKE ? "+ 
-								"AND e.apel LIKE ? "+ 
-								"AND d.COD_DEP LIKE ? "+ 
-								"AND p.id_pensum= ? "+
-								"ORDER BY e.apel;";
+			if (con != null) {
+
+				String qry = "SELECT e.nced, e.apel, e.nom, d.nom_dep, COALESCE(UPPER(e.cargook), ''),COALESCE(e.\"COD_DEDICACION\", ''), "
+						+ "to_char((coev + autoev + heteroev), '990.09') AS notaFinal, "
+						+ "(SELECT to_char((((pre.valor * 16) + (pre.valor_2 * 8)) * 100)/960, '990.09') "
+						+ "FROM \"Catalogos\".preguntas_evaluacion pe, \"GestionDocente\".preg_resultado_eval pre, \"GestionDocente\".resultado_eval re "
+						+ "WHERE pe.id_preguntas_eval= pre.id_preguntas_eval "
+						+ "AND pre.id_resultado_eval= re.id_resultado_eval " + "AND pe.tipo= 'COEV' "
+						+ "AND pe.asignacion ='HORAS' AND re.nced LIKE  e.nced "
+						+ "AND re.id_pensum = ce.id_pensum AND upper(pe.detalle) like  '%DOCENCIA%') as docencia, "
+						+ "(SELECT to_char((((pre.valor * 16) + (pre.valor_2 * 8)) * 100)/960, '990.09') "
+						+ "FROM \"Catalogos\".preguntas_evaluacion pe, \"GestionDocente\".preg_resultado_eval pre, \"GestionDocente\".resultado_eval re "
+						+ "WHERE pe.id_preguntas_eval= pre.id_preguntas_eval "
+						+ "AND pre.id_resultado_eval= re.id_resultado_eval " + "AND pe.tipo= 'COEV' "
+						+ "AND pe.asignacion ='HORAS' AND re.nced LIKE  e.nced "
+						+ "AND re.id_pensum = ce.id_pensum AND upper(pe.detalle) like  'INVEST%') AS investigacion, "
+						+ "(SELECT to_char((((pre.valor * 16) + (pre.valor_2 * 8)) * 100)/960, '990.09') "
+						+ "FROM \"Catalogos\".preguntas_evaluacion pe, \"GestionDocente\".preg_resultado_eval pre, \"GestionDocente\".resultado_eval re "
+						+ "WHERE pe.id_preguntas_eval= pre.id_preguntas_eval "
+						+ "AND pre.id_resultado_eval= re.id_resultado_eval " + "AND pe.tipo= 'COEV' "
+						+ "AND pe.asignacion ='HORAS' AND re.nced LIKE  e.nced "
+						+ "AND re.id_pensum = ce.id_pensum AND upper(pe.detalle) like  'GEST%') as gestion, "
+						+ "CONCAT(\"año_pensum\", '-',  numero_pensum), '' "
+						+ "FROM \"GestionDocente\".calculo_eval ce, \"Rrhh\".emp e, \"Rrhh\".dep d, \"Contratos\".pensum p "
+						+ "WHERE ce.nced= e.nced " + "AND e.cod_dep= d.cod_dep " + "AND ce.id_pensum= p.id_pensum "
+						+ "AND e.nced LIKE ? " + "AND e.nom LIKE ? " + "AND e.apel LIKE ? " + "AND d.COD_DEP LIKE ? "
+						+ "AND p.id_pensum= ? " + "ORDER BY e.apel;";
 
 				ps = con.prepareStatement(qry);
 				ps.setString(1, auxCIDoc);
@@ -1612,13 +1577,13 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 
 				ResultSet rs = ps.executeQuery();
 
-				ArrayList<DocenteDTO > listaDocentes = new ArrayList<DocenteDTO>();
+				ArrayList<DocenteDTO> listaDocentes = new ArrayList<DocenteDTO>();
 
 				while (rs.next()) {
 
 					DocenteDTO dto = new DocenteDTO();
 					dto.setnCed(rs.getString(1));
-					dto.setNombre(rs.getString(2));					
+					dto.setNombre(rs.getString(2));
 					dto.setApel(rs.getString(3));
 					dto.setNomDepartamento(rs.getString(4));
 					dto.setCargo(rs.getString(5));
@@ -1629,7 +1594,7 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 					dto.setGestion(rs.getString(10));
 					dto.setPeriodo(rs.getString(11));
 					dto.setAprobEstudiantes(rs.getString(12));
-					
+
 					listaDocentes.add(dto);
 				}
 
@@ -1637,687 +1602,846 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 				con.close();
 
 				return listaDocentes;
-			}		
+			}
 
-			else {				
+			else {
 				return null;
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();			
+			e.printStackTrace();
 			return null;
 		} finally {
 			ps.close();
 			con.close();
 		}
 	}
-	
-	
-	
-	
-	//variables
-		public Query query = null;
-		public String q ="";
-		public StringBuilder queryString = null;
-		
-		@Override
-		public List<Emp> obtenerListaEmpleados(String criterio) {
-			//Busca todos los empleados
-			if (criterio.isEmpty() || criterio.equals("") || criterio.equals(" ") || criterio.equals("0") ){
-				q = "SELECT e FROM Emp e " +
-						" order by e.apel, e.nom ";
-				queryString = new StringBuilder(q);
-				query = getEntityManager().createQuery(queryString.toString());
-				
-			}
-			else {
-				try {				
-					try {
-						//Busca empleado por cédula
-						if (Integer.parseInt(criterio)>0 || Integer.parseInt(criterio) == 0){						
-							q = "SELECT e FROM Emp e WHERE e.nced LIKE ?0 " +
-								" order by e.apel, e.nom ";
-							queryString = new StringBuilder(q);
-							query = getEntityManager().createQuery(queryString.toString());
-							query.setParameter(0, "%" + criterio + "%");
-						}
-					} catch (Exception e) {
-						//Busca empleado por nombre					
-						q = "SELECT e FROM Emp e WHERE " +
-								" OR e.nom LIKE ?1 " +
-								" order by e.apel, e.nom ";
+
+	// variables
+	public Query query = null;
+	public String q = "";
+	public StringBuilder queryString = null;
+
+	@Override
+	public List<Emp> obtenerListaEmpleados(String criterio) {
+		// Busca todos los empleados
+		if (criterio.isEmpty() || criterio.equals("") || criterio.equals(" ") || criterio.equals("0")) {
+			q = "SELECT e FROM Emp e " + " order by e.apel, e.nom ";
+			queryString = new StringBuilder(q);
+			query = getEntityManager().createQuery(queryString.toString());
+
+		} else {
+			try {
+				try {
+					// Busca empleado por cédula
+					if (Integer.parseInt(criterio) > 0 || Integer.parseInt(criterio) == 0) {
+						q = "SELECT e FROM Emp e WHERE e.nced LIKE ?0 " + " order by e.apel, e.nom ";
 						queryString = new StringBuilder(q);
 						query = getEntityManager().createQuery(queryString.toString());
-						query.setParameter(1, "%" + criterio + "%");
+						query.setParameter(0, "%" + criterio + "%");
 					}
-				} catch (Exception e) {				
-					e.printStackTrace();
+				} catch (Exception e) {
+					// Busca empleado por nombre
+					q = "SELECT e FROM Emp e WHERE " + " OR e.nom LIKE ?1 " + " order by e.apel, e.nom ";
+					queryString = new StringBuilder(q);
+					query = getEntityManager().createQuery(queryString.toString());
+					query.setParameter(1, "%" + criterio + "%");
 				}
-				
-				
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-			return query.getResultList();
+
+		}
+		return query.getResultList();
+	}
+
+	/*
+	 * Busca empleado por cédula
+	 * 
+	 * @see ec.edu.epn.rrhh.beans.EmpleadoDAO#obtenerEmpleado(java.lang.String)
+	 */
+	@Override
+	public Emp obtenerEmpleado(String criterio) {
+		query = getEntityManager().createQuery("SELECT e FROM Emp e WHERE e.nced LIKE ?0");
+
+		query.setParameter(0, "%" + Integer.parseInt(criterio.trim()) + "%");
+
+		Emp aux = new Emp();
+		Emp obj = new Emp();
+
+		try {
+			aux = (Emp) query.getSingleResult();
+			obj = aux;
+
+		} catch (NoResultException e) {
+			obj = null;
+		} catch (NonUniqueResultException e) {
+			obj = aux;
+		} catch (Exception e) {
+			obj = null;
+		}
+		return obj;
+	}
+
+	/**
+	 * Lista los empleados por una lista de cédulas
+	 * 
+	 * @param docentes-
+	 *            lista de string con las cédulas de los docentes a buscar
+	 * @param nombre
+	 *            - String con el nombre que se desa buscar.
+	 * @return lista de empleados con los parameotrs buscados
+	 * @throws NoResultException
+	 *             - Excepcion lanzada cuando no se encuentra la entidad
+	 * @throws Exception
+	 *             - Excepcion general
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Emp> listarEmpXlistCedulas(List<String> docentes, String nombre) throws NoResultException, Exception {
+		List<Emp> retorno = null;
+		try {
+			StringBuilder stQuery = new StringBuilder();
+			stQuery.append(" SELECT emp from Emp emp ");
+			stQuery.append(" where emp.nced in :docentes and emp.clasemp.codClase=1 ");
+			if (nombre.isEmpty()) {
+				stQuery.append(
+						" and (upper(emp.nom || ' '|| emp.apel) like :nombre OR upper(emp.apel || ' '|| emp.nom) like :nombre)");
+			}
+			stQuery.append(" ORDER BY emp.apel, emp.nom");
+			Query q = getEntityManager().createQuery(stQuery.toString());
+			q.setParameter("docentes", docentes);
+			if (nombre.isEmpty()) {
+				q.setParameter("nombre", "%" + nombre.replaceAll(" +", " ").trim().toUpperCase() + "%");
+			}
+			retorno = q.getResultList();
+		} catch (NoResultException e) {
+			throw new NoResultException("No se encontró Empleados por las cédulas enviadas");
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception("Error al buscar los empleados");
+		}
+		return retorno;
+	}
+
+	/**
+	 * Lista los empleados por el id de : departamento
+	 * 
+	 * @param idDepartamento
+	 *            - string con el id del departamentos a listar
+	 * @param nombre
+	 *            - string con el nombre del docente a buscar
+	 * @return lista de empleados con los parameotrs buscados
+	 * @throws NoResultException
+	 *             - Excepcion lanzada cuando no se encuentra la entidad
+	 * @throws Exception
+	 *             - Excepcion general
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Emp> listarEmpXidDep(String idDepartamento, String nombre, String codClase, String tipoRelLaboral,
+			String estadoDocente) throws NoResultException, Exception {
+		List<Emp> retorno = null;
+		try {
+			StringBuilder stQuery = new StringBuilder();
+			stQuery.append(" SELECT emp from Emp emp ");
+			if (!idDepartamento.equals("-99")) {
+				stQuery.append(" where emp.dep.codDep = :idDepartamento and emp.clasemp.codClase=:codClase ");
+			} else {
+				stQuery.append(" where emp.clasemp.codClase=:codClase ");
+			}
+
+			if (!tipoRelLaboral.isEmpty()) {
+				if (tipoRelLaboral.equals("0")) {
+					stQuery.append(" and emp.codTiporelacionlab IN ('1','2') ");
+				} else {
+					stQuery.append(" and emp.codTiporelacionlab = :tipoRelLaboral ");
+				}
+
+			}
+			if (!estadoDocente.isEmpty()) {
+				stQuery.append(" and emp.estemp.codEst=:estadoDocente ");
+			}
+
+			if (!nombre.isEmpty()) {
+				stQuery.append(
+						" and (upper(emp.nom || ' '|| emp.apel) like :nombre OR upper(emp.apel || ' '|| emp.nom) like :nombre)");
+			}
+			stQuery.append(" ORDER BY emp.apel, emp.nom");
+			Query q = getEntityManager().createQuery(stQuery.toString());
+			if (!idDepartamento.equals("-99")) {
+				q.setParameter("idDepartamento", idDepartamento);
+			}
+
+			if (codClase != null) {
+				q.setParameter("codClase", codClase);
+			}
+
+			if (!tipoRelLaboral.isEmpty()) {
+				if (!tipoRelLaboral.equals("0")) {
+					q.setParameter("tipoRelLaboral", tipoRelLaboral);
+				}
+			}
+
+			if (!estadoDocente.isEmpty()) {
+				q.setParameter("estadoDocente", estadoDocente);
+			}
+
+			if (!nombre.isEmpty()) {
+				q.setParameter("nombre", "%" + nombre.replaceAll(" +", " ").trim().toUpperCase() + "%");
+			}
+			retorno = q.getResultList();
+		} catch (NoResultException e) {
+			throw new NoResultException("No se encontró Empleados por el departamento seleccionado");
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception("Error al buscar los empleados");
+		}
+		return retorno;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Emp> findempByParamsDep(String cedula, String apellidos, String nombre, String coddep) {
+
+		List<String> clases = new ArrayList<String>();
+		String v1 = "1";
+		String v4 = "4";
+		String v3 = "3";
+		clases.add(v1);
+		clases.add(v4);
+		clases.add(v3);
+
+		List<String> estados = new ArrayList<String>();
+		String e1 = "1";
+		String e4 = "11";
+
+		estados.add(e1);
+		estados.add(e4);
+
+		StringBuilder queryString = new StringBuilder(
+				"SELECT emp FROM Emp emp where emp.nced like ?0  and emp.clasemp.codClase IN :clases and emp.estemp.codEst IN :estados ");
+
+		if (apellidos != null) {
+			queryString.append(" AND emp.apel like ?3 ");
+		}
+
+		if (nombre != null) {
+			queryString.append(" AND emp.nom like ?4 ");
+		}
+
+		if (coddep != null) {
+			queryString.append(" and emp.dep.codDep like ?5 ");
+
+		}
+
+		queryString.append("  ORDER BY emp.apel ");
+
+		Query query = getEntityManager().createQuery(queryString.toString());
+
+		query.setParameter(0, "%" + cedula + "%");
+		query.setParameter("clases", clases);
+		query.setParameter("estados", estados);
+
+		if (apellidos != null) {
+			query.setParameter(3, "%" + apellidos + "%");
+		}
+		if (nombre != null) {
+			query.setParameter(4, "%" + nombre + "%");
+		}
+
+		if (coddep != null) {
+			query.setParameter(5, "%" + coddep + "%");
+		}
+
+		return query.getResultList();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Emp> findempByParamsReporteGI(String cedula, String apellidos, String nombre, String codRelacionLab,
+			String coddep, String tipo) {
+
+		StringBuilder queryString = new StringBuilder("SELECT emp FROM Emp emp where emp.estemp.codEst = ?0   ");
+
+		if (cedula != null) {
+			queryString.append(" AND emp.nced like ?1 ");
+		}
+
+		if (apellidos != null) {
+			queryString.append(" AND emp.apel like ?2 ");
+		}
+
+		if (nombre != null) {
+			queryString.append(" AND emp.nom like ?3 ");
+		}
+		if (coddep != null) {
+			queryString.append(" AND emp.dep.codDep = ?4 ");
+		}
+
+		if (tipo != null) {
+			queryString.append(" and emp.clasemp.codClase = ?5 ");
+		}
+
+		queryString.append("ORDER BY emp.apel ");
+
+		Query query = getEntityManager().createQuery(queryString.toString());
+
+		query.setParameter(0, "1");
+
+		if (cedula != null) {
+			query.setParameter(1, "%" + cedula + "%");
+		}
+
+		if (apellidos != null) {
+			query.setParameter(2, "%" + apellidos + "%");
+		}
+		if (nombre != null) {
+			query.setParameter(3, "%" + nombre + "%");
+		}
+
+		if (coddep != null) {
+			query.setParameter(4, coddep);
+		}
+
+		if (tipo != null) {
+			query.setParameter(5, tipo);
+		}
+
+		return query.getResultList();
+	}
+
+	@Override
+	public Emp obtenerEmpleadoAcreditacion(String criterio) {
+		query = getEntityManager().createQuery("SELECT e FROM Emp e WHERE e.nced = ?0");
+
+		query.setParameter(0, criterio.trim());
+
+		Emp aux = new Emp();
+		Emp obj = new Emp();
+
+		try {
+			aux = (Emp) query.getSingleResult();
+			obj = aux;
+
+		} catch (NoResultException e) {
+			obj = null;
+		} catch (NonUniqueResultException e) {
+			obj = aux;
+		} catch (Exception e) {
+			obj = null;
+		}
+		return obj;
+	}
+
+	@Override
+	public ArrayList<ReporteChartDTO> totalProyectos(String cedula) {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			con = super.getDataSource().getConnection();
+			if (con != null) {
+				String qry = "select count(id_activid_proy), "
+						+ "CASE a.id_periodo WHEN '2016-1' THEN '2016A' WHEN '2016-2' THEN '2016B' WHEN '2017-1' THEN '2017A' WHEN '2017-2' THEN '2017B' WHEN '2018-1' THEN '2018A' END "
+						+ " from \"GestionDocente\".actividad_proyecto a, \"GestionDocente\".periodo p "
+						+ " where  a.id_periodo = p.id_periodo "
+						+ " and a.id_periodo in ('2016-1','2016-2','2017-1','2017-2','2018-1') and a.nced = ?"
+						+ " group by a.id_periodo order by a.id_periodo ";
+
+				ps = con.prepareStatement(qry);
+
+				ps.setString(1, cedula);
+
+				ResultSet rs = ps.executeQuery();
+
+				ArrayList<ReporteChartDTO> listaDocenteCI = new ArrayList<ReporteChartDTO>();
+
+				while (rs.next()) {
+
+					ReporteChartDTO docen = new ReporteChartDTO();
+					docen.setTotal(rs.getDouble(1));
+					docen.setPeriodo(rs.getString(2));
+					listaDocenteCI.add(docen);
+				}
+				ps.close();
+				con.close();
+				return listaDocenteCI;
+			}
+
+			else {
+				return null;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			super.cerrarConexion(con, ps);
+		}
+	}
+
+	@Override
+	public ArrayList<ReporteChartDTO> totalPublicaciones(String cedula) {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			con = super.getDataSource().getConnection();
+			if (con != null) {
+				String qry = "select count(id_public), CASE id_periodo WHEN '2016-1' THEN '2016A' WHEN '2016-2' THEN '2016B' WHEN '2017-1' THEN '2017A' WHEN '2017-2' THEN '2017B' WHEN '2018-1' THEN '2018A' END"
+						+ " from \"GestionDocente\".publicaciones "
+						+ " where id_periodo in ('2016-1','2016-2','2017-1','2017-2','2018-1')  and nced = ? "
+						+ " group by id_periodo order by id_periodo ";
+
+				ps = con.prepareStatement(qry);
+
+				ps.setString(1, cedula);
+
+				ResultSet rs = ps.executeQuery();
+
+				ArrayList<ReporteChartDTO> listaDocenteCI = new ArrayList<ReporteChartDTO>();
+
+				while (rs.next()) {
+
+					ReporteChartDTO docen = new ReporteChartDTO();
+					docen.setTotal(rs.getDouble(1));
+					docen.setPeriodo(rs.getString(2));
+					listaDocenteCI.add(docen);
+				}
+				ps.close();
+				con.close();
+				return listaDocenteCI;
+			}
+
+			else {
+				return null;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			super.cerrarConexion(con, ps);
+		}
+	}
+
+	@Override
+	public ArrayList<ReporteChartDTO> totalHorasDoc(String cedula) {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			con = super.getDataSource().getConnection();
+			if (con != null) {
+				String qry = " SELECT ROUND(AVG((select COALESCE(sum(COALESCE(valor_16_planif, 0) * semanas_doc_dentro),0) from \"GestionDocente\".actividad_evaluacion  where id_eval_acad= ea.id_eval_acad AND id_tipo_actv_eval=1) + (select COALESCE(sum(COALESCE(valor_16_planif, 0)), 0) from \"GestionDocente\".actividad_evaluacion  where id_eval_acad= ea.id_eval_acad AND id_tipo_actv_eval=2))::numeric,2) AS DOCENCIA_PLANIF , "
+						+ " CASE p.id_pensum WHEN 9 THEN '2017A' WHEN 17 THEN '2017B' WHEN 18 THEN '2018A'  END "
+						+ " FROM  \"GestionDocente\".evaluacion_academica ea, \"Contratos\".pensum p "
+						+ " WHERE ea.id_pensum= p.id_pensum	 " + " and ea.nced = ?" + " and p.id_pensum in (17,9,18) "
+						+ " GROUP BY p.id_pensum ";
+
+				ps = con.prepareStatement(qry);
+
+				ps.setString(1, cedula);
+
+				ResultSet rs = ps.executeQuery();
+
+				ArrayList<ReporteChartDTO> listaDocenteCI = new ArrayList<ReporteChartDTO>();
+
+				while (rs.next()) {
+
+					ReporteChartDTO docen = new ReporteChartDTO();
+					docen.setTotal(rs.getDouble(1));
+					docen.setPeriodo(rs.getString(2));
+					listaDocenteCI.add(docen);
+				}
+				ps.close();
+				con.close();
+				return listaDocenteCI;
+			}
+
+			else {
+				return null;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			super.cerrarConexion(con, ps);
+		}
+	}
+
+	@Override
+	public ArrayList<ReporteChartDTO> totalHorasInv(String cedula) {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			con = super.getDataSource().getConnection();
+			if (con != null) {
+				String qry = " SELECT ROUND(AVG((select COALESCE(sum(COALESCE(valor_16_planif, 0)), 0) from \"GestionDocente\".actividad_evaluacion  where id_eval_acad= ea.id_eval_acad AND id_tipo_actv_eval=3))::numeric, 2) AS INVESTIGACION_PLANIF, "
+						+ " CASE p.id_pensum WHEN 9 THEN '2017A' WHEN 17 THEN '2017B' WHEN 18 THEN '2018A' END "
+						+ " FROM  \"GestionDocente\".evaluacion_academica ea, \"Contratos\".pensum p "
+						+ " WHERE ea.id_pensum= p.id_pensum	 " + " and ea.nced = ?" + " and p.id_pensum in (17,9,18)"
+						+ " GROUP BY p.id_pensum ";
+
+				ps = con.prepareStatement(qry);
+
+				ps.setString(1, cedula);
+
+				ResultSet rs = ps.executeQuery();
+
+				ArrayList<ReporteChartDTO> listaDocenteCI = new ArrayList<ReporteChartDTO>();
+
+				while (rs.next()) {
+
+					ReporteChartDTO docen = new ReporteChartDTO();
+					docen.setTotal(rs.getDouble(1));
+					docen.setPeriodo(rs.getString(2));
+					listaDocenteCI.add(docen);
+				}
+				ps.close();
+				con.close();
+				return listaDocenteCI;
+			}
+
+			else {
+				return null;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			super.cerrarConexion(con, ps);
+		}
+	}
+
+	@Override
+	public ArrayList<ReporteChartDTO> totalHorasGes(String cedula) {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			con = super.getDataSource().getConnection();
+			if (con != null) {
+				String qry = " SELECT ROUND(AVG((select COALESCE(sum(COALESCE(valor_16_planif, 0)), 0) from \"GestionDocente\".actividad_evaluacion  where id_eval_acad= ea.id_eval_acad AND id_tipo_actv_eval=4))::numeric,2) AS GESTION_PLANIF,"
+						+ " CASE p.id_pensum WHEN 9 THEN '2017A' WHEN 17 THEN '2017B' WHEN 18 THEN '2018A' END "
+						+ " FROM  \"GestionDocente\".evaluacion_academica ea, \"Contratos\".pensum p "
+						+ " WHERE ea.id_pensum= p.id_pensum	 " + " and ea.nced = ?" + " and p.id_pensum in (17,9,18)"
+						+ " GROUP BY p.id_pensum ";
+
+				ps = con.prepareStatement(qry);
+
+				ps.setString(1, cedula);
+
+				ResultSet rs = ps.executeQuery();
+
+				ArrayList<ReporteChartDTO> listaDocenteCI = new ArrayList<ReporteChartDTO>();
+
+				while (rs.next()) {
+
+					ReporteChartDTO docen = new ReporteChartDTO();
+					docen.setTotal(rs.getDouble(1));
+					docen.setPeriodo(rs.getString(2));
+					listaDocenteCI.add(docen);
+				}
+				ps.close();
+				con.close();
+				return listaDocenteCI;
+			}
+
+			else {
+				return null;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			super.cerrarConexion(con, ps);
+		}
+	}
+
+	@Override
+	public Emp buscarempJefeDepartamento(String coddep) throws Exception {
+
+		try {
+			Emp empleado = new Emp();
+			StringBuilder queryString = new StringBuilder("SELECT e from Emp e where e.codDepJefe = ?1 ");
+			Query query = getEntityManager().createQuery(queryString.toString());
+			query.setParameter(1, coddep.trim());
+
+			empleado = (Emp) query.getSingleResult();
+
+			return empleado;
+
+		} catch (NoResultException n) {
+			return null;
+		}
+
+		catch (NonUniqueResultException n) {
+			return null;
+		}
+
+	}
+
+	@Override
+	public List<Emp> findinvAcreditadosSenescyt() {
+		StringBuilder queryString = new StringBuilder("SELECT emp FROM Emp emp where emp.acreditasenescyt like ?0 ");
+		queryString.append("ORDER BY emp.apel ");
+		Query query = getEntityManager().createQuery(queryString.toString());
+		query.setParameter(0, "%REG-INV%");
+
+		return query.getResultList();
+	}
+
+	@Override
+	public Emp buscarempLivianoRG(String nced) throws Exception {
+		try {
+			Emp empleado = new Emp();
+			StringBuilder queryString = new StringBuilder("SELECT e from Emp e where e.nced = ?1 ");
+			Query query = getEntityManager().createQuery(queryString.toString());
+			query.setParameter(1, nced.trim());
+			return (Emp) query.getSingleResult();
+		} catch (NoResultException n) {
+			return null;
+		} catch (NonUniqueResultException n) {
+		}
+		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Emp> findEmpXCeduNombre(String cedula, String apellidos, String nombre) {
+
+		StringBuilder queryString = new StringBuilder("SELECT emp FROM Emp emp where emp.nced like ?0 ");
+
+		if (apellidos != null && nombre != null) {
+			queryString.append(" AND (emp.apel like ?1 OR emp.nom like ?2) ");
 		}
 
 		/*
-		 * Busca empleado por cédula
-		 * @see ec.edu.epn.rrhh.beans.EmpleadoDAO#obtenerEmpleado(java.lang.String)
+		 * if (nombre != null) { queryString.append(" AND emp.nom like ?2 "); }
 		 */
-		@Override
-		public Emp obtenerEmpleado(String criterio) {		
-			query = getEntityManager()
-					.createQuery(
-							"SELECT e FROM Emp e WHERE e.nced LIKE ?0");
 
-			query.setParameter(0, "%" + Integer.parseInt(criterio.trim()) + "%");
+		queryString.append("ORDER BY emp.apel ");
 
-			Emp aux = new Emp();
-			Emp obj = new Emp();	
-			
-			try {
-				aux = (Emp) query.getSingleResult();			
-				obj=aux;			
-				
-			} catch (NoResultException e) {						
-				obj = null;
-			} catch (NonUniqueResultException e) {			
-				obj = aux;
-			} catch (Exception e) {			
-				obj = null;
-			}
-			return obj;
+		Query query = getEntityManager().createQuery(queryString.toString());
+
+		query.setParameter(0, "%" + cedula + "%");
+
+		if (apellidos != null) {
+			query.setParameter(1, "%" + apellidos + "%");
 		}
-		
-		/**
-		 * Lista los empleados por una lista de cédulas
-		 * @param docentes- lista de string con las cédulas de los docentes a buscar
-		 * @param nombre - String con el nombre que se desa buscar.
-		 * @return lista de empleados con los parameotrs buscados
-		 * @throws NoResultException - Excepcion lanzada cuando no se encuentra la entidad
-		 * @throws Exception - Excepcion general
-		 */
-		@SuppressWarnings("unchecked")
-		@Override
-		public List<Emp> listarEmpXlistCedulas(List<String> docentes, String nombre)throws NoResultException, Exception {
-			List<Emp> retorno = null;
-			try{
-				StringBuilder stQuery= new StringBuilder();
-				stQuery.append(" SELECT emp from Emp emp ");
-				stQuery.append(" where emp.nced in :docentes and emp.clasemp.codClase=1 ");
-				if(nombre.isEmpty()){
-					stQuery.append(" and (upper(emp.nom || ' '|| emp.apel) like :nombre OR upper(emp.apel || ' '|| emp.nom) like :nombre)");
+		if (nombre != null) {
+			query.setParameter(2, "%" + nombre + "%");
+		}
+
+		return query.getResultList();
+	}
+
+	@Override
+	public DocenteDTO cargoDedicacionRelLab(Integer idPensum, Integer idOpcion, String nced) throws Exception {
+
+		DocenteDTO val = new DocenteDTO();
+		Query query = null;
+		query = getEntityManager().createNativeQuery("SELECT  * FROM \"Rrhh\".bi_reportetipodedicacion(?,?,?);");
+
+		query.setParameter(1, idPensum);
+		query.setParameter(2, idOpcion);
+		query.setParameter(3, nced);
+
+		List<?> lists = query.getResultList();
+
+		if (!lists.isEmpty()) {
+			for (Object list : lists) {
+				val = new DocenteDTO();
+				Object[] fila = (Object[]) list;
+				if (fila[0] != null && fila[0].toString().length() != 0)
+					val.setnCed(fila[0] == null ? "" : fila[0].toString());
+
+				if (fila[1] != null && fila[1].toString().length() != 0) {
+					String dato = null;
+					dato = (fila[1] == null ? "" : fila[1].toString());
+					if (idOpcion == 1) {
+						val.setCargo(dato);
+					} else if (idOpcion == 2) {
+						val.setDedicacion(dato);
+					} else if (idOpcion == 3) {
+						val.setRelacionLab(dato);
+					} else if (idOpcion == 4) {
+						val.setNomDepartamento(dato);
+					} else if (idOpcion == 6) {
+						val.setFechaContrat(dato);
+					}
 				}
-				stQuery.append(" ORDER BY emp.apel, emp.nom" );
-				Query q = getEntityManager().createQuery(stQuery.toString());
-				q.setParameter("docentes", docentes);
-				if(nombre.isEmpty()){
-					q.setParameter("nombre", "%"+nombre.replaceAll(" +", " ").trim().toUpperCase()+"%");
-				}
-				retorno = q.getResultList();
-			} catch (NoResultException e) {
-				throw new NoResultException("No se encontró Empleados por las cédulas enviadas");
+
+			}
+		} else {
+			val = null;
+		}
+
+		return val;
+
+	}
+
+	@Override
+	public DocenteDTO buscarEmpHistoriaLab(String nced, Integer idPensum) throws Exception {
+
+		try {
+			Emp empleado = new Emp();
+			DocenteDTO doc = new DocenteDTO();
+			StringBuilder queryString = new StringBuilder("SELECT e from Emp e where e.nced = ?1 ");
+			Query query = getEntityManager().createQuery(queryString.toString());
+			query.setParameter(1, nced.trim());
+
+			empleado = (Emp) query.getSingleResult();
+
+			Pensum pensum = new Pensum();
+			pensum = pensumDAO.obtenerPensumById(idPensum);
+
+			doc.setApel(empleado.getApel());
+			doc.setNombre(empleado.getNom());
+			doc.setnCed(empleado.getNced());
+			doc.setAuxFechaIngresoEPN(empleado.getFecIngepn().toString());
+			doc.setPeriodo(pensum == null ? "" : pensum.getMeses());
+
+			DocenteDTO dto = new DocenteDTO();
+			try {
+				dto = this.cargoDedicacionRelLab(idPensum, 1, empleado.getNced());
 			} catch (Exception e) {
 				e.printStackTrace();
-				throw new Exception("Error al buscar los empleados");
+				return null;
 			}
-			return retorno;
-		}
-		
-		/**
-		 * Lista los empleados por el id de : departamento
-		 * @param idDepartamento - string con el id del departamentos a listar
-		 * @param nombre - string con el nombre del docente a buscar
-		 * @return lista de empleados con los parameotrs buscados
-		 * @throws NoResultException - Excepcion lanzada cuando no se encuentra la entidad
-		 * @throws Exception - Excepcion general
-		 */
-		@SuppressWarnings("unchecked")
-		@Override
-		public List<Emp> listarEmpXidDep(String idDepartamento, String nombre, String codClase, String tipoRelLaboral, String estadoDocente)throws NoResultException, Exception {
-			List<Emp> retorno = null;
-			try{
-				StringBuilder stQuery= new StringBuilder();
-				stQuery.append(" SELECT emp from Emp emp ");
-				if(!idDepartamento.equals("-99")){
-					stQuery.append(" where emp.dep.codDep = :idDepartamento and emp.clasemp.codClase=:codClase ");
-				}else{
-					stQuery.append(" where emp.clasemp.codClase=:codClase ");
-				}
-				
-				if(!tipoRelLaboral.isEmpty()){
-					if(tipoRelLaboral.equals("0")){
-						stQuery.append(" and emp.codTiporelacionlab IN ('1','2') ");
-					}else{
-						stQuery.append(" and emp.codTiporelacionlab = :tipoRelLaboral ");
-					}
-					
-				}
-				if(!estadoDocente.isEmpty()){
-					stQuery.append(" and emp.estemp.codEst=:estadoDocente ");
-				}
-				
-				if(!nombre.isEmpty()){
-					stQuery.append(" and (upper(emp.nom || ' '|| emp.apel) like :nombre OR upper(emp.apel || ' '|| emp.nom) like :nombre)");
-				}	
-				stQuery.append(" ORDER BY emp.apel, emp.nom" );
-				Query q = getEntityManager().createQuery(stQuery.toString());
-				if(!idDepartamento.equals("-99")){
-					q.setParameter("idDepartamento", idDepartamento);	
-				}
-				
-				if(codClase!=null){
-					q.setParameter("codClase", codClase);
-				}
-				
-				if(!tipoRelLaboral.isEmpty()){
-					if(!tipoRelLaboral.equals("0")){
-						q.setParameter("tipoRelLaboral", tipoRelLaboral);
-					}					
-				}
-				
-				if(!estadoDocente.isEmpty()){
-					q.setParameter("estadoDocente", estadoDocente);
-				}
-				
-				
-				if(!nombre.isEmpty()){
-					q.setParameter("nombre", "%"+nombre.replaceAll(" +", " ").trim().toUpperCase()+"%");
-				}
-				retorno = q.getResultList();
-			} catch (NoResultException e) {
-				throw new NoResultException("No se encontró Empleados por el departamento seleccionado");
+			doc.setCargo(dto == null ? "" : dto.getCargo());
+
+			try {
+				dto = new DocenteDTO();
+				dto = this.cargoDedicacionRelLab(idPensum, 2, empleado.getNced());
 			} catch (Exception e) {
 				e.printStackTrace();
-				throw new Exception("Error al buscar los empleados");
+				return null;
 			}
-			return retorno;
+
+			doc.setDedicacion(dto == null ? "" : dto.getDedicacion());
+
+			try {
+				dto = new DocenteDTO();
+				dto = this.cargoDedicacionRelLab(idPensum, 3, empleado.getNced());
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+
+			doc.setRelacionLab(dto == null ? "" : dto.getRelacionLab());
+
+			try {
+				dto = new DocenteDTO();
+				dto = this.cargoDedicacionRelLab(idPensum, 4, empleado.getNced());
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+
+			doc.setNomDepartamento(dto == null ? "" : dto.getNomDepartamento());
+
+			try {
+				dto = new DocenteDTO();
+				dto = this.cargoDedicacionRelLab(idPensum, 6, empleado.getNced());
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+
+			doc.setFechaContrat((dto == null ? "" : dto.getFechaContrat()));
+
+			return doc;
+
+		} catch (NoResultException n) {
+			return null;
 		}
-		
-		@SuppressWarnings("unchecked")
-		@Override
-		public List<Emp> findempByParamsDep(String cedula, String apellidos, String nombre, String coddep) {
 
-			
-			List<String> clases =  new ArrayList<String>();
-			String v1 = "1";
-			String v4 = "4";
-			String v3 = "3";
-			clases.add(v1);
-			clases.add(v4);
-			clases.add(v3);
-			
-			
-			List<String> estados =  new ArrayList<String>();
-			String e1 = "1";
-			String e4 = "11";
-			
-			estados.add(e1);
-			estados.add(e4);
-			
-			
-			StringBuilder queryString = new StringBuilder("SELECT emp FROM Emp emp where emp.nced like ?0  and emp.clasemp.codClase IN :clases and emp.estemp.codEst IN :estados ");
+		catch (NonUniqueResultException n) {
+			return null;
+		}
 
-			if (apellidos != null) {
-				queryString.append(" AND emp.apel like ?3 ");
-			}
+	}
 
-			if (nombre != null) {
-				queryString.append(" AND emp.nom like ?4 ");
-			}
-			
-			if(coddep != null)
-			{
-				queryString.append(" and emp.dep.codDep like ?5 ");
-				
-			}
-				
-			queryString.append("  ORDER BY emp.apel ");
+	@Override
+	public EmpleadoDTO buscarHistoriaEmpleado(String nced, Integer idPensum) throws Exception {
 
+		try {
+			Emp empleado = new Emp();
+			EmpleadoDTO emp = new EmpleadoDTO();
+			StringBuilder queryString = new StringBuilder("SELECT e from Emp e where e.nced = ?1 ");
 			Query query = getEntityManager().createQuery(queryString.toString());
+			query.setParameter(1, nced.trim());
 
-			query.setParameter(0, "%" + cedula + "%");
-			query.setParameter("clases",clases );
-			query.setParameter("estados",estados);
+			empleado = (Emp) query.getSingleResult();
 
-			if (apellidos != null) {
-				query.setParameter(3, "%" + apellidos + "%");
-			}
-			if (nombre != null) {
-				query.setParameter(4, "%" + nombre + "%");
-			}
-			
-			if (coddep != null) {
-				query.setParameter(5, "%" + coddep + "%");
-			}
+			Pensum pensum = new Pensum();
+			pensum = pensumDAO.obtenerPensumById(idPensum);
 
-			return query.getResultList();
-		}
-		
-		
-		@SuppressWarnings("unchecked")
-		@Override
-		public List<Emp> findempByParamsReporteGI(String cedula, String apellidos, String nombre, String codRelacionLab, String coddep, String tipo) {
+			emp.setNombreEmpleado(empleado.getApel() + " " + empleado.getNom());
+			emp.setNumCedula(empleado.getNced());
+			emp.setFechaIngresoEPN(empleado.getFecIngepn().toString());
+			// doc.setPeriodo(pensum==null?"":pensum.getMeses());
 
-			StringBuilder queryString = new StringBuilder("SELECT emp FROM Emp emp where emp.estemp.codEst = ?0   ");
-
-			
-			if (cedula != null) {
-				queryString.append(" AND emp.nced like ?1 ");
-			}
-			
-			if (apellidos != null) {
-				queryString.append(" AND emp.apel like ?2 ");
-			}
-
-			if (nombre != null) {
-				queryString.append(" AND emp.nom like ?3 ");
-			}
-			if (coddep != null) {
-				queryString.append(" AND emp.dep.codDep = ?4 ");
-			}
-			
-			if (tipo != null) {
-				queryString.append(" and emp.clasemp.codClase = ?5 ");
-			}
-
-			queryString.append("ORDER BY emp.apel ");
-
-			Query query = getEntityManager().createQuery(queryString.toString());
-
-			query.setParameter(0, "1");
-			
-			if (cedula != null) {
-			query.setParameter(1, "%" + cedula + "%");
-			}
-
-			if (apellidos != null) {
-				query.setParameter(2, "%" + apellidos + "%");
-			}
-			if (nombre != null) {
-				query.setParameter(3, "%" + nombre + "%");
-			}
-			
-			if (coddep != null) {
-				query.setParameter(4,  coddep );
-			}
-			
-			if (tipo != null) {
-				query.setParameter(5,  tipo );
-			}
-
-			return query.getResultList();
-		}
-		
-		
-		
-		@Override
-		public Emp obtenerEmpleadoAcreditacion(String criterio) {		
-			query = getEntityManager()
-					.createQuery(
-							"SELECT e FROM Emp e WHERE e.nced = ?0");
-
-			query.setParameter(0, criterio.trim() );
-
-			Emp aux = new Emp();
-			Emp obj = new Emp();	
-			
+			DocenteDTO dto = new DocenteDTO();
 			try {
-				aux = (Emp) query.getSingleResult();			
-				obj=aux;			
-				
-			} catch (NoResultException e) {						
-				obj = null;
-			} catch (NonUniqueResultException e) {			
-				obj = aux;
-			} catch (Exception e) {			
-				obj = null;
-			}
-			return obj;
-		}
-		
-		@Override
-		public ArrayList<ReporteChartDTO> totalProyectos(String cedula) {
-
-			Connection con = null;
-			PreparedStatement ps = null;
-
-			try {
-				con = super.getDataSource().getConnection();
-				if (con != null) {
-					String qry = "select count(id_activid_proy), "
-							+ "CASE a.id_periodo WHEN '2016-1' THEN '2016A' WHEN '2016-2' THEN '2016B' WHEN '2017-1' THEN '2017A' WHEN '2017-2' THEN '2017B' WHEN '2018-1' THEN '2018A' END "
-							+ " from \"GestionDocente\".actividad_proyecto a, \"GestionDocente\".periodo p "
-							+ " where  a.id_periodo = p.id_periodo "
-							+ " and a.id_periodo in ('2016-1','2016-2','2017-1','2017-2','2018-1') and a.nced = ?"
-							+ " group by a.id_periodo order by a.id_periodo ";
-
-					ps = con.prepareStatement(qry);
-
-					ps.setString(1, cedula);
-
-					ResultSet rs = ps.executeQuery();
-
-					ArrayList<ReporteChartDTO> listaDocenteCI = new ArrayList<ReporteChartDTO>();
-
-					while (rs.next()) {
-
-						ReporteChartDTO docen = new ReporteChartDTO();
-						docen.setTotal(rs.getDouble(1));
-						docen.setPeriodo(rs.getString(2));
-						listaDocenteCI.add(docen);
-					}
-					ps.close();
-					con.close();
-					return listaDocenteCI;
-				}
-
-				else {
-					return null;
-				}
-
-			} catch (SQLException e) {
+				dto = this.cargoDedicacionRelLab(idPensum, 1, empleado.getNced());
+			} catch (Exception e) {
 				e.printStackTrace();
 				return null;
-			} finally {
-				super.cerrarConexion(con, ps);
 			}
-		}
-		
-		
-		@Override
-		public ArrayList<ReporteChartDTO> totalPublicaciones(String cedula) {
-
-			Connection con = null;
-			PreparedStatement ps = null;
-
+			emp.setCargo(dto == null ? "" : dto.getCargo());
 			try {
-				con = super.getDataSource().getConnection();
-				if (con != null) {
-					String qry = "select count(id_public), CASE id_periodo WHEN '2016-1' THEN '2016A' WHEN '2016-2' THEN '2016B' WHEN '2017-1' THEN '2017A' WHEN '2017-2' THEN '2017B' WHEN '2018-1' THEN '2018A' END"
-							+ " from \"GestionDocente\".publicaciones "
-							+ " where id_periodo in ('2016-1','2016-2','2017-1','2017-2','2018-1')  and nced = ? "
-							+ " group by id_periodo order by id_periodo ";
-
-					ps = con.prepareStatement(qry);
-
-					ps.setString(1, cedula);
-
-					ResultSet rs = ps.executeQuery();
-
-					ArrayList<ReporteChartDTO> listaDocenteCI = new ArrayList<ReporteChartDTO>();
-
-					while (rs.next()) {
-
-						ReporteChartDTO docen = new ReporteChartDTO();
-						docen.setTotal(rs.getDouble(1));
-						docen.setPeriodo(rs.getString(2));
-						listaDocenteCI.add(docen);
-					}
-					ps.close();
-					con.close();
-					return listaDocenteCI;
-				}
-
-				else {
-					return null;
-				}
-
-			} catch (SQLException e) {
+				dto = new DocenteDTO();
+				dto = this.cargoDedicacionRelLab(idPensum, 2, empleado.getNced());
+			} catch (Exception e) {
 				e.printStackTrace();
 				return null;
-			} finally {
-				super.cerrarConexion(con, ps);
 			}
-		}
-		
-		@Override
-		public ArrayList<ReporteChartDTO> totalHorasDoc(String cedula) {
 
-			Connection con = null;
-			PreparedStatement ps = null;
+			emp.setDedicacion(dto == null ? "" : dto.getDedicacion());
 
 			try {
-				con = super.getDataSource().getConnection();
-				if (con != null) {
-					String qry = " SELECT ROUND(AVG((select COALESCE(sum(COALESCE(valor_16_planif, 0) * semanas_doc_dentro),0) from \"GestionDocente\".actividad_evaluacion  where id_eval_acad= ea.id_eval_acad AND id_tipo_actv_eval=1) + (select COALESCE(sum(COALESCE(valor_16_planif, 0)), 0) from \"GestionDocente\".actividad_evaluacion  where id_eval_acad= ea.id_eval_acad AND id_tipo_actv_eval=2))::numeric,2) AS DOCENCIA_PLANIF , "
-							+ " CASE p.id_pensum WHEN 9 THEN '2017A' WHEN 17 THEN '2017B' WHEN 18 THEN '2018A'  END "
-							+ " FROM  \"GestionDocente\".evaluacion_academica ea, \"Contratos\".pensum p "
-							+ " WHERE ea.id_pensum= p.id_pensum	 "
-							+ " and ea.nced = ?"
-							+ " and p.id_pensum in (17,9,18) "
-							+ " GROUP BY p.id_pensum ";
-
-					ps = con.prepareStatement(qry);
-
-					ps.setString(1, cedula);
-
-					ResultSet rs = ps.executeQuery();
-
-					ArrayList<ReporteChartDTO> listaDocenteCI = new ArrayList<ReporteChartDTO>();
-
-					while (rs.next()) {
-
-						ReporteChartDTO docen = new ReporteChartDTO();
-						docen.setTotal(rs.getDouble(1));
-						docen.setPeriodo(rs.getString(2));
-						listaDocenteCI.add(docen);
-					}
-					ps.close();
-					con.close();
-					return listaDocenteCI;
-				}
-
-				else {
-					return null;
-				}
-
-			} catch (SQLException e) {
+				dto = new DocenteDTO();
+				dto = this.cargoDedicacionRelLab(idPensum, 3, empleado.getNced());
+			} catch (Exception e) {
 				e.printStackTrace();
 				return null;
-			} finally {
-				super.cerrarConexion(con, ps);
 			}
-		}
 
-		@Override
-		public ArrayList<ReporteChartDTO> totalHorasInv(String cedula) {
-
-			Connection con = null;
-			PreparedStatement ps = null;
+			emp.setTipoContrato(dto == null ? "" : dto.getRelacionLab());
 
 			try {
-				con = super.getDataSource().getConnection();
-				if (con != null) {
-					String qry = " SELECT ROUND(AVG((select COALESCE(sum(COALESCE(valor_16_planif, 0)), 0) from \"GestionDocente\".actividad_evaluacion  where id_eval_acad= ea.id_eval_acad AND id_tipo_actv_eval=3))::numeric, 2) AS INVESTIGACION_PLANIF, "
-							+ " CASE p.id_pensum WHEN 9 THEN '2017A' WHEN 17 THEN '2017B' WHEN 18 THEN '2018A' END "
-							+ " FROM  \"GestionDocente\".evaluacion_academica ea, \"Contratos\".pensum p "
-							+ " WHERE ea.id_pensum= p.id_pensum	 "
-							+ " and ea.nced = ?"
-							+ " and p.id_pensum in (17,9,18)"
-							+ " GROUP BY p.id_pensum ";
-
-					ps = con.prepareStatement(qry);
-
-					ps.setString(1, cedula);
-
-					ResultSet rs = ps.executeQuery();
-
-					ArrayList<ReporteChartDTO> listaDocenteCI = new ArrayList<ReporteChartDTO>();
-
-					while (rs.next()) {
-
-						ReporteChartDTO docen = new ReporteChartDTO();
-						docen.setTotal(rs.getDouble(1));
-						docen.setPeriodo(rs.getString(2));
-						listaDocenteCI.add(docen);
-					}
-					ps.close();
-					con.close();
-					return listaDocenteCI;
-				}
-
-				else {
-					return null;
-				}
-
-			} catch (SQLException e) {
+				dto = new DocenteDTO();
+				dto = this.cargoDedicacionRelLab(idPensum, 4, empleado.getNced());
+			} catch (Exception e) {
 				e.printStackTrace();
 				return null;
-			} finally {
-				super.cerrarConexion(con, ps);
 			}
+
+			emp.setNombreDepartamento(dto == null ? "" : dto.getNomDepartamento());
+
+			return emp;
+
+		} catch (NoResultException n) {
+			return null;
 		}
 
-		@Override
-		public ArrayList<ReporteChartDTO> totalHorasGes(String cedula) {
-
-			Connection con = null;
-			PreparedStatement ps = null;
-
-			try {
-				con = super.getDataSource().getConnection();
-				if (con != null) {
-					String qry = " SELECT ROUND(AVG((select COALESCE(sum(COALESCE(valor_16_planif, 0)), 0) from \"GestionDocente\".actividad_evaluacion  where id_eval_acad= ea.id_eval_acad AND id_tipo_actv_eval=4))::numeric,2) AS GESTION_PLANIF,"
-							+ " CASE p.id_pensum WHEN 9 THEN '2017A' WHEN 17 THEN '2017B' WHEN 18 THEN '2018A' END "
-							+ " FROM  \"GestionDocente\".evaluacion_academica ea, \"Contratos\".pensum p "
-							+ " WHERE ea.id_pensum= p.id_pensum	 "
-							+ " and ea.nced = ?"
-							+ " and p.id_pensum in (17,9,18)"
-							+ " GROUP BY p.id_pensum ";
-
-					ps = con.prepareStatement(qry);
-
-					ps.setString(1, cedula);
-
-					ResultSet rs = ps.executeQuery();
-
-					ArrayList<ReporteChartDTO> listaDocenteCI = new ArrayList<ReporteChartDTO>();
-
-					while (rs.next()) {
-
-						ReporteChartDTO docen = new ReporteChartDTO();
-						docen.setTotal(rs.getDouble(1));
-						docen.setPeriodo(rs.getString(2));
-						listaDocenteCI.add(docen);
-					}
-					ps.close();
-					con.close();
-					return listaDocenteCI;
-				}
-
-				else {
-					return null;
-				}
-
-			} catch (SQLException e) {
-				e.printStackTrace();
-				return null;
-			} finally {
-				super.cerrarConexion(con, ps);
-			}
-		}
-		
-		
-		@Override
-		public Emp buscarempJefeDepartamento(String coddep) throws Exception {
-			
-			try {
-				Emp empleado= new Emp();
-				StringBuilder queryString = new StringBuilder("SELECT e from Emp e where e.codDepJefe = ?1 ");
-				Query query = getEntityManager().createQuery(queryString.toString());
-				query.setParameter(1, coddep.trim());
-				
-				empleado= (Emp) query.getSingleResult();
-				
-				
-				
-				return empleado;
-				
-			}  catch (NoResultException n) {
-				return null;
-			}
-			
-			catch (NonUniqueResultException n) {
-				return null;
-			}
-			
+		catch (NonUniqueResultException n) {
+			return null;
 		}
 
-	
-		@Override
-		public List<Emp> findinvAcreditadosSenescyt()
-		  {
-		    StringBuilder queryString = new StringBuilder("SELECT emp FROM Emp emp where emp.acreditasenescyt like ?0 ");
-		    queryString.append("ORDER BY emp.apel ");
-		    Query query = getEntityManager().createQuery(queryString.toString());
-		    query.setParameter(0, "%REG-INV%");
-		    
-		    return query.getResultList();
-		  }
-		  
-		@Override
-		  public Emp buscarempLivianoRG(String nced)
-		    throws Exception
-		  {
-		    try
-		    {
-		      Emp empleado = new Emp();
-		      StringBuilder queryString = new StringBuilder("SELECT e from Emp e where e.nced = ?1 ");
-		      Query query = getEntityManager().createQuery(queryString.toString());
-		      query.setParameter(1, nced.trim());
-		      return (Emp)query.getSingleResult();
-		    }
-		    catch (NoResultException n)
-		    {
-		      return null;
-		    }
-		    catch (NonUniqueResultException n) {}
-		    return null;
-		  }
-		
-		
-		@SuppressWarnings("unchecked")
-		@Override
-		public List<Emp> findEmpXCeduNombre(String cedula, String apellidos, String nombre) {
-
-			StringBuilder queryString = new StringBuilder("SELECT emp FROM Emp emp where emp.nced like ?0 ");
-
-			if (apellidos != null && nombre != null) {
-				queryString.append(" AND (emp.apel like ?1 OR emp.nom like ?2) ");
-			}
-
-			/*if (nombre != null) {
-				queryString.append(" AND emp.nom like ?2 ");
-			}*/
-
-			queryString.append("ORDER BY emp.apel ");
-
-			Query query = getEntityManager().createQuery(queryString.toString());
-
-			query.setParameter(0, "%" + cedula + "%");
-
-			if (apellidos != null) {
-				query.setParameter(1, "%" + apellidos + "%");
-			}
-			if (nombre != null) {
-				query.setParameter(2, "%" + nombre + "%");
-			}
-
-			return query.getResultList();
-		}
-
-		
-
-		
-		
-		
-		
-
-		
-	
-		
-
-		
-		
+	}
 
 }

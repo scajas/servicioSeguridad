@@ -333,12 +333,12 @@ public class PublicacionesDAOImplement extends DaoGenericoImplement<Publicacione
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Publicacione> listaPublicacionesXProyectoAC(String cedula, String tipoPublic, Integer idpensum,
+	public List<Publicacione> listaPublicacionesXProyectoAC(List<String> cedulas, String tipoPublic, Integer idpensum,
 			Integer idproyecto, String titulo) {
 
-		StringBuilder queryString = new StringBuilder("SELECT DISTINCT(p) FROM Publicacione p, Emp e, "
-				+ "EmpleadoPublica ep where p.idPublic = ep.pub.idPublic " + "and e.nced = ep.emp.nced "
-				+ "and e.nced = ?1  ");
+		StringBuilder queryString = new StringBuilder("SELECT DISTINCT p FROM Publicacione p, Emp e, "
+				+ " EmpleadoPublica ep where p.idPublic = ep.pub.idPublic " + " and e.nced = ep.emp.nced "
+				+ " and e.nced IN:list  " );
 
 		if (tipoPublic != null) {
 			queryString.append(" and p.tipoPublicacion.idTipoPublic = ?2 ");
@@ -357,7 +357,9 @@ public class PublicacionesDAOImplement extends DaoGenericoImplement<Publicacione
 		}
 
 		Query query = getEntityManager().createQuery(queryString.toString());
-		query.setParameter(1, cedula);
+		
+		
+		query.setParameter("list", cedulas);
 
 		if (tipoPublic != null) {
 			query.setParameter(2, tipoPublic);
@@ -398,11 +400,11 @@ public class PublicacionesDAOImplement extends DaoGenericoImplement<Publicacione
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Publicacione> listaPublicacionesXProyectoPonencia(String cedula, String tipoPublic, Integer idpensum,
+	public List<Publicacione> listaPublicacionesXProyectoPonencia(List<String> cedulas, String tipoPublic, Integer idpensum,
 			Integer idproyecto, String titulo) {
 
 		StringBuilder queryString = new StringBuilder(
-				"SELECT DISTINCT(p) FROM Publicacione p " + " where p.nced = ?1 ");
+				"SELECT DISTINCT(p) FROM Publicacione p " + " where p.nced IN:list ");
 
 		if (tipoPublic != null) {
 			queryString.append(" and p.tipoPublicacion.idTipoPublic = ?2 ");
@@ -421,7 +423,7 @@ public class PublicacionesDAOImplement extends DaoGenericoImplement<Publicacione
 		}
 
 		Query query = getEntityManager().createQuery(queryString.toString());
-		query.setParameter(1, cedula);
+		query.setParameter("list", cedulas);
 
 		if (tipoPublic != null) {
 			query.setParameter(2, tipoPublic);

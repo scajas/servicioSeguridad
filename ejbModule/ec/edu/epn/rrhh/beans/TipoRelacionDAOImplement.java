@@ -12,35 +12,45 @@ import ec.edu.epn.rrhh.movimientos.TipoRelacion;
 public class TipoRelacionDAOImplement extends DaoGenericoImplement<TipoRelacion> implements TipoRelacionDAO {
 
 	public List<TipoRelacion> findTipoRelacionActivo() {
-		
-		Query q = getEntityManager().createQuery(
-				"Select t from TipoRelacion t where t.descripcion='CONTRATO'");
+
+		Query q = getEntityManager().createQuery("Select t from TipoRelacion t where t.descripcion='CONTRATO'");
 
 		List<TipoRelacion> resultado = null;
-		
-		try{
+
+		try {
 			resultado = q.getResultList();
-		}catch(NoResultException e){
+		} catch (NoResultException e) {
 			return resultado;
 		}
 		return resultado;
 	}
-	
+
 	public List<TipoRelacion> findTipoRelacionConvenioActivo() {
-		
-		Query q = getEntityManager().createQuery(
-				"Select t from TipoRelacion t where t.descripcion='CONVENIO'");
+
+		Query q = getEntityManager().createQuery("Select t from TipoRelacion t where t.descripcion='CONVENIO'");
 
 		List<TipoRelacion> resultado = null;
-		
-		try{
+
+		try {
 			resultado = q.getResultList();
-		}catch(NoResultException e){
+		} catch (NoResultException e) {
 			return resultado;
 		}
 		return resultado;
 	}
 
-	
+	public List<TipoRelacion> findAllTipoRelacionActivos() {
+
+		Query q = getEntityManager().createQuery("Select t from TipoRelacion t where t.estado='ACTIVO'");
+
+		List<TipoRelacion> resultado = null;
+
+		try {
+			resultado = q.getResultList();
+		} catch (NoResultException e) {
+			return resultado;
+		}
+		return resultado;
+	}
 
 }

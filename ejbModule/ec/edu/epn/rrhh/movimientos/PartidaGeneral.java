@@ -15,7 +15,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "partida_general", catalog = "bddcorpepn", schema = "\"Rrhh\"")
 public class PartidaGeneral implements Serializable{
-	
+	//Partida Genaral Class
 	private static final long serialVersionUID = 1L;
 	
 	@Id

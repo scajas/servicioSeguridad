@@ -14,6 +14,7 @@ public class DocentesEvaluacionDTO {
 	private String nomDepartamento;
 	private String relacionLab;
 	private String periodo;
+	private String estado;
 	private String cargaAcademica;
 	private String direccionTesis;
 	private String idPeriodo;
@@ -90,7 +91,10 @@ public class DocentesEvaluacionDTO {
 	
 	
 	
-	
+	/**CAMPOS ADICIONALES*/
+	private String cargoDocente; 
+	private String dedicacion;
+	private String tipo;
 	
 	
 	
@@ -1289,6 +1293,75 @@ public class DocentesEvaluacionDTO {
 	 */
 	public void setHorasPlanifClasesDecimal(BigDecimal horasPlanifClasesDecimal) {
 		this.horasPlanifClasesDecimal = horasPlanifClasesDecimal;
+	}
+
+
+	/**
+	 * @return the estado
+	 */
+	public String getEstado() {
+		return estado;
+	}
+
+
+	/**
+	 * @param estado the estado to set
+	 */
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
+
+	/**
+	 * @return the cargoDocente
+	 */
+	public String getCargoDocente() {
+		return cargoDocente;
+	}
+
+
+	
+
+	/**
+	 * @return the tipo
+	 */
+	public String getTipo() {
+		return tipo;
+	}
+
+
+	/**
+	 * @param cargoDocente the cargoDocente to set
+	 */
+	public void setCargoDocente(String cargoDocente) {
+		this.cargoDocente = cargoDocente;
+	}
+
+
+	
+
+
+	/**
+	 * @param tipo the tipo to set
+	 */
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
+
+	/**
+	 * @return the dedicacion
+	 */
+	public String getDedicacion() {
+		return dedicacion;
+	}
+
+
+	/**
+	 * @param dedicacion the dedicacion to set
+	 */
+	public void setDedicacion(String dedicacion) {
+		this.dedicacion = dedicacion;
 	}
 
 

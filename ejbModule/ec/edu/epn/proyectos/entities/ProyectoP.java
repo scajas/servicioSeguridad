@@ -23,21 +23,8 @@ public class ProyectoP implements Serializable {
 	private double presaprob;
 	private double presupaprobiva;
 	private double presupeject;
-	
-
-	
-
-	
-
-	
 	private Double avace;
 	private String ingobjetivos;
-	
-	
-	
-	
-	
-	
 	@Id
 	@Column(name = "id_proy")
 	private Integer idProy;
@@ -283,7 +270,7 @@ public class ProyectoP implements Serializable {
 	@OneToMany(mappedBy = "proyecto")
 	private List<Presupuesto> presupuestos;
 
-	// bi-directional many-to-one association to Convocatoria
+	// bi-directional many-to-one association to ConvocatoriaVoto
 	@ManyToOne
 	@JoinColumn(name = "id_conv")
 	private Convocatoria convocatoria;

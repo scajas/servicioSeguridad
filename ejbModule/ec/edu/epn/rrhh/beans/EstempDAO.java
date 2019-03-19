@@ -13,5 +13,7 @@ import ec.edu.epn.rrhh.entities.Estemp;
 public interface EstempDAO extends DaoGenerico<Estemp> {
 
 	List<Estemp> findestadosEmp();
+	
+	
 
 }

@@ -150,6 +150,32 @@ public class DependenciaDAOImplement extends DaoGenericoImplement<Dependencia> i
 		}
 		return retorno;
 	}
+	
+	
+	@Override
+	public List<Dependencia> getDependencias() {
+		StringBuilder queryString = new StringBuilder("SELECT fam FROM Dependencia fam "
+				+ "where fam.estado is not null and fam.tipo = 'DEP'");
+		
+		Query query = getEntityManager().createQuery(queryString.toString());
+		
+		List<Dependencia> resultados = query.getResultList();
+		
+		
+		return resultados;
+	}
+	
+	@Override
+	public List<Dependencia> getDependenciasAll() {
+		StringBuilder queryString = new StringBuilder("SELECT fam FROM Dependencia fam ");
+		
+		Query query = getEntityManager().createQuery(queryString.toString());
+		
+		List<Dependencia> resultados = query.getResultList();
+		
+		
+		return resultados;
+	}
 
 	@Override
 	public List<Dependencia> getDependenciasAdministrables() {

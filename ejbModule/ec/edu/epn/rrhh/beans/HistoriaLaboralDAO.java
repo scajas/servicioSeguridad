@@ -7,202 +7,232 @@ import javax.ejb.Remote;
 
 import ec.edu.epn.generic.DAO.DaoGenerico;
 import ec.edu.epn.rrhh.entities.Emp;
-import ec.edu.epn.rrhh.entities.HistoriaEstado;
-import ec.edu.epn.rrhh.movimientos.Designacion;
 import ec.edu.epn.rrhh.movimientos.HistoriaLaboral;
 
 @Remote
 public interface HistoriaLaboralDAO extends DaoGenerico<HistoriaLaboral> {
-	//HistoriaLaboralDAO
+	// HistoriaLaboralDAO
 	public List<HistoriaLaboral> findHistoriaByEmp(Emp emp);
-	
+
 	public List<HistoriaLaboral> findHistoriasSinContratoByEmp(Emp emp);
-	
+
 	public List<HistoriaLaboral> findHistoriasAnuladasInsub(Emp emp);
 
-	public HistoriaLaboral findCurrentHistoriaLaboralByEmp (Emp emp);
-	
-	public HistoriaLaboral findLastHistoriaDesignacionByEmp (Emp emp);
-	
-	public long findCountOfHistoriaDesignacionByDependenciaDesignacion(
-			String nombreDependencia, String nombreDesignacion);
+	public HistoriaLaboral findCurrentHistoriaLaboralByEmp(Emp emp);
+
+	public HistoriaLaboral findLastHistoriaDesignacionByEmp(Emp emp);
+
+	public HistoriaLaboral findCountOfHistoriaDesignacionByDependenciaDesignacion(String nombreDependencia,
+			String nombreDesignacion, int idAccionDePersonal, String tipoDesignacion);
 
 	public List<HistoriaLaboral> findHistoriaYear(Integer year);
 
 	public Integer getMaxID();
-	
+
 	public Integer getMaxNroDocumentoByYear(Integer year);
-	
+
 	public boolean findVacacionActivaByEmpleado(Emp emp, Date fechaActual);
-	
+
 	public boolean findVacacionActivaByEmpleado(Emp emp, Date fechaActual, Date fechaFin);
-	
+
 	public boolean hasNombramientoActivoByEmpleado(Emp emp);
 	
+	public List<HistoriaLaboral> getLicenciasVencidasPorMes(String nombreDependencia, String mes, String anio);
+
 	public boolean findAnioSabaticoActivoByEmpleado(Emp emp, Date fechaActual);
-	
+
 	public boolean findAnioSabaticoActivoByEmpleado(Emp emp, Date fechaActual, Date fechaFin);
-	
+
 	public boolean findEncargoActivoByEmpleado(Emp emp, Date fechaActual, Date fechaFin);
-	
+
 	public boolean findEncargoActivoByEmpleado(Emp emp, Date fechaActual);
-	
+
 	public boolean findLicenciaActivaByEmpleado(Emp emp, Date fechaRige);
-	
-	public boolean findLicenciaActivaByEmpleado (Emp emp, Date fechaRige, Date fechaFin);
-	
+
+	public boolean findLicenciaActivaByEmpleado(Emp emp, Date fechaRige, Date fechaFin);
+
 	public boolean isEmpleadoOnComisionActiva(Emp emp, Date fechaRige);
-	
+
 	public boolean isEmpleadoOnComisionActiva(Emp emp, Date fechaRige, Date fechaFin);
-	
+
 	public boolean findCambioAdministrativoActivoByEmpleado(Emp emp, Date fechaRige);
-		
+
 	public boolean empleadoHasSubrogacionActivaEnFecha(Emp emp, Date fechaActual);
-	
+
 	public boolean empleadoHasSubrogacionActivaEnFecha(Emp emp, Date fechaActual, Date fechaFin);
-	
+
 	public boolean empleadoHasNombramientosSinFinalizar(Emp emp);
-	
+
 	public boolean isEmpleadoOnDesignacionActiva(Emp emp);
-	
+
 	public List<HistoriaLaboral> getDesignacionesEmpleadoOnFecha(Emp emp, Date fechaActual);
-	
+
 	public boolean isEmpleadoConNombramiento(Emp emp);
-	
+
 	public List<HistoriaLaboral> findHistoriaByIdhistoria(Integer historiaid);
 
 	public Boolean isHistoriaElaborado();
-	
-	public HistoriaLaboral getMostRecentNombramientoByEmp (Emp emp);
-	
+
+	public HistoriaLaboral getMostRecentNombramientoByEmp(Emp emp);
+
 	public HistoriaLaboral getMostRecentNombramientoProvisionalByEmp(Emp emp);
 
 	public boolean empleadoHasNombramientosFinalizar(Emp emp);
-	
+
 	public boolean isEmpleadoOnNombramientoProvisional(Emp emp);
-	
+
 	public boolean isAccionPorFinalizar(String nombreAccion, Emp emp);
-	
+
 	public boolean isAnyAccionPorFinalizar(Emp emp);
-	
+
 	public List<HistoriaLaboral> findAccionesNoLicenciaFinalizables(Emp emp);
-	
+
 	public HistoriaLaboral findHistoriaByNroDocumentoEmpYEstado(Emp emp, String nroDocumento, String estado);
-	
-	public List<HistoriaLaboral> getDesignacionesActivasByEmpFinalizacion(
-			Emp emp, String nroDocumentoAFinalizar);
-	
-	public List<HistoriaLaboral> getAnyDesignacionActivaByEmpFinalizacion(Emp emp,
-			String nroDocumentoAFinalizar);
-	
+
+	public List<HistoriaLaboral> getDesignacionesActivasByEmpFinalizacion(Emp emp, String nroDocumentoAFinalizar);
+
+	public List<HistoriaLaboral> getAnyDesignacionActivaByEmpFinalizacion(Emp emp, String nroDocumentoAFinalizar);
+
 	public boolean empleadoHasAnyTipoDesginacionActiva(String tipoDesignacion, Emp emp);
-	
+
 	public boolean empleadoHasAnyLicenciaActiva(Emp emp, String tipoDeLicencia);
-	
+
 	public boolean empleadoHasAnyLicenciaActiva(Emp emp);
-	
+
 	public List<HistoriaLaboral> getLicenciasActivasByEmpleado(Emp emp);
 	
-	public HistoriaLaboral getAnioPeriodoSabaticoActivoByEmpleado (Emp emp);
+	public List<HistoriaLaboral> getAllLicenciasVencidas();
 	
-	public HistoriaLaboral getComisionEstadiaActivaByEmpleado (Emp emp);
-	
-	public HistoriaLaboral getLicenciaPorEstudiosActivaByEmpleado (Emp emp);
-	
+	public long getCountLicenciasVencidas();
+
+	public HistoriaLaboral getAnioPeriodoSabaticoActivoByEmpleado(Emp emp);
+
+	public HistoriaLaboral getComisionEstadiaActivaByEmpleado(Emp emp);
+
+	public HistoriaLaboral getLicenciaPorEstudiosActivaByEmpleado(Emp emp);
+
 	public boolean isAccionInsubsistida(Emp emp, String numeroDocumentoAccion);
 
 	public List<HistoriaLaboral> findHistorias();
-	
+
 	public HistoriaLaboral findHistoriaByIdDesignacion(int idDesignacion);
 
 	public List<HistoriaLaboral> findHistorias(Integer anio);
 
 	public List<HistoriaLaboral> findHistorias(Date inicio, Date ffinal, String nombreDependencia,
-			String nombreDependenciaDesignacion, String nombreCargo, String claseEmpleado,
-			String nombreDesignacion, Emp empleado);
-	
+			String nombreDependenciaDesignacion, String nombreCargo, String claseEmpleado, String nombreDesignacion,
+			Emp empleado);
+
 	public List<HistoriaLaboral> findHistorias(Date inicio, Date ffinal);
-	
+
 	public List<HistoriaLaboral> findHistoriasEjecucion();
-	
-	public HistoriaLaboral findHistoriaDesignacionByDependenciaYTipo
-	(String dependencia, String facultad, String tipoDeDesignacion, String dignidad, String estadoDesignacion);
+
+	public HistoriaLaboral findHistoriaDesignacionByDependenciaYTipo(String dependencia, String facultad,
+			String tipoDeDesignacion, String dignidad, String estadoDesignacion);
 
 	public List<HistoriaLaboral> findNombrameintosByEmp(Emp emp);
-	
+
 	public boolean isEmpleadoOnMultipleDesignacion(Emp emp);
-	
+
 	public List<HistoriaLaboral> getDesignacionesMultiplesByEmp(Emp emp);
-	
+
 	public List<HistoriaLaboral> findContByEmp(Emp emp);
-	
+
 	public HistoriaLaboral findHistoriaActualizacionByEmp(Emp emp);
-	
+
 	public HistoriaLaboral getTipoRelacionNombramientoByEmp(Emp emp);
 
 	List<HistoriaLaboral> findHistoriaByNoDoc(String nced);
 
 	public HistoriaLaboral findLastContByEmp(Emp emp);
-	/*Funciones para manejo de tabs en MovimientosController*/
-	
-	//Tab 1: Historias que afecten la asistencia del empleado. (Sin licencias por estudios o periodos 
+	/* Funciones para manejo de tabs en MovimientosController */
+
+	// Tab 1: Historias que afecten la asistencia del empleado. (Sin licencias
+	// por estudios o periodos
 	// y años sabáticos
-	
+
 	public List<HistoriaLaboral> getHistoriasQueAfectanAsistencia(Emp emp);
-	public List<HistoriaLaboral> getHistoriasQueAfectanAsistenciaReporte(Date inicio, Date ffinal, String nombreDependencia, 
-			String nombreDependenciaDesignacion, String nombreCargo, String claseEmpleado, String nombreDesignacion, Emp empleado);
-	
-	/* Tab 2: Historias que afectan el cargo o la RMU*/
-	
-	public List<HistoriaLaboral> getHistoriasQueAfectanCargoRmu(Emp emp);
-	public List<HistoriaLaboral> getHistoriasQueAfectanCargoRmuReporte (Date inicio, Date ffinal, String nombreDependencia,
-			String nombreDependenciaDesignacion, String nombreCargo, String claseEmpleado, String nombreDesignacion, Emp empleado);
-	
-	/*Tab 3: Historias que se refieran a designacion de dignidades (Designaciones, subrogaciones y encargos
-	 */
-	
-	public List<HistoriaLaboral> getHistoriasQueAfectanDesignacion(Emp emp);
-	public List<HistoriaLaboral> getHistoriasQueAfectanDesignacionReporte(Date inicio, Date ffinal, 
-			String nombreDependencia, String nombreDependenciaDesignacion,String nombreCargo,
-			String claseEmpleado,String nombreDesignacion,  Emp empleado);
-	
-	/*Tab 4: Historias con licencias o comisiones por estudios, año o periodo sabático*/
-	
-	public List<HistoriaLaboral> getHistoriasLicenciasComSabatico(Emp emp);
-	public List<HistoriaLaboral> getHistoriasLicenciasComSabaticoReporte(Date inicio, Date ffinal, 
-			String nombreDependencia, String nombreDependenciaDesignacion, String nombreCargo, 
-			String claseEmpleado, String nombreDesignacion, Emp empleado);
-	
-	/*Tab 5: Sanciones*/
-	
-	public List<HistoriaLaboral> getHistoriasSanciones(Emp emp);
-	public List<HistoriaLaboral> getHistoriasSancionesReporte(Date inicio, Date ffinal, 
-			String nombreDependencia,	String nombreDependenciaDesignacion, String nombreCargo, String claseEmpleado, 
+
+	public List<HistoriaLaboral> getHistoriasQueAfectanAsistenciaReporte(Date inicio, Date ffinal,
+			String nombreDependencia, String nombreDependenciaDesignacion, String nombreCargo, String claseEmpleado,
 			String nombreDesignacion, Emp empleado);
-	
-	/* Tab 6: Contratos* (Ya se encuentra definida la funcion)*/
-	
-	public List<HistoriaLaboral> getContratosReporte(Date inicio, Date ffinal,
-			String nombreDependencia,	String nombreDependenciaDesignacion, String nombreCargo, 
-			String claseEmpleado, String nombreDesignacion, Emp empleado);
-	
-	/*Tab 7: Finalziaciones y actualziaciones*/
-	
+
+	/* Tab 2: Historias que afectan el cargo o la RMU */
+
+	public List<HistoriaLaboral> getHistoriasQueAfectanCargoRmu(Emp emp);
+
+	public List<HistoriaLaboral> getHistoriasQueAfectanCargoRmuReporte(Date inicio, Date ffinal,
+			String nombreDependencia, String nombreDependenciaDesignacion, String nombreCargo, String claseEmpleado,
+			String nombreDesignacion, Emp empleado);
+
+	/*
+	 * Tab 3: Historias que se refieran a designacion de dignidades
+	 * (Designaciones, subrogaciones y encargos
+	 */
+
+	public List<HistoriaLaboral> getHistoriasQueAfectanDesignacion(Emp emp);
+
+	public List<HistoriaLaboral> getHistoriasQueAfectanDesignacionReporte(Date inicio, Date ffinal,
+			String nombreDependencia, String nombreDependenciaDesignacion, String nombreCargo, String claseEmpleado,
+			String nombreDesignacion, Emp empleado);
+
+	/*
+	 * Tab 4: Historias con licencias o comisiones por estudios, año o periodo
+	 * sabático
+	 */
+
+	public List<HistoriaLaboral> getHistoriasLicenciasComSabatico(Emp emp);
+
+	public List<HistoriaLaboral> getHistoriasLicenciasComSabaticoReporte(Date inicio, Date ffinal,
+			String nombreDependencia, String nombreDependenciaDesignacion, String nombreCargo, String claseEmpleado,
+			String nombreDesignacion, Emp empleado);
+
+	/* Tab 5: Sanciones */
+
+	public List<HistoriaLaboral> getHistoriasSanciones(Emp emp);
+
+	public List<HistoriaLaboral> getHistoriasSancionesReporte(Date inicio, Date ffinal, String nombreDependencia,
+			String nombreDependenciaDesignacion, String nombreCargo, String claseEmpleado, String nombreDesignacion,
+			Emp empleado);
+
+	/* Tab 6: Contratos* (Ya se encuentra definida la funcion) */
+
+	public List<HistoriaLaboral> getContratosReporte(Date inicio, Date ffinal, String nombreDependencia,
+			String nombreDependenciaDesignacion, String nombreCargo, String claseEmpleado, String nombreDesignacion,
+			Emp empleado);
+
+	/* Tab 7: Finalziaciones y actualziaciones */
+
 	public List<HistoriaLaboral> getActualizacionesFinalizaciones(Emp emp);
+
 	public List<HistoriaLaboral> getActualizacionesFinalizacionesReporte(Date inicio, Date ffinal,
-			String nombreDependencia, String nombreDependenciaDesignacion,String nombreCargo,
-			String claseEmpleado, String nombreDesignacion,  Emp empleado);
-	
-	
-	/*Tab 8: Historias Migradas */
-	
+			String nombreDependencia, String nombreDependenciaDesignacion, String nombreCargo, String claseEmpleado,
+			String nombreDesignacion, Emp empleado);
+
+	/* Tab 8: Historias Migradas */
+
 	public List<HistoriaLaboral> getAccionesMigradas(Emp emp);
+
 	public List<HistoriaLaboral> getAccionesMigradasReporte(Date inicio, Date ffinal, String nombreDependencia,
 			String nombreDependenciaDesignacion, String nombreCargo, String claseEmpleado, String nombreDesignacion,
 			Emp empleado);
-	/*Finalizacion métodos para manejo de tabs*/
-	
-	
+	/* Finalizacion métodos para manejo de tabs */
 
+	// Reportes empleados
+
+	public List<HistoriaLaboral> getReportePorEmpleadosGeneral(Date fechaDesde, Date fechaHasta,
+			String codEstadoEmpleado, String codTipoRelacionEmpleado, String codClaseEmpleado,
+			String nombreDependencia, String nombreDependenciaDesignacion);
+
+	public List<HistoriaLaboral> getReportePorEmpleadosContratos(Date fechaDesde, Date fechaHasta,
+			String codEstadoEmpleado, String codTipoRelacionEmpleado, String codClaseEmpleado,
+			String nombreDependencia, String nombreDependenciaDesignacion);
+
+	public Integer findHistoriaNumberBySubtipo(String subtipoAccion);
+
+
+	public HistoriaLaboral findLastContByEmpActivo(Emp emp);
+
+	public HistoriaLaboral findCurrentHistoriaLaboralByEstadoActivoEmp(Emp emp);
 
 }
