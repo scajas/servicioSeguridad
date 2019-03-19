@@ -18,6 +18,7 @@ import ec.edu.epn.proyectos.entities.Producto;
 @LocalBean
 public class ProductoDAOImplement extends DaoGenericoImplement<Producto> implements ProductoDAO {
 
+	//commit de prueba
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Producto> findPublicacionesProyecto(Integer idproyecto, String nrotesis) {
