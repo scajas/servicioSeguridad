@@ -43,6 +43,14 @@ public interface EvaluacionAcademicaDAO extends DaoGenerico<EvaluacionAcademica>
 
 	ArrayList<DocentesEvaluacionDTO> reportePlanificacionDoc(String auxCIDoc, String auxNomDoc, String auxApelDoc,
 			String auxDep, String perfilUsuario, Integer idPensum, String codTipoRelacionLab) throws SQLException;
+
+	ArrayList<DocentesEvaluacionDTO> reportePlanificacion2017A() throws SQLException;
+
+	ArrayList<DocentesEvaluacionDTO> calcEvaluacionXCedulaDocReporteGIEPN(String auxCIDoc, String auxNomDoc,
+			String auxApelDoc, String auxDep, String perfilUsuario, Integer idPensum, String codTipoRelacionLab)
+			throws SQLException;
+
+	DocenteDTO presentarCargoDedicacionRelLab(Integer idPensum, Integer idOpcion, String nced) throws Exception;
 	
 	
 	

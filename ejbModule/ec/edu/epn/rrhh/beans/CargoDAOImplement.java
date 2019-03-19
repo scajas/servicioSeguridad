@@ -33,6 +33,15 @@ public class CargoDAOImplement extends DaoGenericoImplement<Cargosm> implements 
 	}
 	
 	@Override
+	public List<Cargosm> findCargosAll() {
+		StringBuilder queryString = new StringBuilder(
+				"SELECT fam FROM Cargosm fam");
+		Query query = getEntityManager().createQuery(queryString.toString());
+		List<Cargosm> resultado = query.getResultList();
+		return resultado;	
+	}
+	
+	@Override
 	public Integer getMaxId() {
 		StringBuilder queryString = new StringBuilder(
 				"SELECT max(idCargo) FROM Cargosm fam ");

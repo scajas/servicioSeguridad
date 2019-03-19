@@ -43,7 +43,7 @@ public class DesignacionDAOImplement extends DaoGenericoImplement<Designacion> i
 		}catch (NoResultException e){
 			return resultado;
 		}catch (NonUniqueResultException e){
-			e.printStackTrace();
+			System.out.println("Más de un "+ tipoDesignacion +" activo ....");
 		}
 			
 		return resultado;

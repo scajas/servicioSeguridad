@@ -140,19 +140,29 @@ public class EvaluacionAcademicaDAOImplement extends DaoGenericoImplement<Evalua
 	@Override
 	public EvaluacionAcademica evaluacionXCedulaPeriodoEstado(String nced, Integer idPensum, String estado, String estado2) throws Exception {
 		
-		Query q = getEntityManager()
-				.createQuery(
-						"SELECT e FROM EvaluacionAcademica e WHERE e.nced=? AND e.idPensum= ? AND (e.estado  like ? OR e.estado  like ?) ");
-
-		
-		q.setParameter(1, nced);
-		q.setParameter(2, idPensum);
-		q.setParameter(3, estado);
-		q.setParameter(4, estado2);
+		try {
+			
 		
 		
+			Query q = getEntityManager()
+					.createQuery(
+							"SELECT e FROM EvaluacionAcademica e WHERE e.nced=? AND e.idPensum= ? AND (e.estado  like ? OR e.estado  like ?) ");
+	
+			
+			q.setParameter(1, nced);
+			q.setParameter(2, idPensum);
+			q.setParameter(3, estado);
+			q.setParameter(4, estado2);
+			
+			
+			
+			return (EvaluacionAcademica) q.getSingleResult();
 		
-		return (EvaluacionAcademica) q.getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		} catch (Exception e) {
+			return null;
+		}
 	}
 	
 	
@@ -276,6 +286,35 @@ public class EvaluacionAcademicaDAOImplement extends DaoGenericoImplement<Evalua
 						dto.setEstado(rs.getString(9));						
 					}
 					
+					
+					DocenteDTO doc= new DocenteDTO();
+					try {
+						doc= this.presentarCargoDedicacionRelLab(idPensum, 1, dto.getnCed());
+					} catch (Exception e) {						
+						e.printStackTrace();
+						return null;
+					}
+					dto.setCargo(doc.getCargo());
+					try {
+						doc= new DocenteDTO();
+						doc= this.presentarCargoDedicacionRelLab(idPensum, 2, dto.getnCed());
+					} catch (Exception e) {						
+						e.printStackTrace();
+						return null;
+					}
+					
+					dto.setDedicacion(doc.getDedicacion());
+					
+					
+					try {
+						doc= new DocenteDTO();
+						doc= this.presentarCargoDedicacionRelLab(idPensum, 3, dto.getnCed());
+					} catch (Exception e) {						
+						e.printStackTrace();
+						return null;
+					}
+					
+					dto.setRelacionLab(doc.getRelacionLab());
 
 					listaDocentes.add(dto);
 
@@ -452,21 +491,22 @@ public class EvaluacionAcademicaDAOImplement extends DaoGenericoImplement<Evalua
 				String qry = "SELECT DISTINCT MAX(e.NCED), e.nom, e.apel, " +
 								"CASE cod_tiporelacionlab WHEN 1 THEN (SELECT p.cargo FROM \"Rrhh\".nomb_temp n, \"Rrhh\".partind p WHERE n.cod_pind= p.cod_pind AND n.frige_nomb = (SELECT MAX(frige_nomb) FROM \"Rrhh\".nomb_temp WHERE nced=e.nced) AND n.nced=e.nced) "+ 
 								"WHEN 2 THEN (SELECT MAX(cargoc) FROM \"Rrhh\".cont c WHERE c.frige_cont=  (SELECT MAX(frige_cont) FROM \"Rrhh\".cont WHERE nced = e.nced) AND c.nced = e.nced) END, "+
-								"d.nom_dep, id_periodo, eval.val_final_auto, eval.val_final_coe, eval.val_final_hetero, eval.estado, eval.id_eval_acad "+																							
-								"FROM \"Rrhh\".EMP E, \"Rrhh\".DEP D, \"GestionDocente\".evaluacion_academica eval, \"GestionDocente\".periodo p "+								 
+								"d.nom_dep, id_periodo, eval.val_final_auto, eval.val_final_coe, eval.val_final_hetero, eval.estado, eval.id_eval_acad, est.descripcion "+																							
+								"FROM \"Rrhh\".EMP E, \"Rrhh\".DEP D, \"GestionDocente\".evaluacion_academica eval, \"GestionDocente\".periodo p, \"GestionDocente\".estado_evaluacion est "+								 
 								"WHERE E.COD_DEP = D.COD_DEP "+ 								
 								"AND eval.nced= E.nced "+ 
+								"AND est.nombre= eval.estado "+
 								"AND COD_EST IN ('1', '3', '4', '5', '6', '7', '2') "+ 
 								"AND e.cod_clase = '1' "+ 
 								"AND p.id_pensum= eval.id_pensum "+								
 								"AND e.nced LIKE ? "+ 
-								"AND (eval.estado= 'COEVAL' OR eval.estado= 'FIN') "+
+								//"AND (eval.estado= 'COEVAL' OR eval.estado= 'FIN') "+
 								"AND e.nom LIKE ? "+ 
 								"AND e.apel LIKE ? "+ 
 								"AND D.COD_DEP LIKE ? "+ 
 								"AND eval.id_pensum = ? "+
 								"AND (e.cod_tiporelacionlab = ? or 0=?) "+
-								"GROUP BY  e.nom, e.apel, e.cod_tiporelacionlab, d.nom_dep, e.nced,  id_periodo, eval.val_final_auto, eval.val_final_coe, eval.val_final_hetero, eval.estado , eval.id_eval_acad "+
+								"GROUP BY  e.nom, e.apel, e.cod_tiporelacionlab, d.nom_dep, e.nced,  id_periodo, eval.val_final_auto, eval.val_final_coe, eval.val_final_hetero, eval.estado , eval.id_eval_acad, est.descripcion "+
 								"ORDER BY e.apel";
 
 				ps = con.prepareStatement(qry);
@@ -497,8 +537,7 @@ public class EvaluacionAcademicaDAOImplement extends DaoGenericoImplement<Evalua
 					dto.setTotalHeteroEval(rs.getDouble(9));
 					dto.setRenderVerEvalFinal(rs.getString(10).equals("FIN")?true:false);
 					dto.setIdEvalAcad(rs.getInt(11));
-					
-					
+					dto.setEstado(rs.getString(12));
 					
 					listaDocentes.add(dto);
 					
@@ -537,8 +576,8 @@ public class EvaluacionAcademicaDAOImplement extends DaoGenericoImplement<Evalua
 				String qry = "SELECT DISTINCT MAX(e.NCED), e.nom, e.apel, " +
 								"CASE cod_tiporelacionlab WHEN 1 THEN (SELECT p.cargo FROM \"Rrhh\".nomb_temp n, \"Rrhh\".partind p WHERE n.cod_pind= p.cod_pind AND n.frige_nomb = (SELECT MAX(frige_nomb) FROM \"Rrhh\".nomb_temp WHERE nced=e.nced) AND n.nced=e.nced) "+ 
 								"WHEN 2 THEN (SELECT MAX(cargoc) FROM \"Rrhh\".cont c WHERE c.frige_cont=  (SELECT MAX(frige_cont) FROM \"Rrhh\".cont WHERE nced = e.nced) AND c.nced = e.nced) END, "+
-								"d.nom_dep, id_periodo, eval.val_final_auto, eval.val_final_coe, eval.val_final_hetero, eval.estado, eval.id_eval_acad "+																							
-								"FROM \"Rrhh\".EMP E, \"Rrhh\".DEP D, \"GestionDocente\".evaluacion_academica eval, \"GestionDocente\".periodo p "+								 
+								"d.nom_dep, id_periodo, eval.val_final_auto, eval.val_final_coe, eval.val_final_hetero, eval.estado, eval.id_eval_acad, est.descripcion  "+																							
+								"FROM \"Rrhh\".EMP E, \"Rrhh\".DEP D, \"GestionDocente\".evaluacion_academica eval, \"GestionDocente\".periodo p, \"GestionDocente\".estado_evaluacion EST "+								 
 								"WHERE E.COD_DEP = D.COD_DEP "+ 								
 								"AND eval.nced= E.nced "+ 
 								"AND COD_EST IN ('1', '3', '4', '5', '6', '7', '2') "+ 
@@ -550,7 +589,8 @@ public class EvaluacionAcademicaDAOImplement extends DaoGenericoImplement<Evalua
 								"AND D.COD_DEP LIKE ? "+ 
 								"AND eval.id_pensum = ? "+
 								"AND (e.cod_tiporelacionlab = ? or 0=?) "+
-								"GROUP BY  e.nom, e.apel, e.cod_tiporelacionlab, d.nom_dep, e.nced,  id_periodo, eval.val_final_auto, eval.val_final_coe, eval.val_final_hetero, eval.estado , eval.id_eval_acad "+
+								"AND eval.estado= est.nombre "+
+								"GROUP BY  e.nom, e.apel, e.cod_tiporelacionlab, d.nom_dep, e.nced,  id_periodo, eval.val_final_auto, eval.val_final_coe, eval.val_final_hetero, eval.estado , eval.id_eval_acad, est.descripcion "+
 								"ORDER BY e.apel";
 
 				ps = con.prepareStatement(qry);
@@ -580,6 +620,7 @@ public class EvaluacionAcademicaDAOImplement extends DaoGenericoImplement<Evalua
 					dto.setTotalCoeEval(rs.getDouble(8));
 					dto.setTotalHeteroEval(rs.getDouble(9));
 					dto.setRenderVerEvalFinal(rs.getString(10).equals("FIN")?true:false);
+					dto.setEstado(rs.getString(12));
 					dto.setIdEvalAcad(rs.getInt(11));
 					
 					
@@ -714,6 +755,253 @@ public class EvaluacionAcademicaDAOImplement extends DaoGenericoImplement<Evalua
 		} catch (Exception e) {
 			return null;
 		}
+	}
+	
+	
+	
+	
+	@Override
+	public ArrayList<DocentesEvaluacionDTO> reportePlanificacion2017A() throws SQLException {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		try {
+			con = dataSource.getConnection();
+			if (con != null) {				
+				
+				String qry = "SELECT DISTINCT MAX(e.NCED), e.nom, e.apel, " +
+								"CASE cod_tiporelacionlab WHEN 1 THEN (SELECT p.cargo FROM \"Rrhh\".nomb_temp n, \"Rrhh\".partind p WHERE n.cod_pind= p.cod_pind AND n.frige_nomb = (SELECT MAX(frige_nomb) FROM \"Rrhh\".nomb_temp WHERE nced=e.nced) AND n.nced=e.nced) "+ 
+								"WHEN 2 THEN (SELECT MAX(cargoc) FROM \"Rrhh\".cont c WHERE c.frige_cont=  (SELECT MAX(frige_cont) FROM \"Rrhh\".cont WHERE nced = e.nced) AND c.nced = e.nced) END, "+
+								"d.nom_dep, id_periodo, eval.val_final_auto, eval.val_final_coe, eval.val_final_hetero, eval.estado, eval.id_eval_acad, est.descripcion  "+																							
+								"FROM \"Rrhh\".EMP E, \"Rrhh\".DEP D, \"GestionDocente\".evaluacion_academica eval, \"GestionDocente\".periodo p, \"GestionDocente\".estado_evaluacion EST "+								 
+								"WHERE E.COD_DEP = D.COD_DEP "+ 								
+								"AND eval.nced= E.nced "+ 
+								"AND COD_EST IN ('1', '3', '4', '5', '6', '7', '2') "+ 
+								"AND e.cod_clase = '1' "+ 
+								"AND p.id_pensum= eval.id_pensum "+								
+								"AND e.nced LIKE '%%' "+
+								"AND e.nom LIKE '%%' "+ 
+								"AND e.apel LIKE '%%' "+ 
+								"AND eval.fecha_ingreso like '%2018-07%' "+
+								"AND D.COD_DEP LIKE '%%' "+ 
+								"AND eval.id_pensum = 9 "+								
+								"AND eval.estado= est.nombre "+
+								"GROUP BY  e.nom, e.apel, e.cod_tiporelacionlab, d.nom_dep, e.nced,  id_periodo, eval.val_final_auto, eval.val_final_coe, eval.val_final_hetero, eval.estado , eval.id_eval_acad, est.descripcion "+
+								"ORDER BY e.apel";
+
+				ps = con.prepareStatement(qry);
+				
+
+				ResultSet rs = ps.executeQuery();
+
+				ArrayList<DocentesEvaluacionDTO> listaDocentes = new ArrayList<DocentesEvaluacionDTO>();
+
+				while (rs.next()) {
+
+					DocentesEvaluacionDTO dto = new DocentesEvaluacionDTO();
+					dto.setCedula(rs.getString(1));
+					dto.setNombre(rs.getString(2));					
+					dto.setApellido(rs.getString(3));
+					dto.setCargo(rs.getString(4));	
+					dto.setNomDepartamento(rs.getString(5));
+					dto.setPeriodo(rs.getString(6));					
+					dto.setIdPeriodo("9");
+					dto.setTotalAutoEval(rs.getDouble(7));
+					dto.setTotalCoeEval(rs.getDouble(8));
+					dto.setTotalHeteroEval(rs.getDouble(9));
+					dto.setRenderVerEvalFinal(rs.getString(10).equals("FIN")?true:false);
+					dto.setEstado(rs.getString(12));
+					dto.setIdEvalAcad(rs.getInt(11));
+					
+					
+					
+					listaDocentes.add(dto);
+					
+				}
+
+				ps.close();
+				con.close();
+
+				return listaDocentes;
+			}		
+
+			else {				
+				return null;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();			
+			return null;
+		} finally {
+			ps.close();
+			con.close();
+		}
+	}
+	
+	
+	@Override
+	public ArrayList<DocentesEvaluacionDTO> calcEvaluacionXCedulaDocReporteGIEPN(String auxCIDoc, String auxNomDoc, String auxApelDoc, String auxDep, String perfilUsuario,  Integer idPensum, String codTipoRelacionLab) throws SQLException {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		try {
+			con = dataSource.getConnection();
+			if (con != null) {				
+				
+				String qry = "SELECT DISTINCT MAX(e.NCED), e.nom, e.apel, "+
+									"CASE cod_tiporelacionlab WHEN 1 THEN "+
+										"(CASE (Select c.nombre_cargo "+
+										"from \"Rrhh\".historia_laboral ht INNER JOIN \"Rrhh\".emp ep ON ht.id_emp=ep.nced "+
+														"INNER JOIN \"Rrhh\".cargosm c ON c.id_cargo=ht.id_cargo "+
+														"INNER JOIN (Select DISTINCT hist.id_emp as nced, max(to_date(hist.fecha_rige, 'yyyy-MM-dd')) as fecha from \"Rrhh\".historia_laboral hist group by hist.id_emp ORDER BY hist.id_emp) maximo ON ep.nced= maximo.nced AND to_date(ht.fecha_rige, 'yyyy-MM-dd')= maximo.fecha "+
+										"where (UPPER(ht.estado) like '%FINALIZADO%'  or UPPER(ht.estado) LIKE '%ELABORADO%') "+
+										"and ht.id_hist not in (Select histo.id_hist from \"Rrhh\".historia_laboral histo where (UPPER(histo.estado) LIKE '%INSUBSISTENTE%' or UPPER(histo.estado) LIKE '%ANULADO%')) "+ 
+										"and ep.nced= e.nced LIMIT 1) "+
+										"WHEN NULL THEN (SELECT p.cargo FROM \"Rrhh\".nomb_temp n, \"Rrhh\".partind p WHERE n.cod_pind= p.cod_pind AND n.frige_nomb = "+ 
+													"(SELECT MAX(frige_nomb) FROM \"Rrhh\".nomb_temp WHERE nced=e.nced) AND n.nced=e.nced) "+
+											"ELSE (SELECT p.cargo FROM \"Rrhh\".nomb_temp n, \"Rrhh\".partind p WHERE n.cod_pind= p.cod_pind AND n.frige_nomb = "+ 
+													"(SELECT MAX(frige_nomb) FROM \"Rrhh\".nomb_temp WHERE nced=e.nced) AND n.nced=e.nced) END) "+
+									"WHEN 2 THEN (CASE (Select c.nombre_cargo "+
+											"from \"Rrhh\".historia_laboral ht INNER JOIN \"Rrhh\".emp ep ON ht.id_emp=ep.nced "+
+															"INNER JOIN \"Rrhh\".cargosm c ON c.id_cargo=ht.id_cargo "+
+															"INNER JOIN (Select DISTINCT hist.id_emp as nced, max(to_date(hist.fecha_rige, 'yyyy-MM-dd')) as fecha from \"Rrhh\".historia_laboral hist group by hist.id_emp ORDER BY hist.id_emp) maximo ON ep.nced= maximo.nced AND to_date(ht.fecha_rige, 'yyyy-MM-dd')= maximo.fecha "+
+											"where (UPPER(ht.estado) like '%FINALIZADO%'  or UPPER(ht.estado) LIKE '%ELABORADO%') "+
+											"and ht.id_hist not in (Select histo.id_hist from \"Rrhh\".historia_laboral histo where (UPPER(histo.estado) LIKE '%INSUBSISTENTE%' or UPPER(histo.estado) LIKE '%ANULADO%')) "+ 
+											"and ep.nced= e.nced LIMIT 1) WHEN NULL THEN (SELECT MAX(cargoc) FROM \"Rrhh\".cont c WHERE c.frige_cont=  (SELECT MAX(frige_cont) FROM \"Rrhh\".cont WHERE nced = e.nced) AND c.nced = e.nced) "+ 
+																"ELSE (SELECT MAX(cargoc) FROM \"Rrhh\".cont c WHERE c.frige_cont=  (SELECT MAX(frige_cont) FROM \"Rrhh\".cont WHERE nced = e.nced) AND c.nced = e.nced) END) "+
+									 "END AS CARGO, "+ 								
+									"d.nom_dep, id_periodo, eval.val_final_auto, eval.val_final_coe, eval.val_final_hetero, eval.estado, eval.id_eval_acad, est.descripcion, "+
+									"(CASE cod_tiporelacionlab WHEN 2 THEN (CASE (Select c.dedicacion "+
+										"from \"Rrhh\".historia_laboral ht INNER JOIN \"Rrhh\".emp ep ON ht.id_emp=ep.nced "+
+														"INNER JOIN \"Rrhh\".cargosm c ON c.id_cargo=ht.id_cargo "+
+														"INNER JOIN (Select DISTINCT hist.id_emp as nced, max(to_date(hist.fecha_rige, 'yyyy-MM-dd')) as fecha from \"Rrhh\".historia_laboral hist group by hist.id_emp ORDER BY hist.id_emp) maximo ON ep.nced= maximo.nced AND to_date(ht.fecha_rige, 'yyyy-MM-dd')= maximo.fecha "+
+										"where (UPPER(ht.estado) like '%FINALIZADO%'  or UPPER(ht.estado) LIKE '%ELABORADO%') "+
+										"and ht.id_hist not in (Select histo.id_hist from \"Rrhh\".historia_laboral histo where (UPPER(histo.estado) LIKE '%INSUBSISTENTE%' or UPPER(histo.estado) LIKE '%ANULADO%')) "+ 
+										"and ep.nced= e.nced LIMIT 1) WHEN NULL THEN (SELECT CASE UPPER(TRIM(dedicacion)) WHEN 'TIEMPO COMPLETO' THEN 'TC' WHEN 'TIEMPO PARCIAL' THEN 'TP' WHEN 'TEMPO PARCIAL' THEN 'TP' WHEN 'MEDIO TIEMPO' THEN 'MT' END "+
+																"FROM \"Contratos\".pedido WHERE nced= e.nced "+
+																"AND id_pensum=eval.id_pensum LIMIT 1) ELSE (SELECT CASE UPPER(TRIM(dedicacion)) WHEN 'TIEMPO COMPLETO' THEN 'TC' WHEN 'TIEMPO PARCIAL' THEN 'TP' WHEN 'TEMPO PARCIAL' THEN 'TP' WHEN 'MEDIO TIEMPO' THEN 'MT' END "+
+																"FROM \"Contratos\".pedido WHERE nced= e.nced "+
+																"AND id_pensum=eval.id_pensum LIMIT 1) END ) "+
+									"WHEN 1 THEN (Select c.dedicacion "+
+										"from \"Rrhh\".historia_laboral ht INNER JOIN \"Rrhh\".emp ep ON ht.id_emp=ep.nced "+
+														"INNER JOIN \"Rrhh\".cargosm c ON c.id_cargo=ht.id_cargo "+
+														"INNER JOIN (Select DISTINCT hist.id_emp as nced, max(to_date(hist.fecha_rige, 'yyyy-MM-dd')) as fecha from \"Rrhh\".historia_laboral hist group by hist.id_emp ORDER BY hist.id_emp) maximo ON ep.nced= maximo.nced AND to_date(ht.fecha_rige, 'yyyy-MM-dd')= maximo.fecha "+
+										"where (UPPER(ht.estado) like '%FINALIZADO%'  or UPPER(ht.estado) LIKE '%ELABORADO%') "+
+										"and ht.id_hist not in (Select histo.id_hist from \"Rrhh\".historia_laboral histo where (UPPER(histo.estado) LIKE '%INSUBSISTENTE%' or UPPER(histo.estado) LIKE '%ANULADO%')) "+
+										"and ep.nced= e.nced LIMIT 1)  END) AS dedicacion, "+
+									"(CASE cod_tiporelacionlab WHEN 1 THEN  'NOMBRAMIENTO' WHEN 2 THEN 'CONTRATO' END) AS tipo "+	
+								"FROM \"Rrhh\".EMP E, \"Rrhh\".DEP D, \"GestionDocente\".evaluacion_academica eval, \"GestionDocente\".periodo p, \"GestionDocente\".estado_evaluacion est "+
+								"WHERE E.COD_DEP = D.COD_DEP "+ 							
+								"AND eval.nced= E.nced "+
+								"AND est.nombre= eval.estado "+ 
+								"AND COD_EST IN ('1', '3', '4', '5', '6', '7', '2') "+ 
+								"AND e.cod_clase = '1' "+
+								"AND p.id_pensum= eval.id_pensum "+ 
+								"AND e.nced LIKE ? "+
+								"AND (eval.estado= 'COEVAL' OR eval.estado= 'FIN') "+ 
+								"AND e.nom LIKE ? "+  
+								"AND e.apel LIKE ? "+ 
+								"AND D.COD_DEP LIKE ? "+   
+								"AND eval.id_pensum = ? "+
+								"AND (e.cod_tiporelacionlab = ? or 0=?) "+ 
+								"GROUP BY  e.nom, e.apel, e.cod_tiporelacionlab, d.nom_dep, e.nced,  id_periodo, eval.val_final_auto, eval.val_final_coe, eval.val_final_hetero, eval.estado , eval.id_eval_acad, est.descripcion "+
+								"ORDER BY e.apel";
+
+				ps = con.prepareStatement(qry);
+				ps.setString(1, auxCIDoc);
+				ps.setString(2, auxNomDoc + "%");
+				ps.setString(3, auxApelDoc + "%");
+				ps.setString(4, auxDep);
+				ps.setInt(5, idPensum);
+				ps.setString(6, codTipoRelacionLab);
+				ps.setString(7, codTipoRelacionLab);
+
+				ResultSet rs = ps.executeQuery();
+
+				ArrayList<DocentesEvaluacionDTO> listaDocentes = new ArrayList<DocentesEvaluacionDTO>();
+
+				while (rs.next()) {
+
+					DocentesEvaluacionDTO dto = new DocentesEvaluacionDTO();
+					dto.setCedula(rs.getString(1));
+					dto.setNombre(rs.getString(2));					
+					dto.setApellido(rs.getString(3));
+					dto.setCargo(rs.getString(4));	
+					dto.setNomDepartamento(rs.getString(5));
+					dto.setPeriodo(rs.getString(6));					
+					dto.setIdPeriodo(String.valueOf(idPensum));
+					dto.setTotalAutoEval(rs.getDouble(7));
+					dto.setTotalCoeEval(rs.getDouble(8));
+					dto.setTotalHeteroEval(rs.getDouble(9));
+					dto.setRenderVerEvalFinal(rs.getString(10).equals("FIN")?true:false);
+					dto.setIdEvalAcad(rs.getInt(11));
+					dto.setEstado(rs.getString(12));
+					dto.setDedicacion(rs.getString(13));
+					dto.setTipo(rs.getString(14));
+					
+					listaDocentes.add(dto);
+					
+				}
+
+				ps.close();
+				con.close();
+
+				return listaDocentes;
+			}		
+
+			else {				
+				return null;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();			
+			return null;
+		} finally {
+			ps.close();
+			con.close();
+		}
+	}
+	
+	@Override
+	public DocenteDTO presentarCargoDedicacionRelLab(Integer idPensum, Integer idOpcion, String nced)throws Exception {
+		
+		DocenteDTO val = new DocenteDTO();
+		Query query = null;
+		query = getEntityManager().createNativeQuery("SELECT  * FROM \"Rrhh\".bi_reportetipodedicacion_V2(?,?,?);");
+		
+		query.setParameter(1, idPensum);
+		query.setParameter(2, idOpcion);
+		query.setParameter(3, nced);
+		
+		List<?> lists = query.getResultList();
+		
+		
+		if (!lists.isEmpty()) {
+			for (Object list : lists) {
+				val = new DocenteDTO();
+				Object[] fila = (Object[]) list;
+				if (fila[0] != null && fila[0].toString().length() != 0)
+					val.setnCed(fila[0]==null? "" : fila[0].toString());
+				
+				
+				if (fila[1] != null && fila[1].toString().length() != 0){
+					String dato= null;
+					dato=(fila[1]==null ? "" : fila[1].toString()); 
+					if(idOpcion==1){
+						val.setCargo(dato);
+					}else if(idOpcion==2){
+						val.setDedicacion(dato);
+					}else if(idOpcion==3){
+						val.setRelacionLab(dato);
+					}
+				}
+			}
+		}else{
+			val= null;
+		}
+		
+		return val;
+		
 	}
 	
 }

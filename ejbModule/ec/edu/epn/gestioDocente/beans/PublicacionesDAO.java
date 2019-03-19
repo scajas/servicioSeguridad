@@ -8,11 +8,10 @@ import ec.edu.epn.generic.DAO.DaoGenerico;
 import ec.edu.epn.gestionDocente.entities.Publicacione;
 
 @Local
-public interface PublicacionesDAO extends DaoGenerico<Publicacione>{
+public interface PublicacionesDAO extends DaoGenerico<Publicacione> {
 
-	List<Publicacione> listaPublicacionesXCedula(String cedula, 
-			String validarecategoriza, String validarevaloriza,String clase, String tipoPublicacion
-			,String medio, String titulo, String idperiodo, boolean ordenPeriodo);
+	List<Publicacione> listaPublicacionesXCedula(String cedula, String validarecategoriza, String validarevaloriza,
+			String clase, String tipoPublicacion, String medio, String titulo, String idperiodo, boolean ordenPeriodo);
 
 	int countPublicacionXCedula(String cedula, String tituloPub, String medio, String idPeriodo,
 			Publicacione publicaciones) throws Exception;
@@ -27,10 +26,10 @@ public interface PublicacionesDAO extends DaoGenerico<Publicacione>{
 
 	List<Publicacione> listPublicacionesTipo(String nced, List<String> tipo, String idPeriodo) throws Exception;
 
-	List<Publicacione> listaPublicacionesXProyectoAC(String cedula, String tipoPublic, Integer idpensum,
+	List<Publicacione> listaPublicacionesXProyectoAC(List<String> cedulas, String tipoPublic, Integer idpensum,
 			Integer idproyecto, String titulo);
 
-	List<Publicacione> listaPublicacionesXProyectoPonencia(String cedula, String tipoPublic, Integer idpensum,
+	List<Publicacione> listaPublicacionesXProyectoPonencia(List<String> cedulas, String tipoPublic, Integer idpensum,
 			Integer idproyecto, String titulo);
 
 	List<Publicacione> listaPublicacionesXProyectoACReporte(String tipoPublic, Integer idpensum, Integer idproyecto);

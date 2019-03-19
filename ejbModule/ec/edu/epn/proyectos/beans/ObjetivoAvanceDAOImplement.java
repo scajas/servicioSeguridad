@@ -154,5 +154,16 @@ public class ObjetivoAvanceDAOImplement extends DaoGenericoImplement<Objetivoava
 			super.cerrarConexion(con, ps);
 		}
 	}
+	
+	
+	@Override
+	public Long countObjtvAvanceXidObjProy(Integer idObjetivoProyecto) {
+		Query q = getEntityManager()
+				.createQuery(
+						"SELECT count(oa) FROM  Objetivoavance oa WHERE oa.objetivo.idObjproy= ? ");
+			
+		q.setParameter(1, idObjetivoProyecto);		
+		return (Long) q.getSingleResult();
+	}
 
 }

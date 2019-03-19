@@ -32,6 +32,18 @@ public class SubTipoAccionDAOImplement extends DaoGenericoImplement<SubtipoAccio
 
 		return resultado;
 	}
+	
+	@Override
+	public List<SubtipoAccion> getAllSubtipoRectificaciones(){
+		StringBuilder queryString = new StringBuilder(
+				"Select sta from SubtipoAccion " + "sta where sta.nombreSubaccion like ?1)");
+		Query query = getEntityManager().createQuery(queryString.toString());
+		query.setParameter(1, "RECTIFICACION%");
+
+		List<SubtipoAccion> resultado = query.getResultList();
+
+		return resultado;
+	}
 
 	@Override
 	public List<SubtipoAccion> findSubTipoAccionPorAccion(String nombreAccion) {
@@ -96,6 +108,17 @@ public class SubTipoAccionDAOImplement extends DaoGenericoImplement<SubtipoAccio
 			resultado = (SubtipoAccion) query.getResultList().get(0);
 		}
 
+		return resultado;
+	}
+
+	@Override
+	public List<SubtipoAccion> findAccionesAdministrablesPlantilla() {
+		StringBuilder queryString = new StringBuilder(
+				"Select sta from SubtipoAccion " 
+		      + "sta where (sta.idStpa between 1 and 100) or "
+		      + " sta.idStpa = 269 or sta.idStpa = 278 ");
+		Query query = getEntityManager().createQuery(queryString.toString());
+		List<SubtipoAccion> resultado = query.getResultList();
 		return resultado;
 	}
 }

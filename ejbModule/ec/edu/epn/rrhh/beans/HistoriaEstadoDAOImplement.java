@@ -30,6 +30,8 @@ public class HistoriaEstadoDAOImplement extends DaoGenericoImplement<HistoriaEst
 
 	}
 	
+
+	
 	@Override
 	public int consultarIdhisotrial() {
 

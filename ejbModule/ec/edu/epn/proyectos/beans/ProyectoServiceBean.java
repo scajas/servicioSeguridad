@@ -12,6 +12,8 @@ import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.hibernate.SQLQuery.ReturnProperty;
+
 import ec.edu.epn.gestioDocente.beans.*;
 import ec.edu.epn.gestionDocente.entities.Publicacione;
 import ec.edu.epn.catalogos.entities.Departamento;
@@ -566,7 +568,7 @@ public class ProyectoServiceBean   implements ProyectoService {
 	public List<ObjetivoProyecto> findObjetivosproyec(Integer idproy) {
 		Query qUsuario = getEntityManager()
 				.createQuery(
-						"select objproy from ObjetivoProyectoP objproy where objproy.proyecto.idProy = ?1");
+						"select objproy from ObjetivoProyecto objproy where objproy.proyecto.idProy = ?1");
 		qUsuario.setParameter(1, idproy);
 		return qUsuario.getResultList();
 
@@ -577,7 +579,7 @@ public class ProyectoServiceBean   implements ProyectoService {
 			Integer idObj) {
 		Query qUsuario = getEntityManager()
 				.createQuery(
-						"select objproy from ObjetivoProyectoP objproy where objproy.proyecto.idProy = ?1 and objproy.tipoObjetivo.idTipoObj = ?2");
+						"select objproy from ObjetivoProyecto objproy where objproy.proyecto.idProy = ?1 and objproy.tipoObjetivo.idTipoObj = ?2");
 		qUsuario.setParameter(1, idproy);
 		qUsuario.setParameter(2, idObj);
 		return qUsuario.getResultList();
@@ -896,7 +898,7 @@ public class ProyectoServiceBean   implements ProyectoService {
 		System.out.println("Entraaaaaaa ConsultarID");
 		Query q = getEntityManager().createQuery(
 				"SELECT MAX(pr.serial)FROM ProyectoP pr"
-						+ " where anio =?1 and pr.tipoProyectoP.idTipoProy =?2 "
+						+ " where anio =?1 and pr.tipoProyecto.idTipoProy =?2 "
 						+ "");
 
 		Integer idReq = null;
@@ -929,7 +931,7 @@ public class ProyectoServiceBean   implements ProyectoService {
 	public Integer consultarIdObje_Proy() {
 		System.out.println("Entraaaaaaa ConsultarID");
 		Query q = getEntityManager().createQuery(
-				"SELECT MAX(objProy.idObjproy)FROM ObjetivoProyectoP objProy");
+				"SELECT MAX(objProy.idObjproy)FROM ObjetivoProyecto objProy");
 
 		Integer idReq = null;
 		try {
@@ -1761,19 +1763,26 @@ public class ProyectoServiceBean   implements ProyectoService {
 			String codigo, Integer idlinea, String coddep, String cedula,
 			String estado, Integer anio) {
 
+		System.out.println("voy a consultar pee");
+		
+		List<ProyectoP> proys = new ArrayList<ProyectoP>();
+		try {
+			
+		
+		
 		StringBuilder queryString = new StringBuilder(
 				"select DISTINCT(pr) from ProyectoP pr, RecursohPr rp, Lineasproy lp, LineasInvestigacion li where   pr.idProy = rp.proyecto.idProy and pr.idProy = lp.proyecto.idProy and lp.lineas.idLinin = li.idLinin and   pr.nombrePr like ?1 ");
 
 		if (idtipo != 0) {
-			queryString.append(" and pr.tipoProyectoP.idTipoProy  = ?2 ");
+			queryString.append(" and pr.tipoProyecto.idTipoProy  = ?2 ");
 		}
 
 		if (area != null) {
-			queryString.append(" and pr.area = ?3 ");
+			queryString.append(" and pr.area like ?3 ");
 		}
 
 		if (codigo != null) {
-			queryString.append(" and pr.codigoPr = ?4 ");
+			queryString.append(" and pr.codigoPr like ?4 ");
 		}
 
 		if (idlinea != 0) {
@@ -1781,14 +1790,14 @@ public class ProyectoServiceBean   implements ProyectoService {
 		}
 
 		if (coddep != null) {
-			queryString.append(" and pr.coddep = ?6 ");
+			queryString.append(" and pr.coddep like ?6 ");
 		}
 		if (cedula != null) {
-			queryString.append(" and rp.nced = ?7 ");
+			queryString.append(" and rp.nced like ?7 ");
 		}
 
 		if (estado != null) {
-			queryString.append(" and pr.estado = ?8 ");
+			queryString.append(" and pr.estado like ?8 ");
 		}
 
 		if (anio != 0) {
@@ -1831,7 +1840,14 @@ public class ProyectoServiceBean   implements ProyectoService {
 			qUsuario.setParameter(9, anio);
 		}
 
-		return qUsuario.getResultList();
+		proys =  qUsuario.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+			proys = null;
+		}
+		
+		return proys;
+		
 
 	}
 

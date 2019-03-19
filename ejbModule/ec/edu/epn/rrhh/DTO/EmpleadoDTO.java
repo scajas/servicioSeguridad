@@ -16,6 +16,9 @@ public class EmpleadoDTO implements Serializable {
 	private String tipoContrato;
 	private String dedicacion;
 	private String nombrefacultad;
+	private String fechaIngresoEPN;
+	private String cargo;
+	
 
 	public EmpleadoDTO() {
 
@@ -137,6 +140,34 @@ public class EmpleadoDTO implements Serializable {
 	 */
 	public void setNombrefacultad(String nombrefacultad) {
 		this.nombrefacultad = nombrefacultad;
+	}
+
+	/**
+	 * @return the fechaIngresoEPN
+	 */
+	public String getFechaIngresoEPN() {
+		return fechaIngresoEPN;
+	}
+
+	/**
+	 * @return the cargo
+	 */
+	public String getCargo() {
+		return cargo;
+	}
+
+	/**
+	 * @param fechaIngresoEPN the fechaIngresoEPN to set
+	 */
+	public void setFechaIngresoEPN(String fechaIngresoEPN) {
+		this.fechaIngresoEPN = fechaIngresoEPN;
+	}
+
+	/**
+	 * @param cargo the cargo to set
+	 */
+	public void setCargo(String cargo) {
+		this.cargo = cargo;
 	}
 
 }

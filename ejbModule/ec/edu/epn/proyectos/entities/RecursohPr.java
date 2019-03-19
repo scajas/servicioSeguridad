@@ -3,6 +3,9 @@ package ec.edu.epn.proyectos.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import ec.edu.epn.rrhh.entities.Emp;
 
 import java.util.Date;

@@ -87,6 +87,8 @@ public class Emp implements Serializable {
 	@Column(name="cod_dep_jefe")
 	private String codDepJefe;
 	
+	@Column(name="pasaporte_extranjero")
+	private String pasaporteExtranjero;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name="fec_ingepn")
@@ -1693,6 +1695,20 @@ public class Emp implements Serializable {
 
 	public void setVacas(List<Vaca> vacas) {
 		this.vacas = vacas;
+	}
+
+	/**
+	 * @return the pasaporteExtranjero
+	 */
+	public String getPasaporteExtranjero() {
+		return pasaporteExtranjero;
+	}
+
+	/**
+	 * @param pasaporteExtranjero the pasaporteExtranjero to set
+	 */
+	public void setPasaporteExtranjero(String pasaporteExtranjero) {
+		this.pasaporteExtranjero = pasaporteExtranjero;
 	}
 
 }

@@ -255,18 +255,6 @@
 		<class>ec.edu.epn.proyectos.entities.CierrePeriodo</class>
 		<class>ec.edu.epn.proyectos.entities.Comentario</class>
 		<class>ec.edu.epn.proyectos.entities.RecorridoCierre</class>
-		<class>ec.indumaq.entidades.CategoriaProductoIndumaq</class>
-		<class>ec.indumaq.entidades.ClienteIndumaq</class>
-		<class>ec.indumaq.entidades.DetalleProductoIndumaq</class>
-		<class>ec.indumaq.entidades.EstadoFacturaIndumaq</class>
-		<class>ec.indumaq.entidades.FacturaIndumaq</class>
-		<class>ec.indumaq.entidades.FormaPagosFacturaIndumaq</class>
-		<class>ec.indumaq.entidades.PagosFacturaIndumaq</class>
-		<class>ec.indumaq.entidades.ProductoIndumaq</class>
-		<class>ec.indumaq.entidades.ProveedorIndumaq</class>
-		<class>ec.indumaq.entidades.SucursalIndumaq</class>
-		<class>ec.indumaq.entidades.TipoFacturaIndumaq</class>
-		<class>ec.indumaq.entidades.VentaIndumaq</class>
 		<class>ec.edu.epn.deportivo.entities.Deporte</class>
 		<class>ec.edu.epn.deportivo.entities.DiasPlanificacion</class>
 		<class>ec.edu.epn.deportivo.entities.Diashora</class>

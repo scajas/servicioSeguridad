@@ -22,4 +22,6 @@ public interface ObjetivoAvanceDAO extends DaoGenerico<Objetivoavance> {
 
 	boolean deleteObjJDBC(Objetivoavance tfa);
 
+	Long countObjtvAvanceXidObjProy(Integer idObjetivoProyecto);
+
 }

@@ -3,9 +3,11 @@ package ec.edu.epn.proyectos.beans;
 import javax.ejb.Local;
 
 import ec.edu.epn.generic.DAO.DaoGenerico;
+import ec.edu.epn.proyectos.DTO.ProyectoDTO;
 import ec.edu.epn.proyectos.entities.Convocatoria;
 import ec.edu.epn.proyectos.entities.ProyectoP;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @Local
@@ -25,6 +27,12 @@ public interface ProyectoPDAO extends DaoGenerico<ProyectoP> {
 	int consultarNumeroSerial(int anio, int idtipo);
 
 	ProyectoP buscarProyecto(Integer idProy) throws Exception;
+
+	List<ProyectoDTO> listProyectoPlanificacion(String cedula) throws SQLException;
+
+	List<ProyectoP> findproyectosActivos(String coddep, String nombre, String cedula);
+
+	String findDirectorXProyecto(Integer idProyecto);
 	
 	
 }

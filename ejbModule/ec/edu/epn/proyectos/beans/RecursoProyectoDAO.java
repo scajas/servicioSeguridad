@@ -21,6 +21,10 @@ public interface RecursoProyectoDAO extends DaoGenerico<RecursohPr> {
 	List<RecursohPr> buscarRecursoExisteCedula(String nced, Integer idproy) throws Exception;
 
 	List<RecursohPr> findrecProy(Integer idproy);
+
+	RecursohPr findDirectorbycedula(String cedula);
+
+	List<RecursohPr> findAllDirectores();
 	
 	
 

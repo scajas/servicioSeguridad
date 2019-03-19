@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -11,8 +12,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.resource.cci.Streamable;
+
+import org.primefaces.model.StreamedContent;
 
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
@@ -52,11 +58,16 @@ import ec.edu.epn.proyectos.entities.Producto;
 import ec.edu.epn.proyectos.entities.ProyectoP;
 import ec.edu.epn.proyectos.entities.Recursoavance;
 import ec.edu.epn.proyectos.entities.RecursohPr;
+import ec.edu.epn.publik.beans.UsuarioService;
 import ec.edu.epn.rrhh.DTO.DocenteDTO;
+import ec.edu.epn.rrhh.beans.DepDAO;
+import ec.edu.epn.rrhh.beans.DepDAOImplement;
 import ec.edu.epn.rrhh.entities.Dep;
 import ec.edu.epn.rrhh.entities.Emp;
 import ec.edu.epn.rrhh.entities.Eventocapac;
 import ec.edu.epn.rrhh.entities.Familiare;
+import ec.edu.epn.rrhh.movimientos.HistoriaLaboral;
+import ec.edu.epn.seguridad.vo.Usuario;
 import ec.edu.epn.silabo.entities.ActividadesVinculacion;
 import ec.edu.epn.silabo.entities.Bibliografia;
 import ec.edu.epn.silabo.entities.Capitulo;
@@ -77,13 +88,20 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 	/**
 	 * 
 	 */
+
+	@EJB(lookup = "java:global/ServiciosSeguridadEPN/UsuarioServiceBean!ec.edu.epn.publik.beans.UsuarioService")
+	private UsuarioService usuarioI;
+
 	private static final long serialVersionUID = 1503713234846805093L;
+
+	public static final String INFORME_AVANCE = "IA";
+	public static final String INFORME_PLANIFICACION = "IPL";
 
 	public String generarPdfRevaloriza(DocenteDTO docSelect, Recategorizacion recategor, Emp emp,
 			List<Tesissaew> tesissaew, List<Infoactividad> informes, List<NombramientoDTO> nom,
 			List<TituloFormacionAcademica> titulosRevaloriza, List<Publicacione> indexadas, List<Publicacione> obras,
 			List<Patente> patentes, List<ActividadProyecto> listaactividadPoryecto, List<ExpProfesExt> expExterna,
-			String pathDocs
+			String pathDocs, DocenteDTO docNuevoHL, List<HistoriaLaboral> historiaLaboral
 
 	) {
 		String url = "";
@@ -170,16 +188,16 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			datosPersonales.addCell(createLabelCell6(emp.getApel() + " " + emp.getNom()));
 
 			datosPersonales.addCell(createLabelCell5("Adscripción:"));
-			datosPersonales.addCell(createLabelCell6(emp.getDep().getNomDep()));
+			datosPersonales.addCell(createLabelCell6(docNuevoHL.getNomDepartamento()));
 
 			datosPersonales.addCell(createLabelCell5("Cargo:"));
-			datosPersonales.addCell(createLabelCell6(docSelect.getCargo()));
+			datosPersonales.addCell(createLabelCell6(docNuevoHL.getCargo()));
 
 			datosPersonales.addCell(createLabelCell5("Fecha Ingreso EPN:"));
 			datosPersonales.addCell(createLabelCell6(docSelect.getAuxFechaIngresoEPN()));
 
 			datosPersonales.addCell(createLabelCell5("Fecha último puesto:"));
-			datosPersonales.addCell(createLabelCell6(docSelect.getFechaContrat().toString()));
+			datosPersonales.addCell(createLabelCell6(docNuevoHL.getFechaContrat()));
 
 			datosPersonales.addCell(createLabelCell5("E-mail "));
 			datosPersonales.addCell(createLabelCell6(emp.getEmail1()));
@@ -473,12 +491,32 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			datosEPN.addCell(createLabelCell("F. Inicio"));
 			datosEPN.addCell(createLabelCell("F. Fin"));
 
-			for (NombramientoDTO nomb : nom) {
+			for (HistoriaLaboral nomb : historiaLaboral) {
 
-				datosEPN.addCell(createLabelCell4(nomb.getCargo()));
-				datosEPN.addCell(createLabelCell4(nomb.getCategoria()));
-				datosEPN.addCell(createLabelCell4(nomb.getFecha()));
-				datosEPN.addCell(createLabelCell4(nomb.getFechaF()));
+				
+				
+				if(nomb.getCargosm() == null)
+				{
+					datosEPN.addCell(createLabelCell4(""));
+				}
+				
+				else
+				{
+					datosEPN.addCell(createLabelCell4(nomb.getCargosm().getNombreCargo()));
+				}
+
+				datosEPN.addCell(createLabelCell4(""));
+				if (nomb.getFechaRige() == null) {
+					datosEPN.addCell(createLabelCell4(""));
+				} else {
+					datosEPN.addCell(createLabelCell4(nomb.getFechaRige().toString()));
+				}
+				
+				if (nomb.getFechaPrevistaFin() == null) {
+					datosEPN.addCell(createLabelCell4(""));
+				} else {
+					datosEPN.addCell(createLabelCell4(nomb.getFechaPrevistaFin().toString()));
+				}
 
 			}
 
@@ -633,7 +671,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 	public String generarPdfRecategoriza(DocenteDTO docSelect, Recategorizacion recategor, Emp emp,
 			List<NombramientoDTO> nom, List<TituloFormacionAcademica> titulosRevaloriza, List<Publicacione> indexadas,
 			List<Publicacione> obras, List<Patente> patentes, List<ActividadProyecto> listaactividadPoryecto,
-			List<ExpProfesExt> expExterna, List<Capacitacion> capacitaciones, String pathDocs
+			List<ExpProfesExt> expExterna, List<Capacitacion> capacitaciones, String pathDocs,DocenteDTO docHist, List<HistoriaLaboral> historias
 
 	) {
 		String url = "";
@@ -720,16 +758,16 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			datosPersonales.addCell(createLabelCell6(emp.getApel() + " " + emp.getNom()));
 
 			datosPersonales.addCell(createLabelCell5("Adscripción:"));
-			datosPersonales.addCell(createLabelCell6(emp.getDep().getNomDep()));
+			datosPersonales.addCell(createLabelCell6(docHist.getNomDepartamento()));
 
 			datosPersonales.addCell(createLabelCell5("Cargo:"));
-			datosPersonales.addCell(createLabelCell6(docSelect.getCargo()));
+			datosPersonales.addCell(createLabelCell6(docHist.getCargo()));
 
 			datosPersonales.addCell(createLabelCell5("Fecha Ingreso EPN:"));
 			datosPersonales.addCell(createLabelCell6(docSelect.getAuxFechaIngresoEPN()));
 
 			datosPersonales.addCell(createLabelCell5("Fecha último puesto:"));
-			datosPersonales.addCell(createLabelCell6(docSelect.getFechaContrat().toString()));
+			datosPersonales.addCell(createLabelCell6(docHist.getFechaContrat()));
 
 			datosPersonales.addCell(createLabelCell5("E-mail "));
 			datosPersonales.addCell(createLabelCell6(emp.getEmail1()));
@@ -822,12 +860,41 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			datosEPN.addCell(createLabelCell("F. Inicio"));
 			datosEPN.addCell(createLabelCell("F. Fin"));
 
-			for (NombramientoDTO nomb : nom) {
+			for (HistoriaLaboral nomb : historias) {
 
-				datosEPN.addCell(createLabelCell4(nomb.getCargo()));
-				datosEPN.addCell(createLabelCell4(nomb.getCategoria()));
-				datosEPN.addCell(createLabelCell4(nomb.getFecha()));
-				datosEPN.addCell(createLabelCell4(nomb.getFechaF()));
+				
+				
+				
+				if(nomb.getCargosm() == null)
+				{
+					datosEPN.addCell(createLabelCell4(""));
+				}
+				else
+				{
+					datosEPN.addCell(createLabelCell4(nomb.getCargosm().getNombreCargo()));
+				}
+				datosEPN.addCell(createLabelCell4(""));
+				if(nomb.getFechaRige() == null)
+				{
+					datosEPN.addCell(createLabelCell4(""));
+				}
+				else
+				{
+					datosEPN.addCell(createLabelCell4(nomb.getFechaRige().toString())) ;
+				}
+				
+				if(nomb.getFechaPrevistaFin() == null)
+				{
+					datosEPN.addCell(createLabelCell4(""));
+				}
+				else
+				{
+					datosEPN.addCell(createLabelCell4(nomb.getFechaPrevistaFin().toString()));
+				}
+				
+				
+				
+				
 
 			}
 
@@ -2040,8 +2107,8 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 
 			// Creacion del archivo
 
-			FileOutputStream outputStream = new FileOutputStream(new File(
-					pathDocs + "/" + proyecto.getCodigoPr().trim() + "-IA-" + periodo.getMeses() + ".pdf"));
+			FileOutputStream outputStream = new FileOutputStream(
+					new File(pathDocs + "/" + proyecto.getCodigoPr().trim() + "-IA-" + periodo.getMeses() + ".pdf"));
 
 			url = pathDocs + "/" + proyecto.getCodigoPr().trim() + "-IA-" + periodo.getMeses() + ".pdf";
 
@@ -2183,11 +2250,11 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			cell.setBackgroundColor(new BaseColor(250, 191, 143));
 			tablaEquipoP.addCell(cell);
 
-			cell = new PdfPCell(new Phrase("HSS\n" + cierre.getMeses(), fuente));
+			cell = new PdfPCell(new Phrase("Horas Semestre\n" + cierre.getMeses(), fuente));
 			cell.setBackgroundColor(new BaseColor(197, 217, 241));
 			tablaEquipoP.addCell(cell);
 
-			cell = new PdfPCell(new Phrase("HSS\n" + cierre.getMeses(), fuente));
+			cell = new PdfPCell(new Phrase("Horas Semestre\n" + cierre.getMeses(), fuente));
 			cell.setBackgroundColor(new BaseColor(250, 191, 143));
 			tablaEquipoP.addCell(cell);
 
@@ -2573,6 +2640,42 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			}
 			document.add(tablappON);
 
+			// PdfPTable tablaFirma = new PdfPTable(4);
+			//
+			// tablaFirma.setWidthPercentage(100);
+			// float[] columnWidtFir = new float[] { 15f, 35f, 15f, 35f };
+			// tablaFirma.setWidths(columnWidtFir);
+			//
+			// cell = new PdfPCell(new Phrase("Firma del director del proyecto",
+			// fuente));
+			// cell.setBackgroundColor(new BaseColor(197, 217, 241));
+			// cell.setRowspan(2);
+			// tablaFirma.addCell(cell);
+			//
+			// tablaFirma.addCell(createImageCell1(pathDocs + "/" + firmaDr));
+			//
+			// cell = new PdfPCell(new Phrase("Firma del jefe de departamento",
+			// fuente));
+			// cell.setBackgroundColor(new BaseColor(197, 217, 241));
+			// cell.setRowspan(2);
+			// tablaFirma.addCell(cell);
+			//
+			// tablaFirma.addCell(createImageCell1(pathDocs + "/" + firmaJD));
+			//
+			// cell = new PdfPCell(new Phrase(
+			// "Nombre del Director:" + director.getApellidoPersonalPr() + " " +
+			// director.getNombrePersonalPr(),
+			// fuenteContenido));
+			// tablaFirma.addCell(cell);
+			//
+			// cell = new PdfPCell(
+			// new Phrase("Nombre del Jefe Dept.:" + jefeDep.getApel() + " " +
+			// jefeDep.getNom(), fuenteContenido));
+			//
+			// tablaFirma.addCell(cell);
+			//
+			// document.add(tablaFirma);
+
 			PdfPTable tablaFirma = new PdfPTable(4);
 
 			tablaFirma.setWidthPercentage(100);
@@ -2580,26 +2683,39 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			tablaFirma.setWidths(columnWidtFir);
 
 			cell = new PdfPCell(new Phrase("Firma del director del proyecto", fuente));
-			cell.setBackgroundColor(new BaseColor(197, 217, 241));
+			cell.setBackgroundColor(new BaseColor(252, 213, 180));
 			cell.setRowspan(2);
 			tablaFirma.addCell(cell);
 
-			tablaFirma.addCell(createImageCell1(pathDocs + "/" + firmaJD));
+			if (firmaDr == null) {
+				cell = new PdfPCell(new Phrase("", fuenteContenido));
+				cell.setFixedHeight(40f);
+			} else {
+				cell = createImageCell1(pathDocs + "/" + firmaDr);
+			}
+
+			tablaFirma.addCell(cell);
 
 			cell = new PdfPCell(new Phrase("Firma del jefe de departamento", fuente));
-			cell.setBackgroundColor(new BaseColor(197, 217, 241));
+			cell.setBackgroundColor(new BaseColor(252, 213, 180));
 			cell.setRowspan(2);
 			tablaFirma.addCell(cell);
 
-			tablaFirma.addCell(createImageCell1(pathDocs + "/" + firmaDr));
+			if (firmaJD == null) {
+				cell = new PdfPCell(new Phrase("", fuenteContenido));
+				cell.setFixedHeight(40f);
+			} else {
+				cell = createImageCell1(pathDocs + "/" + firmaJD);
+			}
+			tablaFirma.addCell(cell);
 
 			cell = new PdfPCell(new Phrase(
-					"Nombre del Director:" + director.getApellidoPersonalPr() + " " + director.getNombrePersonalPr(),
+					"Nombre del Director:" + director.getApellidoPersonalPr() + "-" + director.getNombrePersonalPr(),
 					fuenteContenido));
 			tablaFirma.addCell(cell);
 
-			cell = new PdfPCell(
-					new Phrase("Nombre del Jefe Dept.:" + jefeDep.getApel() + " " + jefeDep.getNom(), fuenteContenido));
+			cell = new PdfPCell(new Phrase("Nombre del Jefe Dept.: " + jefeDep.getApel() + " " + jefeDep.getNom(),
+					fuenteContenido));
 
 			tablaFirma.addCell(cell);
 
@@ -2620,12 +2736,12 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 		}
 
 	}
-	
+
 	public String generarPdfInvestifacionReporteUpdate(List<EquipoProyectoDTO> recursos, List<Lineasproy> lineas,
 			ProyectoP proyecto, List<Objetivoavance> objetivos, CierrePeriodo cierre,
 			List<Cronogramaavance> actividades, List<Publicacione> publicaciones, List<Producto> tesis,
 			List<Publicacione> ponencias, String pathDocs, RecursohPr director, Pensum periodo, String sigla,
-			Emp jefeDep, Dep dep, String firmaJD, String firmaDr,Integer idversion) {
+			Emp jefeDep, Dep dep, String firmaJD, String firmaDr, Integer idversion) {
 		String url = "";
 		try {
 
@@ -2636,16 +2752,15 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 
 			// Creacion del archivo
 
-			FileOutputStream outputStream = new FileOutputStream(new File(
-					pathDocs + "/" + proyecto.getCodigoPr().trim() + "-" + periodo.getMeses() + "-" + sigla + idversion+"V2.pdf"));
+			FileOutputStream outputStream = new FileOutputStream(new File(pathDocs + "/" + proyecto.getCodigoPr().trim()
+					+ "-" + periodo.getMeses() + "-" + sigla + idversion + "V2.pdf"));
 
-			url = pathDocs + "/" + proyecto.getCodigoPr().trim() + "-" + periodo.getMeses() + "-" + sigla + idversion+"V2.pdf";
+			url = pathDocs + "/" + proyecto.getCodigoPr().trim() + "-" + periodo.getMeses() + "-" + sigla + idversion
+					+ "V2.pdf";
 
 			System.out.println("URL" + url);
 
 			PdfWriter writer = PdfWriter.getInstance(document, outputStream);
-			
-			
 
 			// Se abre el archivo para crear
 			document.open();
@@ -2751,7 +2866,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			PdfPTable tablaEquipoP = new PdfPTable(7);
 
 			tablaEquipoP.setWidthPercentage(100);
-			float[] columnWidthEqp = new float[] { 20f, 20f, 15f, 15f, 30f, 10f,10f };
+			float[] columnWidthEqp = new float[] { 20f, 20f, 15f, 15f, 30f, 10f, 10f };
 			tablaEquipoP.setWidths(columnWidthEqp);
 			cell = new PdfPCell(new Phrase("Equipo de trabajo del proyecto", fuente));
 			cell.setBackgroundColor(new BaseColor(217, 217, 217));
@@ -2772,12 +2887,11 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			cell.setBackgroundColor(new BaseColor(217, 217, 217));
 			cell.setRowspan(2);
 			tablaEquipoP.addCell(cell);
-			
+
 			cell = new PdfPCell(new Phrase("Justificación", fuente));
 			cell.setBackgroundColor(new BaseColor(217, 217, 217));
 			cell.setRowspan(2);
 			tablaEquipoP.addCell(cell);
-
 
 			cell = new PdfPCell(new Phrase("Planificadas", fuente));
 			cell.setBackgroundColor(new BaseColor(197, 217, 241));
@@ -2787,16 +2901,14 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			cell.setBackgroundColor(new BaseColor(250, 191, 143));
 			tablaEquipoP.addCell(cell);
 
-			cell = new PdfPCell(new Phrase("HSS\n" + cierre.getMeses(), fuente));
+			cell = new PdfPCell(new Phrase("Horas Semestre\n" + cierre.getMeses(), fuente));
 			cell.setBackgroundColor(new BaseColor(197, 217, 241));
 			tablaEquipoP.addCell(cell);
 
-			cell = new PdfPCell(new Phrase("HSS\n" + cierre.getMeses(), fuente));
+			cell = new PdfPCell(new Phrase("Horas Semestre\n" + cierre.getMeses(), fuente));
 			cell.setBackgroundColor(new BaseColor(250, 191, 143));
 			tablaEquipoP.addCell(cell);
-			
-			
-			
+
 			for (EquipoProyectoDTO rec : recursos) {
 				cell = new PdfPCell(new Phrase(rec.getRol(), fuente));
 				cell.setBackgroundColor(new BaseColor(197, 217, 241));
@@ -2810,7 +2922,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 
 				cell = new PdfPCell(new Phrase(rec.getCargo(), fuenteContenido));
 				tablaEquipoP.addCell(cell);
-				
+
 				cell = new PdfPCell(new Phrase(rec.getJustificacion(), fuenteContenido));
 				tablaEquipoP.addCell(cell);
 
@@ -2819,7 +2931,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 
 				cell = new PdfPCell(new Phrase(rec.getHreport().toString(), fuenteContenido));
 				tablaEquipoP.addCell(cell);
-				
+
 			}
 
 			document.add(tablaEquipoP);
@@ -2855,7 +2967,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			PdfPTable tablaObjEsp = new PdfPTable(5);
 
 			tablaObjEsp.setWidthPercentage(100);
-			float[] columnWidthObjEsp = new float[] { 5f, 30f, 35f, 10f,30f };
+			float[] columnWidthObjEsp = new float[] { 5f, 30f, 35f, 10f, 30f };
 			tablaObjEsp.setWidths(columnWidthObjEsp);
 
 			cell = new PdfPCell(new Phrase("N°", fuente));
@@ -2873,7 +2985,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			cell = new PdfPCell(new Phrase("% cumplimiento al \n" + cierre.getMeses(), fuente));
 			cell.setBackgroundColor(new BaseColor(197, 217, 241));
 			tablaObjEsp.addCell(cell);
-			
+
 			cell = new PdfPCell(new Phrase("Justificación", fuente));
 			cell.setBackgroundColor(new BaseColor(197, 217, 241));
 			tablaObjEsp.addCell(cell);
@@ -2893,7 +3005,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 
 				cell = new PdfPCell(new Phrase(objetivos.get(i).getAvance().toString(), fuenteContenido));
 				tablaObjEsp.addCell(cell);
-				
+
 				cell = new PdfPCell(new Phrase(objetivos.get(i).getJustificacion(), fuenteContenido));
 				tablaObjEsp.addCell(cell);
 
@@ -2927,7 +3039,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			PdfPTable tablaActividades = new PdfPTable(9);
 
 			tablaActividades.setWidthPercentage(100);
-			float[] columnWidtAct = new float[] { 5f, 55f, 25f, 5f, 5f, 5f, 5f, 5f,10f };
+			float[] columnWidtAct = new float[] { 5f, 55f, 25f, 5f, 5f, 5f, 5f, 5f, 10f };
 			tablaActividades.setWidths(columnWidtAct);
 
 			cell = new PdfPCell(new Phrase("N°", fuente));
@@ -2939,7 +3051,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			cell.setBackgroundColor(new BaseColor(197, 217, 241));
 			cell.setRowspan(2);
 			tablaActividades.addCell(cell);
-			
+
 			cell = new PdfPCell(new Phrase("Justificación", fuente));
 			cell.setBackgroundColor(new BaseColor(197, 217, 241));
 			cell.setRowspan(2);
@@ -2968,8 +3080,6 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			cell = new PdfPCell(new Phrase("M6", fuente));
 			cell.setBackgroundColor(new BaseColor(197, 217, 241));
 			tablaActividades.addCell(cell);
-			
-			
 
 			for (int i = 0; i < actividades.size(); i++) {
 				Integer numeral = i + 1;
@@ -2997,8 +3107,6 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				tablaActividades.addCell(cell);
 				cell = new PdfPCell(new Phrase(actividades.get(i).getM1112(), fuenteContenido));
 				tablaActividades.addCell(cell);
-				
-				
 
 			}
 
@@ -3252,7 +3360,8 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 	public String generarPdfInvestifacionReporteVistaPrevia(List<EquipoProyectoDTO> recursos, List<Lineasproy> lineas,
 			ProyectoP proyecto, List<Objetivoavance> objetivos, List<Cronogramaavance> actividades,
 			List<Publicacione> publicaciones, List<Producto> tesis, List<Publicacione> ponencias, String pathDocs,
-			Emp director, Pensum periodo, String sigla) {
+			Emp autoridad, Pensum periodo, String sigla, String pathFirmaDir, String pathFirmaJefe, RecursohPr director,
+			Dep dep) {
 		String url = "";
 		try {
 
@@ -3263,10 +3372,11 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 
 			// Creacion del archivo
 
-			FileOutputStream outputStream = new FileOutputStream(new File(
-					pathDocs + "/" + proyecto.getCodigoPr() + "-" + periodo.getMeses() + "-" + sigla + ".pdf"));
+			FileOutputStream outputStream = new FileOutputStream(new File(pathDocs + "/" + proyecto.getCodigoPr().trim()
+					+ "-" + INFORME_AVANCE + "-" + periodo.getMeses() + ".pdf"));
 
-			url = pathDocs + "/" + proyecto.getCodigoPr() + "-" + periodo.getMeses() + "-" + sigla + ".pdf";
+			url = pathDocs + "/" + proyecto.getCodigoPr().trim() + "-" + INFORME_AVANCE + "-" + periodo.getMeses()
+					+ ".pdf";
 
 			System.out.println("URL" + url);
 
@@ -3336,7 +3446,9 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			cell.setBackgroundColor(new BaseColor(197, 217, 241));
 			cell.setRowspan(2);
 			tablageneral.addCell(cell);
-			cell = new PdfPCell(new Phrase(director.getDep().getNomDep(), fuenteContenido));
+
+			cell = new PdfPCell(new Phrase(dep.getNomDep(), fuenteContenido));
+
 			cell.setRowspan(2);
 			tablageneral.addCell(cell);
 
@@ -3408,11 +3520,11 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			cell.setBackgroundColor(new BaseColor(250, 191, 143));
 			tablaEquipoP.addCell(cell);
 
-			cell = new PdfPCell(new Phrase("HSS\n" + periodo.getMeses(), fuente));
+			cell = new PdfPCell(new Phrase("Horas Semestre\n" + periodo.getMeses(), fuente));
 			cell.setBackgroundColor(new BaseColor(197, 217, 241));
 			tablaEquipoP.addCell(cell);
 
-			cell = new PdfPCell(new Phrase("HSS\n" + periodo.getMeses(), fuente));
+			cell = new PdfPCell(new Phrase("Horas Semestre\n" + periodo.getMeses(), fuente));
 			cell.setBackgroundColor(new BaseColor(250, 191, 143));
 			tablaEquipoP.addCell(cell);
 
@@ -3819,23 +3931,34 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			cell.setRowspan(2);
 			tablaFirma.addCell(cell);
 
-			cell = new PdfPCell(new Phrase("", fuenteContenido));
-			cell.setFixedHeight(40f);
+			if (pathFirmaDir == null) {
+				cell = new PdfPCell(new Phrase("", fuenteContenido));
+				cell.setFixedHeight(40f);
+			} else {
+				cell = createImageCell1(pathFirmaDir);
+			}
 			tablaFirma.addCell(cell);
 
 			cell = new PdfPCell(new Phrase("Firma del jefe de departamento", fuente));
 			cell.setBackgroundColor(new BaseColor(197, 217, 241));
 			cell.setRowspan(2);
 			tablaFirma.addCell(cell);
-			cell = new PdfPCell(new Phrase("", fuenteContenido));
-			cell.setFixedHeight(40f);
+
+			if (pathFirmaJefe == null) {
+				cell = new PdfPCell(new Phrase("", fuenteContenido));
+				cell.setFixedHeight(40f);
+			} else {
+				cell = createImageCell1(pathFirmaJefe);
+			}
 			tablaFirma.addCell(cell);
 
-			cell = new PdfPCell(
-					new Phrase("Nombre del Director:" + director.getApel() + " " + director.getNom(), fuenteContenido));
+			cell = new PdfPCell(new Phrase(
+					"Nombre del Director: " + director.getApellidoPersonalPr() + " " + director.getNombrePersonalPr(),
+					fuenteContenido));
 			tablaFirma.addCell(cell);
 
-			cell = new PdfPCell(new Phrase("Nombre del Jefe Dept.:", fuenteContenido));
+			cell = new PdfPCell(new Phrase("Nombre del Jefe Dept.: " + autoridad.getApel() + " " + autoridad.getNom(),
+					fuenteContenido));
 
 			tablaFirma.addCell(cell);
 
@@ -3871,9 +3994,10 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 
 			// Creacion del archivo
 
-			FileOutputStream outputStream = new FileOutputStream(new File(pathDocs + "/" + proyecto.getCodigoPr().trim() + "-IPL-" + periodo.getMeses() + ".pdf"));
+			FileOutputStream outputStream = new FileOutputStream(
+					new File(pathDocs + "/" + proyecto.getCodigoPr().trim() + "-IPL-" + periodo.getMeses() + ".pdf"));
 
-			url =  pathDocs + "/" + proyecto.getCodigoPr().trim() + "-IPL-" + periodo.getMeses() + ".pdf";
+			url = pathDocs + "/" + proyecto.getCodigoPr().trim() + "-IPL-" + periodo.getMeses() + ".pdf";
 
 			System.out.println("URL" + url);
 
@@ -4009,7 +4133,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			cell.setBackgroundColor(new BaseColor(197, 217, 241));
 			tablaEquipoP.addCell(cell);
 
-			cell = new PdfPCell(new Phrase("HSS\n" + cierre.getMeses(), fuente));
+			cell = new PdfPCell(new Phrase("Horas Semestre\n" + cierre.getMeses(), fuente));
 			cell.setBackgroundColor(new BaseColor(197, 217, 241));
 			tablaEquipoP.addCell(cell);
 
@@ -4198,6 +4322,44 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 
 			document.add(tablaActividades);
 
+			// PdfPTable tablaFirma = new PdfPTable(4);
+			//
+			// tablaFirma.setWidthPercentage(100);
+			// float[] columnWidtFir = new float[] { 15f, 35f, 15f, 35f };
+			// tablaFirma.setWidths(columnWidtFir);
+			//
+			// cell = new PdfPCell(new Phrase("Firma del director del proyecto",
+			// fuente));
+			// cell.setBackgroundColor(new BaseColor(252, 213, 180));
+			// cell.setRowspan(2);
+			// tablaFirma.addCell(cell);
+			//
+			// tablaFirma.addCell(createImageCell1(pathDocs + "/" +
+			// pathfirmaJD));
+			//
+			// cell = new PdfPCell(new Phrase("Firma del jefe de departamento",
+			// fuente));
+			// cell.setBackgroundColor(new BaseColor(252, 213, 180));
+			// cell.setRowspan(2);
+			// tablaFirma.addCell(cell);
+			//
+			// tablaFirma.addCell(createImageCell1(pathDocs + "/" +
+			// pathfirmaDr));
+			//
+			// cell = new PdfPCell(new Phrase(
+			// "Nombre del Director:" + director.getApellidoPersonalPr() + " " +
+			// director.getNombrePersonalPr(),
+			// fuenteContenido));
+			// tablaFirma.addCell(cell);
+			//
+			// cell = new PdfPCell(new Phrase("Nombre del Jefe Dept.:" +
+			// empleado.getApel() + " " + empleado.getNom(),
+			// fuenteContenido));
+			//
+			// tablaFirma.addCell(cell);
+			//
+			// document.add(tablaFirma);
+
 			PdfPTable tablaFirma = new PdfPTable(4);
 
 			tablaFirma.setWidthPercentage(100);
@@ -4209,21 +4371,34 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			cell.setRowspan(2);
 			tablaFirma.addCell(cell);
 
-			tablaFirma.addCell(createImageCell1(pathDocs + "/" + pathfirmaDr));
+			if (pathfirmaDr == null) {
+				cell = new PdfPCell(new Phrase("", fuenteContenido));
+				cell.setFixedHeight(40f);
+			} else {
+				cell = createImageCell1(pathDocs + "/" + pathfirmaDr);
+			}
+
+			tablaFirma.addCell(cell);
 
 			cell = new PdfPCell(new Phrase("Firma del jefe de departamento", fuente));
 			cell.setBackgroundColor(new BaseColor(252, 213, 180));
 			cell.setRowspan(2);
 			tablaFirma.addCell(cell);
 
-			tablaFirma.addCell(createImageCell1(pathDocs + "/" + pathfirmaJD));
+			if (pathfirmaJD == null) {
+				cell = new PdfPCell(new Phrase("", fuenteContenido));
+				cell.setFixedHeight(40f);
+			} else {
+				cell = createImageCell1(pathDocs + "/" + pathfirmaJD);
+			}
+			tablaFirma.addCell(cell);
 
 			cell = new PdfPCell(new Phrase(
-					"Nombre del Director:" + director.getApellidoPersonalPr() + " " + director.getNombrePersonalPr(),
+					"Nombre del Director:" + director.getApellidoPersonalPr() + "-" + director.getNombrePersonalPr(),
 					fuenteContenido));
 			tablaFirma.addCell(cell);
 
-			cell = new PdfPCell(new Phrase("Nombre del Jefe Dept.:" + empleado.getApel() + " " + empleado.getNom(),
+			cell = new PdfPCell(new Phrase("Nombre del Jefe Dept.: " + empleado.getApel() + " " + empleado.getNom(),
 					fuenteContenido));
 
 			tablaFirma.addCell(cell);
@@ -4245,12 +4420,11 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 		}
 
 	}
-	
-	
+
 	public String generarPdfInvestifacionReportePlanicacionupdate(List<Recursoavance> recursos, List<Lineasproy> lineas,
 			ProyectoP proyecto, List<Objetivoavance> objetivos, CierrePeriodo cierre,
 			List<Cronogramaavance> actividades, String pathDocs, RecursohPr director, Pensum periodo, String sigla,
-			Emp empleado, Dep dep, String pathfirmaJD, String pathfirmaDr,Integer idversion) {
+			Emp empleado, Dep dep, String pathfirmaJD, String pathfirmaDr, Integer idversion) {
 		String url = "";
 		try {
 
@@ -4262,15 +4436,15 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			// Creacion del archivo
 
 			FileOutputStream outputStream = new FileOutputStream(new File(pathDocs + "/" + "Proyecto" + "-"
-					+ director.getNced().trim() + "-" + periodo.getMeses() + "-" + sigla + idversion+"V2.pdf"));
+					+ director.getNced().trim() + "-" + periodo.getMeses() + "-" + sigla + idversion + "V2.pdf"));
 
 			url = pathDocs + "/" + "Proyecto" + "-" + director.getNced().trim() + "-" + periodo.getMeses() + "-" + sigla
-					+ idversion+"V2.pdf";
+					+ idversion + "V2.pdf";
 
 			System.out.println("URL" + url);
 
 			PdfWriter writer = PdfWriter.getInstance(document, outputStream);
-			
+
 			// Se abre el archivo para crear
 			document.open();
 			// Variable para ocupar otro pdf como plantilla
@@ -4375,7 +4549,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			PdfPTable tablaEquipoP = new PdfPTable(6);
 
 			tablaEquipoP.setWidthPercentage(100);
-			float[] columnWidthEqp = new float[] { 20f, 20f, 25f, 25f, 30f,15f };
+			float[] columnWidthEqp = new float[] { 20f, 20f, 25f, 25f, 30f, 15f };
 			tablaEquipoP.setWidths(columnWidthEqp);
 			cell = new PdfPCell(new Phrase("Equipo de trabajo del proyecto", fuente));
 			cell.setBackgroundColor(new BaseColor(217, 217, 217));
@@ -4396,7 +4570,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			cell.setBackgroundColor(new BaseColor(217, 217, 217));
 			cell.setRowspan(2);
 			tablaEquipoP.addCell(cell);
-			cell = new PdfPCell(new Phrase("Justificación" , fuente));
+			cell = new PdfPCell(new Phrase("Justificación", fuente));
 			cell.setBackgroundColor(new BaseColor(197, 217, 241));
 			cell.setRowspan(2);
 			tablaEquipoP.addCell(cell);
@@ -4404,14 +4578,10 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			cell = new PdfPCell(new Phrase("Planificadas", fuente));
 			cell.setBackgroundColor(new BaseColor(197, 217, 241));
 			tablaEquipoP.addCell(cell);
-			
 
-			cell = new PdfPCell(new Phrase("HSS\n" + cierre.getMeses(), fuente));
+			cell = new PdfPCell(new Phrase("Horas Semestre\n" + cierre.getMeses(), fuente));
 			cell.setBackgroundColor(new BaseColor(197, 217, 241));
 			tablaEquipoP.addCell(cell);
-			
-			
-			
 
 			for (Recursoavance rec : recursos) {
 				cell = new PdfPCell(new Phrase(rec.getRecurso().getRolProyecto().getRolProy(), fuente));
@@ -4428,14 +4598,12 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 
 				cell = new PdfPCell(new Phrase(rec.getRecurso().getCargo(), fuenteContenido));
 				tablaEquipoP.addCell(cell);
-				
+
 				cell = new PdfPCell(new Phrase(rec.getJustificacion(), fuenteContenido));
 				tablaEquipoP.addCell(cell);
 
 				cell = new PdfPCell(new Phrase(rec.getValor().toString(), fuenteContenido));
 				tablaEquipoP.addCell(cell);
-				
-				
 
 			}
 
@@ -4472,7 +4640,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			PdfPTable tablaObjEsp = new PdfPTable(5);
 
 			tablaObjEsp.setWidthPercentage(100);
-			float[] columnWidthObjEsp = new float[] { 5f, 40f, 45f, 10f,30f };
+			float[] columnWidthObjEsp = new float[] { 5f, 40f, 45f, 10f, 30f };
 			tablaObjEsp.setWidths(columnWidthObjEsp);
 
 			cell = new PdfPCell(new Phrase("N°", fuente));
@@ -4490,8 +4658,8 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			cell = new PdfPCell(new Phrase("% cumplimiento al \n" + cierre.getMeses(), fuente));
 			cell.setBackgroundColor(new BaseColor(252, 213, 180));
 			tablaObjEsp.addCell(cell);
-			
-			cell = new PdfPCell(new Phrase("Justificación" , fuente));
+
+			cell = new PdfPCell(new Phrase("Justificación", fuente));
 			cell.setBackgroundColor(new BaseColor(252, 213, 180));
 			tablaObjEsp.addCell(cell);
 
@@ -4510,7 +4678,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 
 				cell = new PdfPCell(new Phrase(objetivos.get(i).getAvance().toString(), fuenteContenido));
 				tablaObjEsp.addCell(cell);
-				
+
 				cell = new PdfPCell(new Phrase(objetivos.get(i).getJustificacion(), fuenteContenido));
 				tablaObjEsp.addCell(cell);
 
@@ -4544,7 +4712,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			PdfPTable tablaActividades = new PdfPTable(9);
 
 			tablaActividades.setWidthPercentage(100);
-			float[] columnWidtAct = new float[] { 5f, 55f, 30f, 5f, 5f, 5f, 5f, 5f,5f };
+			float[] columnWidtAct = new float[] { 5f, 55f, 30f, 5f, 5f, 5f, 5f, 5f, 5f };
 			tablaActividades.setWidths(columnWidtAct);
 
 			cell = new PdfPCell(new Phrase("N°", fuente));
@@ -4556,7 +4724,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			cell.setBackgroundColor(new BaseColor(252, 213, 180));
 			cell.setRowspan(2);
 			tablaActividades.addCell(cell);
-			
+
 			cell = new PdfPCell(new Phrase("Justificación", fuente));
 			cell.setBackgroundColor(new BaseColor(252, 213, 180));
 			cell.setRowspan(2);
@@ -4585,9 +4753,6 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			cell = new PdfPCell(new Phrase("M6", fuente));
 			cell.setBackgroundColor(new BaseColor(252, 213, 180));
 			tablaActividades.addCell(cell);
-			
-			
-			
 
 			for (int i = 0; i < actividades.size(); i++) {
 				Integer numeral = i + 1;
@@ -4598,7 +4763,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 
 				cell = new PdfPCell(new Phrase(actividades.get(i).getCronograma().getNombreCr(), fuenteContenido));
 				tablaActividades.addCell(cell);
-				
+
 				cell = new PdfPCell(new Phrase(actividades.get(i).getJustificacion(), fuenteContenido));
 				tablaActividades.addCell(cell);
 
@@ -4616,8 +4781,6 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				tablaActividades.addCell(cell);
 				cell = new PdfPCell(new Phrase(actividades.get(i).getM1112(), fuenteContenido));
 				tablaActividades.addCell(cell);
-				
-				
 
 			}
 
@@ -4673,7 +4836,8 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 
 	public String generarPdfInvestifacionReportePlanicacionPreview(List<Recursoavance> recursos,
 			List<Lineasproy> lineas, ProyectoP proyecto, List<Objetivoavance> objetivos,
-			List<Cronogramaavance> actividades, String pathDocs, Emp director, Pensum periodo, String sigla) {
+			List<Cronogramaavance> actividades, String pathDocs, Emp autoridad, Pensum periodo, String sigla,
+			String pathFirmaDir, String pathFirmaJefe, RecursohPr director, Dep dep) {
 		String url = "";
 		try {
 
@@ -4684,10 +4848,11 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 
 			// Creacion del archivo
 
-			FileOutputStream outputStream = new FileOutputStream(new File(
-					pathDocs + "/" + proyecto.getCodigoPr() + "-" + periodo.getMeses() + "-" + sigla + "TMP.pdf"));
+			FileOutputStream outputStream = new FileOutputStream(new File(pathDocs + "/" + proyecto.getCodigoPr().trim()
+					+ "-" + INFORME_PLANIFICACION + "-" + periodo.getMeses() + ".pdf"));
 
-			url = pathDocs + "/" + proyecto.getCodigoPr() + "-" + periodo.getMeses() + "-" + sigla + "TMP.pdf";
+			url = pathDocs + "/" + proyecto.getCodigoPr().trim() + "-" + INFORME_PLANIFICACION + "-"
+					+ periodo.getMeses() + ".pdf";
 
 			System.out.println("URL" + url);
 
@@ -4756,7 +4921,9 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			cell.setBackgroundColor(new BaseColor(252, 213, 180));
 			cell.setRowspan(2);
 			tablageneral.addCell(cell);
-			cell = new PdfPCell(new Phrase(director.getDep().getNomDep(), fuenteContenido));
+
+			cell = new PdfPCell(new Phrase(dep.getNomDep(), fuenteContenido));
+
 			cell.setRowspan(2);
 			tablageneral.addCell(cell);
 
@@ -4824,7 +4991,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			cell.setBackgroundColor(new BaseColor(197, 217, 241));
 			tablaEquipoP.addCell(cell);
 
-			cell = new PdfPCell(new Phrase("HSS\n" + periodo.getMeses(), fuente));
+			cell = new PdfPCell(new Phrase("Horas Semestre\n" + periodo.getMeses(), fuente));
 			cell.setBackgroundColor(new BaseColor(197, 217, 241));
 			tablaEquipoP.addCell(cell);
 
@@ -5034,23 +5201,35 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			cell.setRowspan(2);
 			tablaFirma.addCell(cell);
 
-			cell = new PdfPCell(new Phrase("", fuenteContenido));
-			cell.setFixedHeight(40f);
+			if (pathFirmaDir == null) {
+				cell = new PdfPCell(new Phrase("", fuenteContenido));
+				cell.setFixedHeight(40f);
+			} else {
+				cell = createImageCell1(pathFirmaDir);
+			}
+
 			tablaFirma.addCell(cell);
 
 			cell = new PdfPCell(new Phrase("Firma del jefe de departamento", fuente));
 			cell.setBackgroundColor(new BaseColor(252, 213, 180));
 			cell.setRowspan(2);
 			tablaFirma.addCell(cell);
-			cell = new PdfPCell(new Phrase("", fuenteContenido));
-			cell.setFixedHeight(40f);
+
+			if (pathFirmaJefe == null) {
+				cell = new PdfPCell(new Phrase("", fuenteContenido));
+				cell.setFixedHeight(40f);
+			} else {
+				cell = createImageCell1(pathFirmaJefe);
+			}
 			tablaFirma.addCell(cell);
 
-			cell = new PdfPCell(
-					new Phrase("Nombre del Director:" + director.getApel() + " " + director.getNom(), fuenteContenido));
+			cell = new PdfPCell(new Phrase(
+					"Nombre del Director:" + director.getApellidoPersonalPr() + "-" + director.getNombrePersonalPr(),
+					fuenteContenido));
 			tablaFirma.addCell(cell);
 
-			cell = new PdfPCell(new Phrase("Nombre del Jefe Dept.:", fuenteContenido));
+			cell = new PdfPCell(new Phrase("Nombre del Jefe Dept.: " + autoridad.getApel() + " " + autoridad.getNom(),
+					fuenteContenido));
 
 			tablaFirma.addCell(cell);
 

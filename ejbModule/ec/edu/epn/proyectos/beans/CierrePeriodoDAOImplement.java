@@ -1,13 +1,16 @@
 package ec.edu.epn.proyectos.beans;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.Query;
 
+import ec.edu.epn.contratos.beans.PensumDAO;
 import ec.edu.epn.generic.DAO.DaoGenericoImplement;
 import ec.edu.epn.proyectos.entities.CierrePeriodo;
 
@@ -17,6 +20,9 @@ import ec.edu.epn.proyectos.entities.CierrePeriodo;
 @Stateless
 @LocalBean
 public class CierrePeriodoDAOImplement extends DaoGenericoImplement<CierrePeriodo> implements CierrePeriodoDAO {
+
+	@EJB(lookup = "java:global/ServiciosSeguridadEPN/PensumDAOImplement!ec.edu.epn.contratos.beans.PensumDAO")
+	private PensumDAO pensumDAO;
 
 	@Override
 	public List<CierrePeriodo> consultarCierreProyecto(Integer idproy, Integer idpensun, String tipo) {
@@ -101,6 +107,9 @@ public class CierrePeriodoDAOImplement extends DaoGenericoImplement<CierrePeriod
 	@Override
 	public List<CierrePeriodo> consultarCierreProyectoDept(String estado, String coddep) {
 
+		List<CierrePeriodo> cierres = new ArrayList<CierrePeriodo>();
+		List<CierrePeriodo> listCierre = new ArrayList<CierrePeriodo>();
+
 		StringBuilder querys = new StringBuilder(
 				"SELECT e From CierrePeriodo e where e.cerrado = ?1 and e.proyecto.coddep  = ?2 ");
 		querys.append(" order by e.meses DESC");
@@ -109,7 +118,17 @@ public class CierrePeriodoDAOImplement extends DaoGenericoImplement<CierrePeriod
 		query.setParameter(1, estado);
 		query.setParameter(2, coddep);
 
-		return query.getResultList();
+		cierres = query.getResultList();
+
+		if (!cierres.isEmpty()) {
+			for (CierrePeriodo dto : cierres) {
+				dto.setPensum(pensumDAO.obtenerPensumById(dto.getIdPensum()));
+
+				listCierre.add(dto);
+			}
+		}
+
+		return listCierre;
 
 	}
 
@@ -117,7 +136,103 @@ public class CierrePeriodoDAOImplement extends DaoGenericoImplement<CierrePeriod
 	public List<CierrePeriodo> consultarCierres() {
 
 		StringBuilder querys = new StringBuilder(
-				"SELECT e From CierrePeriodo e where e.cerrado = 'S' order by e.proyecto.codigoPr ");
+				"SELECT e From CierrePeriodo e where e.cerrado = 'S' order by e.meses desc ");
+
+		Query query = getEntityManager().createQuery(querys.toString());
+
+		return query.getResultList();
+
+	}
+
+	@Override
+	public List<CierrePeriodo> consultarCierresVIPS() {
+
+		StringBuilder querys = new StringBuilder(
+				"SELECT e From CierrePeriodo e where e.cerrado = 'S' and e.path IS NOT EMPTY order by e.meses desc ");
+
+		Query query = getEntityManager().createQuery(querys.toString());
+
+		return query.getResultList();
+
+	}
+
+	@Override
+	public CierrePeriodo consultarCierreProyectoPensumIngresadas(Integer idproy, Integer idpensun, String tipo,
+			String cerrado) {
+
+		try {
+
+			StringBuilder querys = new StringBuilder("SELECT e From CierrePeriodo e where e.proyecto.idProy = ?1   ");
+
+			if (idpensun != 0) {
+				querys.append(" and e.idPensum = ?3 ");
+
+			}
+
+			if (tipo != null) {
+				querys.append(" and e.tipo = ?4 ");
+
+			}
+
+			querys.append(" order by e.meses DESC");
+
+			Query query = getEntityManager().createQuery(querys.toString());
+			query.setParameter(1, idproy);
+
+			if (idpensun != 0) {
+				query.setParameter(3, idpensun);
+
+			}
+
+			if (tipo != null) {
+				query.setParameter(4, tipo);
+
+			}
+			return (CierrePeriodo) query.getSingleResult();
+
+		} catch (NoResultException e) {
+			return null;
+		}
+
+		catch (NonUniqueResultException e) {
+			return null;
+		} catch (Exception e) {
+			return null;
+		}
+
+	}
+
+	@Override
+	public List<CierrePeriodo> consultarCierreProyectoDeptEstados(String coddep) {
+
+		List<CierrePeriodo> cierres = new ArrayList<CierrePeriodo>();
+		List<CierrePeriodo> listCierre = new ArrayList<CierrePeriodo>();
+
+		StringBuilder querys = new StringBuilder("SELECT e From CierrePeriodo e where e.proyecto.coddep  = ?1 and e.idPensum > 17 ");
+		querys.append(" order by e.meses DESC");
+
+		Query query = getEntityManager().createQuery(querys.toString());
+
+		query.setParameter(1, coddep);
+
+		cierres = query.getResultList();
+
+		if (!cierres.isEmpty()) {
+			for (CierrePeriodo dto : cierres) {
+				dto.setPensum(pensumDAO.obtenerPensumById(dto.getIdPensum()));
+
+				listCierre.add(dto);
+			}
+		}
+
+		return listCierre;
+
+	}
+	@Override
+	public List<CierrePeriodo> consultarCierresReporte() {
+
+		StringBuilder querys = new StringBuilder(
+				"SELECT e From CierrePeriodo e where e.idPensum > 17 order by e.meses desc ");
 
 		Query query = getEntityManager().createQuery(querys.toString());
 

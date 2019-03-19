@@ -15,5 +15,7 @@ public interface TipoRelacionDAO extends DaoGenerico<TipoRelacion> {
 	public List<TipoRelacion> findTipoRelacionActivo();
 	
 	public List<TipoRelacion> findTipoRelacionConvenioActivo();
+	
+	public List<TipoRelacion> findAllTipoRelacionActivos();
 
 }

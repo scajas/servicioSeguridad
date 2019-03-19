@@ -7,8 +7,6 @@ import java.util.List;
 import javax.ejb.EJBHome;
 import javax.ejb.Local;
 
-import ec.edu.epn.infraestructura.entities.LugarEspacio;
-
 
 @Local
 public interface DaoGenerico<E> extends EJBHome {
@@ -29,11 +27,7 @@ public interface DaoGenerico<E> extends EJBHome {
 	Connection conexionDocenteReporte();	
 
 
-
-
-
 	Integer generarId(String entidad, String id);
-
 
 	void eliminar(String entidad, String idCampo, Integer valor);	
 

@@ -25,36 +25,36 @@ public class ComentariosDAOImplement extends DaoGenericoImplement<Comentario> im
 
 		if (estado != null) {
 
-			querys.append(" and   e.estado = ?2  ");
+			querys.append(" and   e.estado = ?2 ");
 		}
 
 		if (idproy != 0) {
 
-			querys.append(" and e.cierre.proyecto.idProy = ?3  ");
+			querys.append(" and e.cierre.proyecto.idProy = ?3 ");
 		}
 
 		if (cedula != null) {
 
-			querys.append(" and e.nced = ?4  ");
+			querys.append(" and e.nced = ?4 ");
 		}
 
 		if (departamento != null) {
 
-			querys.append(" and  e.coddep = ?5  ");
+			querys.append(" and  e.coddep = ?5 ");
 		}
 		if (tipo != null) {
 
-			querys.append(" and  e.tipo = ?6  ");
+			querys.append(" and  e.tipo = ?6 ");
 		}
 
 		if (vips != null) {
 
-			querys.append(" and  e.vips = ?7  ");
+			querys.append(" and  e.vips = ?7 ");
 		}
 		
 		if (idpensum != 0) {
 
-			querys.append(" and e.cierre.idPensum = ?8  ");
+			querys.append(" and e.cierre.idPensum = ?8 ");
 		}
 		
 		

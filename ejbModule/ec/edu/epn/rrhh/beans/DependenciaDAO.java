@@ -29,6 +29,10 @@ public interface DependenciaDAO extends DaoGenerico<Dependencia> {
 	
 	Dependencia getDependenciaByNombre(String nombreDependencia);
 
+	List<Dependencia> getDependencias();
+
+	List<Dependencia> getDependenciasAll();
+
 	
 
 }
