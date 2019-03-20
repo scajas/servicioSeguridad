@@ -113,7 +113,7 @@
 		</dependency>
 
 
-		<!-- https://mvnrepository.com/artifact/org.jasig.cas/cas-client-core CAMBIO EN F01-->
+		<!-- CAMBIO WILDON F01 https://mvnrepository.com/artifact/org.jasig.cas/cas-client-core -->
 		<dependency>
 			<groupId>org.jasig.cas</groupId>
 			<artifactId>cas-client-core</artifactId>
