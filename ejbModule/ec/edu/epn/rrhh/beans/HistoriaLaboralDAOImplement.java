@@ -2077,19 +2077,25 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		/*
 		 * Revisar aqui el estado actual
 		 */
-		if(resultado.size()>1){
-			for (HistoriaLaboral ultimo : resultado) {
-				if (ultimo.getId().getEstado() != "Anulado" && ultimo.getFechaRige() != null) {
-					if (ultimo.getFechaFin() != null) {
-						ultimoContrato = ultimo;
-						break;
+		
+		if(!resultado.isEmpty()){
+			if(resultado.size()>1){
+				for (HistoriaLaboral ultimo : resultado) {
+					if (ultimo.getId().getEstado() != "Anulado" && ultimo.getFechaRige() != null) {
+						if (ultimo.getFechaFin() != null) {
+							ultimoContrato = ultimo;
+							break;
+						}
 					}
 				}
+				return ultimoContrato;
+			}else{
+				return resultado.get(0);
 			}
-			return ultimoContrato;
 		}else{
-			return resultado.get(0);
+			return null;
 		}
+		
 		
 
 	
