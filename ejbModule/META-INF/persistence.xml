@@ -263,6 +263,55 @@
 		<class>ec.edu.epn.deportivo.entities.HoraPlanificacion</class>
 		<class>ec.edu.epn.deportivo.entities.Planificacion</class>
 		<class>ec.edu.epn.deportivo.entities.GrupoEstudiante</class>
+		<class>ec.edu.epn.laboratorioBJ.entities.Bodega</class>
+		<class>ec.edu.epn.laboratorioBJ.entities.BodegaUsuario</class>
+		<class>ec.edu.epn.laboratorioBJ.entities.Caracteristica</class>
+		<class>ec.edu.epn.laboratorioBJ.entities.CaracteristicaUsuario</class>
+		<class>ec.edu.epn.laboratorioBJ.entities.Cargospersonal</class>
+		<class>ec.edu.epn.laboratorioBJ.entities.Cliente</class>
+		<class>ec.edu.epn.laboratorioBJ.entities.Compra</class>
+		<class>ec.edu.epn.laboratorioBJ.entities.Concentracion</class>
+		<class>ec.edu.epn.laboratorioBJ.entities.BodegaUsuarioPK</class>
+		<class>ec.edu.epn.laboratorioBJ.entities.CaracteristicaUsuarioPK</class>
+		<class>ec.edu.epn.laboratorioBJ.entities.ControlExistenciaMetodo</class>
+		<class>ec.edu.epn.laboratorioBJ.entities.Detalle</class>
+		<class>ec.edu.epn.laboratorioBJ.entities.Detallemetodo</class>
+		<class>ec.edu.epn.laboratorioBJ.entities.Detalleorden</class>
+		<class>ec.edu.epn.laboratorioBJ.entities.DetalleProforma</class>
+		<class>ec.edu.epn.laboratorioBJ.entities.Estadoproducto</class>
+		<class>ec.edu.epn.laboratorioBJ.entities.Existencia</class>
+		<class>ec.edu.epn.laboratorioBJ.entities.Grado</class>
+		<class>ec.edu.epn.laboratorioBJ.entities.Hidratacion</class>
+		<class>ec.edu.epn.laboratorioBJ.entities.LaboratorioLab</class>
+		<class>ec.edu.epn.laboratorioBJ.entities.LaboratorioUsuario</class>
+		<class>ec.edu.epn.laboratorioBJ.entities.LaboratorioUsuarioPK</class>
+		<class>ec.edu.epn.laboratorioBJ.entities.laboratory</class>
+		<class>ec.edu.epn.laboratorioBJ.entities.Metodo</class>
+		<class>ec.edu.epn.laboratorioBJ.entities.Movimientosinventario</class>
+		<class>ec.edu.epn.laboratorioBJ.entities.Muestra</class>
+		<class>ec.edu.epn.laboratorioBJ.entities.Norma</class>
+		<class>ec.edu.epn.laboratorioBJ.entities.Ordeninventario</class>
+		<class>ec.edu.epn.laboratorioBJ.entities.OrdenTrabajo</class>
+		<class>ec.edu.epn.laboratorioBJ.entities.PersonalLab</class>
+		<class>ec.edu.epn.laboratorioBJ.entities.Posgiro</class>
+		<class>ec.edu.epn.laboratorioBJ.entities.Presentacion</class>
+		<class>ec.edu.epn.laboratorioBJ.entities.ProductoLab</class>
+		<class>ec.edu.epn.laboratorioBJ.entities.Proforma</class>
+		<class>ec.edu.epn.laboratorioBJ.entities.ProveedorLab</class>
+		<class>ec.edu.epn.laboratorioBJ.entities.Pureza</class>
+		<class>ec.edu.epn.laboratorioBJ.entities.Riesgoespecifico</class>
+		<class>ec.edu.epn.laboratorioBJ.entities.SaldoExistencia</class>
+		<class>ec.edu.epn.laboratorioBJ.entities.SaldoExistenciaPK</class>
+		<class>ec.edu.epn.laboratorioBJ.entities.Servicio</class>
+		<class>ec.edu.epn.laboratorioBJ.entities.Tipocliente</class>
+		<class>ec.edu.epn.laboratorioBJ.entities.TipoJustificacion</class>
+		<class>ec.edu.epn.laboratorioBJ.entities.Tipopersonal</class>
+		<class>ec.edu.epn.laboratorioBJ.entities.Tipoproducto</class>
+		<class>ec.edu.epn.laboratorioBJ.entities.Tipoproveedor</class>
+		<class>ec.edu.epn.laboratorioBJ.entities.Tipordeninv</class>
+		<class>ec.edu.epn.laboratorioBJ.entities.Tiposervicio</class>
+		<class>ec.edu.epn.laboratorioBJ.entities.UnidadLabo</class>
+		<class>ec.edu.epn.laboratorioBJ.entities.Unidadmedida</class>
 		
 
 
