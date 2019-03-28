@@ -39,7 +39,7 @@ class MateriaServiceBean implements MateriaService {
 			Query query = null;
 			if (!codMateria.equals("")) {
 				queryString = new StringBuilder(
-						"SELECT ma FROM Materia ma where ma.codMateria like ?1 and ma.carreraMateria like ?2");
+						"SELECT ma FROM Materia ma where ma.codmatsaew like ?1 and ma.carreraMateria like ?2");
 				query = getEntityManager().createQuery(queryString.toString());
 				query.setParameter(1, "%" + codMateria + "%");
 				query.setParameter(2, carrera);
@@ -168,7 +168,7 @@ class MateriaServiceBean implements MateriaService {
 		Query query = null;
 
 		queryString = new StringBuilder(
-				"SELECT ma FROM CargaAcademica ma where ma.codMatSAE = ?1 and ma.pedido.idPedido = ?2");
+				"SELECT ma FROM CargaAcademica ma where ma.codmatsaew = ?1 and ma.pedido.idPedido = ?2");
 		query = getEntityManager().createQuery(queryString.toString());
 		query.setParameter(1, codigo);
 		query.setParameter(2, idPedido);
@@ -184,7 +184,7 @@ class MateriaServiceBean implements MateriaService {
 		Query query = null;
 		boolean ver = false;
 		queryString = new StringBuilder(
-				"SELECT ma FROM CargaAcademica ma where ma.idcarrerasaew = ?1 and ma.codmatsaew = ?2 and ma.paralelo = ?3 and ma.pedido.pensum.idPensum = ?4 ");
+				"SELECT ma FROM CargaAcademica ma where ma.idCarreraSaew  = ?1 and ma.codmatsaew = ?2 and ma.paralelo = ?3 and ma.pedido.pensum.idPensum = ?4 ");
 		query = getEntityManager().createQuery(queryString.toString());
 		query.setParameter(1, idcarrera);
 		query.setParameter(2, idmateria);

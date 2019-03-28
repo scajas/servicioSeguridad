@@ -1154,6 +1154,7 @@ public class procedimientosAlmacenados {
 				horario.setSabado(result.getString(14));
 				horario.setFechaInicial(result.getString(15));
 				horario.setFechaFinal(result.getString(16));
+				horario.setCarrera(result.getString(17));
 				horario.setMarcaModular(result.getString(21));
 
 				if (horario.getIdHora() == null)
@@ -1945,6 +1946,10 @@ public class procedimientosAlmacenados {
 				listacarga.add(result.getString(35));
 				listacarga.add(result.getString(36));
 				listacarga.add(result.getString(37));
+				
+				listacarga.add(result.getString(38));
+				
+				
 
 				// Tercera Sesion
 
@@ -1963,6 +1968,8 @@ public class procedimientosAlmacenados {
 				listacarga.add(result.getString(56));
 				listacarga.add(result.getString(55));
 				listacarga.add(result.getString(57));
+				
+				
 			}
 			result.close();
 
