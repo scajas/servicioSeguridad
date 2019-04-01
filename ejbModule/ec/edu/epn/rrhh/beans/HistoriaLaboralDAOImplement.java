@@ -2520,7 +2520,8 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 				+ "or fam.accionP.subtipoAccion.nombreSubaccion = ?7 "
 				+ "or fam.accionP.subtipoAccion.nombreSubaccion = ?8 "
 				+ "or fam.accionP.subtipoAccion.nombreSubaccion = ?9 "
-				+ "or fam.accionP.subtipoAccion.nombreSubaccion = ?10 " + ")"
+				+ "or fam.accionP.subtipoAccion.nombreSubaccion = ?10 "
+				+ "or fam.accionP.subtipoAccion.nombreSubaccion = ?11 " + ")"
 				+ "and fam.id.fechaI = (Select max(t.id.fechaI) "
 				+ "from HistoriaLaboral t where t.id.idHist=fam.id.idHist)";
 
@@ -2570,6 +2571,7 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		query.setParameter(8, "LICENCIA POR MATRIMONIO-UNION DE HECHO");
 		query.setParameter(9, "LICENCIA POR PATERNIDAD");
 		query.setParameter(10, "REINTEGRO");
+		query.setParameter(11, "LICENCIA POR ESTUDIOS DE POSGRADO");
 
 		List<HistoriaLaboral> resultado = query.getResultList();
 
