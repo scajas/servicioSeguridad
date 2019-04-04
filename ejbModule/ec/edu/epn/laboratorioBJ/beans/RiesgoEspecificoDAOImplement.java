@@ -17,7 +17,7 @@ public class RiesgoEspecificoDAOImplement extends DaoGenericoImplement<Riesgoesp
      * Default constructor. 
      */
     public RiesgoEspecificoDAOImplement() {
-       
+       //generate
     }
 
 }

@@ -25,9 +25,11 @@ public class ProductoLabDAOImplement extends DaoGenericoImplement<ProductoLab> i
 
 	@Override
 	public List<ProductoLab> filtrarLista(String dato) {
-
-		StringBuilder queryString = new StringBuilder("SELECT d FROM ProductoLab d where nombre_pr like '%"+dato+"%'");
+		// Busqueda por nombre
+		StringBuilder queryString = new StringBuilder(
+				"SELECT d FROM ProductoLab d where nombre_pr like '%" + dato + "%'");
 		Query query = getEntityManager().createQuery(queryString.toString());
+
 		List<ProductoLab> resultados = query.getResultList();
 		return resultados;
 
