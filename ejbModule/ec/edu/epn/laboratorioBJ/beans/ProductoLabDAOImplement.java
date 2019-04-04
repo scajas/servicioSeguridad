@@ -28,8 +28,6 @@ public class ProductoLabDAOImplement extends DaoGenericoImplement<ProductoLab> i
 
 		StringBuilder queryString = new StringBuilder("SELECT d FROM ProductoLab d where nombre_pr like '%"+dato+"%'");
 		Query query = getEntityManager().createQuery(queryString.toString());
-		//query.setParameter(1, dato);
-
 		List<ProductoLab> resultados = query.getResultList();
 		return resultados;
 
