@@ -54,9 +54,9 @@ public class LaboratorioLab implements Serializable {
 	private UnidadLabo unidad;
 
 	//bi-directional many-to-one association to Servicio
-/*	@OneToMany(mappedBy="laboratorio")
+	@OneToMany(mappedBy="laboratorio")
 	private List<Servicio> servicios;
-*/
+
 	public LaboratorioLab() {
 	}
 
@@ -148,7 +148,7 @@ public class LaboratorioLab implements Serializable {
 		this.unidad = unidad;
 	}
 
-/*	public List<Servicio> getServicios() {
+	public List<Servicio> getServicios() {
 		return this.servicios;
 	}
 
@@ -169,5 +169,4 @@ public class LaboratorioLab implements Serializable {
 
 		return servicio;
 	}
-*/
 }
