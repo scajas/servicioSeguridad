@@ -9,7 +9,7 @@ import javax.persistence.*;
  * 
  */
 @Entity
-@Table(name = "`pureza`", catalog = "`bddcorpepn`", schema = "`Laboratorios`")
+@Table(name = "pureza", catalog = "bddcorpepn", schema = "`Laboratorios`")
 @NamedQuery(name="Pureza.findAll", query="SELECT p FROM Pureza p")
 public class Pureza implements Serializable {
 	private static final long serialVersionUID = 1L;

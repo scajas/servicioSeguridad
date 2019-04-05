@@ -9,7 +9,7 @@ import javax.persistence.*;
  * 
  */
 @Entity
-@Table(name = "`control_existencia_metodo`", catalog = "`bddcorpepn`", schema = "`Laboratorios`")
+@Table(name = "control_existencia_metodo", catalog = "bddcorpepn", schema = "`Laboratorios`")
 @NamedQuery(name="ControlExistenciaMetodo.findAll", query="SELECT c FROM ControlExistenciaMetodo c")
 public class ControlExistenciaMetodo implements Serializable {
 	private static final long serialVersionUID = 1L;
