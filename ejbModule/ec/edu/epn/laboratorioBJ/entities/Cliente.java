@@ -240,4 +240,5 @@ public class Cliente implements Serializable {
 		return proforma;
 	}
 
+>>>>>>> ejbModule/ec/edu/epn/laboratorioBJ/entities/Cliente.java
 }

@@ -11,6 +11,7 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(name = "`detalleorden`", catalog = "`bddcorpepn`", schema = "`Laboratorios`")
 @NamedQuery(name="Detalleorden.findAll", query="SELECT d FROM Detalleorden d")
 public class Detalleorden implements Serializable {
 	private static final long serialVersionUID = 1L;
