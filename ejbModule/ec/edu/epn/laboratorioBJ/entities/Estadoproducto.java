@@ -17,8 +17,8 @@ public class Estadoproducto implements Serializable {
 
 	@Id
 	
-	@SequenceGenerator(name="ESTADOPRODUCTO_IDESTADOPROD_GENERATOR", sequenceName="secuencia_estadoproducto",allocationSize=1, catalog="bddcorpepn",schema="`Laboratorios`")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="ESTADOPRODUCTO_IDESTADOPROD_GENERATOR")
+	@SequenceGenerator(name="MUESTRA_IDMUESTRA_GENERATOR", sequenceName="secuencia_muestra",allocationSize=1, catalog="bddcorpepn",schema="`Laboratorios`")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="MUESTRA_IDMUESTRA_GENERATOR")
 	
 	@Column(name="id_estadoprod")
 	private int idEstadoprod;
@@ -30,8 +30,8 @@ public class Estadoproducto implements Serializable {
 	private String nombreEstp;
 
 	//bi-directional many-to-one association to Existencia
-	//@OneToMany(mappedBy="estadoproducto")
-	//private List<Existencia> existencias;
+	@OneToMany(mappedBy="estadoproducto")
+	private List<Existencia> existencias;
 
 	public Estadoproducto() {
 	}
@@ -59,7 +59,7 @@ public class Estadoproducto implements Serializable {
 	public void setNombreEstp(String nombreEstp) {
 		this.nombreEstp = nombreEstp;
 	}
-/*
+
 	public List<Existencia> getExistencias() {
 		return this.existencias;
 	}
@@ -80,6 +80,6 @@ public class Estadoproducto implements Serializable {
 		existencia.setEstadoproducto(null);
 
 		return existencia;
-	}*/
+	}
 
 }
