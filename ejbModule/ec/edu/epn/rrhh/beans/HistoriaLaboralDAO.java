@@ -121,7 +121,7 @@ public interface HistoriaLaboralDAO extends DaoGenerico<HistoriaLaboral> {
 
 	public List<HistoriaLaboral> findHistorias(Date inicio, Date ffinal, String nombreDependencia,
 			String nombreDependenciaDesignacion, String nombreCargo, String claseEmpleado, String nombreDesignacion,
-			Emp empleado);
+			Emp empleado, boolean isFullReport);
 
 	public List<HistoriaLaboral> findHistorias(Date inicio, Date ffinal);
 
@@ -155,7 +155,7 @@ public interface HistoriaLaboralDAO extends DaoGenerico<HistoriaLaboral> {
 
 	public List<HistoriaLaboral> getHistoriasQueAfectanAsistenciaReporte(Date inicio, Date ffinal,
 			String nombreDependencia, String nombreDependenciaDesignacion, String nombreCargo, String claseEmpleado,
-			String nombreDesignacion, Emp empleado);
+			String nombreDesignacion, Emp empleado, boolean isFullReport);
 
 	/* Tab 2: Historias que afectan el cargo o la RMU */
 
@@ -163,7 +163,7 @@ public interface HistoriaLaboralDAO extends DaoGenerico<HistoriaLaboral> {
 
 	public List<HistoriaLaboral> getHistoriasQueAfectanCargoRmuReporte(Date inicio, Date ffinal,
 			String nombreDependencia, String nombreDependenciaDesignacion, String nombreCargo, String claseEmpleado,
-			String nombreDesignacion, Emp empleado);
+			String nombreDesignacion, Emp empleado , boolean isFullReport);
 
 	/*
 	 * Tab 3: Historias que se refieran a designacion de dignidades
@@ -174,7 +174,7 @@ public interface HistoriaLaboralDAO extends DaoGenerico<HistoriaLaboral> {
 
 	public List<HistoriaLaboral> getHistoriasQueAfectanDesignacionReporte(Date inicio, Date ffinal,
 			String nombreDependencia, String nombreDependenciaDesignacion, String nombreCargo, String claseEmpleado,
-			String nombreDesignacion, Emp empleado);
+			String nombreDesignacion, Emp empleado , boolean isFullReport);
 
 	/*
 	 * Tab 4: Historias con licencias o comisiones por estudios, año o periodo
@@ -185,7 +185,7 @@ public interface HistoriaLaboralDAO extends DaoGenerico<HistoriaLaboral> {
 
 	public List<HistoriaLaboral> getHistoriasLicenciasComSabaticoReporte(Date inicio, Date ffinal,
 			String nombreDependencia, String nombreDependenciaDesignacion, String nombreCargo, String claseEmpleado,
-			String nombreDesignacion, Emp empleado);
+			String nombreDesignacion, Emp empleado , boolean isFullReport);
 
 	/* Tab 5: Sanciones */
 
@@ -193,13 +193,13 @@ public interface HistoriaLaboralDAO extends DaoGenerico<HistoriaLaboral> {
 
 	public List<HistoriaLaboral> getHistoriasSancionesReporte(Date inicio, Date ffinal, String nombreDependencia,
 			String nombreDependenciaDesignacion, String nombreCargo, String claseEmpleado, String nombreDesignacion,
-			Emp empleado);
+			Emp empleado , boolean isFullReport);
 
 	/* Tab 6: Contratos* (Ya se encuentra definida la funcion) */
 
 	public List<HistoriaLaboral> getContratosReporte(Date inicio, Date ffinal, String nombreDependencia,
 			String nombreDependenciaDesignacion, String nombreCargo, String claseEmpleado, String nombreDesignacion,
-			Emp empleado);
+			Emp empleado , boolean isFullReport);
 
 	/* Tab 7: Finalziaciones y actualziaciones */
 
@@ -207,7 +207,7 @@ public interface HistoriaLaboralDAO extends DaoGenerico<HistoriaLaboral> {
 
 	public List<HistoriaLaboral> getActualizacionesFinalizacionesReporte(Date inicio, Date ffinal,
 			String nombreDependencia, String nombreDependenciaDesignacion, String nombreCargo, String claseEmpleado,
-			String nombreDesignacion, Emp empleado);
+			String nombreDesignacion, Emp empleado , boolean isFullReport);
 
 	/* Tab 8: Historias Migradas */
 
@@ -215,7 +215,7 @@ public interface HistoriaLaboralDAO extends DaoGenerico<HistoriaLaboral> {
 
 	public List<HistoriaLaboral> getAccionesMigradasReporte(Date inicio, Date ffinal, String nombreDependencia,
 			String nombreDependenciaDesignacion, String nombreCargo, String claseEmpleado, String nombreDesignacion,
-			Emp empleado);
+			Emp empleado , boolean isFullReport);
 	/* Finalizacion métodos para manejo de tabs */
 
 	// Reportes empleados
