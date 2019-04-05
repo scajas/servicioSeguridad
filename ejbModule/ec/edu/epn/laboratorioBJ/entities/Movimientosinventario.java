@@ -11,7 +11,7 @@ import java.util.Date;
  * 
  */
 @Entity
-@Table(name = "`movimientosinventario`", catalog = "`bddcorpepn`", schema = "`Laboratorios`")
+@Table(name = "movimientosinventario", catalog = "bddcorpepn", schema = "`Laboratorios`")
 @NamedQuery(name="Movimientosinventario.findAll", query="SELECT m FROM Movimientosinventario m")
 public class Movimientosinventario implements Serializable {
 	private static final long serialVersionUID = 1L;
