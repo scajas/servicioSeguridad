@@ -136,4 +136,4 @@ public class ProveedorLab implements Serializable {
 		this.tipoproveedor = tipoproveedor;
 	}
 
-}
+} 
