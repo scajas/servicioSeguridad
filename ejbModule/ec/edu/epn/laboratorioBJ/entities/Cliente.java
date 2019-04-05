@@ -5,79 +5,82 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
 
-
 /**
  * The persistent class for the cliente database table.
  * 
  */
 @Entity
-@Table(name = "`cliente`", catalog = "`bddcorpepn`", schema = "`Laboratorios`")
-@NamedQuery(name="Cliente.findAll", query="SELECT c FROM Cliente c")
+@Table(name = "`cliente`", catalog = "bddcorpepn", schema = "`Laboratorios`")
+@NamedQuery(name = "Cliente.findAll", query = "SELECT c FROM Cliente c")
 public class Cliente implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="id_cliente")
-	private String idCliente;
 
+	@SequenceGenerator(name = "CLIENTE_IDCLIENTE_GENERATOR", sequenceName = "secuencia_cliente", allocationSize = 1, catalog = "bddcorpepn", schema = "`Laboratorios`")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CLIENTE_IDCLIENTE_GENERATOR")
+
+	@Column(name = "id_cliente")
+	private int idCliente;
+ 
 	private String cedula;
 
-	@Column(name="celular_cl")
+	@Column(name = "celular_cl")
 	private String celularCl;
 
-	@Column(name="contacto_cl")
+	@Column(name = "contacto_cl")
 	private String contactoCl;
 
-	@Column(name="direccion_cl")
+	@Column(name = "direccion_cl")
 	private String direccionCl;
 
-	@Column(name="email_cl")
+	@Column(name = "email_cl")
 	private String emailCl;
 
-	@Column(name="fax_cl")
+	@Column(name = "fax_cl")
 	private String faxCl;
 
 	private Timestamp fechatrans;
 
-	@Column(name="nombre_cl")
+	@Column(name = "nombre_cl")
 	private String nombreCl;
 
-	@Column(name="nombre_usuario")
+	@Column(name = "nombre_usuario")
 	private String nombreUsuario;
 
-	@Column(name="otrofono_cl")
+	@Column(name = "otrofono_cl")
 	private String otrofonoCl;
 
-	@Column(name="pasaporte_cl")
+	@Column(name = "pasaporte_cl")
 	private String pasaporteCl;
 
-	@Column(name="ruc_cl")
+	@Column(name = "ruc_cl")
 	private String rucCl;
 
-	@Column(name="telefono_cl")
+	@Column(name = "telefono_cl")
 	private String telefonoCl;
 
-	//bi-directional many-to-one association to Tipocliente
+	// bi-directional many-to-one association to Tipocliente
 	@ManyToOne
-	@JoinColumn(name="id_tipocliente")
+	@JoinColumn(name = "id_tipocliente")
 	private Tipocliente tipocliente;
 
-	//bi-directional many-to-one association to OrdenTrabajo
-	@OneToMany(mappedBy="cliente")
+	// bi-directional many-to-one association to OrdenTrabajo
+	@OneToMany(mappedBy = "cliente")
 	private List<OrdenTrabajo> ordenTrabajos;
 
-	//bi-directional many-to-one association to Proforma
-	@OneToMany(mappedBy="cliente")
+	// bi-directional many-to-one association to Proforma
+	@OneToMany(mappedBy = "cliente")
 	private List<Proforma> proformas;
 
 	public Cliente() {
 	}
 
-	public String getIdCliente() {
-		return this.idCliente;
+	public int getIdCliente() {
+		return idCliente;
 	}
 
-	public void setIdCliente(String idCliente) {
+	public void setIdCliente(int idCliente) {
 		this.idCliente = idCliente;
 	}
 
@@ -237,4 +240,5 @@ public class Cliente implements Serializable {
 		return proforma;
 	}
 
+>>>>>>> ejbModule/ec/edu/epn/laboratorioBJ/entities/Cliente.java
 }

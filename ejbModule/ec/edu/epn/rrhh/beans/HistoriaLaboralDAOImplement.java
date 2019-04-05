@@ -227,7 +227,8 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 						+ "and hist.accionP.subtipoAccion.tipoAccion.idTpa != 13 " + "and hist.fechaRige<=?2 "
 						+ "and (hist.id.estado = 'Finalizado' or hist.id.estado = '\"Finalizado\"') and "
 						+ "hist.id.idHist not in (Select histo.id.idHist from HistoriaLaboral histo "
-						+ "where histo.emp.nced=?1 and (histo.id.estado= ?3 or histo.id.estado=?4) ))");
+						+ "where histo.emp.nced=?1 and (histo.id.estado= ?3 or histo.id.estado=?4) )) "
+						+ "order by hl.fechaRige desc");
 
 		Query query = getEntityManager().createQuery(queryString.toString());
 
@@ -246,11 +247,10 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		} catch (NonUniqueResultException e) {
 			resultado = resultados.get(0);
 			for (int i = 1; i < resultados.size(); i++) {
-				if (resultados.get(i).getId().getFechaI().getDate() > resultados.get(i - 1).getId().getFechaI()
-						.getDate())
+				if (resultados.get(i).getId().getFechaI().after(resultados.get(i - 1).getId().getFechaI())){
 					resultado = resultados.get(i);
+				}					
 			}
-
 		}
 
 		if (this.isEmpleadoConNombramiento(emp)) {
