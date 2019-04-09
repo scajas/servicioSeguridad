@@ -33,6 +33,20 @@
 			</plugin>
 		</plugins>
 	</build>
+
+
+
+	<distributionManagement>
+
+		<site>
+			<id>mojo.website</id>
+			<name>MVN</name>
+			<url>file:///tmp/project</url>
+		</site>
+
+	</distributionManagement>
+
+
 	<dependencies>
 
 		<dependency>
@@ -62,7 +76,7 @@
 			<version>1.0</version>
 		</dependency>
 
-<dependency>
+		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
 			<version>4.0.1.Final</version>
