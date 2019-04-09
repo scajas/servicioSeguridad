@@ -312,6 +312,9 @@
 		<class>ec.edu.epn.laboratorioBJ.entities.Tiposervicio</class>
 		<class>ec.edu.epn.laboratorioBJ.entities.UnidadLabo</class>
 		<class>ec.edu.epn.laboratorioBJ.entities.Unidadmedida</class>
+		<class>ec.edu.epn.facturacion.entities.Detallefactura</class>
+		<class>ec.edu.epn.facturacion.entities.EstadoFactura</class>
+		<class>ec.edu.epn.facturacion.entities.Factura</class>
 		
 
 

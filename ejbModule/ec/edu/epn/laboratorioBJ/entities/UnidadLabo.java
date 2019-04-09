@@ -15,10 +15,12 @@ public class UnidadLabo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name = "UNIDAD_IDUNIDAD_GENERATOR", sequenceName = "secuencia_unidadmedida", allocationSize = 1, catalog = "bddcorpepn", schema = "`Laboratorios`")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "UNIDAD_IDUNIDAD_GENERATOR")
+
+	@SequenceGenerator(name = "UNIDADLAB_IDUNIDADLAB_GENERATOR", sequenceName = "secuencia_id_unidad", allocationSize = 1, catalog = "bddcorpepn", schema = "`Laboratorios`")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "UNIDADLAB_IDUNIDADLAB_GENERATOR")
+
 	@Column(name = "id_unidad")
-	private Integer idUnidad;
+	private int idUnidad;
 
 	@Column(name = "aux_id_unid")
 	private String auxIdUnid;
@@ -63,7 +65,7 @@ public class UnidadLabo implements Serializable {
 	private String telefonoU;
 
 	// bi-directional many-to-one association to Compra
-	@OneToMany(mappedBy = "unidad")
+	@OneToMany(mappedBy="unidad")
 	private List<Compra> compras;
 
 	// bi-directional many-to-one association to Laboratorio
@@ -77,11 +79,11 @@ public class UnidadLabo implements Serializable {
 	public UnidadLabo() {
 	}
 
-	public Integer getIdUnidad() {
-		return this.idUnidad;
+	public int getIdUnidad() {
+		return idUnidad;
 	}
 
-	public void setIdUnidad(Integer idUnidad) {
+	public void setIdUnidad(int idUnidad) {
 		this.idUnidad = idUnidad;
 	}
 

@@ -9,7 +9,7 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name = "`tipoproveedor`", catalog = "`bddcorpepn`", schema = "`Laboratorios`")
+@Table(name = "tipoproveedor", catalog = "bddcorpepn", schema = "`Laboratorios`")
 @NamedQuery(name = "Tipoproveedor.findAll", query = "SELECT t FROM Tipoproveedor t")
 public class Tipoproveedor implements Serializable {
 	private static final long serialVersionUID = 1L;

@@ -16,10 +16,10 @@ public class Tipoproducto implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="TIPOPRODUCTO_IDTIPOPROD_GENERATOR", sequenceName="SECUENCIA_TIPOPRODUCTO")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="TIPOPRODUCTO_IDTIPOPROD_GENERATOR")
+	@SequenceGenerator(name="TIPOPRODUCTO_IDTIPOPRODUCTO_GENERATOR", sequenceName="secuencia_tipoproducto",allocationSize=1, catalog="bddcorpepn",schema="`Laboratorios`")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="TIPOPRODUCTO_IDTIPOPRODUCTO_GENERATOR")
 	@Column(name="id_tipoprod")
-	private String idTipoprod;
+	private int idTipoprod;
 
 	@Column(name="descr_tprod")
 	private String descrTprod;
@@ -38,11 +38,11 @@ public class Tipoproducto implements Serializable {
 	public Tipoproducto() {
 	}
 
-	public String getIdTipoprod() {
+	public int getIdTipoprod() {
 		return this.idTipoprod;
 	}
 
-	public void setIdTipoprod(String idTipoprod) {
+	public void setIdTipoprod(int idTipoprod) {
 		this.idTipoprod = idTipoprod;
 	}
 

@@ -11,6 +11,7 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(name = "proforma", catalog = "bddcorpepn", schema = "`Laboratorios`")
 @NamedQuery(name="Proforma.findAll", query="SELECT p FROM Proforma p")
 public class Proforma implements Serializable {
 	private static final long serialVersionUID = 1L;

@@ -5,7 +5,6 @@ import javax.ejb.Stateless;
 
 import ec.edu.epn.generic.DAO.DaoGenericoImplement;
 import ec.edu.epn.laboratorioBJ.entities.Riesgoespecifico;
-import ec.edu.epn.laboratorioBJ.entities.Tipocliente;
 
 /**
  * Session Bean implementation class RiesgoEspecificoDAOImplement
@@ -18,7 +17,7 @@ public class RiesgoEspecificoDAOImplement extends DaoGenericoImplement<Riesgoesp
      * Default constructor. 
      */
     public RiesgoEspecificoDAOImplement() {
-        // TODO Auto-generated constructor stub
+       //generate
     }
 
 }

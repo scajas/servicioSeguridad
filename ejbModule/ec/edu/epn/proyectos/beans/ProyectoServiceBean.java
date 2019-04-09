@@ -12,8 +12,6 @@ import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import org.hibernate.SQLQuery.ReturnProperty;
-
 import ec.edu.epn.gestioDocente.beans.*;
 import ec.edu.epn.gestionDocente.entities.Publicacione;
 import ec.edu.epn.catalogos.entities.Departamento;

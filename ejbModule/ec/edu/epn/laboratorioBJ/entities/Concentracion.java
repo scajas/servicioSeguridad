@@ -30,8 +30,8 @@ public class Concentracion implements Serializable {
 	private String nombreCon;
 
 	//bi-directional many-to-one association to Existencia
-	//@OneToMany(mappedBy="concentracion")
-	//private List<Existencia> existencias;
+	@OneToMany(mappedBy="concentracion")
+	private List<Existencia> existencias;
 
 	public Concentracion() {
 	}
@@ -43,8 +43,6 @@ public class Concentracion implements Serializable {
 	public void setIdConcentracion(int idConcentracion) {
 		this.idConcentracion = idConcentracion;
 	}
-
-
 
 	public String getDescrCon() {
 		return this.descrCon;
@@ -62,7 +60,7 @@ public class Concentracion implements Serializable {
 		this.nombreCon = nombreCon;
 	}
 
-	/*public List<Existencia> getExistencias() {
+	public List<Existencia> getExistencias() {
 		return this.existencias;
 	}
 
@@ -82,6 +80,6 @@ public class Concentracion implements Serializable {
 		existencia.setConcentracion(null);
 
 		return existencia;
-	}*/
+	}
 
 }
