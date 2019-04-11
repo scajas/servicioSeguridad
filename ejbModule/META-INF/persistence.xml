@@ -315,6 +315,9 @@
 		<class>ec.edu.epn.facturacion.entities.Detallefactura</class>
 		<class>ec.edu.epn.facturacion.entities.EstadoFactura</class>
 		<class>ec.edu.epn.facturacion.entities.Factura</class>
+		<class>ec.edu.epn.facturacion.entities.TransferenciaInterna</class>
+		<class>ec.edu.epn.facturacion.entities.Caja</class>
+		<class>ec.edu.epn.facturacion.entities.PuntoFacturacion</class>
 		
 
 
