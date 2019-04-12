@@ -95,6 +95,4 @@ public class Bodega implements Serializable {
 	public void setUbicacionBg(String ubicacionBg) {
 		this.ubicacionBg = ubicacionBg;
 	}
-
-
 }
