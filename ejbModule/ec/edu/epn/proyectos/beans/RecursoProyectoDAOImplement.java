@@ -111,7 +111,7 @@ public class RecursoProyectoDAOImplement extends DaoGenericoImplement<RecursohPr
 	@Override
 	public List<RecursohPr> findAllDirectores() {
 		Query qUsuario = getEntityManager().createQuery(
-				"select reh from RecursohPr reh where  reh.rolProyecto.idRolProy = ?1 and reh.estadoPr = ?2 ");
+				"select reh from RecursohPr reh where  reh.rolProyecto.idRolProy = ?1 and reh.estadoPr = ?2 order by reh.apellidoPersonalPr");
 
 		qUsuario.setParameter(1, 1);
 		qUsuario.setParameter(2, "VINCULADO");

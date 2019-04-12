@@ -145,12 +145,14 @@ public class CierrePeriodoDAOImplement extends DaoGenericoImplement<CierrePeriod
 	}
 
 	@Override
-	public List<CierrePeriodo> consultarCierresVIPS() {
+	public List<CierrePeriodo> consultarCierresVIPS(Integer idtipo) {
 
 		StringBuilder querys = new StringBuilder(
-				"SELECT e From CierrePeriodo e where e.cerrado = 'S' and e.path IS NOT EMPTY order by e.meses desc ");
+				"SELECT e From CierrePeriodo e where e.cerrado = 'S' and e.path IS NOT NULL and e.proyecto.tipoProyecto.idTipoProy = ?0 order by e.meses desc ");
 
 		Query query = getEntityManager().createQuery(querys.toString());
+
+		query.setParameter(0, idtipo);
 
 		return query.getResultList();
 
@@ -208,7 +210,8 @@ public class CierrePeriodoDAOImplement extends DaoGenericoImplement<CierrePeriod
 		List<CierrePeriodo> cierres = new ArrayList<CierrePeriodo>();
 		List<CierrePeriodo> listCierre = new ArrayList<CierrePeriodo>();
 
-		StringBuilder querys = new StringBuilder("SELECT e From CierrePeriodo e where e.proyecto.coddep  = ?1 and e.idPensum > 17 ");
+		StringBuilder querys = new StringBuilder(
+				"SELECT e From CierrePeriodo e where e.proyecto.coddep  = ?1 and e.idPensum > 17 ");
 		querys.append(" order by e.meses DESC");
 
 		Query query = getEntityManager().createQuery(querys.toString());
@@ -228,6 +231,7 @@ public class CierrePeriodoDAOImplement extends DaoGenericoImplement<CierrePeriod
 		return listCierre;
 
 	}
+
 	@Override
 	public List<CierrePeriodo> consultarCierresReporte() {
 
@@ -235,6 +239,19 @@ public class CierrePeriodoDAOImplement extends DaoGenericoImplement<CierrePeriod
 				"SELECT e From CierrePeriodo e where e.idPensum > 17 order by e.meses desc ");
 
 		Query query = getEntityManager().createQuery(querys.toString());
+
+		return query.getResultList();
+
+	}
+
+	@Override
+	public List<CierrePeriodo> consultarCierreRevisados(String revisado) {
+
+		StringBuilder querys = new StringBuilder(
+				"SELECT e From CierrePeriodo e where e.revisado = ?1 order by e.meses desc ");
+
+		Query query = getEntityManager().createQuery(querys.toString());
+		query.setParameter(1, revisado);
 
 		return query.getResultList();
 
