@@ -2135,7 +2135,9 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 				+ "or hl.accionP.subtipoAccion.nombreSubaccion = ?12 "
 				+ "or hl.accionP.subtipoAccion.nombreSubaccion = ?13 "
 				+ "or hl.accionP.subtipoAccion.nombreSubaccion = ?14 "
-				+ "or hl.accionP.subtipoAccion.nombreSubaccion = ?15) " + "and hl.id.fechaI = (Select max(t.id.fechaI) "
+				+ "or hl.accionP.subtipoAccion.nombreSubaccion = ?15 "
+				+ "or hl.accionP.subtipoAccion.nombreSubaccion = ?16) " 
+				+ "and hl.id.fechaI = (Select max(t.id.fechaI) "
 				+ "from HistoriaLaboral t where t.id.idHist=hl.id.idHist)");
 
 		Query query = getEntityManager().createQuery(queryString.toString());
@@ -2154,6 +2156,7 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		query.setParameter(13, "VACACIONES");
 		query.setParameter(14, "CUIDADO DE FAMILIARES CON DISCAPACIDADES SEVERAS O ENFERMEDADES CATASTROFICAS");
 		query.setParameter(15, "LICENCIA POR CUIDADO DEL RECIEN NACIDO");
+		query.setParameter(16, "LICENCIA POR ESTUDIOS DE POSGRADO");
 
 		List<HistoriaLaboral> resultados = query.getResultList();
 
@@ -2235,7 +2238,8 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 				+ "or hl.accionP.subtipoAccion.nombreSubaccion = ?7 "
 				+ "or hl.accionP.subtipoAccion.nombreSubaccion = ?8 "
 				+ "or hl.accionP.subtipoAccion.nombreSubaccion = ?9 "
-				+ "or hl.accionP.subtipoAccion.nombreSubaccion = ?10 " + ")"
+				+ "or hl.accionP.subtipoAccion.nombreSubaccion = ?10 "
+				+ "or hl.accionP.subtipoAccion.nombreSubaccion = ?11 " + ")"
 				+ "and hl.id.fechaI = (Select max(t.id.fechaI) "
 				+ "from HistoriaLaboral t where t.id.idHist=hl.id.idHist)");
 
@@ -2250,6 +2254,8 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		query.setParameter(8, "LICENCIA POR MATRIMONIO-UNION DE HECHO");
 		query.setParameter(9, "LICENCIA POR PATERNIDAD");
 		query.setParameter(10, "REINTEGRO");
+		query.setParameter(11, "LICENCIA POR ESTUDIOS DE POSGRADO");
+		
 
 		List<HistoriaLaboral> resultados = query.getResultList();
 
