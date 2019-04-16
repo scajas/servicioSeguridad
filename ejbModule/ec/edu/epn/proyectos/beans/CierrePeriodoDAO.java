@@ -14,17 +14,19 @@ public interface CierrePeriodoDAO extends DaoGenerico<CierrePeriodo> {
 
 	CierrePeriodo consultarCierreProyectoPensum(Integer idproy, Integer idpensun, String tipo, String cerrado);
 
-	List<CierrePeriodo> consultarCierreProyectoDept(String estado,String dep);
+	List<CierrePeriodo> consultarCierreProyectoDept(String estado, String dep);
 
 	List<CierrePeriodo> consultarCierres();
 
 	CierrePeriodo consultarCierreProyectoPensumIngresadas(Integer idproy, Integer idpensun, String tipo,
 			String cerrado);
 
-	List<CierrePeriodo> consultarCierresVIPS();
+	List<CierrePeriodo> consultarCierresVIPS(Integer idtipo);
 
 	List<CierrePeriodo> consultarCierreProyectoDeptEstados(String coddep);
 
 	List<CierrePeriodo> consultarCierresReporte();
+
+	List<CierrePeriodo> consultarCierreRevisados(String revisado);
 
 }
