@@ -35,6 +35,25 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		return resultado;
 
 	}
+	
+	@Override
+	public List<HistoriaLaboral> findHistoriasByEmpNoDuplicados(Emp emp){
+		StringBuilder queryString = new StringBuilder(
+				"SELECT " + "fam FROM HistoriaLaboral fam where " + "fam.emp.nced =?1 and fam.id.fechaI = "
+						+ "(Select max(t.id.fechaI) " 
+						+ "from HistoriaLaboral t where t.id.idHist=fam.id.idHist "
+						+ "and t.id.idHist not in "
+						+ "(select hist.id.idHist from HistoriaLaboral hist where "
+						+ " trim(t.id.estado)= 'Duplicado' or trim(t.id.estado) = 'Anulado' "
+						+ "or trim(t.id.estado) = 'Insubsistente' and hist.emp.nced = ?1))");
+
+		Query query = getEntityManager().createQuery(queryString.toString());
+
+		query.setParameter(1, emp.getNced());
+		List<HistoriaLaboral> resultado = query.getResultList();
+
+		return resultado;
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -233,18 +252,31 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		StringBuilder queryString = new StringBuilder(
 				"Select hl from HistoriaLaboral  " + "hl where  hl.emp.nced =?1 and hl.fechaRige = "
 						+ "(Select max(hist.fechaRige) from HistoriaLaboral hist where hist.emp.nced=?1 "
-						+ "and hist.accionP.subtipoAccion.tipoAccion.idTpa != 13 " + "and hist.fechaRige<=?2 "
+						+ "and hist.accionP.subtipoAccion.tipoAccion.idTpa != 13 and hist.fechaRige<=?2 "
 						+ "and (hist.id.estado = 'Finalizado' or hist.id.estado = '\"Finalizado\"') and "
 						+ "hist.id.idHist not in (Select histo.id.idHist from HistoriaLaboral histo "
-						+ "where histo.emp.nced=?1 and (histo.id.estado= ?3 or histo.id.estado=?4) )) "
-						+ "order by hl.fechaRige desc");
+						+ "where histo.emp.nced=?1 and (histo.id.estado= ?3 or histo.id.estado=?4)"
+						+ ")) and hl.id.idHist not in ( select hitl.id.idHist from HistoriaLaboral hitl where "
+						+ " hitl.accionP.subtipoAccion.nombreSubaccion like ?5 or "
+						+ " hitl.accionP.subtipoAccion.nombreSubaccion like ?6 or "
+						+ " hitl.accionP.subtipoAccion.nombreSubaccion like ?7 or  "
+						+ " hitl.accionP.subtipoAccion.nombreSubaccion like ?8 or "
+						+ " hitl.accionP.subtipoAccion.nombreSubaccion like ?9 "
+						+ " and hitl.emp.nced = ?1) "
+						+ " order by hl.fechaRige desc");
 
 		Query query = getEntityManager().createQuery(queryString.toString());
 
-		query.setParameter(3, "Insubsistente");
 		query.setParameter(1, emp.getNced());
-		query.setParameter(4, "Anulado");
 		query.setParameter(2, new Date());
+		query.setParameter(3, "Insubsistente");
+		query.setParameter(4, "Anulado");	
+		query.setParameter(5, "VACACI%");
+		query.setParameter(6, "LICENCIA POR MATERINDAD%");
+		query.setParameter(7, "LICENCIA POR PATERNIDAD%");
+		query.setParameter(8, "LICENCIA POR ENFERMEDAD%");
+		query.setParameter(9, "LICENCIA POR CUIDADO DEL RECIEN NACIDO%");
+		
 		HistoriaLaboral resultado = null;
 		List<HistoriaLaboral> resultados = query.getResultList();
 		try {

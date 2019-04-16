@@ -13,6 +13,8 @@ import ec.edu.epn.rrhh.movimientos.HistoriaLaboral;
 public interface HistoriaLaboralDAO extends DaoGenerico<HistoriaLaboral> {
 	// HistoriaLaboralDAO
 	public List<HistoriaLaboral> findHistoriaByEmp(Emp emp);
+	
+	public List<HistoriaLaboral> findHistoriasByEmpNoDuplicados(Emp emp);
 
 	public List<HistoriaLaboral> findHistoriasSinContratoByEmp(Emp emp);
 
