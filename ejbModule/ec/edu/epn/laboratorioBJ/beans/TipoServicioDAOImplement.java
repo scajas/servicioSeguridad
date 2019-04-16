@@ -19,5 +19,7 @@ public class TipoServicioDAOImplement extends DaoGenericoImplement<Tiposervicio>
     public TipoServicioDAOImplement() {
         // TODO Auto-generated constructor stub
     }
+    
+    
 
 }
