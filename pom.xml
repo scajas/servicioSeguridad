@@ -33,6 +33,20 @@
 			</plugin>
 		</plugins>
 	</build>
+
+
+
+	<distributionManagement>
+
+		<site>
+			<id>mojo.website</id>
+			<name>MVN</name>
+			<url>file:///tmp/project</url>
+		</site>
+
+	</distributionManagement>
+
+
 	<dependencies>
 
 		<dependency>
@@ -66,8 +80,65 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
 			<version>4.0.1.Final</version>
-			<scope>test</scope>
+			<scope>provided</scope>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-jpamodelgen -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-jpamodelgen</artifactId>
+			<version>4.3.1.Final</version>
+			<scope>provided</scope>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.jasig.cas</groupId>
+			<artifactId>cas-client-integration-atlassian</artifactId>
+			<version>3.1.10</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/net.sf.jasperreports/jasperreports -->
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports</artifactId>
+			<version>6.1.0</version>
+		</dependency>
+
+
+		<!-- CAMBIO WILDON F01 https://mvnrepository.com/artifact/org.jasig.cas/cas-client-core -->
+		<dependency>
+			<groupId>org.jasig.cas</groupId>
+			<artifactId>cas-client-core</artifactId>
+			<version>3.1.10</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/javax.resource/javax.resource-api -->
+		<dependency>
+			<groupId>javax.resource</groupId>
+			<artifactId>javax.resource-api</artifactId>
+			<version>1.7-b01</version>
+		</dependency>
+
+
+
+		<dependency>
+			<groupId>javax.ejb</groupId>
+			<artifactId>javax.ejb-api</artifactId>
+			<version>3.2</version>
+		</dependency>
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-web-api</artifactId>
+			<version>7.0</version>
+			<type>jar</type>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/javax.mail/mail -->
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4.7</version>
+		</dependency>
+
 
 		<!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
 		<dependency>
@@ -110,13 +181,6 @@
 			<groupId>org.jasig.cas</groupId>
 			<artifactId>cas-client-integration-atlassian</artifactId>
 			<version>3.1.10</version>
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/net.sf.jasperreports/jasperreports -->
-		<dependency>
-			<groupId>net.sf.jasperreports</groupId>
-			<artifactId>jasperreports</artifactId>
-			<version>6.1.0</version>
 		</dependency>
 
 
