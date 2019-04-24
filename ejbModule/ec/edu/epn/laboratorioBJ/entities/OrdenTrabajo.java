@@ -5,67 +5,66 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
-
 /**
  * The persistent class for the orden_trabajo database table.
  * 
  */
 @Entity
 @Table(name = "orden_trabajo", catalog = "bddcorpepn", schema = "`Laboratorios`")
-@NamedQuery(name="OrdenTrabajo.findAll", query="SELECT o FROM OrdenTrabajo o")
+@NamedQuery(name = "OrdenTrabajo.findAll", query = "SELECT o FROM OrdenTrabajo o")
 public class OrdenTrabajo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="id_orden")
+	@Column(name = "id_orden")
 	private String idOrden;
 
-	@Column(name="aux_ordent")
+	@Column(name = "aux_ordent")
 	private Integer auxOrdent;
 
-	@Column(name="estado_ot")
+	@Column(name = "estado_ot")
 	private String estadoOt;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name="fecha_cierre")
+	@Column(name = "fecha_cierre")
 	private Date fechaCierre;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name="fechaentrega_ot")
+	@Column(name = "fechaentrega_ot")
 	private Date fechaentregaOt;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name="fechaorden_ot")
+	@Column(name = "fechaorden_ot")
 	private Date fechaordenOt;
 
-	@Column(name="id_factura")
+	@Column(name = "id_factura")
 	private String idFactura;
 
-	@Column(name="id_ti")
+	@Column(name = "id_ti")
 	private String idTi;
 
-	@Column(name="id_usuario")
+	@Column(name = "id_usuario")
 	private Integer idUsuario;
 
-	@Column(name="numeromuestra_ot")
+	@Column(name = "numeromuestra_ot")
 	private Integer numeromuestraOt;
 
-	@Column(name="observ_ot")
+	@Column(name = "observ_ot")
 	private String observOt;
 
-	@Column(name="responsable_ot")
+	@Column(name = "responsable_ot")
 	private String responsableOt;
 
-	@Column(name="tipo_ot")
+	@Column(name = "tipo_ot")
 	private String tipoOt;
 
-	//bi-directional many-to-one association to Detalleorden
-	@OneToMany(mappedBy="ordenTrabajo")
+	// bi-directional many-to-one association to Detalleorden
+	@OneToMany(mappedBy = "ordenTrabajo")
 	private List<Detalleorden> detalleordens;
 
-	//bi-directional many-to-one association to Cliente
+	// bi-directional many-to-one association to Cliente
 	@ManyToOne
-	@JoinColumn(name="id_cliente")
+	@JoinColumn(name = "id_cliente")
 	private Cliente cliente;
 
 	public OrdenTrabajo() {
