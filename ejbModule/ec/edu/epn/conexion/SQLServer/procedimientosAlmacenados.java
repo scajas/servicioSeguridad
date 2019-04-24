@@ -57,14 +57,15 @@ public class procedimientosAlmacenados {
 			this.pensumVigente = pensumVigente;
 
 		} catch (Exception e) {
-			e.printStackTrace();
+
 		}
 	}
 
 	public List<FacultadCatalogos> obtenerFacultades() {
 		java.sql.ResultSet result = null;
+		conexionSQL sql = new conexionSQL();
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 
 			CallableStatement cst = sql.getConection().prepareCall("{call pa_saefacultad (?)}");
@@ -85,15 +86,18 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 			return listaFacu;
 		} catch (Exception e) {
-			e.printStackTrace();
+
 			return null;
+		} finally {
+			sql.closeConnection();
 		}
 	}
 
 	public List<Carrera> obtenerCarreras(String facultad) {
 		java.sql.ResultSet result = null;
+		conexionSQL sql = new conexionSQL();
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 
 			CallableStatement cst = sql.getConection().prepareCall("{call pa_saecarrera (?,?)}");
@@ -115,8 +119,10 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 			return listaCarrear;
 		} catch (Exception e) {
-			e.printStackTrace();
+
 			return null;
+		} finally {
+			sql.closeConnection();
 		}
 	}
 
@@ -133,8 +139,9 @@ public class procedimientosAlmacenados {
 	public List<E111DTO> E111(FacultadCatalogos facultad, Carrera carrera, Pensum pensum) {
 
 		java.sql.ResultSet result = null;
+		conexionSQL sql = new conexionSQL();
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 
 			// pa_saeestcarrtut_acreditacion 'LIE11','INGENIERIA DE
@@ -198,8 +205,10 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 			return list;
 		} catch (Exception e) {
-			e.printStackTrace();
+
 			return null;
+		} finally {
+			sql.closeConnection();
 		}
 	}
 
@@ -208,8 +217,9 @@ public class procedimientosAlmacenados {
 	public List<E111DTO> E111TotalxProfesor(FacultadCatalogos facultad, Carrera carrera, Pensum pensum) {
 
 		java.sql.ResultSet result = null;
+		conexionSQL sql = new conexionSQL();
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 
 			// pa_saeestcarrtut_acreditacion
@@ -259,8 +269,10 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 			return list;
 		} catch (Exception e) {
-			e.printStackTrace();
+
 			return null;
+		} finally {
+			sql.closeConnection();
 		}
 	}
 
@@ -269,9 +281,10 @@ public class procedimientosAlmacenados {
 	 **/
 	public List<E112ADTO> E112A(FacultadCatalogos facultad, Carrera carrera) {
 
+		conexionSQL sql = new conexionSQL();
 		java.sql.ResultSet result = null;
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 
 			/**
@@ -334,8 +347,10 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 			return list;
 		} catch (Exception e) {
-			e.printStackTrace();
+
 			return null;
+		} finally {
+			sql.closeConnection();
 		}
 	}
 
@@ -345,10 +360,11 @@ public class procedimientosAlmacenados {
 
 	public List<E112BDTO> E112B(FacultadCatalogos facultad, Carrera carrera, Pensum pensum) {
 
+		conexionSQL sql = new conexionSQL();
 		java.sql.ResultSet result = null;
 		try {
 			this.pensumVigente = pensum;
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 
 			/**
@@ -403,8 +419,10 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 			return list;
 		} catch (Exception e) {
-			e.printStackTrace();
+
 			return null;
+		} finally {
+			sql.closeConnection();
 		}
 	}
 
@@ -412,10 +430,11 @@ public class procedimientosAlmacenados {
 
 	public List<E112BDTO> E112BTotalesPorcentajes(FacultadCatalogos facultad, Carrera carrera, Pensum pensum) {
 
+		conexionSQL sql = new conexionSQL();
 		java.sql.ResultSet result = null;
 		try {
 			this.pensumVigente = pensum;
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 
 			/**
@@ -463,8 +482,10 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 			return list;
 		} catch (Exception e) {
-			e.printStackTrace();
+
 			return null;
+		} finally {
+			sql.closeConnection();
 		}
 	}
 
@@ -474,9 +495,10 @@ public class procedimientosAlmacenados {
 			Carrera carrera, Pensum pensum) {
 
 		java.sql.ResultSet result = null;
+		conexionSQL sql = new conexionSQL();
 		try {
 			this.pensumVigente = pensum;
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 
 			/**
@@ -537,8 +559,10 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 			return list;
 		} catch (Exception e) {
-			e.printStackTrace();
+
 			return null;
+		} finally {
+			sql.closeConnection();
 		}
 	}
 
@@ -548,8 +572,9 @@ public class procedimientosAlmacenados {
 	public List<E112CDTO> E112C() {
 
 		java.sql.ResultSet result = null;
+		conexionSQL sql = new conexionSQL();
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 
 			// pa_saeestcarrtut_acreditacion
@@ -583,8 +608,10 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 			return list;
 		} catch (Exception e) {
-			e.printStackTrace();
+
 			return null;
+		} finally {
+			sql.closeConnection();
 		}
 	}
 
@@ -621,8 +648,9 @@ public class procedimientosAlmacenados {
 	public List<E142DTO> E142(FacultadCatalogos facultad, Carrera carrera, Pensum pensum) {
 
 		java.sql.ResultSet result = null;
+		conexionSQL sql = new conexionSQL();
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 
 			this.pensumVigente = pensum;
@@ -682,16 +710,19 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 			return list;
 		} catch (Exception e) {
-			e.printStackTrace();
+
 			return null;
+		} finally {
+			sql.closeConnection();
 		}
 	}
 
 	public List<E142XTipoBecaDTO> E142XTipoBeca(FacultadCatalogos facultad, Carrera carrera, Pensum pensum) {
 
 		java.sql.ResultSet result = null;
+		conexionSQL sql = new conexionSQL();
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 
 			this.pensumVigente = pensum;
@@ -755,8 +786,10 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 			return list;
 		} catch (Exception e) {
-			e.printStackTrace();
+
 			return null;
+		} finally {
+			sql.closeConnection();
 		}
 	}
 
@@ -773,8 +806,9 @@ public class procedimientosAlmacenados {
 	public List<E21ADTO> E21A(FacultadCatalogos facultad, Carrera carrera, Pensum pensum) {
 
 		java.sql.ResultSet result = null;
+		conexionSQL sql = new conexionSQL();
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 
 			this.pensumVigente = pensum;
@@ -825,16 +859,19 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 			return list;
 		} catch (Exception e) {
-			e.printStackTrace();
+
 			return null;
+		} finally {
+			sql.closeConnection();
 		}
 	}
 
 	public List<E21ADTO> E21B(FacultadCatalogos facultad, Carrera carrera, Pensum pensum) {
 
 		java.sql.ResultSet result = null;
+		conexionSQL sql = new conexionSQL();
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 
 			this.pensumVigente = pensum;
@@ -878,8 +915,10 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 			return list;
 		} catch (Exception e) {
-			e.printStackTrace();
+
 			return null;
+		} finally {
+			sql.closeConnection();
 		}
 	}
 
@@ -890,8 +929,9 @@ public class procedimientosAlmacenados {
 	public List<E21ADTO> E221(FacultadCatalogos facultad, Carrera carrera, Pensum pensum) {
 
 		java.sql.ResultSet result = null;
+		conexionSQL sql = new conexionSQL();
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 
 			this.pensumVigente = pensum;
@@ -935,15 +975,18 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 			return list;
 		} catch (Exception e) {
-			e.printStackTrace();
+
 			return null;
+		} finally {
+			sql.closeConnection();
 		}
 	}
 
 	public List<PeriodosSAEWDTO> periodosSAEW() {
 		java.sql.ResultSet result = null;
+		conexionSQL sql = new conexionSQL();
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 
 			// pa_saeperiodonl 'L'
@@ -968,8 +1011,10 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 			return list;
 		} catch (Exception e) {
-			e.printStackTrace();
+
 			return null;
+		} finally {
+			sql.closeConnection();
 		}
 	}
 
@@ -977,8 +1022,9 @@ public class procedimientosAlmacenados {
 			PeriodosSAEWDTO perIngresoA, PeriodosSAEWDTO perGradoD, PeriodosSAEWDTO perGradoA) {
 
 		java.sql.ResultSet result = null;
+		conexionSQL sql = new conexionSQL();
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 
 			// pa_graduadosvia 'LA','INGENIERIA DE
@@ -1025,8 +1071,10 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 			return list;
 		} catch (Exception e) {
-			e.printStackTrace();
+
 			return null;
+		} finally {
+			sql.closeConnection();
 		}
 	}
 
@@ -1037,8 +1085,9 @@ public class procedimientosAlmacenados {
 		// pa_contsilabo 'CF','07','','','','',2017,1
 
 		java.sql.ResultSet result = null;
+		conexionSQL sql = new conexionSQL();
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 
 			CallableStatement cst = sql.getConection().prepareCall("{call pa_contsilabo (?,?,?,?,?,?,?,?)}");
@@ -1064,15 +1113,17 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 
 		} catch (Exception e) {
-			e.printStackTrace();
 
+		} finally {
+			sql.closeConnection();
 		}
 	}
 
 	public List<CargaAcademica> obtenerCargaAcademica(String cedula, Pensum p) {
 		java.sql.ResultSet result = null;
+		conexionSQL sql = new conexionSQL();
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 
 			CallableStatement cst = sql.getConection().prepareCall("{call pa_saecontparalca (?,?,?,?,?,?)}");
@@ -1113,16 +1164,19 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 			return listaCarga;
 		} catch (Exception e) {
-			e.printStackTrace();
+
 			return null;
+		} finally {
+			sql.closeConnection();
 		}
 
 	}
 
 	public List<HorarioDTO> obtenerCargaAcademicaExtendida(String cedula) {
 		java.sql.ResultSet result = null;
+		conexionSQL sql = new conexionSQL();
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 
 			CallableStatement cst = sql.getConection().prepareCall("{call pa_saecontparalca (?,?,?,?,?,?)}");
@@ -1197,16 +1251,19 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 			return listaHorario;
 		} catch (Exception e) {
-			e.printStackTrace();
+
 			return null;
+		} finally {
+			sql.closeConnection();
 		}
 
 	}
 
 	public List<TesisDirigidasDTO> obtenerTesisDirigida(String cedula) {
 		java.sql.ResultSet result = null;
+		conexionSQL sql = new conexionSQL();
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 
 			CallableStatement cst = sql.getConection().prepareCall("{call pa_saecontesis (?,?)}");
@@ -1232,16 +1289,19 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 			return listaTesis;
 		} catch (Exception e) {
-			e.printStackTrace();
+
 			return null;
+		} finally {
+			sql.closeConnection();
 		}
 
 	}
 
 	public List<Carrera> obtenerCarreras(int nivel) {
 		java.sql.ResultSet result = null;
+		conexionSQL sql = new conexionSQL();
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 
 			// Llamada al procedimiento almacenado
@@ -1267,16 +1327,19 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 			return listaCarrear;
 		} catch (Exception e) {
-			e.printStackTrace();
+
 			return null;
+		} finally {
+			sql.closeConnection();
 		}
 
 	}
 
 	public List<String> pa_saecontprofeLD() {
 		java.sql.ResultSet result = null;
+		conexionSQL sql = new conexionSQL();
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 
 			// Llamada al procedimiento almacenado
@@ -1298,15 +1361,18 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 			return listaCedulas;
 		} catch (Exception e) {
-			e.printStackTrace();
+
 			return null;
+		} finally {
+			sql.closeConnection();
 		}
 	}
 
 	public List<String> pa_saecontprofeD(String cedula) {
 		java.sql.ResultSet result = null;
+		conexionSQL sql = new conexionSQL();
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 
 			// Llamada al procedimiento almacenado
@@ -1327,23 +1393,29 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 			return lista;
 		} catch (Exception e) {
-			e.printStackTrace();
+
 			return null;
+		} finally {
+			sql.closeConnection();
 		}
 	}
 
-	public List<String> pa_saedatparalISP(String opcion, String codCarrera,
-			String codMateria, String paral, String cedula, String user) {
+	public List<String> pa_saedatparalISP(String opcion, String codCarrera, String codMateria, String paral,
+			String cedula, String user) {
 		java.sql.ResultSet result = null;
+		conexionSQL sql = new conexionSQL();
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 
 			// Llamada al procedimiento almacenado
-			CallableStatement cst = sql.getConection().prepareCall(
-					"{call pa_saedatparalI (?,?,?,?,?,?,?,?,?,?,?,?,?)}");
-			
-			/**pa_saedatparalI SP,'142','msa430','GR1',2017,1,'','','BE913159','','','','saei'*/
+			CallableStatement cst = sql.getConection()
+					.prepareCall("{call pa_saedatparalI (?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+
+			/**
+			 * pa_saedatparalI
+			 * SP,'142','msa430','GR1',2017,1,'','','BE913159','','','','saei'
+			 */
 
 			// Parametro 1 del procedimiento almacenado
 			cst.setString(1, opcion);
@@ -1375,16 +1447,19 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 			return lista;
 		} catch (Exception e) {
-			e.printStackTrace();
+
 			return null;
+		} finally {
+			sql.closeConnection();
 		}
 	}
 
 	public List<Materia> obtenerMateriasLaboratorio(String codCarrera, String codMateria, String nomMateria,
 			String nomCarrera) {
 		java.sql.ResultSet result = null;
+		conexionSQL sql = new conexionSQL();
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 
 			// Llamada al procedimiento almacenado
@@ -1412,16 +1487,19 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 			return listaMateria;
 		} catch (Exception e) {
-			e.printStackTrace();
+
 			return null;
+		} finally {
+			sql.closeConnection();
 		}
 	}
 
 	public List<Materia> obtenerMateriasSNNA(String codCarrera, String codMateria, String nomMateria,
 			String nomCarrera) {
 		java.sql.ResultSet result = null;
+		conexionSQL sql = new conexionSQL();
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 
 			// Llamada al procedimiento almacenado
@@ -1452,15 +1530,18 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 			return listaMateria;
 		} catch (Exception e) {
-			e.printStackTrace();
+
 			return null;
+		} finally {
+			sql.closeConnection();
 		}
 	}
 
 	public List<Materia> obtenerMaterias(String codCarrera, String codMateria, String nomMateria, String nomCarrera) {
 		java.sql.ResultSet result = null;
+		conexionSQL sql = new conexionSQL();
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 
 			// Llamada al procedimiento almacenado
@@ -1491,16 +1572,19 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 			return listaMateria;
 		} catch (Exception e) {
-			e.printStackTrace();
+
 			return null;
+		} finally {
+			sql.closeConnection();
 		}
 	}
 
 	public List<Materia> obtenerMateriasConvenio(String codCarrera, String codMateria, String nomMateria,
 			String nomCarrera) {
 		java.sql.ResultSet result = null;
+		conexionSQL sql = new conexionSQL();
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 			CallableStatement cst = sql.getConection().prepareCall("{call pa_saedatparal (?,?,?,?,?,?)}");
 
@@ -1526,16 +1610,19 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 			return listaMateria;
 		} catch (Exception e) {
-			e.printStackTrace();
+
 			return null;
+		} finally {
+			sql.closeConnection();
 		}
 	}
 
 	public String verificarDatosParaConvenios(String opcion, String cedula, String codmateria) {
 		java.sql.ResultSet result = null;
+		conexionSQL sql = new conexionSQL();
 
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 
 			// Llamada al procedimiento almacenado pa_saedatcontratoest
@@ -1562,16 +1649,19 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 			return respuesta;
 		} catch (Exception e) {
-			e.printStackTrace();
+
 			return null;
+		} finally {
+			sql.closeConnection();
 		}
 	}
 
 	public List<CargaAcademica> obtenerCarga(String codCarrera, String codMat) {
 		java.sql.ResultSet result = null;
+		conexionSQL sql = new conexionSQL();
 
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 
 			// Llamada al procedimiento almacenado
@@ -1601,15 +1691,18 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 			return listacarga;
 		} catch (Exception e) {
-			e.printStackTrace();
+
 			return null;
+		} finally {
+			sql.closeConnection();
 		}
 	}
 
 	public void consultarPedidosInsertSAE(Pedido pedido) {
 		/** INGRESO SAEW PROFESORES */
+		conexionSQL sql = new conexionSQL();
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			SimpleDateFormat fom = new SimpleDateFormat("dd/MM/yyyy");
 			sql.getConnection();
 			CallableStatement cst = sql.getConection()
@@ -1641,21 +1734,21 @@ public class procedimientosAlmacenados {
 			cst.setString(15, pedido.getSexo().substring(0, 1));
 			cst.setString(16, pedido.getCodDep());
 
-
 			cst.executeUpdate();
 			sql.closeConnection();
 
 		} catch (Exception e) {
-			e.printStackTrace();
 
+		} finally {
+			sql.closeConnection();
 		}
 	}
 
 	public void consultarPedidosTituloInsertSAE(List<TitulosDocente> docenteTitulos) {
 		SimpleDateFormat fom = new SimpleDateFormat("dd/MM/yy");
-
+		conexionSQL sql = new conexionSQL();
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 			// Llamada al procedimiento almacenado
 			CallableStatement cst = sql.getConection().prepareCall("{call pa_saecontitulo (?,?,?,?,?,?,?)}");
@@ -1678,16 +1771,18 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 
 		} catch (Exception e) {
-			e.printStackTrace();
 
+		} finally {
+			sql.closeConnection();
 		}
 	}
 
 	public List<CargaAcademica> pa_chequeacruce(String codCarrera, String codMat) {
 		java.sql.ResultSet result = null;
+		conexionSQL sql = new conexionSQL();
 
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 
 			// Llamada al procedimiento almacenado
@@ -1719,8 +1814,10 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 			return listacarga;
 		} catch (Exception e) {
-			e.printStackTrace();
+
 			return null;
+		} finally {
+			sql.closeConnection();
 		}
 	}
 
@@ -1728,8 +1825,9 @@ public class procedimientosAlmacenados {
 			String horario1, String horario2, String codEdificio, String codAula, String fecha1, String fecha2) {
 		java.sql.ResultSet result = null;
 		String mensajeSaew = "";
+		conexionSQL sql = new conexionSQL();
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 
 			String j = "pa_saedatchequeacruce 'P','07','1716247257','SIC412','GR1','        10  ','        12  ','2014','2'";
@@ -1765,17 +1863,20 @@ public class procedimientosAlmacenados {
 			return mensajeSaew;
 
 		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("ERROR: " + e.getMessage());
+
+			sql.closeConnection();
 			return mensajeSaew;
+		} finally {
+			sql.closeConnection();
 		}
 	}
 
 	public List<DatosSaew> pa_saedatparalINuevo(String opcion, String codCarrera, String codMat, String paral) {
 		java.sql.ResultSet result = null;
+		conexionSQL sql = new conexionSQL();
 
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 
 			// Llamada al procedimiento almacenado
@@ -1877,16 +1978,19 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 			return listaDatosSaew;
 		} catch (Exception e) {
-			e.printStackTrace();
+			sql.closeConnection();
 			return null;
+		} finally {
+			sql.closeConnection();
 		}
 	}
 
 	public List<String> pa_saedatparalI(String codCarrera, String codMat, String paral) {
 		java.sql.ResultSet result = null;
+		conexionSQL sql = new conexionSQL();
 
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 
 			// Llamada al procedimiento almacenado
@@ -1946,10 +2050,8 @@ public class procedimientosAlmacenados {
 				listacarga.add(result.getString(35));
 				listacarga.add(result.getString(36));
 				listacarga.add(result.getString(37));
-				
+
 				listacarga.add(result.getString(38));
-				
-				
 
 				// Tercera Sesion
 
@@ -1968,24 +2070,26 @@ public class procedimientosAlmacenados {
 				listacarga.add(result.getString(56));
 				listacarga.add(result.getString(55));
 				listacarga.add(result.getString(57));
-				
-				
+
 			}
 			result.close();
 
 			sql.closeConnection();
 			return listacarga;
 		} catch (Exception e) {
-			e.printStackTrace();
+			sql.closeConnection();
 			return null;
+		} finally {
+			sql.closeConnection();
 		}
 	}
 
 	public List<DatosSaew> pa_saedatparalIS(String codCarrera, String codMat, String paral) {
 		java.sql.ResultSet result = null;
+		conexionSQL sql = new conexionSQL();
 
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 
 			// Llamada al procedimiento almacenado
@@ -2073,17 +2177,22 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 			return listaDatosSaew;
 		} catch (Exception e) {
-			e.printStackTrace();
+			sql.closeConnection();
 			return null;
+		}
+
+		finally {
+			sql.closeConnection();
 		}
 	}
 
 	public List<DatosSaewHorariosFechas> pa_saedatparalIFS(String codCarrera, String codMat, String paral,
 			String cedula) {
 		java.sql.ResultSet result = null;
+		conexionSQL sql = new conexionSQL();
 
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 
 			// Llamada al procedimiento almacenado
@@ -2119,8 +2228,10 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 			return listaDatosSaew;
 		} catch (Exception e) {
-			e.printStackTrace();
+			sql.closeConnection();
 			return null;
+		} finally {
+			sql.closeConnection();
 		}
 	}
 
@@ -2128,9 +2239,10 @@ public class procedimientosAlmacenados {
 			String cedulaSimultaneo, Pedido pedido) {
 
 		java.sql.ResultSet result = null;
+		conexionSQL sql = new conexionSQL();
 		String mensajeSaew = "";
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 			SimpleDateFormat fom = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -2141,8 +2253,9 @@ public class procedimientosAlmacenados {
 
 			/**
 			 * pa_saedatparalI
-			 * U,'142','msa430','GR1',2017,1,'','','9900000010','','','','saei','','','','',1,'BE913159','','PROFESOR
-			 * A TIEMPO COMPLETO','CONTRATO OCASIONAL'
+			 * U,'142','msa430','GR1',2017,1,'','','9900000010','','','','saei',
+			 * '','','','',1,'BE913159','','PROFESOR A TIEMPO
+			 * COMPLETO','CONTRATO OCASIONAL'
 			 */
 
 			// Parametro 1 del procedimiento almacenado
@@ -2180,16 +2293,18 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 			return mensajeSaew;
 		} catch (SQLException e) {
-			e.printStackTrace();
+			sql.closeConnection();
 			return e.getMessage();
+		} finally {
+			sql.closeConnection();
 		}
 	}
 
 	public List<List<String>> pa_saedathorarf(String codCarrera, String codMat, String paral) {
 		java.sql.ResultSet result = null;
-
+		conexionSQL sql = new conexionSQL();
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 
 			// Llamada al procedimiento almacenado
@@ -2224,8 +2339,11 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 			return listaFechas;
 		} catch (Exception e) {
-			e.printStackTrace();
+			sql.closeConnection();
+
 			return null;
+		} finally {
+			sql.closeConnection();
 		}
 	}
 
@@ -2233,8 +2351,9 @@ public class procedimientosAlmacenados {
 
 	public String pa_saehoraradic(CargaAcademica carga) {
 
+		conexionSQL sql = new conexionSQL();
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 			// Llamada al procedimiento almacenado
 			CallableStatement cst = sql.getConection().prepareCall("{call pa_saehoraradic (?,?,?,?,?,?,?,?)}");
@@ -2253,14 +2372,17 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 			return "Se registro las horas adicionales";
 		} catch (Exception e) {
-			e.printStackTrace();
+			sql.closeConnection();
 			return " No se ha nada en el saew";
+		} finally {
+			sql.closeConnection();
 		}
 	}
 
 	public String pa_saehorasp(CargaAcademica carga) {
+		conexionSQL sql = new conexionSQL();
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 			// Llamada al procedimiento almacenado
 
@@ -2292,15 +2414,18 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 			return "Se registro las saeHorasP";
 		} catch (Exception e) {
-			e.printStackTrace();
+			sql.closeConnection();
 			return " No se ha nada en el saew";
+		} finally {
+			sql.closeConnection();
 		}
 	}
 
 	public String pa_saehoraspcon(CargaAcademica carga) {
 
+		conexionSQL sql = new conexionSQL();
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 			// Llamada al procedimiento almacenado
 
@@ -2326,15 +2451,18 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 			return "Se registro las pa_saehoraspcon";
 		} catch (Exception e) {
-			e.printStackTrace();
+			sql.closeConnection();
 			return " No se ha nada en el saew";
+		} finally {
+			sql.closeConnection();
 		}
 	}
 
 	public String verificarMateriasAEliminar(List<CargaAcademica> carga) {
 
+		conexionSQL sql = new conexionSQL();
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 
 			// Llamada al procedimiento almacenado pa_saedatcontratoest
@@ -2372,16 +2500,19 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 			return respuesta;
 		} catch (Exception e) {
-			e.printStackTrace();
+			sql.closeConnection();
 			return "";
+		} finally {
+			sql.closeConnection();
 		}
 	}
 
 	public List<CargaPlanificacionDTO> obtenerCargaAcademicaPlanificacion(String cedula, String añoPensum,
 			String numeroPensum) {
 		java.sql.ResultSet result = null;
+		conexionSQL sql = new conexionSQL();
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 
 			CallableStatement cst = sql.getConection().prepareCall("{call pa_saecontparalca (?,?,?,?,?,?)}");
@@ -2418,8 +2549,10 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 			return listaCargaPlanif;
 		} catch (Exception e) {
-			e.printStackTrace();
+			sql.closeConnection();
 			return null;
+		} finally {
+			sql.closeConnection();
 		}
 
 	}
@@ -2427,8 +2560,9 @@ public class procedimientosAlmacenados {
 	/** SE OBTIENE TODAS LAS CARRERAS EN LA EPN */
 	public List<CarreraDTO> obtenerCarrerasFacultad(int nivel) {
 		java.sql.ResultSet result = null;
+		conexionSQL sql = new conexionSQL();
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 
 			CallableStatement cst = sql.getConection().prepareCall("{call pa_saedatcarrera (?,?,?,?)}");
@@ -2506,8 +2640,10 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 			return listaCarrear;
 		} catch (Exception e) {
-			e.printStackTrace();
+
 			return null;
+		} finally {
+			sql.closeConnection();
 		}
 
 	}
@@ -2515,8 +2651,9 @@ public class procedimientosAlmacenados {
 	/** SE OBTIENE EL DOCUMENTO DE IDENTIDAD DE LOS DOCENTES POR CARRERA */
 	public List<DocenteDTO> obtenerNumCedDocenteCarrera(String idCarrera, Pensum p) {
 		java.sql.ResultSet result = null;
+		conexionSQL sql = new conexionSQL();
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 
 			CallableStatement cst = sql.getConection().prepareCall("{call pa_saecontparalca (?,?,?,?,?,?)}");
@@ -2542,8 +2679,10 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 			return listaNumDocente;
 		} catch (Exception e) {
-			e.printStackTrace();
+
 			return null;
+		} finally {
+			sql.closeConnection();
 		}
 
 	}
@@ -2582,16 +2721,18 @@ public class procedimientosAlmacenados {
 			return "S";
 		} catch (Exception e) {
 			sql.closeConnection();
-			e.printStackTrace();
 			return "N";
+		} finally {
+			sql.closeConnection();
 		}
 	}
 
 	public List<MateriaDTO> pa_contsilabo(String codcar, String codprf, String codmat, Integer anomat, Integer semmat,
 			String paralo) {
 		java.sql.ResultSet result = null;
+		conexionSQL sql = new conexionSQL();
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 			// Llamada al procedimiento almacenado
 
@@ -2617,7 +2758,6 @@ public class procedimientosAlmacenados {
 				materia.setHoras(result.getString(4));
 				materia.setAula(result.getString(5));
 				materia.setUbicacion(result.getString(6));
-
 				materia.setFuncion(result.getString(7));
 				materia.setEst(result.getString(8));
 				materia.setNroSesiones(result.getString(9));
@@ -2634,41 +2774,33 @@ public class procedimientosAlmacenados {
 				materia.setCodcar(result.getString(20));
 				materia.setCarrera(result.getString(21));
 				materia.setFacultad(result.getString(22));
-
 				listaMaterias.add(materia);
 			}
 			result.close();
 			sql.closeConnection();
 			return listaMaterias;
 		} catch (Exception e) {
-			e.printStackTrace();
+
 			return null;
+		} finally {
+			sql.closeConnection();
 		}
+
 	}
 
 	public String fechaPasoMateria(String opcion, String codcarre, String cedula, String codmar, String paralelo,
 			Integer anomat, Integer semmat) {
-
+		conexionSQL sql = new conexionSQL();
 		try {
 
 			java.sql.ResultSet result = null;
 			String mensajeSaew = "";
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 			// Llamada al procedimiento almacenado
 
 			CallableStatement cst = sql.getConection().prepareCall("{call pa_contsilabo (?,?,?,?,?,?,?,?)}");
 			// Parametro 1 del procedimiento almacenado
-
-			System.out.println("opcion" + opcion);
-			System.out.println("cos carrera" + codcarre);
-			System.out.println("cedula " + cedula);
-			System.out.println("4");
-			System.out.println("codMateria" + codmar);
-
-			System.out.println("paralelo" + paralelo);
-			System.out.println("ano" + anomat);
-			System.out.println("semestre" + semmat);
 
 			cst.setString(1, opcion);
 			cst.setString(2, codcarre);
@@ -2690,8 +2822,11 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 			return mensajeSaew;
 		} catch (Exception e) {
-			e.printStackTrace();
+
 			return "";
+
+		} finally {
+			sql.closeConnection();
 		}
 	}
 
@@ -2699,11 +2834,13 @@ public class procedimientosAlmacenados {
 	 * DEVUELVE TODAS LAS ACTIVIDADES DE DOCENCIA DE TODOS LOS PERIODOS POR
 	 * NUMERO DE CEDULA DEL DOCENTE Y NIVEL (POSGRADO, PREGRADO)
 	 ****************************************/
+	@SuppressWarnings("finally")
 	public List<ActividadDocenciaDTO> spActividadDocenciaPensum(String nced, String nivel) {
 		List<ActividadDocenciaDTO> listActividad = new ArrayList<ActividadDocenciaDTO>();
+		conexionSQL sql = new conexionSQL();
 		try {
 			java.sql.ResultSet result = null;
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 			// LLAMADA AL SP
 
@@ -2737,21 +2874,30 @@ public class procedimientosAlmacenados {
 
 			sql.closeConnection();
 		} catch (Exception e) {
+			sql.closeConnection();
 			listActividad = new ArrayList<ActividadDocenciaDTO>();
-			e.printStackTrace();
+
 		}
-		return listActividad;
+
+		finally {
+			sql.closeConnection();
+			return listActividad;
+
+		}
+
 	}
 
 	/**********************************************************************
 	 * DEVUELVE TODAS LAS ACTIVIDADES DE DOCENCIA DE TODOS LOS PERIODOS POR
 	 * NUMERO DE CEDULA DEL DOCENTE Y NIVEL (POSGRADO, PREGRADO)
 	 ****************************************/
+	@SuppressWarnings("finally")
 	public List<TesisDocenteDTO> spTesisDocenciaPensum(String nced, String tipo) {
 		List<TesisDocenteDTO> listTesisDocente = new ArrayList<TesisDocenteDTO>();
+		conexionSQL sql = new conexionSQL();
 		try {
 			java.sql.ResultSet result = null;
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 			// LLAMADA AL SP
 
@@ -2789,10 +2935,14 @@ public class procedimientosAlmacenados {
 
 			sql.closeConnection();
 		} catch (Exception e) {
+			sql.closeConnection();
 			listTesisDocente = new ArrayList<TesisDocenteDTO>();
-			e.printStackTrace();
+
+		} finally {
+			sql.closeConnection();
+			return listTesisDocente;
+
 		}
-		return listTesisDocente;
 	}
 
 	/**********************************************************************
@@ -2800,11 +2950,13 @@ public class procedimientosAlmacenados {
 	 * NUMERO DE CEDULA DEL DOCENTE Y NIVEL (POSGRADO, PREGRADO) DE LOS ULTIMOS
 	 * 5 AÑOS
 	 ****************************************/
+	@SuppressWarnings("finally")
 	public List<ActividadDocenciaDTO> spActividadDocenciaSAEW(String nced, Integer año) {
 		List<ActividadDocenciaDTO> listActividad = new ArrayList<ActividadDocenciaDTO>();
+		conexionSQL sql = new conexionSQL();
 		try {
 			java.sql.ResultSet result = null;
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 			Calendar c = Calendar.getInstance();
 			Integer anio = c.get(Calendar.YEAR) - año;
@@ -2839,10 +2991,14 @@ public class procedimientosAlmacenados {
 
 			sql.closeConnection();
 		} catch (Exception e) {
+			sql.closeConnection();
 			listActividad = new ArrayList<ActividadDocenciaDTO>();
-			e.printStackTrace();
+
+		} finally {
+			sql.closeConnection();
+			return listActividad;
+
 		}
-		return listActividad;
 	}
 
 	// public static void main(String[] args) {
@@ -2876,7 +3032,7 @@ public class procedimientosAlmacenados {
 	// sql.closeConnection();
 	//
 	// } catch (Exception e) {
-	// e.printStackTrace();
+	//
 	//
 	// }
 	// }
@@ -2888,9 +3044,10 @@ public class procedimientosAlmacenados {
 
 	public List<ReporteDistributivoAcademicoDTO> obtenerCargaDistributivoOK(Pensum pensum, Carrera carr,
 			FacultadCatalogos facultad) {
+		conexionSQL sql = new conexionSQL();
 		java.sql.ResultSet result = null;
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 
 			CallableStatement cst = sql.getConection().prepareCall("{call pa_saeparal (?,?,?,?,?,?,?,?)}");
@@ -2936,32 +3093,38 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 			return listaDistr;
 		} catch (Exception e) {
-			e.printStackTrace();
+			sql.closeConnection();
+
 			return null;
+		}
+
+		finally {
+			sql.closeConnection();
+
 		}
 
 	}
 
 	public List<CargaPlanificacionDTO> obtenerHeteroCargaAcademica(String cedula, String añoPensum,
 			String numeroPensum) {
+		conexionSQL sql = new conexionSQL();
 		java.sql.ResultSet result = null;
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 
 			/* pa_saeevaluaer 'L','','','','1756943757','','',2017,1 */
 
 			CallableStatement cst = sql.getConection().prepareCall("{call pa_saeevaluaer (?,?,?,?,?,?,?,?,?)}");
 
-			if(Integer.parseInt(añoPensum)== 2017 && Integer.parseInt(numeroPensum)==2){
-				cst.setString(1, "LV");	
-			}else if(Integer.parseInt(añoPensum)>= 2018){
+			if (Integer.parseInt(añoPensum) == 2017 && Integer.parseInt(numeroPensum) == 2) {
 				cst.setString(1, "LV");
-			}else{
+			} else if (Integer.parseInt(añoPensum) >= 2018) {
+				cst.setString(1, "LV");
+			} else {
 				cst.setString(1, "L");
 			}
-			
-			
+
 			cst.setString(2, "");
 			cst.setString(3, "");
 			cst.setString(4, "");
@@ -2979,7 +3142,7 @@ public class procedimientosAlmacenados {
 				carga.setNomMateriaSAE(result.getString(4).trim());
 				carga.setNomParaleloSAE(result.getString(5));
 				carga.setValHetero(Double.parseDouble(result.getString(8) == null ? "0.0" : result.getString(8)));
-				carga.setAula(result.getString(16)==null?"":result.getString(16).replace("/", ""));
+				carga.setAula(result.getString(16) == null ? "" : result.getString(16).replace("/", ""));
 
 				listaCargaPlanif.add(carga);
 			}
@@ -2987,7 +3150,11 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 			return listaCargaPlanif;
 		} catch (Exception e) {
+			sql.closeConnection();
 			return null;
+		} finally {
+			sql.closeConnection();
+
 		}
 
 	}
@@ -3023,7 +3190,7 @@ public class procedimientosAlmacenados {
 	// sql.closeConnection();
 	//
 	// } catch (Exception e) {
-	// e.printStackTrace();
+	//
 	//
 	// }
 	// }
@@ -3031,8 +3198,9 @@ public class procedimientosAlmacenados {
 	public List<ReporteDistributivoAcademicoDTO> obtenerCargaPorCarrera(Pensum pensum, Carrera carr,
 			FacultadCatalogos facultad) {
 		java.sql.ResultSet result = null;
+		conexionSQL sql = new conexionSQL();
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 
 			CallableStatement cst = sql.getConection().prepareCall("{call pa_saeparal (?,?,?,?,?,?,?,?)}");
@@ -3074,16 +3242,21 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 			return listaDistr;
 		} catch (Exception e) {
-			e.printStackTrace();
+			sql.closeConnection();
+
 			return null;
+		} finally {
+			sql.closeConnection();
+
 		}
 
 	}
 
 	public List<CargaAcademicaDistributivoDTO> obtenerCargaDistributivo() {
 		java.sql.ResultSet result = null;
+		conexionSQL sql = new conexionSQL();
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 
 			CallableStatement cst = sql.getConection().prepareCall("{call pa_saeparal (?,?,?,?,?,?,?,?)}");
@@ -3116,16 +3289,21 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 			return listaDistr;
 		} catch (Exception e) {
-			e.printStackTrace();
+			sql.closeConnection();
+
 			return null;
+		} finally {
+			sql.closeConnection();
+
 		}
 
 	}
 
 	public List<DistributivoAcademicoDTO> obtenerDistributivo1() {
 		java.sql.ResultSet result = null;
+		conexionSQL sql = new conexionSQL();
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 
 			CallableStatement cst = sql.getConection().prepareCall("{call pa_saeparalca (?,?,?,?,?,?,?,?,?)}");
@@ -3178,16 +3356,20 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 			return listaDistr;
 		} catch (Exception e) {
-			e.printStackTrace();
+			sql.closeConnection();
 			return null;
+		} finally {
+			sql.closeConnection();
+
 		}
 
 	}
 
 	public List<ReporteDistributivoAcademicoDTO> obtenerEstudiantesMatriculados(Pensum pensum, Carrera carre) {
 		java.sql.ResultSet result = null;
+		conexionSQL sql = new conexionSQL();
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 
 			CallableStatement cst = sql.getConection().prepareCall("{call pa_saeestcarr  (?,?,?,?,?,?,?,?,?,?,?,?)}");
@@ -3229,16 +3411,21 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 			return listaDistr;
 		} catch (Exception e) {
-			e.printStackTrace();
+			sql.closeConnection();
+
 			return null;
+		} finally {
+			sql.closeConnection();
+
 		}
 
 	}
 
 	public ReporteChartDTO obtenerEstudiantesTutorias(Integer año, Integer numero, String cedula) {
 		java.sql.ResultSet result = null;
+		conexionSQL sql = new conexionSQL();
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 
 			CallableStatement cst = sql.getConection().prepareCall("{call pa_saetutoria (?,?,?,?,?,?,?,?,?,?,?,?,?)}");
@@ -3277,16 +3464,23 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 			return listaDistr;
 		} catch (Exception e) {
-			e.printStackTrace();
+			sql.closeConnection();
+
 			return null;
+		}
+
+		finally {
+			sql.closeConnection();
+
 		}
 
 	}
 
 	public ReporteChartDTO obtenerTesisDirigidas(Integer año, Integer numero, String cedula) {
 		java.sql.ResultSet result = null;
+		conexionSQL sql = new conexionSQL();
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 
 			CallableStatement cst = sql.getConection().prepareCall("{call pa_tesisxest (?,?,?,?,?,?,?,?,?,?)}");
@@ -3333,16 +3527,21 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 			return listaDistr;
 		} catch (Exception e) {
-			e.printStackTrace();
+			sql.closeConnection();
+
 			return null;
+		} finally {
+			sql.closeConnection();
+
 		}
 
 	}
 
 	public List<ReporteChartDTO> obtenerMateriasDocente(Integer año, Integer numero, String cedula) {
 		java.sql.ResultSet result = null;
+		conexionSQL sql = new conexionSQL();
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 
 			CallableStatement cst = sql.getConection().prepareCall("{call pa_saecontparalca (?,?,?,?,?,?)}");
@@ -3380,8 +3579,12 @@ public class procedimientosAlmacenados {
 		} catch (
 
 		Exception e) {
-			e.printStackTrace();
+			sql.closeConnection();
+
 			return null;
+		} finally {
+			sql.closeConnection();
+
 		}
 	}
 
@@ -3389,11 +3592,13 @@ public class procedimientosAlmacenados {
 	 * DEVUELVE TODAS LAS ACTIVIDADES DE DOCENCIA DE TODOS LOS PERIODOS POR
 	 * NUMERO DE CEDULA DEL DOCENTE Y NIVEL (POSGRADO, PREGRADO)
 	 ****************************************/
+	@SuppressWarnings("finally")
 	public List<TesisDocenteDTO> spTesisProyectos(String nced, String tipo) {
 		List<TesisDocenteDTO> listTesisDocente = new ArrayList<TesisDocenteDTO>();
+		conexionSQL sql = new conexionSQL();
 		try {
 			java.sql.ResultSet result = null;
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 			// LLAMADA AL SP
 
@@ -3433,17 +3638,28 @@ public class procedimientosAlmacenados {
 
 			sql.closeConnection();
 		} catch (Exception e) {
+
+			sql.closeConnection();
+
 			listTesisDocente = new ArrayList<TesisDocenteDTO>();
-			e.printStackTrace();
+
 		}
-		return listTesisDocente;
+
+		finally {
+			sql.closeConnection();
+			return listTesisDocente;
+
+		}
+
 	}
 
+	@SuppressWarnings("finally")
 	public List<CordinacionDTO> spCoordinacionUsuario(String nced) {
 		List<CordinacionDTO> listCordinacion = new ArrayList<CordinacionDTO>();
+		conexionSQL sql = new conexionSQL();
 		try {
 			java.sql.ResultSet result = null;
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 			// LLAMADA AL SP
 
@@ -3482,15 +3698,22 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 		} catch (Exception e) {
 			listCordinacion = new ArrayList<CordinacionDTO>();
-			e.printStackTrace();
+			sql.closeConnection();
+
 		}
-		return listCordinacion;
+
+		finally {
+			sql.closeConnection();
+			return listCordinacion;
+
+		}
 	}
 
 	public List<MateriaDTO> obtenerMateriasPEA(Pensum pensum, String codcar, String nced) {
 		java.sql.ResultSet result = null;
+		conexionSQL sql = new conexionSQL();
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 
 			CallableStatement cst = sql.getConection().prepareCall("{call pa_saeparal (?,?,?,?,?,?,?,?,?,?,?,?)}");
@@ -3529,30 +3752,33 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 			return listaDistr;
 		} catch (Exception e) {
-			e.printStackTrace();
+			sql.closeConnection();
+
 			return null;
+		} finally {
+			sql.closeConnection();
+
 		}
 
 	}
-	
-	
+
 	public Double obtenerHetero2017A(String cedula) {
 		java.sql.ResultSet result = null;
+		conexionSQL sql = new conexionSQL();
 		try {
-			conexionSQL sql = new conexionSQL();
+
 			sql.getConnection();
 
 			/* pa_saeevaluaer 'L','','','','1756943757','','',2017,1 */
 
 			CallableStatement cst = sql.getConection().prepareCall("{call pa_saeevaluaer (?,?,?,?,?,?,?,?,?)}");
-									//										pa_saeevaluaer 'CA','','','','0802548578'
-			
-			
+			// pa_saeevaluaer 'CA','','','','0802548578'
+
 			cst.setString(1, "CA");
 			cst.setString(2, "");
 			cst.setString(3, "");
 			cst.setString(4, "");
-			cst.setString(5, cedula);	
+			cst.setString(5, cedula);
 			cst.setString(6, "");
 			cst.setString(7, "");
 			cst.setString(8, "");
@@ -3561,7 +3787,7 @@ public class procedimientosAlmacenados {
 			result = cst.executeQuery();
 			List<CargaPlanificacionDTO> listaCargaPlanif = new ArrayList<CargaPlanificacionDTO>();
 			while (result.next()) {
-				CargaPlanificacionDTO carga = new CargaPlanificacionDTO();				
+				CargaPlanificacionDTO carga = new CargaPlanificacionDTO();
 				carga.setValHetero(Double.parseDouble(result.getString(5) == null ? "0.0" : result.getString(5)));
 				listaCargaPlanif.add(carga);
 			}
@@ -3569,109 +3795,115 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 			return listaCargaPlanif.get(0).getValHetero();
 		} catch (Exception e) {
+			sql.closeConnection();
 			return null;
+
+		} finally {
+			sql.closeConnection();
+
 		}
 
 	}
-	
+
 	// Metodo para sacar datos de materias horarios fechas
-		public List<DatosSaewModulares> pa_saehorarf(String codCarrera, String codMat, String paral) {
-			java.sql.ResultSet result = null;
+	public List<DatosSaewModulares> pa_saehorarf(String codCarrera, String codMat, String paral) {
+		java.sql.ResultSet result = null;
+		conexionSQL sql = new conexionSQL();
 
-			Integer val = null;
-			System.out.println("POSIBLE VALOR NULO PARA ENTERO: " + val);
-			try {
-				conexionSQL sql = new conexionSQL();
-				sql.getConnection();
+		Integer val = null;
+		System.out.println("POSIBLE VALOR NULO PARA ENTERO: " + val);
+		try {
 
-				// Llamada al procedimiento almacenado
-				// pa_saehorarf
-				// L,'','142','MSA380','GR1','',null,null,null,'','',null,null,2018,2
-				// pa_saehorarf L,'','142','MSA380','GR1','',0,0,0,'','',0,0,2018,2
+			sql.getConnection();
 
-				CallableStatement cst = sql.getConection()
-						.prepareCall("{call pa_saehorarf (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+			// Llamada al procedimiento almacenado
+			// pa_saehorarf
+			// L,'','142','MSA380','GR1','',null,null,null,'','',null,null,2018,2
+			// pa_saehorarf L,'','142','MSA380','GR1','',0,0,0,'','',0,0,2018,2
 
-				cst.setString(1, "L");
-				cst.setString(2, "");
-				cst.setString(3, codCarrera);
-				cst.setString(4, codMat);
-				cst.setString(5, paral);
-				cst.setString(6, "");
-				cst.setNull(7, Types.INTEGER);
-				cst.setNull(8, Types.INTEGER);
-				cst.setNull(9, Types.INTEGER);
-				cst.setString(10, "");
-				cst.setString(11, "");
-				cst.setNull(12, Types.INTEGER);
-				cst.setNull(13, Types.INTEGER);
-				cst.setString(14, pensumVigente.getAñoPensum());
-				cst.setString(15, pensumVigente.getNumeroPensum());
+			CallableStatement cst = sql.getConection()
+					.prepareCall("{call pa_saehorarf (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
 
-				result = cst.executeQuery();
+			cst.setString(1, "L");
+			cst.setString(2, "");
+			cst.setString(3, codCarrera);
+			cst.setString(4, codMat);
+			cst.setString(5, paral);
+			cst.setString(6, "");
+			cst.setNull(7, Types.INTEGER);
+			cst.setNull(8, Types.INTEGER);
+			cst.setNull(9, Types.INTEGER);
+			cst.setString(10, "");
+			cst.setString(11, "");
+			cst.setNull(12, Types.INTEGER);
+			cst.setNull(13, Types.INTEGER);
+			cst.setString(14, pensumVigente.getAñoPensum());
+			cst.setString(15, pensumVigente.getNumeroPensum());
 
-				List<DatosSaewModulares> listaDatosSaew = new ArrayList<DatosSaewModulares>();
-				while (result.next()) {
-					DatosSaewModulares datos = new DatosSaewModulares();
+			result = cst.executeQuery();
 
-					datos.setFecha(result.getString(1));
-					datos.setNroSesion(result.getInt(2));
-					datos.setDe(result.getInt(3));
-					datos.setA(result.getInt(4));
-					datos.setSubTotal(result.getInt(5));
+			List<DatosSaewModulares> listaDatosSaew = new ArrayList<DatosSaewModulares>();
+			while (result.next()) {
+				DatosSaewModulares datos = new DatosSaewModulares();
 
-					listaDatosSaew.add(datos);
-				}
+				datos.setFecha(result.getString(1));
+				datos.setNroSesion(result.getInt(2));
+				datos.setDe(result.getInt(3));
+				datos.setA(result.getInt(4));
+				datos.setSubTotal(result.getInt(5));
 
-				result.close();
-
-				sql.closeConnection();
-				return listaDatosSaew;
-			} catch (Exception e) {
-				e.printStackTrace();
-				return null;
-			}
-		}
-		
-		
-		
-		public List<EstudianteMedicoDTO> datosEstudiantesSAEW(String cedula, String nombre) {
-			java.sql.ResultSet result = null;
-			try {
-				conexionSQL sql = new conexionSQL();
-				sql.getConnection();
-
-				//pa_saedatEstMed '', ''
-
-				CallableStatement cst = sql.getConection().prepareCall("{call pa_saedatEstMed (?,?)}");
-
-				
-				
-				cst.setString(1, cedula);
-				cst.setString(2, nombre);			
-
-				result = cst.executeQuery();
-				List<EstudianteMedicoDTO> listaEstudSaew = new ArrayList<EstudianteMedicoDTO>();
-				while (result.next()) {
-					EstudianteMedicoDTO estudiante = new EstudianteMedicoDTO();
-					estudiante.setCedula(result.getString(2));
-					estudiante.setNombre(result.getString(3));
-					estudiante.setFechaNacimiento(result.getString(10));
-					estudiante.setNacionalidad(result.getString(11));
-					estudiante.setGenero(result.getString(12));
-					listaEstudSaew.add(estudiante);
-				}
-				result.close();
-				sql.closeConnection();
-				return listaEstudSaew;
-			} catch (Exception e) {
-				return null;
+				listaDatosSaew.add(datos);
 			}
 
+			result.close();
+
+			sql.closeConnection();
+			return listaDatosSaew;
+		} catch (Exception e) {
+			sql.closeConnection();
+			return null;
+		} finally {
+			sql.closeConnection();
+
+		}
+	}
+
+	public List<EstudianteMedicoDTO> datosEstudiantesSAEW(String cedula, String nombre) {
+		java.sql.ResultSet result = null;
+		conexionSQL sql = new conexionSQL();
+		try {
+
+			sql.getConnection();
+
+			// pa_saedatEstMed '', ''
+
+			CallableStatement cst = sql.getConection().prepareCall("{call pa_saedatEstMed (?,?)}");
+
+			cst.setString(1, cedula);
+			cst.setString(2, nombre);
+
+			result = cst.executeQuery();
+			List<EstudianteMedicoDTO> listaEstudSaew = new ArrayList<EstudianteMedicoDTO>();
+			while (result.next()) {
+				EstudianteMedicoDTO estudiante = new EstudianteMedicoDTO();
+				estudiante.setCedula(result.getString(2));
+				estudiante.setNombre(result.getString(3));
+				estudiante.setFechaNacimiento(result.getString(10));
+				estudiante.setNacionalidad(result.getString(11));
+				estudiante.setGenero(result.getString(12));
+				listaEstudSaew.add(estudiante);
+			}
+			result.close();
+			sql.closeConnection();
+			return listaEstudSaew;
+		} catch (Exception e) {
+			sql.closeConnection();
+			return null;
+		} finally {
+			sql.closeConnection();
+
 		}
 
-		
-		
-
+	}
 
 }

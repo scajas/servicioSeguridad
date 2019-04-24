@@ -148,7 +148,7 @@ public class CierrePeriodoDAOImplement extends DaoGenericoImplement<CierrePeriod
 	public List<CierrePeriodo> consultarCierresVIPS(Integer idtipo) {
 
 		StringBuilder querys = new StringBuilder(
-				"SELECT e From CierrePeriodo e where e.cerrado = 'S' and e.path IS NOT NULL and e.proyecto.tipoProyecto.idTipoProy = ?0 order by e.meses desc ");
+				"SELECT e From CierrePeriodo e where e.cerrado = 'S' and e.path IS NOT NULL and e.proyecto.tipoProyecto.idTipoProy = ?0 and e.revisado = 'N' order by e.meses desc ");
 
 		Query query = getEntityManager().createQuery(querys.toString());
 

@@ -69,7 +69,9 @@ public class DaoGenericoImplement<E> implements DaoGenerico<E>{
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void update(E objeto) throws Exception {
-		entityManager.merge(objeto);		
+		entityManager.merge(objeto);
+		
+		
 	}
 
 	@Override
