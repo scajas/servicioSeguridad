@@ -26,17 +26,17 @@ public class ProformaDAOImplement extends DaoGenericoImplement<Proforma> impleme
 	}
 
 	@Override
-	public List<Proforma> getparametrosCliente(String fechaInicio, String fechaFin, String tipoCliente,
+	public List<Proforma> getparametrosCliente(String fechaInicio, String fechaFin, Integer tipoCliente,
 			String estadoPro) {
 
-		if (tipoCliente.equals("")) {
+		if (tipoCliente.equals(null)) {
 			setConsulta("SELECT p FROM Proforma p WHERE p.estadoPo like '%" + estadoPro + "%' AND p.fecha BETWEEN '"
 					+ fechaInicio + "' AND '" + fechaFin + "'");
 		} else if (estadoPro.equals("")) {
-			setConsulta("SELECT p FROM Proforma p WHERE p.cliente.tipocliente.tipoTcl like '%" + tipoCliente
+			setConsulta("SELECT p FROM Proforma p WHERE p.cliente.tipocliente.idTipocliente like '%" + tipoCliente
 					+ "%' AND p.fecha BETWEEN '" + fechaInicio + "' AND '" + fechaFin + "'");
 		} else {
-			setConsulta("SELECT p FROM Proforma p WHERE p.cliente.tipocliente.tipoTcl like '%" + tipoCliente
+			setConsulta("SELECT p FROM Proforma p WHERE p.cliente.tipocliente.idTipocliente like '%" + tipoCliente
 					+ "%' AND p.estadoPo like '%" + estadoPro + "%' AND p.fecha BETWEEN '" + fechaInicio + "' AND '"
 					+ fechaFin + "'");
 		}
