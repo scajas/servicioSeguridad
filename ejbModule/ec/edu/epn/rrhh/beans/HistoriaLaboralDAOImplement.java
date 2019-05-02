@@ -304,7 +304,9 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 			}
 		}
 		for (int i = 0; i < clearResults.size(); i++) {
-			resultado = clearResults.get(i);
+			if(i==0){
+				resultado = clearResults.get(i);
+			}			
 			if (clearResults.size() > 1) {
 				try{
 					if (clearResults.get(i+1).getFechaRige().after(clearResults.get(i).getFechaRige())) {
@@ -2103,34 +2105,20 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 						+ "and fam.fechaRige = (Select max(t.fechaRige) from HistoriaLaboral t where "
 						+ "t.accionP is null and t.id.idHist not in "
 						+ "(Select f.id.idHist from HistoriaLaboral f where (f.id.estado = 'Anulado' "
-						+ "or f.id.estado = 'Duplicado'))and t.emp.nced =:cedula) " + "order by fam.fechaRige desc ");
+						+ "or f.id.estado = 'Duplicado'))and t.emp.nced =:cedula) " 
+						+ "order by fam.id.fechaI desc ");
 
 		Query query = getEntityManager().createQuery(queryString.toString());
 
 		query.setParameter("cedula", emp.getNced());
-		List<HistoriaLaboral> resultado = query.getResultList();
-
-		/*
-		 * Revisar aqui el estado actual
-		 */
-
-		if (!resultado.isEmpty()) {
-			if (resultado.size() > 1) {
-				for (HistoriaLaboral ultimo : resultado) {
-					if (ultimo.getId().getEstado() != "Anulado" && ultimo.getFechaRige() != null) {
-						if (ultimo.getFechaFin() != null) {
-							ultimoContrato = ultimo;
-							break;
-						}
-					}
-				}
-				return ultimoContrato;
-			} else {
-				return resultado.get(0);
-			}
-		} else {
-			return null;
+		try{
+			ultimoContrato = (HistoriaLaboral) query.getSingleResult();
+		}catch(NoResultException e){
+			System.out.println("Empleado sin contratos registrados");
+		}catch(NonUniqueResultException e1){
+			ultimoContrato = (HistoriaLaboral) query.getResultList().get(0);
 		}
+		return ultimoContrato;
 
 	}
 
