@@ -134,6 +134,14 @@ public class CargoDAOImplement extends DaoGenericoImplement<Cargosm> implements 
 		return resultado;
 	}
 	
+	@Override
+	public List<Cargosm> findCargosActivosMigrados() {
+		StringBuilder queryString = new StringBuilder(
+				"SELECT fam FROM Cargosm fam where fam.estado ='activo' or fam.estado = 'migrado' or fam.estado = 'inactivo'");
+		Query query = getEntityManager().createQuery(queryString.toString());
+		List<Cargosm> resultado = query.getResultList();
+		return resultado;	
+	}
 	
 	
 }
