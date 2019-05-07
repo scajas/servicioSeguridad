@@ -134,6 +134,7 @@ public class CargoDAOImplement extends DaoGenericoImplement<Cargosm> implements 
 		return resultado;
 	}
 	
+	
 	@Override
 	public List<Cargosm> findCargosActivosMigrados() {
 		StringBuilder queryString = new StringBuilder(
