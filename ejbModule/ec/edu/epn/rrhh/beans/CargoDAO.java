@@ -23,6 +23,7 @@ public interface CargoDAO extends DaoGenerico<Cargosm> {
 	List<Cargosm> findCargos();
 	Integer getMaxId();
 	public List<Cargosm> findCargosAll();
+	public List<Cargosm> findCargosActivosMigrados();
 
 	
 
