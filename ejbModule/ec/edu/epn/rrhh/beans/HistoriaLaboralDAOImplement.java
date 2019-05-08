@@ -248,19 +248,20 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		// Finalizado para obtener la situación
 
 		StringBuilder queryString = new StringBuilder(
-				"Select hl from HistoriaLaboral hl where  hl.emp.nced =?1 and hl.fechaRige = "
+				        " Select hl from HistoriaLaboral hl where  hl.emp.nced =?1 and hl.fechaRige = "
 						+ "(Select max(hist.fechaRige) from HistoriaLaboral hist where hist.emp.nced=?1 "
-						+ "and hist.accionP.subtipoAccion.tipoAccion.idTpa != 13 and hist.fechaRige<=?2 "
-						+ "and (hist.id.estado = 'Finalizado' or hist.id.estado = '\"Finalizado\"') and "
-						+ "hist.id.idHist not in (Select histo.id.idHist from HistoriaLaboral histo "
-						+ "where histo.emp.nced=?1 and (histo.id.estado= ?3 or histo.id.estado=?4)"
-						+ ")) and hl.id.idHist not in ( select hitl.id.idHist from HistoriaLaboral hitl where "
-						+ " hitl.accionP.subtipoAccion.nombreSubaccion like ?5 or "
-						+ " hitl.accionP.subtipoAccion.nombreSubaccion like ?6 or "
-						+ " hitl.accionP.subtipoAccion.nombreSubaccion like ?7 or  "
-						+ " hitl.accionP.subtipoAccion.nombreSubaccion like ?8 or "
-						+ " hitl.accionP.subtipoAccion.nombreSubaccion like ?9 " + " and hitl.emp.nced = ?1) "
-						+ " order by hl.fechaRige desc");
+						+ " and hist.fechaRige<=?2 "
+						+ " and (trim(hist.id.estado) = 'Finalizado' or "
+						+ " trim(hist.id.estado) = '\"Finalizado\"') and "
+						+ " hist.id.idHist not in (Select histo.id.idHist from HistoriaLaboral histo "
+						+ " where histo.emp.nced=?1 and (histo.id.estado= ?3 or histo.id.estado=?4) " 
+						+ " or (histo.accionP.subtipoAccion.nombreSubaccion like ?5 or "
+						+ " histo.accionP.subtipoAccion.nombreSubaccion like ?6 or "
+						+ " histo.accionP.subtipoAccion.nombreSubaccion like ?7 or  "
+						+ " histo.accionP.subtipoAccion.nombreSubaccion like ?8 or "
+						+ " histo.accionP.subtipoAccion.nombreSubaccion like ?9 "
+						+ " or histo.accionP.subtipoAccion.tipoAccion.idTpa = 13))) "
+						+ " order by hl.fechaRige desc" );
 
 		Query query = getEntityManager().createQuery(queryString.toString());
 
@@ -281,8 +282,9 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 
 		try {
 			resultado = (HistoriaLaboral) query.getSingleResult();
-		} catch (NoResultException e) {
 			ultimoContrato = this.findLastContByEmp(emp);
+		} catch (NoResultException e) {
+			System.out.println("Empleado sin accciones de personal");
 		} catch (NonUniqueResultException e) {
 			resultados = query.getResultList();
 			resultado = resultados.get(0);
@@ -304,18 +306,18 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 			}
 		}
 		for (int i = 0; i < clearResults.size(); i++) {
-			if(i==0){
+			if (i == 0) {
 				resultado = clearResults.get(i);
-			}			
+			}
 			if (clearResults.size() > 1) {
-				try{
-					if (clearResults.get(i+1).getFechaRige().after(clearResults.get(i).getFechaRige())) {
-						resultado = clearResults.get(i+1);
+				try {
+					if (clearResults.get(i + 1).getFechaRige().after(resultado.getFechaRige())) {
+						resultado = clearResults.get(i + 1);
 					}
-				}catch(IndexOutOfBoundsException e){
+				} catch (IndexOutOfBoundsException e) {
 					continue;
-				}			
-			} 
+				}
+			}
 		}
 		return resultado;
 	}
@@ -1058,8 +1060,7 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 	}
 
 	private HistoriaLaboral getMostRecentCualquierNombramientoByEmp(Emp emp) {
-		StringBuilder queryString = new StringBuilder("Select hl from HistoriaLaboral " 
-				+ " hl where hl.fechaRige ="
+		StringBuilder queryString = new StringBuilder("Select hl from HistoriaLaboral " + " hl where hl.fechaRige ="
 				+ "(Select max(hist.fechaRige) from HistoriaLaboral hist where "
 				+ " hist.emp.nced=?1 and TRIM(hist.accionP.subtipoAccion.nombreSubaccion) like ?2 "
 				+ " and hist.id.estado=?3 "
@@ -2105,17 +2106,16 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 						+ "and fam.fechaRige = (Select max(t.fechaRige) from HistoriaLaboral t where "
 						+ "t.accionP is null and t.id.idHist not in "
 						+ "(Select f.id.idHist from HistoriaLaboral f where (f.id.estado = 'Anulado' "
-						+ "or f.id.estado = 'Duplicado'))and t.emp.nced =:cedula) " 
-						+ "order by fam.id.fechaI desc ");
+						+ "or f.id.estado = 'Duplicado'))and t.emp.nced =:cedula) " + "order by fam.id.fechaI desc ");
 
 		Query query = getEntityManager().createQuery(queryString.toString());
 
 		query.setParameter("cedula", emp.getNced());
-		try{
+		try {
 			ultimoContrato = (HistoriaLaboral) query.getSingleResult();
-		}catch(NoResultException e){
+		} catch (NoResultException e) {
 			System.out.println("Empleado sin contratos registrados");
-		}catch(NonUniqueResultException e1){
+		} catch (NonUniqueResultException e1) {
 			ultimoContrato = (HistoriaLaboral) query.getResultList().get(0);
 		}
 		return ultimoContrato;
