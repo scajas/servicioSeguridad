@@ -7,6 +7,8 @@ import java.util.List;
 import javax.ejb.EJBHome;
 import javax.ejb.Local;
 
+import ec.edu.epn.laboratorioBJ.entities.Servicio;
+
 
 @Local
 public interface DaoGenerico<E> extends EJBHome {
@@ -29,7 +31,9 @@ public interface DaoGenerico<E> extends EJBHome {
 
 	Integer generarId(String entidad, String id);
 
-	void eliminar(String entidad, String idCampo, Integer valor);	
+	void eliminar(String entidad, String idCampo, Integer valor);
+
+
 
 
 }
