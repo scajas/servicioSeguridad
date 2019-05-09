@@ -1,7 +1,5 @@
 package ec.edu.epn.atencionmedica.dto;
 
-import java.util.Date;
-
 public class EstudianteMedicoDTO {
 	
 	private String cedula;

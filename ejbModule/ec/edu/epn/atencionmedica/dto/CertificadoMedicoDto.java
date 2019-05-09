@@ -13,6 +13,7 @@ public class CertificadoMedicoDto {
 	private Date varHasta;
 	private String varNombreMedico;
 	private String varCodigoMsp;
+	private String varCedulaMedico;
 	
 	private Integer varHistoriaClinica;
 	private String varApellidos;
@@ -91,7 +92,7 @@ public class CertificadoMedicoDto {
 	
 	//Constructor para generar el certificado médico
 	public CertificadoMedicoDto(String varPaciente, String varCedula, String varDiagnostico, String varCIE,
-			Integer varHoras, Date varDesde, Date varHasta, String varNombreMedico, String varCodigoMsp) {
+			Integer varHoras, Date varDesde, Date varHasta, String varNombreMedico, String varCodigoMsp, String varCedulaMedico) {
 		super();
 		this.varPaciente = varPaciente;
 		this.varCedula = varCedula;
@@ -102,11 +103,12 @@ public class CertificadoMedicoDto {
 		this.varHasta = varHasta;
 		this.varNombreMedico = varNombreMedico;
 		this.varCodigoMsp = varCodigoMsp;
+		this.varCedulaMedico= varCedulaMedico;
 	}
 
 	//Constructor para generar el certificado médico
 	public CertificadoMedicoDto(String varPaciente, String varCedula, String varDiagnostico, String varCIE,
-			Integer varHoras, Date varDesde, String varNombreMedico, String varCodigoMsp) {
+			Integer varHoras, Date varDesde, String varNombreMedico, String varCodigoMsp, String varCedulaMedico) {
 		super();
 		this.varPaciente = varPaciente;
 		this.varCedula = varCedula;
@@ -116,12 +118,13 @@ public class CertificadoMedicoDto {
 		this.varDesde = varDesde;
 		this.varNombreMedico = varNombreMedico;
 		this.varCodigoMsp = varCodigoMsp;
+		this.varCedulaMedico= varCedulaMedico;
 	}
 		
 	
 	//Constructor para generar el pedido de exámen
 	public CertificadoMedicoDto(String varCedula, Integer varHistoriaClinica,  String varApellidos,
-			String varNombres, Date varDesde,  String varEspecialidad, String varNombreMedico, String varPedidoExamen, String varOtros, String varCodigoMsp) {
+			String varNombres, Date varDesde,  String varEspecialidad, String varNombreMedico, String varPedidoExamen, String varOtros, String varCodigoMsp, String varCedulaMedico) {
 		super();
 		this.varCedula = varCedula;
 		this.varHistoriaClinica = varHistoriaClinica;
@@ -133,6 +136,7 @@ public class CertificadoMedicoDto {
 		this.varPedidoExamen = varPedidoExamen;
 		this.varOtros = varOtros;
 		this.varCodigoMsp = varCodigoMsp;
+		this.varCedulaMedico= varCedulaMedico;
 	}
 	
 	//Constructor para generar el pedido de exámen
@@ -146,7 +150,7 @@ public class CertificadoMedicoDto {
 			String varCoproparasitario, String varSangreOculta, String varInvPolimorfoNucleares, String varRotavirus,
 			String varElementalMicroscopica, String varGotaFresca, String varGram, String varPruebaEmbarazo, String varCultivoAntibiograma,
 			String varGramBacteriologia, String varZiehl, String varHongos, String varFresco, String varCultivoAntibiogramaBacteriologia, String varOtros,
-			String varCodigoMsp) {
+			String varCodigoMsp, String varCedulaMedico) {
 		super();
 		this.varCedula = varCedula;
 		this.varHistoriaClinica = varHistoriaClinica;
@@ -202,12 +206,13 @@ public class CertificadoMedicoDto {
 		
 		this.varOtros = varOtros;
 		this.varCodigoMsp = varCodigoMsp;
+		this.varCedulaMedico= varCedulaMedico;
 	}
 
 	//Constructor para generar el pediddo de examne de imagen
 	public CertificadoMedicoDto(String varCedula, Integer varHistoriaClinica,  String varApellidos,
 			String varNombres, Date varDesde,  String varEspecialidad, String varNombreMedico, String varCodigoMsp, String varMotivo, String varCIE, String varExamenFisico,
-			String varCIEDiagDefinitivo, String varPedidoExamen, String varDescribirExamen, String varDiagPresuntivo, String varDiagDefinitivo) {
+			String varCIEDiagDefinitivo, String varPedidoExamen, String varDescribirExamen, String varDiagPresuntivo, String varDiagDefinitivo, String varCedulaMedico) {
 		super();
 		this.varCedula = varCedula;
 		this.varHistoriaClinica = varHistoriaClinica;
@@ -225,13 +230,14 @@ public class CertificadoMedicoDto {
 		this.varDescribirExamen = varDescribirExamen;
 		this.varDiagPresuntivo = varDiagPresuntivo;
 		this.varDiagDefinitivo = varDiagDefinitivo;
+		this.varCedulaMedico= varCedulaMedico;
 	}
 	
 	//Constructor para generar el pediddo de examne de imagen
 	public CertificadoMedicoDto(String varCedula, Integer varHistoriaClinica,  String varApellidos,
 			String varNombres, Date varDesde,  String varEspecialidad, String varNombreMedico, String varCodigoMsp, String varMotivo, String varCIE, String varExamenFisico,
 			String varCIEDiagDefinitivo, String varPedidoExamen, String varDescribirExamen, String varRxConvencional, String varTomografia, String varResonancia,
-			String varEcografia, String varProcedimiento, String varOtros, String varDiagPresuntivo, String varDiagDefinitivo) {
+			String varEcografia, String varProcedimiento, String varOtros, String varDiagPresuntivo, String varDiagDefinitivo, String varCedulaMedico) {
 		super();
 		this.varCedula = varCedula;
 		this.varHistoriaClinica = varHistoriaClinica;
@@ -255,6 +261,7 @@ public class CertificadoMedicoDto {
 		this.varOtros = varOtros;
 		this.varDiagPresuntivo = varDiagPresuntivo;
 		this.varDiagDefinitivo = varDiagDefinitivo;
+		this.varCedulaMedico= varCedulaMedico;
 	}
 	
 	
@@ -837,6 +844,14 @@ public class CertificadoMedicoDto {
 
 	public void setVarDiagDefinitivo(String varDiagDefinitivo) {
 		this.varDiagDefinitivo = varDiagDefinitivo;
+	}
+
+	public String getVarCedulaMedico() {
+		return varCedulaMedico;
+	}
+
+	public void setVarCedulaMedico(String varCedulaMedico) {
+		this.varCedulaMedico = varCedulaMedico;
 	}
 	
 	
