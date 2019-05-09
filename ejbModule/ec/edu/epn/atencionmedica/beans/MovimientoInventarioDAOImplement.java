@@ -5,8 +5,6 @@ import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import ec.edu.epn.atencionmedica.entities.Catalogo;
@@ -178,7 +176,7 @@ public class MovimientoInventarioDAOImplement extends DaoGenericoImplement<Movim
 		List<Movimientoinventario> listaMovEncontradas = new ArrayList<Movimientoinventario>();
 				
 		q = "SELECT m from Movimientoinventario m "
-				+ " WHERE m.catalogotipomovinventario.idCatalogo between 19 and 24 "
+				+ " WHERE m.catalogotipomovinventario.idCatalogo IN (19,20,21,22,23,24,109,110) "
 				+ " AND m.fechahoraMov between ?0 and ?1 "
 				+ " order by  m.fechahoraMov desc ";
 		

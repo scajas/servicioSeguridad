@@ -1,6 +1,5 @@
 package ec.edu.epn.atencionmedica.beans;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -356,6 +355,16 @@ public class CatalogoDAOImplement extends DaoGenericoImplement<Catalogo> impleme
 	@Override
 	public List<Catalogo> obtenerListaTipoProcedimientos() {
 		String q = "SELECT cat FROM Catalogo cat WHERE cat.catalogotipo = 10 and cat.activoCat = true ORDER BY cat.descripcionCat";
+		StringBuilder queryString = new StringBuilder(q);
+		Query query = getEntityManager().createQuery(queryString.toString());
+		return query.getResultList();
+	}
+	
+	
+	
+	@Override
+	public List<Catalogo> obtenerListaTipoAtencionMedicaNuevo() {
+		String q = "SELECT cat FROM Catalogo cat WHERE cat.catalogotipo = 11 and cat.activoCat = true";
 		StringBuilder queryString = new StringBuilder(q);
 		Query query = getEntityManager().createQuery(queryString.toString());
 		return query.getResultList();
