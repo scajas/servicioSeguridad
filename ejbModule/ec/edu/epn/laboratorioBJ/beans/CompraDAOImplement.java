@@ -28,8 +28,9 @@ public class CompraDAOImplement extends DaoGenericoImplement<Compra> implements 
 	@Override
 	public List<Compra> getParametrosCompra(String fechaInicio, String fechaFin) {
 
-		setConsulta("SELECT c FROM Compra c WHERE c.fechaCo BETWEEN '"
-				+ fechaInicio + "' AND '" + fechaFin + "'");
+		setConsulta("SELECT c FROM Compra c, ProveedorLab pv "
+				+ "WHERE c.proveedor.idProveedor = pv.idProveedor "
+				+ "AND c.fechaCo BETWEEN '" + fechaInicio + "' AND '" + fechaFin + "'");
 
 		System.out.println("FECHA DESDE: " + fechaInicio + " HASTA: " + fechaFin);
 		System.out.println("Consulta: " + getConsulta());
