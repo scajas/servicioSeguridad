@@ -281,8 +281,7 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		List<HistoriaLaboral> resultados = new ArrayList<HistoriaLaboral>();
 
 		try {
-			resultado = (HistoriaLaboral) query.getSingleResult();
-			ultimoContrato = this.findLastContByEmp(emp);
+			resultado = (HistoriaLaboral) query.getSingleResult();		
 		} catch (NoResultException e) {
 			System.out.println("Empleado sin accciones de personal");
 		} catch (NonUniqueResultException e) {
@@ -293,6 +292,8 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 					resultado = resultados.get(i);
 				}
 			}
+		}finally{
+			ultimoContrato = this.findLastContByEmp(emp);
 		}
 
 		resultados.clear();
