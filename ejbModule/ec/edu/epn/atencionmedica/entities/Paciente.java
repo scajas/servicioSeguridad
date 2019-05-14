@@ -103,6 +103,29 @@ public class Paciente implements Serializable {
 	
 	@Column(name="sexo_pac", nullable=false, length=10)
 	private String sexoPac;
+	
+	private String psicologicos;
+	private String psiquiatricos;
+	
+	@Column(name="antecedente_medicamento")
+	private String antecedenteMedicamento;
+	
+	
+	@Column(name="direccion")
+	private String direccion;
+	
+	@Column(name="telefono")
+	private String telefono;
+	
+	@Column(name="telefono2")
+	private String telefono2;	
+	
+	@Column(name="dep_car")
+	private String depCar;
+	
+	
+	
+	
 
 	//bi-directional many-to-one association to Atencionmedica
 	@OneToMany(mappedBy="paciente")
@@ -423,6 +446,62 @@ public class Paciente implements Serializable {
 
 	public void setAntecedentesginobstPac(String antecedentesginobstPac) {
 		this.antecedentesginobstPac = antecedentesginobstPac;
+	}
+
+	public String getPsicologicos() {
+		return psicologicos;
+	}
+
+	public void setPsicologicos(String psicologicos) {
+		this.psicologicos = psicologicos;
+	}
+
+	public String getPsiquiatricos() {
+		return psiquiatricos;
+	}
+
+	public void setPsiquiatricos(String psiquiatricos) {
+		this.psiquiatricos = psiquiatricos;
+	}
+
+	public String getAntecedenteMedicamento() {
+		return antecedenteMedicamento;
+	}
+
+	public void setAntecedenteMedicamento(String antecedenteMedicamento) {
+		this.antecedenteMedicamento = antecedenteMedicamento;
+	}
+
+	public String getDireccion() {
+		return direccion;
+	}
+
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
+	}
+
+	public String getTelefono() {
+		return telefono;
+	}
+
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
+
+	public String getTelefono2() {
+		return telefono2;
+	}
+
+	public void setTelefono2(String telefono2) {
+		this.telefono2 = telefono2;
+	}
+
+	public String getDepCar() {
+		return depCar;
+	}
+
+	public void setDepCar(String depCar) {
+		this.depCar = depCar;
 	}
 
 }

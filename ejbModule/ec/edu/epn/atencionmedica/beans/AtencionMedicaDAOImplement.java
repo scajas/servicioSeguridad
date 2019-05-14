@@ -7,8 +7,6 @@ import javax.ejb.Stateless;
 import javax.persistence.Query;
 
 import ec.edu.epn.atencionmedica.entities.Atencionmedica;
-import ec.edu.epn.atencionmedica.entities.Movimientoinventario;
-import ec.edu.epn.contratos.DTO.PedidosContratosDTO;
 import ec.edu.epn.generic.DAO.DaoGenericoImplement;
 
 @Stateless(mappedName="AtencionMedicaDAOImplement")
@@ -162,6 +160,28 @@ public class AtencionMedicaDAOImplement extends DaoGenericoImplement<Atencionmed
 			listaAtencionesEncontradas = query.getResultList();
 		}
 		return listaAtencionesEncontradas;
+	}
+	
+	
+	
+	@Override
+	public Atencionmedica obtenerAtencionMedicaPaciente(Integer idPaciente) {
+		List<Atencionmedica> listaAtencionesSignosVitales = new ArrayList<Atencionmedica>();
+		
+		q = "SELECT am FROM Atencionmedica am "
+					+ " WHERE am.paciente.idPaciente = ?0 ";
+			queryString = new StringBuilder(q);
+			query = getEntityManager().createQuery(queryString.toString());
+			query.setParameter(0, idPaciente);
+
+			listaAtencionesSignosVitales = query.getResultList();
+			
+			if(!listaAtencionesSignosVitales.isEmpty()){
+				return listaAtencionesSignosVitales.get(0);
+			}
+			else{
+				return null;
+			}
 	}
 
 }

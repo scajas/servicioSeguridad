@@ -158,6 +158,18 @@ public class Atencionmedica implements Serializable {
 	@Column(name="enfermedad_actual")
 	private String enfermedadActual;
 	
+	@Column(name="reposo_atm_dias")
+	private Integer reposoAtmDias;	
+	
+	@Column(name="laboratorio_resultado")
+	private String laboratorioResultado;	
+	
+	@Column(name="otros_diagnostico")
+	private String otrosDiagnostico;
+	
+	@Column(name="atencion_tipo")
+	private Integer atencionTipo;
+	
 	
 
 	//bi-directional many-to-one association to Catalogo
@@ -652,6 +664,39 @@ public class Atencionmedica implements Serializable {
 		this.enfermedadActual = enfermedadActual;
 	}
 
+	public Integer getReposoAtmDias() {
+		return reposoAtmDias;
+	}
+
+	public void setReposoAtmDias(Integer reposoAtmDias) {
+		this.reposoAtmDias = reposoAtmDias;
+	}
+
+	public String getLaboratorioResultado() {
+		return laboratorioResultado;
+	}
+
+	public void setLaboratorioResultado(String laboratorioResultado) {
+		this.laboratorioResultado = laboratorioResultado;
+	}
+
+	public String getOtrosDiagnostico() {
+		return otrosDiagnostico;
+	}
+
+	public void setOtrosDiagnostico(String otrosDiagnostico) {
+		this.otrosDiagnostico = otrosDiagnostico;
+	}
+
+	public Integer getAtencionTipo() {
+		return atencionTipo;
+	}
+
+	public void setAtencionTipo(Integer atencionTipo) {
+		this.atencionTipo = atencionTipo;
+	}
+
+	
 	
 
 	

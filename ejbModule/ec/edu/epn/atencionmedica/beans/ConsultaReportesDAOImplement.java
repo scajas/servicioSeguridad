@@ -60,12 +60,13 @@ public class ConsultaReportesDAOImplement extends DaoGenericoImplement<Reporte2>
 				q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); 	//var3
 				q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); 	//var4
 				q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); 	//var5
-				q.append(" ) "); 
-				q.append(" from Atencionmedica as a, Paciente as p, Topografiacie as tp, Topografiacie as t, Catalogo as cp, PersonalAtencion as per, Catalogo as ce ");
+				q.append(" ) ");
+				//q.append(" from Atencionmedica as a, Paciente as p, Topografiacie as tp, Topografiacie as t, Catalogo as cp, PersonalAtencion as per, Catalogo as ce ");
+				q.append(" from Atencionmedica as a, Paciente as p, Catalogo as cp, PersonalAtencion as per, Catalogo as ce ");
 				q.append(" where a.paciente.idPaciente = p.idPaciente ");
 				q.append(" and cp.idCatalogo = p.catalogo.idCatalogo ");
-				q.append(" and a.topografiacie.idTopografia = t.idTopografia ");
-				q.append(" and tp.idTopografia = t.topografiacie.idTopografia");
+				//q.append(" and a.topografiacie.idTopografia = t.idTopografia ");
+				//q.append(" and tp.idTopografia = t.topografiacie.idTopografia");
 				q.append(" and a.personal.idPersonal = per.idPersonal ");
 				q.append(" and per.catalogo2.idCatalogo = ce.idCatalogo ");
 				
@@ -82,11 +83,12 @@ public class ConsultaReportesDAOImplement extends DaoGenericoImplement<Reporte2>
 				q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); 	//var4
 				q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); 	//var5
 				q.append(" ) "); 
-				q.append(" from Atencionmedica as a, Paciente as p, Topografiacie as tp, Topografiacie as t, Catalogo as cp, PersonalAtencion as per, Catalogo as ce ");
+				//q.append(" from Atencionmedica as a, Paciente as p, Topografiacie as tp, Topografiacie as t, Catalogo as cp, PersonalAtencion as per, Catalogo as ce ");
+				q.append(" from Atencionmedica as a, Paciente as p, Catalogo as cp, PersonalAtencion as per, Catalogo as ce ");
 				q.append(" where a.paciente.idPaciente = p.idPaciente ");
 				q.append(" and cp.idCatalogo = p.catalogo.idCatalogo ");
-				q.append(" and a.topografiacie.idTopografia = t.idTopografia ");
-				q.append(" and tp.idTopografia = t.topografiacie.idTopografia");
+				//q.append(" and a.topografiacie.idTopografia = t.idTopografia ");
+				//q.append(" and tp.idTopografia = t.topografiacie.idTopografia");
 				q.append(" and a.personal.idPersonal = per.idPersonal ");
 				q.append(" and per.catalogo2.idCatalogo = ce.idCatalogo ");
 				
@@ -114,11 +116,12 @@ public class ConsultaReportesDAOImplement extends DaoGenericoImplement<Reporte2>
 				q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); 	//var4
 				q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); 	//var5
 				q.append(" ) "); 
-				q.append(" from Atencionmedica as a, Paciente as p, Topografiacie as tp, Topografiacie as t, Catalogo as cp, PersonalAtencion as per, Catalogo as ce ");
+				q.append(" from Atencionmedica as a, Paciente as p,  Catalogo as cp, PersonalAtencion as per, Catalogo as ce ");
+				//q.append(" from Atencionmedica as a, Paciente as p, Topografiacie as tp, Topografiacie as t*/, Catalogo as cp, PersonalAtencion as per, Catalogo as ce ");
 				q.append(" where a.paciente.idPaciente = p.idPaciente ");
 				q.append(" and cp.idCatalogo = p.catalogo.idCatalogo ");
-				q.append(" and a.topografiacie.idTopografia = t.idTopografia ");
-				q.append(" and tp.idTopografia = t.topografiacie.idTopografia");
+				//q.append(" and a.topografiacie.idTopografia = t.idTopografia ");
+				//q.append(" and tp.idTopografia = t.topografiacie.idTopografia");
 				q.append(" and a.personal.idPersonal = per.idPersonal ");
 				q.append(" and per.catalogo2.idCatalogo = ce.idCatalogo ");
 				
@@ -135,11 +138,12 @@ public class ConsultaReportesDAOImplement extends DaoGenericoImplement<Reporte2>
 				q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); 	//var4
 				q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); 	//var5
 				q.append(" ) "); 
-				q.append(" from Atencionmedica as a, Paciente as p, Topografiacie as tp, Topografiacie as t, Catalogo as cp, PersonalAtencion as per, Catalogo as ce ");
+				//q.append(" from Atencionmedica as a, Paciente as p, Topografiacie as tp, Topografiacie as t, Catalogo as cp, PersonalAtencion as per, Catalogo as ce ");
+				q.append(" from Atencionmedica as a, Paciente as p, Catalogo as cp, PersonalAtencion as per, Catalogo as ce ");
 				q.append(" where a.paciente.idPaciente = p.idPaciente ");
 				q.append(" and cp.idCatalogo = p.catalogo.idCatalogo ");
-				q.append(" and a.topografiacie.idTopografia = t.idTopografia ");
-				q.append(" and tp.idTopografia = t.topografiacie.idTopografia");
+				//q.append(" and a.topografiacie.idTopografia = t.idTopografia ");
+				//q.append(" and tp.idTopografia = t.topografiacie.idTopografia");
 				q.append(" and a.personal.idPersonal = per.idPersonal ");
 				q.append(" and per.catalogo2.idCatalogo = ce.idCatalogo ");
 				
@@ -156,10 +160,11 @@ public class ConsultaReportesDAOImplement extends DaoGenericoImplement<Reporte2>
 				q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); 	//var5
 				q.append(" ) "); 
 				q.append(" from Atencionmedica as a, Paciente as p, Topografiacie as tp, Topografiacie as t, Catalogo as cp, PersonalAtencion as per, Catalogo as ce, Catalogo as ca ");
+				//q.append(" from Atencionmedica as a, Paciente as p, Topografiacie as tp, Topografiacie as t, Catalogo as cp, PersonalAtencion as per, Catalogo as ce, Catalogo as ca ");
 				q.append(" where a.paciente.idPaciente = p.idPaciente ");
 				q.append(" and cp.idCatalogo = p.catalogo.idCatalogo ");
-				q.append(" and a.topografiacie.idTopografia = t.idTopografia ");
-				q.append(" and tp.idTopografia = t.topografiacie.idTopografia");
+				//q.append(" and a.topografiacie.idTopografia = t.idTopografia ");
+				//q.append(" and tp.idTopografia = t.topografiacie.idTopografia");
 				q.append(" and a.personal.idPersonal = per.idPersonal ");
 				q.append(" and per.catalogo2.idCatalogo = ce.idCatalogo ");
 				q.append(" and ca.idCatalogo = a.catalogo.idCatalogo ");
@@ -171,17 +176,19 @@ public class ConsultaReportesDAOImplement extends DaoGenericoImplement<Reporte2>
 			case 10: //------> SEGÚN DIAGNÓSTICO POR SEXO
 				//QUERY 10
 				q.append("SELECT NEW ec.edu.epn.atencionmedica.entities.Reporte2(1 "); //CONTADOR
-				q.append(" , tp.codigoTop "); q.append(" , tp.nombreTop "); q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); 	//var1
+				//q.append(" , tp.codigoTop "); q.append(" , tp.nombreTop "); q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); 	//var1
+				q.append(" , a.topografiacie.codigoTop "); q.append(" , a.topografiacie.nombreTop "); q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); 	//var1
 				q.append(" , p.sexoPac "); q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); 	//var2
 				q.append(" , ce.descripcionCat "); q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); 	//var3
 				q.append(" , per.apellido1Prs "); q.append(" , COALESCE(per.nombre1Prs,'') "); q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); 	//var4
 				q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); 	//var5
 				q.append(" ) "); 
-				q.append(" from Atencionmedica as a, Paciente as p, Topografiacie as tp, Topografiacie as t, Catalogo as cp, PersonalAtencion as per, Catalogo as ce ");
+				//q.append(" from Atencionmedica as a, Paciente as p, Topografiacie as tp, Topografiacie as t, Catalogo as cp, PersonalAtencion as per, Catalogo as ce ");
+				q.append(" from Atencionmedica as a, Paciente as p,  Catalogo as cp, PersonalAtencion as per, Catalogo as ce ");
 				q.append(" where a.paciente.idPaciente = p.idPaciente ");
 				q.append(" and cp.idCatalogo = p.catalogo.idCatalogo ");
-				q.append(" and a.topografiacie.idTopografia = t.idTopografia ");
-				q.append(" and tp.idTopografia = t.topografiacie.idTopografia");
+				//q.append(" and a.topografiacie.idTopografia = t.idTopografia ");
+				//q.append(" and tp.idTopografia = t.topografiacie.idTopografia");
 				q.append(" and a.personal.idPersonal = per.idPersonal ");
 				q.append(" and per.catalogo2.idCatalogo = ce.idCatalogo ");
 				
@@ -191,17 +198,19 @@ public class ConsultaReportesDAOImplement extends DaoGenericoImplement<Reporte2>
 			case 11: //------> SEGÚN DIAGNÓSTICO POR TIPO DE PACIENTE
 				//QUERY 11
 				q.append("SELECT NEW ec.edu.epn.atencionmedica.entities.Reporte2(1 "); //CONTADOR
-				q.append(" , tp.codigoTop "); q.append(" , ' - ' ");	 q.append(" , tp.nombreTop "); q.append(" , '' "); q.append(" , '' "); //var1
+				//q.append(" , tp.codigoTop "); q.append(" , ' - ' ");	 q.append(" , tp.nombreTop "); q.append(" , '' "); q.append(" , '' "); //var1
+				q.append(" , a.topografiacie.codigoTop "); q.append(" , ' - ' ");	 q.append(" , a.topografiacie.nombreTop "); q.append(" , '' "); q.append(" , '' "); //var1
 				q.append(" , cp.descripcionCat "); q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); 	//var2
 				q.append(" , ce.descripcionCat "); q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); 	//var3
 				q.append(" , per.apellido1Prs "); q.append(" , COALESCE(per.nombre1Prs,'') "); q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); 	//var4
 				q.append(" , '' "); q.append(" , '' ");	 q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); //var5
-				q.append(" ) "); 
-				q.append(" from Atencionmedica as a, Paciente as p, Topografiacie as tp, Topografiacie as t, Catalogo as cp, PersonalAtencion as per, Catalogo as ce ");
+				q.append(" ) ");
+				q.append(" from Atencionmedica as a, Paciente as p, Catalogo as cp, PersonalAtencion as per, Catalogo as ce ");
+				//q.append(" from Atencionmedica as a, Paciente as p, Topografiacie as tp, Topografiacie as t, Catalogo as cp, PersonalAtencion as per, Catalogo as ce ");
 				q.append(" where a.paciente.idPaciente = p.idPaciente ");
 				q.append(" and cp.idCatalogo = p.catalogo.idCatalogo ");
-				q.append(" and a.topografiacie.idTopografia = t.idTopografia ");
-				q.append(" and tp.idTopografia = t.topografiacie.idTopografia");
+				//q.append(" and a.topografiacie.idTopografia = t.idTopografia ");
+				//q.append(" and tp.idTopografia = t.topografiacie.idTopografia");
 				q.append(" and a.personal.idPersonal = per.idPersonal ");
 				q.append(" and per.catalogo2.idCatalogo = ce.idCatalogo ");
 				
@@ -211,7 +220,8 @@ public class ConsultaReportesDAOImplement extends DaoGenericoImplement<Reporte2>
 			case 12: //------> SEGÚN DIAGNÓSTICO POR EDADES
 				
 				q.append(" SELECT NEW ec.edu.epn.atencionmedica.entities.Reporte2( 1 , 'edad' "); //CONTADOR
-				q.append(" , tp.codigoTop "); q.append(" , ' - ' ");	 q.append(" , tp.nombreTop "); q.append(" , '' "); q.append(" , '' "); //var1
+				//q.append(" , tp.codigoTop "); q.append(" , ' - ' ");	 q.append(" , tp.nombreTop "); q.append(" , '' "); q.append(" , '' "); //var1
+				q.append(" , a.topografiacie.codigoTop "); q.append(" , ' - ' ");	 q.append(" , a.topografiaci.nombreTop "); q.append(" , '' "); q.append(" , '' "); //var1
 				q.append(" , a.fechahoraAtm "); q.append(" , p.fechanacPac ");	 q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); //var2
 				q.append(" , '' "); q.append(" , '' ");	 q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); //var3
 				q.append(" , '' "); q.append(" , '' ");	 q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); //var4
@@ -220,14 +230,14 @@ public class ConsultaReportesDAOImplement extends DaoGenericoImplement<Reporte2>
 				q.append("  from "); 
 				q.append("    Atencionmedica as a, "); 
 				q.append("    Paciente as p,  ");
-				q.append("    Topografiacie as tp,  ");
-				q.append("    Topografiacie as t,   ");
+				//q.append("    Topografiacie as tp,  ");
+				//q.append("    Topografiacie as t,   ");
 				q.append("    Catalogo as cp,   ");
 				q.append("    PersonalAtencion as per  ");
 				q.append(" where a.paciente.idPaciente = p.idPaciente ");
 				q.append(" and cp.idCatalogo = p.catalogo.idCatalogo ");
-				q.append(" and a.topografiacie.idTopografia = t.idTopografia ");
-				q.append(" and tp.idTopografia = t.topografiacie.idTopografia");
+				//q.append(" and a.topografiacie.idTopografia = t.idTopografia ");
+				//q.append(" and tp.idTopografia = t.topografiacie.idTopografia");
 				q.append(" and a.personal.idPersonal = per.idPersonal ");
 				
 				tipoQuery = TIPO_QUERY_TYPED;
@@ -389,10 +399,10 @@ public class ConsultaReportesDAOImplement extends DaoGenericoImplement<Reporte2>
 				q.append(" ) "); 
 				q.append("  from ");  
 				q.append("    Insumomedico as i,  ");
-				q.append("    Catalogo as c,   ");
+				//q.append("    Catalogo as c,   ");
 				q.append("    Catalogo as ct   ");
-				q.append(" where i.catalogoTipoPresentacion.idCatalogo = c.idCatalogo ");
-				q.append(" and ct.idCatalogo = i.catalogo.idCatalogo ");
+				q.append(" where i.catalogoTipoPresentacion.idCatalogo = ct.idCatalogo ");
+				//q.append(" and ct.idCatalogo = i.catalogo.idCatalogo ");
 				
 
 				tipoQuery = TIPO_QUERY_TYPED;
@@ -552,7 +562,7 @@ public class ConsultaReportesDAOImplement extends DaoGenericoImplement<Reporte2>
 		q.append(" SELECT NEW ec.edu.epn.atencionmedica.dto.CertificadoMedicoDto("); //CONTADOR1, CONTADOR2 
 		q.append(" p.nombre1Pac ");q.append("|| ' ' ||");q.append("p.apellido1Pac");
 		q.append(" , p.identificacionPac "); q.append(" , t.nombreTop "); q.append(" , t.codigoTop "); q.append(" , a.reposoAtm "); q.append(" , a.fechahorainicioAtm"); 	
-		q.append(", per.apellido1Prs");q.append("|| ' ' ||");q.append(" per.nombre1Prs "); q.append(" , per.codigomspPrs "); 
+		q.append(", per.apellido1Prs");q.append("|| ' ' ||");q.append(" per.nombre1Prs "); q.append(" , per.codigomspPrs "); q.append(" , per.identificacionPrs ");
 		q.append(" )"); 
 		q.append(" from Atencionmedica as a, Paciente as p, Topografiacie as t,PersonalAtencion as per ");
 		q.append(" where a.paciente.idPaciente = p.idPaciente ");		
@@ -579,7 +589,7 @@ public class ConsultaReportesDAOImplement extends DaoGenericoImplement<Reporte2>
 		q.append(" , p.nombre1Pac ");q.append("|| ' ' ||");q.append("p.nombre2Pac");
 		q.append(" , a.fechahoraAtm"); q.append(" , esp.descripcionCat"); q.append(" , per.apellido1Prs");q.append("|| ' ' ||");q.append(" per.nombre1Prs "); 
 		q.append(" , a.pedidosexamenesmedicosAtm ");q.append(" , a.examenesmedicosAtm ");
-		q.append(" , per.codigomspPrs "); 
+		q.append(" , per.codigomspPrs "); q.append(" , per.identificacionPrs ");
 		q.append(" )"); 
 		q.append(" from Atencionmedica as a, Paciente as p, Catalogo as esp,PersonalAtencion as per ");
 		q.append(" where a.paciente.idPaciente = p.idPaciente ");					
@@ -608,7 +618,7 @@ public class ConsultaReportesDAOImplement extends DaoGenericoImplement<Reporte2>
 		q.append(" , per.codigomspPrs ");q.append(" , a.motivoAtm ");q.append(" , t.codigoTop ");  
 		q.append(" , a.examenfisicoAtm ");q.append(" , (SELECT codigoTop FROM Topografiacie WHERE idTopografia = a.idDiagDefinitivo) ");
 		q.append(" , a.pedidosexamenesmedicosAtm ");q.append(" , a.examenesimagendescAtm ");
-		q.append(" , t.nombreTop ");q.append(" , (SELECT nombreTop FROM Topografiacie WHERE idTopografia = a.idDiagDefinitivo) ");
+		q.append(" , t.nombreTop ");q.append(" , (SELECT nombreTop FROM Topografiacie WHERE idTopografia = a.idDiagDefinitivo) "); q.append(" , per.identificacionPrs ");
 		q.append(" )"); 
 		q.append(" from Atencionmedica as a, Paciente as p, Catalogo as esp,PersonalAtencion as per, Topografiacie as t ");
 		q.append(" where a.paciente.idPaciente = p.idPaciente ");					
