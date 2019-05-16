@@ -40,10 +40,10 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 	public List<HistoriaLaboral> findHistoriasByEmpNoDuplicados(Emp emp) {
 		StringBuilder queryString = new StringBuilder(
 				"SELECT " + "fam FROM HistoriaLaboral fam where " + "fam.emp.nced =?1 and fam.id.fechaI = "
-						+ "(Select max(t.id.fechaI) " + "from HistoriaLaboral t where t.id.idHist=fam.id.idHist "
-						+ "and t.id.idHist not in " + "(select hist.id.idHist from HistoriaLaboral hist where "
-						+ " trim(t.id.estado)= 'Duplicado' or trim(t.id.estado) = 'Anulado' "
-						+ "or trim(t.id.estado) = 'Insubsistente' and hist.emp.nced = ?1))");
+						+ "(Select max(t.id.fechaI) from HistoriaLaboral t where t.id.idHist=fam.id.idHist "
+						+ "and t.id.idHist not in (select hist.id.idHist from HistoriaLaboral hist where "
+						+ " (trim(hist.id.estado)= 'Duplicado' or trim(hist.id.estado) = 'Anulado' "
+						+ "or trim(hist.id.estado) = 'Insubsistente') and hist.emp.nced = ?1))");
 
 		Query query = getEntityManager().createQuery(queryString.toString());
 
