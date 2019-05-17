@@ -39,7 +39,7 @@ public class ExistenciasDAOImplement extends DaoGenericoImplement<Existencia> im
 	public ExistenciasDAOImplement() {
 		// TODO Auto-generated constructor stub
 	}
-
+	private String consulta;
 	@Override
 	public SaldoExistencia findSaldoById(String id) {
 		StringBuilder querys = new StringBuilder("SELECT s FROM SaldoExistencia s where id_existencia = ?0");
@@ -130,6 +130,25 @@ public class ExistenciasDAOImplement extends DaoGenericoImplement<Existencia> im
 		}
 
 	}
+	
+	@Override
+	public Movimientosinventario movimientoInvenBynombred(String id) {
+		
+		StringBuilder querys = new StringBuilder("SELECT m FROM Movimientosinventario m where m.idExistencia = ?0");
+		Query query = getEntityManager().createQuery(querys.toString());
+		query.setParameter(0, id);
+		query.setMaxResults(1);
+
+		try {
+			Movimientosinventario movimientoInv = (Movimientosinventario) query.getSingleResult();
+			return movimientoInv;
+		} catch (NoResultException nre) {
+			return null;
+		} catch (NonUniqueResultException nure) {
+			return null;
+		}
+	}
+	
 	
 	@Override
 	public Pureza buscarPurezaById(String id) {
@@ -321,7 +340,36 @@ public class ExistenciasDAOImplement extends DaoGenericoImplement<Existencia> im
 		}
 
 	}
+
+	@Override
+	public List<Movimientosinventario> getParametroFecha(String fechaInicio, String fechaFinal) {
+		setConsulta("SELECT (m) FROM Movimientosinventario m, Existencia e, ProductoLab p, Grado g, Tipoproducto tp, Tipordeninv toi"
+				+ " WHERE m.idExistencia = e.idExistencia "
+				+ " AND e.producto.idProducto = p.idProducto"
+				+ " AND e.grado.idGrado = g.idGrado"
+				+ " AND p.tipoproducto.idTipoprod = tp.idTipoprod"
+				+ " AND m.fechaMi BETWEEN '"
+				+ fechaInicio + "' AND '" + fechaFinal + "'");
+
+				
+		System.out.println("FECHA DESDE: " + fechaInicio + " HASTA: " + fechaFinal);
+		System.out.println("Consulta: " + getConsulta());
+
+		StringBuilder queryString = new StringBuilder(getConsulta());
+		Query query = getEntityManager().createQuery(queryString.toString());
+
+		List<Movimientosinventario> resultados = query.getResultList();
+		return resultados;
+	}
+
 	
+	public String getConsulta() {
+		return consulta;
+	}
+
+	public void setConsulta(String consulta) {
+		this.consulta = consulta;
+	}
 	
 
 }

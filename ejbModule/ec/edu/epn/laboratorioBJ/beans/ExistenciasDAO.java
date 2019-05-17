@@ -23,6 +23,11 @@ import ec.edu.epn.laboratorioBJ.entities.laboratory;
 public interface ExistenciasDAO extends DaoGenerico<Existencia> {
 
 	SaldoExistencia findSaldoById(String id);
+	
+	Movimientosinventario movimientoInvenBynombred(String id);
+	
+	/*reporte*/
+	List<Movimientosinventario> getParametroFecha(String fechaInicio, String fechaFinal);
 
 	List<ProductoLab> filtrarLista(String dato);
 
