@@ -13,7 +13,7 @@ public class TipoRelacionDAOImplement extends DaoGenericoImplement<TipoRelacion>
 
 	public List<TipoRelacion> findTipoRelacionActivo() {
 
-		Query q = getEntityManager().createQuery("Select t from TipoRelacion t where t.descripcion='CONTRATO'");
+		Query q = getEntityManager().createQuery("Select t from TipoRelacion t where t.descripcion='CONTRATO' and t.estado='ACTIVO'");
 
 		List<TipoRelacion> resultado = null;
 
