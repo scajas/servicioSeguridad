@@ -30,9 +30,9 @@ public class Tipordeninv implements Serializable {
 	private String nombreToi;
 
 	//bi-directional many-to-one association to Ordeninventario
-	/*@OneToMany(mappedBy="tipordeninv")
+	@OneToMany(mappedBy="tipordeninv")
 	private List<Ordeninventario> ordeninventarios;
-*/
+
 	public Tipordeninv() {
 	}
 
