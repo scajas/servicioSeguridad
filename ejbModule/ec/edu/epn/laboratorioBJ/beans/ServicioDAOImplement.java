@@ -28,11 +28,9 @@ public class ServicioDAOImplement extends DaoGenericoImplement<Servicio> impleme
 	@Override
 	public List<Servicio> listaServicioUnidad(int id) {
 		StringBuilder queryString = new StringBuilder(
-				"SELECT b FROM Servicio b where b.laboratorio.unidad.idUnidad = ?1 ");
-		// new StringBuilder("SELECT b FROM Servicio b where id_Unidad = ?1 ");
+				"SELECT b FROM Servicio b where b.laboratorio.unidad.idUnidad = ?1 ");	
 		Query query = getEntityManager().createQuery(queryString.toString());
 		query.setParameter(1, id);
-
 		List<Servicio> resultados = query.getResultList();
 		return resultados;
 	}
@@ -41,10 +39,8 @@ public class ServicioDAOImplement extends DaoGenericoImplement<Servicio> impleme
 	public String maxIdServ(int id) {
 		StringBuilder queryString = new StringBuilder(
 				"SELECT max(b.idServicio) FROM Servicio b where b.laboratorio.unidad.idUnidad = ?1 ");
-		// new StringBuilder("SELECT b FROM Servicio b where id_Unidad = ?1 ");
 		Query query = getEntityManager().createQuery(queryString.toString());
 		query.setParameter(1, id);
-
 		String idServ = (String) query.getSingleResult();
 		return idServ;
 	}
@@ -57,7 +53,6 @@ public class ServicioDAOImplement extends DaoGenericoImplement<Servicio> impleme
 				"SELECT b FROM Servicio b where b.tiposervicio.idTiposerv = ?1 ");		
 		Query query = getEntityManager().createQuery(queryString.toString());
 		query.setParameter(1, idTipo);
-
 		List<Servicio> resultados = query.getResultList();
 		return resultados;
 	}
@@ -71,7 +66,6 @@ public class ServicioDAOImplement extends DaoGenericoImplement<Servicio> impleme
 		StringBuilder queryString = new StringBuilder(
 				"SELECT b FROM Servicio b where b.tiposervicio.nombreTs like '%" + tiposervicio + "%'");
 		Query query = getEntityManager().createQuery(queryString.toString());
-
 		List<Servicio> resultados = query.getResultList();
 		return resultados;
 	}

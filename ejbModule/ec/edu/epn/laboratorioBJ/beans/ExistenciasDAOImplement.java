@@ -88,7 +88,6 @@ public class ExistenciasDAOImplement extends DaoGenericoImplement<Existencia> im
 	@Override
 	public List<Movimientosinventario> listarMovimientoById(String idExistencia) {
 
-		System.out.println("COSAS DE LA VIDA: " + idExistencia);
 		StringBuilder queryString = new StringBuilder(
 				"SELECT m FROM Movimientosinventario m where m.idExistencia = ?1 ");
 		Query query = getEntityManager().createQuery(queryString.toString());
@@ -102,7 +101,6 @@ public class ExistenciasDAOImplement extends DaoGenericoImplement<Existencia> im
 	@Override
 	public List<Existencia> listarExistenciaById(int id) {
 
-		System.out.println("idUnidad: " + id);
 		StringBuilder queryString = new StringBuilder("SELECT e FROM Existencia e where e.idUnidad = ?1 ");
 		Query query = getEntityManager().createQuery(queryString.toString());
 		query.setParameter(1, id);
@@ -350,10 +348,6 @@ public class ExistenciasDAOImplement extends DaoGenericoImplement<Existencia> im
 				+ " AND p.tipoproducto.idTipoprod = tp.idTipoprod"
 				+ " AND m.fechaMi BETWEEN '"
 				+ fechaInicio + "' AND '" + fechaFinal + "'");
-
-				
-		System.out.println("FECHA DESDE: " + fechaInicio + " HASTA: " + fechaFinal);
-		System.out.println("Consulta: " + getConsulta());
 
 		StringBuilder queryString = new StringBuilder(getConsulta());
 		Query query = getEntityManager().createQuery(queryString.toString());
