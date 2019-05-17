@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.ejb.Local;
 
-import ec.edu.epn.atencionmedica.entities.Atencionmedica;
 import ec.edu.epn.atencionmedica.entities.Paciente;
 
 @Local

@@ -7,6 +7,7 @@ import javax.ejb.Stateless;
 import javax.persistence.Query;
 
 import ec.edu.epn.generic.DAO.DaoGenericoImplement;
+import ec.edu.epn.laboratorioBJ.entities.LaboratorioLab;
 import ec.edu.epn.laboratorioBJ.entities.ProductoLab;
 import ec.edu.epn.laboratorioBJ.entities.Servicio;
 import ec.edu.epn.laboratorioBJ.entities.Tiposervicio;
@@ -45,20 +46,25 @@ public class ServicioDAOImplement extends DaoGenericoImplement<Servicio> impleme
 		return idServ;
 	}
 
-
-	
 	@Override
-	public List<Servicio> listaServicioXTipo(int idTipo) {
-		StringBuilder queryString = new StringBuilder(
-				"SELECT b FROM Servicio b where b.tiposervicio.idTiposerv = ?1 ");		
+	public List<Servicio> listaServicioXTipo(int id) {
+		StringBuilder queryString = new StringBuilder("SELECT b FROM Servicio b where b.laboratorio.unidad.idUnidad = ?1 ");
 		Query query = getEntityManager().createQuery(queryString.toString());
 		query.setParameter(1, idTipo);
 		List<Servicio> resultados = query.getResultList();
 		return resultados;
 	}
-   
 	
-	
+	@Override
+	public List<LaboratorioLab> listaLaboratorioUnidad(int id) {
+		StringBuilder queryString = new StringBuilder("SELECT b FROM LaboratorioLab b where b.unidad.idUnidad = ?1 ");
+		Query query = getEntityManager().createQuery(queryString.toString());
+		query.setParameter(1, id);
+
+		List<LaboratorioLab> resultados = query.getResultList();
+		return resultados;
+	}
+
 	/////
 	@Override
 	public List<Servicio> getparametrosTipoServicio(String tiposervicio) {
@@ -69,5 +75,5 @@ public class ServicioDAOImplement extends DaoGenericoImplement<Servicio> impleme
 		List<Servicio> resultados = query.getResultList();
 		return resultados;
 	}
-	
+
 }

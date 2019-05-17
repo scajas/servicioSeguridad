@@ -10,6 +10,6 @@ import ec.edu.epn.laboratorioBJ.entities.Proforma;
 @Local
 public interface ProformaDAO extends DaoGenerico<Proforma> {
 
-	List<Proforma> getparametrosCliente(String fechaInicio, String fechaFin, String tipoCliente, String estadoPro);
+	List<Proforma> getparametrosCliente(String fechaInicio, String fechaFin, Integer tipoCliente, String estadoPro);
 
 }

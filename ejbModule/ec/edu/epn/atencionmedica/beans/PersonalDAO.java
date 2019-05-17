@@ -35,4 +35,10 @@ public interface PersonalDAO {
 	public PersonalAtencion obtenerPersonal(String criterio);
 
 	List<PersonalAtencion> obtenerListaPersonalReporte();
+	
+	/**
+	 * Metodo para obtener la lista de personal medico
+	 * @return List<PersonalAtencion>
+	 */
+	public List<PersonalAtencion> obtenerListaPersonal();
 }

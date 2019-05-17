@@ -26,19 +26,34 @@ public class ProformaDAOImplement extends DaoGenericoImplement<Proforma> impleme
 	}
 
 	@Override
-	public List<Proforma> getparametrosCliente(String fechaInicio, String fechaFin, String tipoCliente,
+	public List<Proforma> getparametrosCliente(String fechaInicio, String fechaFin, Integer tipoCliente,
 			String estadoPro) {
-
-		if (tipoCliente.equals("")) {
-			setConsulta("SELECT p FROM Proforma p WHERE p.estadoPo like '%" + estadoPro + "%' AND p.fecha BETWEEN '"
-					+ fechaInicio + "' AND '" + fechaFin + "'");
-		} else if (estadoPro.equals("")) {
-			setConsulta("SELECT p FROM Proforma p WHERE p.cliente.tipocliente.tipoTcl like '%" + tipoCliente
-					+ "%' AND p.fecha BETWEEN '" + fechaInicio + "' AND '" + fechaFin + "'");
+		if (tipoCliente == 0) {
+			setConsulta("SELECT p FROM Proforma p, Cliente c, Tipocliente tc, Usuario u, UnidadLabo uni "
+					+ "WHERE p.cliente.idCliente = c.idCliente "
+					+ "AND c.tipocliente.idTipocliente=tc.idTipocliente "
+					+ "AND p.idUsuario = u.id "
+					+ "AND u.id_unidad = uni.idUnidad "
+					+ "AND p.estadoPo like '%" + estadoPro + "%' AND p.fecha BETWEEN '" + fechaInicio + "' "
+					+ "AND '" + fechaFin + "'");
+		} else if (estadoPro.equals(null)) {
+			setConsulta("SELECT p FROM Proforma p, Cliente c, Tipocliente tc, Usuario u, UnidadLabo uni  "
+					+ "WHERE p.cliente.idCliente = c.idCliente "
+					+ "AND c.tipocliente.idTipocliente= tc.idTipocliente "
+					+ "AND p.idUsuario = u.id "
+					+ "AND u.id_unidad = uni.idUnidad "
+					+ "AND p.cliente.tipocliente.idTipocliente like '%" + tipoCliente+ "%' "
+					+ "AND p.fecha BETWEEN '" + fechaInicio + "' AND '" + fechaFin + "'");
 		} else {
-			setConsulta("SELECT p FROM Proforma p WHERE p.cliente.tipocliente.tipoTcl like '%" + tipoCliente
-					+ "%' AND p.estadoPo like '%" + estadoPro + "%' AND p.fecha BETWEEN '" + fechaInicio + "' AND '"
-					+ fechaFin + "'");
+
+			setConsulta("SELECT p FROM Proforma p, Cliente c, Tipocliente tc, Usuario u, UnidadLabo uni  "
+					+ "WHERE p.cliente.idCliente = c.idCliente "
+					+ "AND c.tipocliente.idTipocliente= tc.idTipocliente "
+					+ "AND p.idUsuario = u.id "
+					+ "AND u.id_unidad = uni.idUnidad "
+					+ "AND p.cliente.tipocliente.idTipocliente like '%" + tipoCliente + "%' "
+					+ "AND p.estadoPo like '%" + estadoPro + "%' "
+					+ "AND p.fecha BETWEEN '" + fechaInicio + "' AND '" + fechaFin + "'");
 		}
 
 		System.out.println("FECHA DESDE: " + fechaInicio + " HASTA: " + fechaFin);

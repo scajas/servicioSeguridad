@@ -77,6 +77,8 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 
 	@Override
 	public Emp buscaremp(String nced) throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
 
 		try {
 			Emp empleado = new Emp();
@@ -86,8 +88,6 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 
 			empleado = (Emp) query.getSingleResult();
 
-			Connection con = null;
-			PreparedStatement ps = null;
 			con = dataSource.getConnection();
 			if (empleado != null && con != null) {
 				String qry = "SELECT "
@@ -114,6 +114,9 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 
 		catch (NonUniqueResultException n) {
 			return null;
+
+		} finally {
+			super.cerrarConexion(con, ps);
 		}
 
 	}

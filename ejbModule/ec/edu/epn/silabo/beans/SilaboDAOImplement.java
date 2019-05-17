@@ -114,11 +114,11 @@ public class SilaboDAOImplement extends DaoGenericoImplement<Silabo> implements 
 	@Override
 	public List<Silabo> consultarSilaboMateria(String nced, String codigo) {
 
-		StringBuilder querys = new StringBuilder("SELECT e From Silabo e where e.cedula = ?1 and e.codigo = ?2  ");
+		StringBuilder querys = new StringBuilder("SELECT e From Silabo e where e.cedula = ?1 and e.codigo like ?2  ");
 
 		Query query = getEntityManager().createQuery(querys.toString());
 		query.setParameter(1, nced);
-		query.setParameter(2, codigo);
+		query.setParameter(2, "%"+codigo+"%");
 
 		return query.getResultList();
 

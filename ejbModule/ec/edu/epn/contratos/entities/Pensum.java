@@ -64,6 +64,12 @@ public class Pensum implements Serializable {
 
 	private String meses;
 	private String visibledips;
+	
+	@Temporal(TemporalType.DATE)
+	private Date vipsplanifica;
+
+	@Temporal(TemporalType.DATE)
+	private Date vipsreporta;
 
 	public Pensum() {
 	}
@@ -216,5 +222,22 @@ public class Pensum implements Serializable {
 	public void setIdPensumAnterior(Integer idPensumAnterior) {
 		this.idPensumAnterior = idPensumAnterior;
 	}
+
+	public Date getVipsplanifica() {
+		return vipsplanifica;
+	}
+
+	public void setVipsplanifica(Date vipsplanifica) {
+		this.vipsplanifica = vipsplanifica;
+	}
+
+	public Date getVipsreporta() {
+		return vipsreporta;
+	}
+
+	public void setVipsreporta(Date vipsreporta) {
+		this.vipsreporta = vipsreporta;
+	}
+	
 
 }

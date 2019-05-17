@@ -5,15 +5,17 @@ import java.util.List;
 import javax.ejb.Local;
 
 import ec.edu.epn.generic.DAO.DaoGenerico;
+import ec.edu.epn.laboratorioBJ.entities.LaboratorioLab;
 import ec.edu.epn.laboratorioBJ.entities.Servicio;
 import ec.edu.epn.laboratorioBJ.entities.Tiposervicio;
 
 @Local
 public interface ServicioDAO extends DaoGenerico<Servicio> {
 	
-	List<Servicio> listaServicioUnidad(int id);
+	List<Servicio> listaServicioUnidad(Integer id);
 	String maxIdServ(int id);
 	List<Servicio> listaServicioXTipo(int idTipo);
 	List<Servicio> getparametrosTipoServicio(String tiposervicio);
+	List<LaboratorioLab> listaLaboratorioUnidad(int id);
 
 }

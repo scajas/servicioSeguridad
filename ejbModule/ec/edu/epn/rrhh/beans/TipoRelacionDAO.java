@@ -18,4 +18,7 @@ public interface TipoRelacionDAO extends DaoGenerico<TipoRelacion> {
 	
 	public List<TipoRelacion> findAllTipoRelacionActivos();
 
+	public List<TipoRelacion> findAllTipoRelacionActivosMigrado();
+
+	
 }

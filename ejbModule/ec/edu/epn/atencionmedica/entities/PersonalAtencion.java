@@ -80,7 +80,12 @@ public class PersonalAtencion extends util implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="id_tipoespecialidad", nullable=false)
 	private Catalogo catalogo2;
-
+	
+	//bi-directional many-to-one association
+		@OneToMany(mappedBy="personal")
+		private List<HorarioMedico> horariomedicos;
+		
+	
 	public PersonalAtencion() {
 	}
 
@@ -251,6 +256,14 @@ public class PersonalAtencion extends util implements Serializable {
 
 	public void setEstado(String estado) {
 		this.estado = estado;
+	}
+	
+	public List<HorarioMedico> getHorariomedicos() {
+		return horariomedicos;
+	}
+
+	public void setHorariomedicos(List<HorarioMedico> horariomedicos) {
+		this.horariomedicos = horariomedicos;
 	}
 
 }

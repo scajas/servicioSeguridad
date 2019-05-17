@@ -142,7 +142,23 @@ public class PersonalDAOImplement extends DaoGenericoImplement<PersonalAtencion>
 			
 	}
 	
-	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<PersonalAtencion> obtenerListaPersonal() {
+
+		try {
+			q = "SELECT prs FROM PersonalAtencion prs WHERE prs.catalogo1.idCatalogo = 36 or "
+					+ "prs.catalogo1.idCatalogo = 37" +
+					" order by prs.apellido1Prs, prs.apellido2Prs, nombre1Prs, nombre2Prs";
+			queryString = new StringBuilder(q);
+			query = getEntityManager().createQuery(queryString.toString());		
+						
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return query.getResultList();
+		
+	}
 
 	
 

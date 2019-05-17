@@ -5,7 +5,6 @@ import java.util.List;
 import javax.ejb.Local;
 
 import ec.edu.epn.atencionmedica.entities.Atencionmedica;
-import ec.edu.epn.atencionmedica.entities.Movimientoinventario;
 
 @Local
 public interface AtencionMedicaDAO {
@@ -38,5 +37,6 @@ public interface AtencionMedicaDAO {
 	public Atencionmedica obtenerUltimaAtencionMedicaPorPaciente(Integer idPaciente);
 	
 	public List<Atencionmedica> obtenerListaProcedimientos(String criterio);
+	Atencionmedica obtenerAtencionMedicaPaciente(Integer idPaciente);
 		
 }

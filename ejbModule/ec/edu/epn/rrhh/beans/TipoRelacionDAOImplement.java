@@ -52,5 +52,19 @@ public class TipoRelacionDAOImplement extends DaoGenericoImplement<TipoRelacion>
 		}
 		return resultado;
 	}
+	
+	@Override
+	public List<TipoRelacion> findAllTipoRelacionActivosMigrado() {
+		Query q = getEntityManager().createQuery("Select t from TipoRelacion t where t.estado='ACTIVO' or t.estado='MIGRADO'");
+
+		List<TipoRelacion> resultado = null;
+
+		try {
+			resultado = q.getResultList();
+		} catch (NoResultException e) {
+			return resultado;
+		}
+		return resultado;
+	}
 
 }
