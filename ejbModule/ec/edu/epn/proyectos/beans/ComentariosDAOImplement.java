@@ -19,7 +19,7 @@ public class ComentariosDAOImplement extends DaoGenericoImplement<Comentario> im
 
 	@Override
 	public List<Comentario> findComentarioByproyecto(String estado, Integer idproy, String cedula, String departamento,
-			String tipo, String vips,Integer idpensum) {
+			String tipo, String vips, Integer idpensum) {
 
 		StringBuilder querys = new StringBuilder("SELECT e From Comentario e where e.cometario like ?1  ");
 
@@ -51,13 +51,11 @@ public class ComentariosDAOImplement extends DaoGenericoImplement<Comentario> im
 
 			querys.append(" and  e.vips = ?7 ");
 		}
-		
+
 		if (idpensum != 0) {
 
 			querys.append(" and e.cierre.idPensum = ?8 ");
 		}
-		
-		
 
 		querys.append(" order by e.fecha DESC ");
 
@@ -92,11 +90,25 @@ public class ComentariosDAOImplement extends DaoGenericoImplement<Comentario> im
 
 			query.setParameter(7, vips);
 		}
-		
+
 		if (idpensum != 0) {
 
 			query.setParameter(8, idpensum);
 		}
+
+		return query.getResultList();
+
+	}
+
+	@Override
+	public List<Comentario> findComentarioByCierre(Integer idCierre, String tipo) {
+
+		StringBuilder querys = new StringBuilder(
+				"SELECT e From Comentario e where e.cierre.id = ?1 and e.tipo = ?2 order by e.fecha DESC ");
+
+		Query query = getEntityManager().createQuery(querys.toString());
+		query.setParameter(1, idCierre);
+		query.setParameter(2, tipo);
 
 		return query.getResultList();
 
