@@ -1505,7 +1505,7 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 			queryString = new StringBuilder("Select hist from HistoriaLaboral hist "
 					+ "where hist.emp.nced= ?1 and trim(hist.nroDocumento) = ?2 and "
 					+ "hist.id.fechaI in (Select max(histo.id.fechaI) from HistoriaLaboral histo "
-					+ " where histo.emp.nced=?1 and trim(histo.nroDocumento)=?2" + " and "
+					+ " where histo.emp.nced=?1 and trim(histo.nroDocumento)=?2" + " and hist.id.idHist=histo.id.idHist and"
 					+ " (trim(histo.id.estado)=?3 or trim(histo.id.estado)='Registrado' or trim(histo.id.estado)='Legalizado' or trim(histo.id.estado)='Legalizada' "
 					+ "or trim(histo.id.estado) = 'Elaborado')) "
 					+ "and hist.id.idHist not in (Select i.id.idHist from HistoriaLaboral i where (i.id.estado = 'Anulado' or i.id.estado='Duplicado') and i.emp.nced=?1)"
@@ -1518,7 +1518,7 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 
 		Query query = getEntityManager().createQuery(queryString.toString());
 		query.setParameter(1, emp.getNced());
-		query.setParameter(2, nroDocumento);
+		query.setParameter(2, nroDocumento.trim());
 		query.setParameter(3, estado);
 
 		HistoriaLaboral resultado = null;
