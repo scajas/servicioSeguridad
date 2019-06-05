@@ -1153,7 +1153,7 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 
 		Query query = getEntityManager().createQuery(queryString.toString());
 		query.setParameter(1, emp.getNced());
-		query.setParameter(2, nombreAccion);
+		query.setParameter(2, nombreAccion+"%");
 		if (nombreAccion.compareTo("VACACIONES") != 0) {
 			query.setParameter(3, "Ejecucion");
 		} else {
@@ -1645,7 +1645,8 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 					+ "and fam.id.idHist not in (Select histo.id.idHist from HistoriaLaboral histo "
 					+ "where histo.emp.nced=?1 and (histo.id.estado= ?4 or histo.id.estado=?5) "
 					+ "and  histo.accionP.subtipoAccion.nombreSubaccion like ?2) "
-					+ "and fam.accionP.subtipoAccion.tipoAccion.nombreAccion like 'LICENCIA%'");
+					+ "and fam.accionP.subtipoAccion.tipoAccion.nombreAccion like 'LICENCIA%' "
+					+ "and fam.fechaRige >= '01/01/2014'");
 
 			Query query = getEntityManager().createQuery(queryString.toString());
 			query.setParameter(1, emp.getNced());
