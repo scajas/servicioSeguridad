@@ -29,7 +29,21 @@ public class CronogramaProyectoDAOImplement extends DaoGenericoImplement<Cronogr
 		return query.getResultList();
 
 	}
-
 	
+	
+	@Override
+	public List<Cronograma> findCronogramabyProyectoFaltante(Integer idproyecto, Integer idpensum, String tipo) {
+
+		StringBuilder querys = new StringBuilder(
+				"SELECT e From Cronograma e where e.proyecto.idProy = ?1   and e.idCronograma not in (Select a.cronograma.idCronograma from Cronogramaavance a where a.idpensum  = ?2 and a.tipo = ?3)   order by e.idCronograma");
+
+		Query query = getEntityManager().createQuery(querys.toString());
+		query.setParameter(1, idproyecto);
+		query.setParameter(2, idpensum);
+		query.setParameter(3, tipo);
+
+		return query.getResultList();
+
+	}
 
 }

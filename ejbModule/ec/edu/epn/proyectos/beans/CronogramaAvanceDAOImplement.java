@@ -61,4 +61,14 @@ public class CronogramaAvanceDAOImplement extends DaoGenericoImplement<Cronogram
 		return query.getResultList();
 
 	}
+	
+	@Override
+	public Long countCronoAvanceXidObjProy(Integer idCronograma) {
+		Query q = getEntityManager()
+				.createQuery(
+						"SELECT count(oa) FROM  Cronogramaavance oa WHERE oa.cronograma.idCronograma = ? ");
+			
+		q.setParameter(1, idCronograma);		
+		return (Long) q.getSingleResult();
+	}
 }

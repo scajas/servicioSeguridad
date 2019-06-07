@@ -16,4 +16,6 @@ public interface CronogramaAvanceDAO extends DaoGenerico<Cronogramaavance> {
 
 	List<Cronogramaavance> findAvanceByCronogramaReporte(Integer idcronograma, String tipo, Integer idpensum);
 
+	Long countCronoAvanceXidObjProy(Integer idCronograma);
+
 }

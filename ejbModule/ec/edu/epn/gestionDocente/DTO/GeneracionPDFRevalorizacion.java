@@ -3361,7 +3361,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			ProyectoP proyecto, List<Objetivoavance> objetivos, List<Cronogramaavance> actividades,
 			List<Publicacione> publicaciones, List<Producto> tesis, List<Publicacione> ponencias, String pathDocs,
 			Emp autoridad, Pensum periodo, String sigla, String pathFirmaDir, String pathFirmaJefe, RecursohPr director,
-			Dep dep) {
+			Dep dep,CierrePeriodo cierre) {
 		String url = "";
 		try {
 
@@ -3621,15 +3621,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 
 			document.add(tablaObjEsp);
 
-			Double avance = 0.00;
-			if (objetivos.size() > 0) {
-				for (int i = 0; i < objetivos.size(); i++) {
-					avance = avance + objetivos.get(i).getAvance();
-				}
-
-				avance = avance / objetivos.size();
-
-			}
+			
 
 			PdfPTable tablaObjGeneralPorcen = new PdfPTable(2);
 			tablaObjGeneralPorcen.setWidthPercentage(100);
@@ -3637,7 +3629,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			cell = new PdfPCell(new Phrase("Porcentaje Total de Avance del Proyecto", fuente));
 			cell.setBackgroundColor(new BaseColor(197, 217, 241));
 			tablaObjGeneralPorcen.addCell(cell);
-			cell = new PdfPCell(new Phrase(avance.toString(), fuenteContenido));
+			cell = new PdfPCell(new Phrase(cierre.getAvance().toString(), fuenteContenido));
 			tablaObjGeneralPorcen.addCell(cell);
 			document.add(tablaObjGeneralPorcen);
 
@@ -3963,8 +3955,23 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			tablaFirma.addCell(cell);
 
 			document.add(tablaFirma);
+			
+			
+			document.add(datosContrato);
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+			String fechaComoCadena = sdf.format(new Date());
+			
+			Paragraph ingreso = new Paragraph();
+			String ing = "\n Fecha envío Jefe Departamento: "  +fechaComoCadena;
+			fuente = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.BOLD);
+			ingreso.setFont(fuente);
+			ingreso.setAlignment(Element.ALIGN_LEFT);
+			ingreso.add(ing);
 
+			document.add(ingreso);
+			
 			document.close();
+			
 			writer.close();
 
 			cb.closePath();
@@ -4837,7 +4844,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 	public String generarPdfInvestifacionReportePlanicacionPreview(List<Recursoavance> recursos,
 			List<Lineasproy> lineas, ProyectoP proyecto, List<Objetivoavance> objetivos,
 			List<Cronogramaavance> actividades, String pathDocs, Emp autoridad, Pensum periodo, String sigla,
-			String pathFirmaDir, String pathFirmaJefe, RecursohPr director, Dep dep) {
+			String pathFirmaDir, String pathFirmaJefe, RecursohPr director, Dep dep,CierrePeriodo cierre) {
 		String url = "";
 		try {
 
@@ -5088,23 +5095,14 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 
 			document.add(tablaObjEsp);
 
-			Double avance = 0.00;
-			if (objetivos.size() > 0) {
-				for (int i = 0; i < objetivos.size(); i++) {
-					avance = avance + objetivos.get(i).getAvance();
-				}
-
-				avance = avance / objetivos.size();
-
-			}
-
+			
 			PdfPTable tablaObjGeneralPorcen = new PdfPTable(2);
 			tablaObjGeneralPorcen.setWidthPercentage(100);
 			tablaObjGeneral.setWidths(columnWidthObjG);
 			cell = new PdfPCell(new Phrase("Porcentaje Total de Avance del Proyecto", fuente));
 			cell.setBackgroundColor(new BaseColor(252, 213, 180));
 			tablaObjGeneralPorcen.addCell(cell);
-			cell = new PdfPCell(new Phrase(avance.toString(), fuenteContenido));
+			cell = new PdfPCell(new Phrase(cierre.getAvance().toString(), fuenteContenido));
 			tablaObjGeneralPorcen.addCell(cell);
 			document.add(tablaObjGeneralPorcen);
 
@@ -5234,6 +5232,23 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			tablaFirma.addCell(cell);
 
 			document.add(tablaFirma);
+			
+			
+			
+			document.add(datosContrato);
+			
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+			String fechaComoCadena = sdf.format(new Date());
+			
+			Paragraph ingreso = new Paragraph();
+			String ing = "\n Fecha envío Jefe Departamento: "  + fechaComoCadena;
+			fuente = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.BOLD);
+			ingreso.setFont(fuente);
+			ingreso.setAlignment(Element.ALIGN_LEFT);
+			ingreso.add(ing);
+
+			document.add(ingreso);
 
 			document.close();
 

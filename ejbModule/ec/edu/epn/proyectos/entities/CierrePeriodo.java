@@ -1,6 +1,7 @@
 package ec.edu.epn.proyectos.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.ejb.EJB;
 import javax.persistence.*;
@@ -44,6 +45,10 @@ public class CierrePeriodo implements Serializable {
 	private String enviadoalf;
 	private String iddocalf,observaciones,revisado,
 	  pathmodifica;
+	
+	private Date fechacierredocente ,
+	  fechacierrejd ,
+	  fechacierrevips;
 
 	@ManyToOne
 	@JoinColumn(name = "id_proyecto")
@@ -200,6 +205,30 @@ public class CierrePeriodo implements Serializable {
 
 	public void setRevisado(String revisado) {
 		this.revisado = revisado;
+	}
+
+	public Date getFechacierredocente() {
+		return fechacierredocente;
+	}
+
+	public void setFechacierredocente(Date fechacierredocente) {
+		this.fechacierredocente = fechacierredocente;
+	}
+
+	public Date getFechacierrejd() {
+		return fechacierrejd;
+	}
+
+	public void setFechacierrejd(Date fechacierrejd) {
+		this.fechacierrejd = fechacierrejd;
+	}
+
+	public Date getFechacierrevips() {
+		return fechacierrevips;
+	}
+
+	public void setFechacierrevips(Date fechacierrevips) {
+		this.fechacierrevips = fechacierrevips;
 	}
 
 }
