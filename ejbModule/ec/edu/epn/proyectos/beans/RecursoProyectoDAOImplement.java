@@ -126,5 +126,19 @@ public class RecursoProyectoDAOImplement extends DaoGenericoImplement<RecursohPr
 		}
 
 	}
+	
+	
+	@Override
+	public List<RecursohPr> findrecProyFaltante(Integer idproy, Integer idpensum, String tipo) {
+		Query qUsuario = getEntityManager().createQuery(
+				"select rec from RecursohPr rec where rec.proyecto.idProy = ?1 and rec.estadoPr = 'VINCULADO'   "
+				+ " and rec.idRhPr NOT IN (SELECT a.recurso.idRhPr  FROM Recursoavance a where a.idpensum  = ?2 and a.tipo = ?3 )"
+				+ "order by rec.rolProyecto.idRolProy");
+		qUsuario.setParameter(1, idproy);
+		qUsuario.setParameter(2, idpensum);
+		qUsuario.setParameter(3, tipo);
+		return qUsuario.getResultList();
+
+	}
 
 }

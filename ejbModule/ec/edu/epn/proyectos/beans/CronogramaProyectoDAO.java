@@ -12,4 +12,6 @@ public interface CronogramaProyectoDAO extends DaoGenerico<Cronograma>{
 
 	List<Cronograma> findCronogramabyProyecto(Integer idproyecto);
 
+	List<Cronograma> findCronogramabyProyectoFaltante(Integer idproyecto, Integer idpensum, String tipo);
+
 }

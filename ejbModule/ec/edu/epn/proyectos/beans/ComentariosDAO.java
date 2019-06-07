@@ -13,4 +13,6 @@ public interface ComentariosDAO extends DaoGenerico<Comentario>{
 	List<Comentario> findComentarioByproyecto(String estado, Integer idproy, String cedula, String departamento,
 			String tipo,String vips,Integer idpensum);
 
+	List<Comentario> findComentarioByCierre(Integer idCierre, String tipo);
+
 }

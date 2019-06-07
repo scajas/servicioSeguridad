@@ -12,4 +12,6 @@ public interface ObjetivoProyectoDAO extends DaoGenerico<ObjetivoProyecto> {
 
 	List<ObjetivoProyecto> findObjetivoByProyecto(Integer idproyecto);
 
+	List<ObjetivoProyecto> findObjetivoByProyectoFaltante(Integer idproyecto, Integer idpensum, String tipo);
+
 }

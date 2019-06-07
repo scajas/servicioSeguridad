@@ -31,6 +31,24 @@ public class ObjetivoProyectoDAOImplement extends DaoGenericoImplement<ObjetivoP
 	}
 	
 	
+	@Override
+	public List<ObjetivoProyecto> findObjetivoByProyectoFaltante(Integer idproyecto, Integer idpensum, String tipo) {
+
+		StringBuilder querys = new StringBuilder(
+				"SELECT e From ObjetivoProyecto e where e.proyecto.idProy = ?1  "
+				+ " and e.idObjproy not in (Select o.objetivo.idObjproy  from Objetivoavance o where o.idpensum  = ?2 and o.tipo = ?3 ))"
+				+ "order by e.idObjproy");
+
+		Query query = getEntityManager().createQuery(querys.toString());
+		query.setParameter(1, idproyecto);
+		query.setParameter(2, idpensum);
+		query.setParameter(3, tipo);
+
+		return query.getResultList();
+
+	}
+	
+	
 	
 	
 
