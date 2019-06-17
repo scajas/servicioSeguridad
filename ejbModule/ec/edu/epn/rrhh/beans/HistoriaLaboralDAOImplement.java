@@ -1440,6 +1440,35 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		}
 		return true;
 	}
+	
+	@Override
+	public long findCountAccionesNoLicenciaFinalizables(Emp emp){
+		long count=0;
+		StringBuilder queryString = new StringBuilder("SELECT count(fam) FROM HistoriaLaboral fam where "
+				+ " fam.emp.nced = ?1 " + "and (fam.accionP.subtipoAccion.nombreSubaccion like ?2 "
+				+ "or fam.accionP.subtipoAccion.nombreSubaccion like ?3 "
+				+ "or fam.accionP.subtipoAccion.nombreSubaccion like ?4 "
+				+ "or fam.accionP.subtipoAccion.nombreSubaccion like ?5 )"
+				+ "and (fam.id.estado <> ?6 and fam.id.estado <> ?7 and fam.id.estado <> ?8) "
+				+ "and (fam.designacion.estado <> ?9 and fam.designacion.estado <> ?10)");
+		
+		Query query = getEntityManager().createQuery(queryString.toString());
+
+		query.setParameter(1, emp.getNced());
+		query.setParameter(2, "DESIGNACION%");
+		query.setParameter(3, "ENCARGO%");
+		query.setParameter(4, "SUBROGACION%");
+		query.setParameter(5, "POSESION%");
+		query.setParameter(6, "Anulado");
+		query.setParameter(7, "Insubsistente");
+		query.setParameter(8, "Ejecucion");
+		query.setParameter(9, "Terminado");
+		query.setParameter(10, "Anulado");
+		
+		count = (long)query.getSingleResult();
+		
+		return count;
+	}
 
 	@Override
 	public List<HistoriaLaboral> findAccionesNoLicenciaFinalizables(Emp emp) {
@@ -1476,23 +1505,6 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		query.setParameter(3, "Finalizado");
 
 		resultados.addAll(query.getResultList());
-
-		/*
-		 * StringBuilder queryString3 = new StringBuilder("SELECT " +
-		 * "fam FROM HistoriaLaboral fam where " + " fam.emp.nced = ?1 " +
-		 * "and (fam.accionP.subtipoAccion.nombreSubaccion =?2 " +
-		 * "or fam.accionP.subtipoAccion.nombreSubaccion = ?3 " +
-		 * " and fam.fechaFin is null " + "and fam.id.estado =?4");
-		 * 
-		 * query = getEntityManager().createQuery(queryString2.toString());
-		 * 
-		 * query.setParameter(1, emp.getNced()); query.setParameter(2,
-		 * "NOMBRAMIENTO PROVISIONAL HASTA QUE FINALIZE CONCURSO");
-		 * query.setParameter(3, "NOMBRAMIENTO PROVISIONAL DE PRUEBA");
-		 * query.setParameter(3, "Finalizado");
-		 * 
-		 * resultados.addAll(query.getResultList());
-		 */
 
 		return resultados;
 

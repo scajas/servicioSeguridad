@@ -86,6 +86,8 @@ public interface HistoriaLaboralDAO extends DaoGenerico<HistoriaLaboral> {
 	public boolean isAccionPorFinalizar(String nombreAccion, Emp emp);
 
 	public boolean isAnyAccionPorFinalizar(Emp emp);
+	
+	public long findCountAccionesNoLicenciaFinalizables(Emp emp);
 
 	public List<HistoriaLaboral> findAccionesNoLicenciaFinalizables(Emp emp);
 
