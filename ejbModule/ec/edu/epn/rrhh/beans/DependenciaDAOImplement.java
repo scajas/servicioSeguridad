@@ -79,6 +79,22 @@ public class DependenciaDAOImplement extends DaoGenericoImplement<Dependencia> i
 	}
 	
 	
+	@Override
+	public List<Dependencia> findDependenciaAcademica() {
+		StringBuilder queryString = new StringBuilder("SELECT fam FROM Dependencia fam where "
+				+ "fam.nomDep like '%DEP%'  "
+				+ "and fam.tipo='DEP'");
+
+		Query query = getEntityManager().createQuery(queryString.toString());
+		List<Dependencia> resultado = query.getResultList();
+
+		return resultado;
+
+	}
+	
+	
+	
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Dependencia> listarFacultades() throws NoResultException, Exception {
