@@ -8,6 +8,6 @@ import ec.edu.epn.proyectos.entities.Hss;
 @Local
 public interface HSSDAO extends DaoGenerico<Hss>{
 
-	Hss findHSSBy(Integer idtipo, Integer idrol);
+	Hss findHSSBy(Integer idtipo, Integer idrol,Integer anio);
 
 }

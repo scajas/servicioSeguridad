@@ -27,7 +27,7 @@ public class ServicioDAOImplement extends DaoGenericoImplement<Servicio> impleme
 	}
 
 	@Override
-	public List<Servicio> listaServicioUnidad(int id) {
+	public List<Servicio> listaServicioUnidad(Integer id) {
 		StringBuilder queryString = new StringBuilder(
 				"SELECT b FROM Servicio b where b.laboratorio.unidad.idUnidad = ?1 ");	
 		Query query = getEntityManager().createQuery(queryString.toString());
@@ -50,7 +50,7 @@ public class ServicioDAOImplement extends DaoGenericoImplement<Servicio> impleme
 	public List<Servicio> listaServicioXTipo(int id) {
 		StringBuilder queryString = new StringBuilder("SELECT b FROM Servicio b where b.laboratorio.unidad.idUnidad = ?1 ");
 		Query query = getEntityManager().createQuery(queryString.toString());
-		query.setParameter(1, idTipo);
+		query.setParameter(1, id);
 		List<Servicio> resultados = query.getResultList();
 		return resultados;
 	}
