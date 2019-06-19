@@ -18,14 +18,15 @@ import ec.edu.epn.proyectos.entities.Hss;
 public class HSSDAOImplement extends DaoGenericoImplement<Hss> implements HSSDAO {
 
 	@Override
-	public Hss findHSSBy(Integer idtipo, Integer idrol) {
+	public Hss findHSSBy(Integer idtipo, Integer idrol,Integer anio) {
 
 		try {
 			StringBuilder queryString = new StringBuilder(
-					"select pr from Hss pr where pr.rol.idRolProy = ?1 and pr.tipoproyecto.idTipoProy = ?2 ");
+					"select pr from Hss pr where pr.rol.idRolProy = ?1 and pr.tipoproyecto.idTipoProy = ?2 and pr.anio = ?3  ");
 			Query query = getEntityManager().createQuery(queryString.toString());
 			query.setParameter(1, idrol);
 			query.setParameter(2, idtipo);
+			query.setParameter(3, anio);
 			return (Hss) query.getSingleResult();
 
 		} catch (NoResultException e) {

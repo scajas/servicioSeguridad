@@ -18,7 +18,7 @@ public class Hss implements Serializable {
 
 	private Integer maximo;
 
-	private Integer minimo;
+	private Integer minimo,anio;
 
 	@ManyToOne
 	@JoinColumn(name = "idrolproy")
@@ -69,6 +69,14 @@ public class Hss implements Serializable {
 
 	public void setTipoproyecto(TipoProyectoP tipoproyecto) {
 		this.tipoproyecto = tipoproyecto;
+	}
+
+	public Integer getAnio() {
+		return anio;
+	}
+
+	public void setAnio(Integer anio) {
+		this.anio = anio;
 	}
 	
 	
