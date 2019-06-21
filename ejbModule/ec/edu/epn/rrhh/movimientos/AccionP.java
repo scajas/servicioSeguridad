@@ -5,14 +5,13 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
-
 /**
  * The persistent class for the accion_p database table.
  * 
  */
 @Entity
 @Table(name = "accion_p", catalog = "bddcorpepn", schema = "\"Rrhh\"")
-@NamedQuery(name="AccionP.findAll", query="SELECT a FROM AccionP a")
+@NamedQuery(name = "AccionP.findAll", query = "SELECT a FROM AccionP a")
 public class AccionP implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -21,9 +20,8 @@ public class AccionP implements Serializable {
 
 	private String autnom;
 
-	@Column(name="cargo_solic")
+	@Column(name = "cargo_solic")
 	private String cargoSolic;
-
 
 	private String dirtalento;
 
@@ -32,26 +30,32 @@ public class AccionP implements Serializable {
 
 	private String numdispres;
 
-	@Column(name="pais_estudios")
+	@Column(name = "pais_estudios")
 	private String paisEstudios;
 
 	private String respelaboracion;
 
 	private String solicitante;
 
-	@Column(name="titulo_obtenerse")
+	@Column(name = "titulo_obtenerse")
 	private String tituloObtenerse;
 
 	private String universidad;
-	
-	@Column(name="cargo_aut")
+
+	@Column(name = "cargo_aut")
 	private String cargoAut;
-	
-	@Column(name="motivlicenextraord")
+
+	@Column(name = "motivlicenextraord")
 	private String motivoLicenciaExtraordinaria;
-	
-	@Column(name="cargo_dir_talentoh")
+
+	@Column(name = "cargo_dir_talentoh")
 	private String cargoDirTalentoH;
+	
+	@Column(name = "nro_acta_concurso")
+	private String nroActaConcurso;
+	
+	@Column(name = "fecha_acta_concurso")
+	private Date fechaActaConcurso;
 
 	public String getCargoAut() {
 		return cargoAut;
@@ -61,13 +65,18 @@ public class AccionP implements Serializable {
 		this.cargoAut = cargoAut;
 	}
 
-	//bi-directional many-to-one association to SubtipoAccion
-	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="id_stpa")
+	// bi-directional many-to-one association to SubtipoAccion
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "id_stpa")
 	private SubtipoAccion subtipoAccion;
 
-	//bi-directional many-to-one association to HistoriaLaboral
-	@OneToMany(mappedBy="accionP")
+	// bi-directional many-to-one association to SubtipoAccion
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "id_habilitante")
+	private HabilitanteAccion habilitanteAccion;
+
+	// bi-directional many-to-one association to HistoriaLaboral
+	@OneToMany(mappedBy = "accionP")
 	private List<HistoriaLaboral> historiaLaborals;
 
 	public AccionP() {
@@ -105,7 +114,6 @@ public class AccionP implements Serializable {
 		this.dirtalento = dirtalento;
 	}
 
-	
 	public Date getFechadispres() {
 		return this.fechadispres;
 	}
@@ -173,15 +181,22 @@ public class AccionP implements Serializable {
 	public List<HistoriaLaboral> getHistoriaLaborals() {
 		return this.historiaLaborals;
 	}
-	
 
 	public void setHistoriaLaborals(List<HistoriaLaboral> historiaLaborals) {
 		this.historiaLaborals = historiaLaborals;
 	}
-	
-	
+
 	public String getCargoDirTalentoH() {
 		return cargoDirTalentoH;
+	}
+
+
+	public HabilitanteAccion getHabilitanteAccion() {
+		return habilitanteAccion;
+	}
+
+	public void setHabilitanteAccion(HabilitanteAccion habilitanteAccion) {
+		this.habilitanteAccion = habilitanteAccion;
 	}
 
 	public void setCargoDirTalentoH(String cargoDirTalentoH) {
@@ -209,6 +224,23 @@ public class AccionP implements Serializable {
 	public void setMotivoLicenciaExtraordinaria(String motivoLicenciaExtraordinaria) {
 		this.motivoLicenciaExtraordinaria = motivoLicenciaExtraordinaria;
 	}
+
+	public String getNroActaConcurso() {
+		return nroActaConcurso;
+	}
+
+	public void setNroActaConcurso(String nroActaConcurso) {
+		this.nroActaConcurso = nroActaConcurso;
+	}
+
+	public Date getFechaActaConcurso() {
+		return fechaActaConcurso;
+	}
+
+	public void setFechaActaConcurso(Date fechaActaConcurso) {
+		this.fechaActaConcurso = fechaActaConcurso;
+	}
+	
 	
 
 }
