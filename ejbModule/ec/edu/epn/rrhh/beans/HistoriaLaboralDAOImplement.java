@@ -1444,13 +1444,17 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 	@Override
 	public long findCountAccionesNoLicenciaFinalizables(Emp emp){
 		long count=0;
-		StringBuilder queryString = new StringBuilder("SELECT count(fam) FROM HistoriaLaboral fam where "
+		StringBuilder queryString = new StringBuilder(""
+				+ "SELECT count(t) from HistoriaLaboral t where t.id.fechaI in "
+				+ "(SELECT max(fam.id.fechaI) FROM HistoriaLaboral fam where "
 				+ " fam.emp.nced = ?1 " + "and (fam.accionP.subtipoAccion.nombreSubaccion like ?2 "
 				+ "or fam.accionP.subtipoAccion.nombreSubaccion like ?3 "
 				+ "or fam.accionP.subtipoAccion.nombreSubaccion like ?4 "
 				+ "or fam.accionP.subtipoAccion.nombreSubaccion like ?5 )"
 				+ "and (fam.id.estado <> ?6 and fam.id.estado <> ?7 and fam.id.estado <> ?8) "
-				+ "and (fam.designacion.estado <> ?9 and fam.designacion.estado <> ?10)");
+				+ "and (fam.designacion.estado <> ?9 and fam.designacion.estado <> ?10"
+				+ " and fam.designacion.estado <> ?10) and t.emp.nced = ?1"
+				+ " group by fam.id.idHist)");
 		
 		Query query = getEntityManager().createQuery(queryString.toString());
 
@@ -1463,7 +1467,7 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		query.setParameter(7, "Insubsistente");
 		query.setParameter(8, "Ejecucion");
 		query.setParameter(9, "Terminado");
-		query.setParameter(10, "Anulado");
+		query.setParameter(10,"Finalizando");
 		
 		count = (long)query.getSingleResult();
 		
@@ -1472,13 +1476,17 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 
 	@Override
 	public List<HistoriaLaboral> findAccionesNoLicenciaFinalizables(Emp emp) {
-		StringBuilder queryString = new StringBuilder("SELECT " + "fam FROM HistoriaLaboral fam where "
-				+ " fam.emp.nced = ?1 " + "and (fam.accionP.subtipoAccion.nombreSubaccion like ?2 "
+		StringBuilder queryString = new StringBuilder(""
+				+ " SELECT t from HistoriaLaboral t where t.id.fechaI in ( "
+				+ " SELECT max(fam.id.fechaI) FROM HistoriaLaboral fam where "
+				+ " fam.emp.nced = ?1 and (fam.accionP.subtipoAccion.nombreSubaccion like ?2 "
 				+ "or fam.accionP.subtipoAccion.nombreSubaccion like ?3 "
 				+ "or fam.accionP.subtipoAccion.nombreSubaccion like ?4 "
 				+ "or fam.accionP.subtipoAccion.nombreSubaccion like ?5 )"
 				+ "and (fam.id.estado <> ?6 and fam.id.estado <> ?7 and fam.id.estado <> ?8) "
-				+ "and (fam.designacion.estado <> ?9 and fam.designacion.estado <> ?10)");
+				+ "and (fam.designacion.estado <> ?9 and fam.designacion.estado <> ?10"
+				+ " and fam.designacion.estado <> ?11) "
+				+ " and t.emp.nced = ?1 group by fam.id.idHist)");
 
 		Query query = getEntityManager().createQuery(queryString.toString());
 
@@ -1492,7 +1500,7 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		query.setParameter(8, "Ejecucion");
 		query.setParameter(9, "Terminado");
 		query.setParameter(10, "Anulado");
-
+		query.setParameter(11,"Finalizando");
 		List<HistoriaLaboral> resultados = query.getResultList();
 
 		StringBuilder queryString2 = new StringBuilder("SELECT " + "fam FROM HistoriaLaboral fam where "

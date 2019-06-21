@@ -189,8 +189,7 @@ public class AccionP implements Serializable {
 	public String getCargoDirTalentoH() {
 		return cargoDirTalentoH;
 	}
-	
-	
+
 
 	public HabilitanteAccion getHabilitanteAccion() {
 		return habilitanteAccion;
