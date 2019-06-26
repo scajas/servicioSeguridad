@@ -25,16 +25,19 @@ public class DocAdjuntoDAOImplement extends DaoGenericoImplement<Docadjunto> imp
 	}
 
 	@Override
-	public Docadjunto getDocHist(Integer numhistoria) throws IndexOutOfBoundsException {
+	public Docadjunto getDocHist(Integer numhistoria) {
 		Docadjunto doc = new Docadjunto();
 		StringBuilder queryString = new StringBuilder(
 				"SELECT t FROM Docadjunto " + "t where t.historiaLaboral.id.idHist =?1 "
 						+ "order by t.idDoc desc ");
 		Query query = getEntityManager().createQuery(queryString.toString());
 		query.setParameter(1, numhistoria);
-
-		doc = (Docadjunto) query.getResultList().get(0);
-
+        try{
+        	doc = (Docadjunto) query.getResultList().get(0);	
+        }catch(IndexOutOfBoundsException e){
+        	return null;
+        }
+		
 		return doc;
 	}
 
