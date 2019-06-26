@@ -34,6 +34,12 @@ public class Movimientoinventario implements Serializable {
 
 	@Column(name="numerodocumento_mov", length=100)
 	private String numerodocumentoMov;
+	
+	
+	@Column(name="id_pesonal_despacho")
+	private Integer idPesonalDespacho;
+	
+	
 
 	//bi-directional many-to-one association to Detallemovimiento
 	@OneToMany(mappedBy="movimientoinventario", fetch = FetchType.EAGER)
@@ -135,6 +141,20 @@ public class Movimientoinventario implements Serializable {
 
 	public void setCatalogotipoestadomov(Catalogo catalogotipoestadomov) {
 		this.catalogotipoestadomov = catalogotipoestadomov;
+	}
+
+	/**
+	 * @return the idPesonalDespacho
+	 */
+	public Integer getIdPesonalDespacho() {
+		return idPesonalDespacho;
+	}
+
+	/**
+	 * @param idPesonalDespacho the idPesonalDespacho to set
+	 */
+	public void setIdPesonalDespacho(Integer idPesonalDespacho) {
+		this.idPesonalDespacho = idPesonalDespacho;
 	}
 
 }

@@ -67,6 +67,8 @@ public class CargaAcademicaSaeDAOImplement extends DaoGenericoImplement<CargaAca
 				sae.setNomMateriaSae(dto.getNomMateriaSAE()==null?"":dto.getNomMateriaSAE());
 				sae.setNumAlumnosSae(dto.getNumAlumnosSAE()==null?0:dto.getNumAlumnosSAE());
 				sae.setAula(dto.getAula()==null?"":dto.getAula());
+				/*sae.setNivel(dto.getNivel());
+				sae.setRegimen((dto.getRegimen()));*/
 				super.save(sae);				
 				
 			}		
@@ -101,6 +103,8 @@ public class CargaAcademicaSaeDAOImplement extends DaoGenericoImplement<CargaAca
 						carga.setNomCarreraSae(dto.getNomCarreraSAE()==null?"":dto.getNomCarreraSAE());
 						carga.setNomMateriaSae(dto.getNomMateriaSAE()==null?"":dto.getNomMateriaSAE());
 						carga.setAula(dto.getAula()==null?"":dto.getAula());
+						/*carga.setNivel(dto.getNivel());
+						carga.setRegimen(dto.getRegimen());*/
 						super.update(carga);
 						listCargaAux.remove(dto);
 					}
@@ -122,6 +126,8 @@ public class CargaAcademicaSaeDAOImplement extends DaoGenericoImplement<CargaAca
 					sae.setNomMateriaSae(dto.getNomMateriaSAE()==null?"":dto.getNomMateriaSAE());
 					sae.setNumAlumnosSae(dto.getNumAlumnosSAE()==null?0:dto.getNumAlumnosSAE());		
 					sae.setAula(dto.getAula()==null?"":dto.getAula());
+					/*sae.setNivel(dto.getNivel());
+					sae.setRegimen(dto.getRegimen());*/
 					super.save(sae);				
 					
 				}

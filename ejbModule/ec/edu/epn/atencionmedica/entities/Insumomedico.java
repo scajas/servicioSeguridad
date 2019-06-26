@@ -49,7 +49,17 @@ public class Insumomedico extends util implements Serializable {
 	
 	@Temporal( TemporalType.DATE)
 	@Column(name="fechacaducidad_ism")
-	private Date fechacaducidadIsm;
+	private Date fechacaducidadIsm;	
+	
+	private String estado;
+	
+	@Column(name="tipo_insumo")
+	private Integer tipoInsumo;
+	
+	
+	@Column(name="fecha_ingreso")
+	private Date fechaIngreso;
+	
 
 	//bi-directional many-to-one association to Detallemovimiento
 	@OneToMany(mappedBy="insumomedico")
@@ -142,6 +152,48 @@ public class Insumomedico extends util implements Serializable {
 
 	public void setFechacaducidadIsm(Date fechacaducidadIsm) {
 		this.fechacaducidadIsm = fechacaducidadIsm;
+	}
+
+	/**
+	 * @return the estado
+	 */
+	public String getEstado() {
+		return estado;
+	}
+
+	/**
+	 * @param estado the estado to set
+	 */
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
+	/**
+	 * @return the tipoInsumo
+	 */
+	public Integer getTipoInsumo() {
+		return tipoInsumo;
+	}
+
+	/**
+	 * @param tipoInsumo the tipoInsumo to set
+	 */
+	public void setTipoInsumo(Integer tipoInsumo) {
+		this.tipoInsumo = tipoInsumo;
+	}
+
+	/**
+	 * @return the fechaIngreso
+	 */
+	public Date getFechaIngreso() {
+		return fechaIngreso;
+	}
+
+	/**
+	 * @param fechaIngreso the fechaIngreso to set
+	 */
+	public void setFechaIngreso(Date fechaIngreso) {
+		this.fechaIngreso = fechaIngreso;
 	}
 
 	

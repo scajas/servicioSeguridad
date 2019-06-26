@@ -1,7 +1,6 @@
 package ec.edu.epn.rrhh.DTO;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 public class DocentesEvaluacionDTO {
 	
@@ -95,6 +94,9 @@ public class DocentesEvaluacionDTO {
 	private String cargoDocente; 
 	private String dedicacion;
 	private String tipo;
+	
+	/**CAMPO ADICIONAL JUSTIFICACION HORAS PLANIFICADAS*/
+	private String justificacionHorasPlanif; 
 	
 	
 	
@@ -1320,7 +1322,13 @@ public class DocentesEvaluacionDTO {
 	}
 
 
-	
+	/**
+	 * @return the decicacion
+	 */
+	public String getDedicacion() {
+		return dedicacion;
+	}
+
 
 	/**
 	 * @return the tipo
@@ -1338,7 +1346,12 @@ public class DocentesEvaluacionDTO {
 	}
 
 
-	
+	/**
+	 * @param decicacion the decicacion to set
+	 */
+	public void setDedicacion(String dedicacion) {
+		this.dedicacion = dedicacion;
+	}
 
 
 	/**
@@ -1350,18 +1363,18 @@ public class DocentesEvaluacionDTO {
 
 
 	/**
-	 * @return the dedicacion
+	 * @return the justificacionHorasPlanif
 	 */
-	public String getDedicacion() {
-		return dedicacion;
+	public String getJustificacionHorasPlanif() {
+		return justificacionHorasPlanif;
 	}
 
 
 	/**
-	 * @param dedicacion the dedicacion to set
+	 * @param justificacionHorasPlanif the justificacionHorasPlanif to set
 	 */
-	public void setDedicacion(String dedicacion) {
-		this.dedicacion = dedicacion;
+	public void setJustificacionHorasPlanif(String justificacionHorasPlanif) {
+		this.justificacionHorasPlanif = justificacionHorasPlanif;
 	}
 
 

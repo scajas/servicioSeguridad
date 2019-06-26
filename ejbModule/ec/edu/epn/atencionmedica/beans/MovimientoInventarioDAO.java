@@ -21,6 +21,7 @@ public interface MovimientoInventarioDAO {
 	public List<Movimientoinventario> obtenerListaMovimientos(Date fechaInicial, Date fechaFinal);
 	
 	public List<Movimientoinventario> obtenerListaMovimientosInventario(Integer idAtencionMedico);
+	Movimientoinventario obtenerListaMovimientosInventarioUnico(Integer idAtencionMedica);
 		
 
 }

@@ -89,6 +89,8 @@ public class ActividadEvaluacion implements Serializable {
 	@Column(name="id_tipo_actv_eval")
 	private Integer idTipoActvEval;
 	
+	/*@Column(name="semestre_acad")
+	private Double semestreAcad;*/
 	
 	
 	/**VALORES PARA PRESENTACION DE INFORMACION CON 2 DECIMALES*/	
@@ -513,6 +515,8 @@ public class ActividadEvaluacion implements Serializable {
 	public void setCalificacionPonderadaCoeDecimal(BigDecimal calificacionPonderadaCoeDecimal) {
 		this.calificacionPonderadaCoeDecimal = calificacionPonderadaCoeDecimal;
 	}
+
+	
 
 	
 	
