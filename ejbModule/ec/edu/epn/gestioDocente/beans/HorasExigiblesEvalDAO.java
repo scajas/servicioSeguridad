@@ -10,5 +10,9 @@ public interface HorasExigiblesEvalDAO extends DaoGenerico<HorasExigiblesEval>{
 
 	HorasExigiblesEval horasExigiblesXPensum(Integer idPensum);
 
+	Double numhorasExigiblesXPensum(Integer idPensum);
+
+	
+
 	
 }

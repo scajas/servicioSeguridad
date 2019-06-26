@@ -121,10 +121,15 @@ public interface EmpleadoDAO extends DaoGenerico<Emp> {
 	Emp buscarempLivianoRG(String nced) throws Exception;
 
 	DocenteDTO cargoDedicacionRelLab(Integer idPensum, Integer idOpcion, String nced) throws Exception;
-
-	DocenteDTO buscarEmpHistoriaLab(String nced, Integer idPensum) throws Exception;
+	
 
 	EmpleadoDTO buscarHistoriaEmpleado(String nced, Integer idPensum) throws Exception;
+
+	List<DocenteDTO> buscarEmpHistoriaLab(String nced, Integer idPensum, String apel, String nom, String dep)
+			throws Exception;
+
+	List<DocenteDTO> presentarCargoDedicacionRelLab(Integer idPensum, String nced, String apel, String nom, String dep)
+			throws Exception;
 
 /*	List<Emp> buscarempActualizar() throws Exception;
 

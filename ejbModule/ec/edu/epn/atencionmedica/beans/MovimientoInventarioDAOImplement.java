@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import ec.edu.epn.atencionmedica.entities.Catalogo;
@@ -22,7 +24,7 @@ public class MovimientoInventarioDAOImplement extends DaoGenericoImplement<Movim
 	// variables
 	public Query query = null;
 	public String q = "";
-	public StringBuilder queryString = null;		
+	public StringBuilder queryString = null;
 
 	@Override
 	public boolean actualizarDespachoDeMovimiento(Movimientoinventario movimientoinventario) {
@@ -33,9 +35,12 @@ public class MovimientoInventarioDAOImplement extends DaoGenericoImplement<Movim
 		try {
 			// Movimiento....actualizar despacho de insumos médicos
 			movimientoinventario.setCatalogotipoestadomov((Catalogo) getEntityManager().find(Catalogo.class, 28));
-			movimientoinventario.setMotivoMov(movimientoinventario.getMotivoMov().trim() + " DESPACHADO POR "
-					+ movimientoinventario.getPersonal().getApellido1Prs().trim() + " "
-					+ (movimientoinventario.getPersonal().getNombre1Prs() == null ? "" : movimientoinventario.getPersonal().getNombre1Prs().trim()) + " CON FECHA " + new Date());
+			movimientoinventario
+					.setMotivoMov(movimientoinventario.getMotivoMov().trim() + " DESPACHADO POR "
+							+ movimientoinventario.getPersonal().getApellido1Prs().trim() + " "
+							+ (movimientoinventario.getPersonal().getNombre1Prs() == null ? ""
+									: movimientoinventario.getPersonal().getNombre1Prs().trim())
+							+ " CON FECHA " + new Date());
 			movimientoinventario.setPersonal(movAux.getPersonal());
 			getEntityManager().merge(movimientoinventario);
 
@@ -117,7 +122,10 @@ public class MovimientoInventarioDAOImplement extends DaoGenericoImplement<Movim
 
 	/*
 	 * Obtener movimiento de inventario
-	 * @see ec.edu.epn.atencionmedica.beans.MovimientoInventarioDAO#obtenerMovimientoInventario(ec.edu.epn.atencionmedica.entities.Movimientoinventario)
+	 * 
+	 * @see ec.edu.epn.atencionmedica.beans.MovimientoInventarioDAO#
+	 * obtenerMovimientoInventario(ec.edu.epn.atencionmedica.entities.
+	 * Movimientoinventario)
 	 */
 	@Override
 	public Movimientoinventario obtenerMovimientoInventario(Movimientoinventario movimiento) {
@@ -125,7 +133,7 @@ public class MovimientoInventarioDAOImplement extends DaoGenericoImplement<Movim
 
 		if (movimiento.getIdMovimientoinv() == 0 && movimiento.getCatalogotipoestadomov().getIdCatalogo() == 6
 				&& movimiento.getPersonal().getIdPersonal() > 0
-				&& movimiento.getCatalogotipomovinventario().getIdCatalogo() == 5) {			
+				&& movimiento.getCatalogotipomovinventario().getIdCatalogo() == 5) {
 			q = "SELECT c FROM Movimientoinventario c" + " WHERE c.catalogotipoestadomov.idCatalogo = ?0 "
 					+ " AND c.personal.idPersonal = ?1 " + " AND c.catalogotipomovinventario.idCatalogo = ?2 "
 					+ " order by c.idAtencionmed desc ";
@@ -136,10 +144,9 @@ public class MovimientoInventarioDAOImplement extends DaoGenericoImplement<Movim
 			query.setParameter(0, movimiento.getCatalogotipoestadomov().getIdCatalogo());
 			query.setParameter(1, movimiento.getPersonal().getIdPersonal());
 			query.setParameter(2, movimiento.getCatalogotipomovinventario().getIdCatalogo());
-		
 
 			listaMovimientoInventarioEncontradas = query.getResultList();
-			
+
 		} else if (movimiento.getIdMovimientoinv() != 0) {
 			// obtener la atencion mèdica por id de atencion medica
 		}
@@ -155,18 +162,15 @@ public class MovimientoInventarioDAOImplement extends DaoGenericoImplement<Movim
 	@Override
 	public List<Movimientoinventario> obtenerListaDespachosPendientes() {
 		List<Movimientoinventario> listaAtencionesEncontradas = new ArrayList<Movimientoinventario>();
-				
-		q = "SELECT distinct m from Movimientoinventario m "
-				+ " WHERE m.catalogotipoestadomov.idCatalogo = 27 "
+
+		q = "SELECT distinct m from Movimientoinventario m " + " WHERE m.catalogotipoestadomov.idCatalogo = 27 "
 				+ " and (m.catalogotipomovinventario.idCatalogo = 25 or m.catalogotipomovinventario.idCatalogo = 26) "
-				+ " and to_char(m.fechahoraMov,'YYYY-MM-DD') = to_char(now(),'YYYY-MM-DD') "
-				+ " order by m asc ";
-		
+				+ " and to_char(m.fechahoraMov,'YYYY-MM-DD') = to_char(now(),'YYYY-MM-DD') " + " order by m asc ";
+
 		queryString = new StringBuilder(q);
 		query = getEntityManager().createQuery(queryString.toString());
 
 		listaAtencionesEncontradas = query.getResultList();
-
 
 		return listaAtencionesEncontradas;
 	}
@@ -174,19 +178,18 @@ public class MovimientoInventarioDAOImplement extends DaoGenericoImplement<Movim
 	@Override
 	public List<Movimientoinventario> obtenerListaMovimientos(Date fechaInicial, Date fechaFinal) {
 		List<Movimientoinventario> listaMovEncontradas = new ArrayList<Movimientoinventario>();
-				
+
 		q = "SELECT m from Movimientoinventario m "
 				+ " WHERE m.catalogotipomovinventario.idCatalogo IN (19,20,21,22,23,24,109,110) "
-				+ " AND m.fechahoraMov between ?0 and ?1 "
-				+ " order by  m.fechahoraMov desc ";
-		
+				+ " AND m.fechahoraMov between ?0 and ?1 " + " order by  m.fechahoraMov desc ";
+
 		queryString = new StringBuilder(q);
-		query = getEntityManager().createQuery(queryString.toString());		
+		query = getEntityManager().createQuery(queryString.toString());
 		query.setParameter(0, fechaInicial);
 		query.setParameter(1, fechaFinal);
 
 		listaMovEncontradas = query.getResultList();
-		
+
 		System.out.println("Encontrados: " + listaMovEncontradas.size());
 		return listaMovEncontradas;
 	}
@@ -194,19 +197,31 @@ public class MovimientoInventarioDAOImplement extends DaoGenericoImplement<Movim
 	@Override
 	public List<Movimientoinventario> obtenerListaMovimientosInventario(Integer idAtencionMedica) {
 		List<Movimientoinventario> listaMovEncontradas = new ArrayList<Movimientoinventario>();
-		
-		q = "SELECT m from Movimientoinventario m "
-				+ " WHERE m.atencionmedica.idAtencionmed =  ?0";
-		
+
+		q = "SELECT m from Movimientoinventario m " + " WHERE m.atencionmedica.idAtencionmed =  ?0";
+
 		queryString = new StringBuilder(q);
-		query = getEntityManager().createQuery(queryString.toString());		
-		query.setParameter(0, idAtencionMedica);		
+		query = getEntityManager().createQuery(queryString.toString());
+		query.setParameter(0, idAtencionMedica);
 
 		listaMovEncontradas = query.getResultList();
-				
+
 		return listaMovEncontradas;
 	}
 
+	@Override
+	public Movimientoinventario obtenerListaMovimientosInventarioUnico(Integer idAtencionMedica) {
+		try {
+			q = "SELECT m from Movimientoinventario m " + " WHERE m.atencionmedica.idAtencionmed =  ?0";
 
+			queryString = new StringBuilder(q);
+			query = getEntityManager().createQuery(queryString.toString());
+			query.setParameter(0, idAtencionMedica);
+
+			return (Movimientoinventario) query.getSingleResult();
+		} catch (Exception e) {
+			return null;
+		}
+	}
 
 }

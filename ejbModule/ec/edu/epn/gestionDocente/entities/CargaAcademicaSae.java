@@ -63,6 +63,10 @@ public class CargaAcademicaSae implements Serializable {
 	
 	private String aula;
 	
+	/*private String regimen;
+	
+	private String nivel;*/
+	
 	
 	/**PARA CALCULOS CON DECIMAL 2*/
 	@Transient
@@ -240,4 +244,5 @@ public class CargaAcademicaSae implements Serializable {
 		this.aula = aula;
 	}
 
+	
 }

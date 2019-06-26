@@ -1,5 +1,6 @@
 package ec.edu.epn.gestioDocente.beans;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Local;
@@ -15,6 +16,9 @@ public interface ExperienciaProfesionalExternaDAO extends DaoGenerico<ExpProfesE
 	
 	
 	List<ExpProfesExt> listExperienciaProfRecategoriza(String cedula);
+
+
+	ArrayList<Integer> llenaAnios();
 	
 	//List<ExpProfesExt> listExperienciaProfExtXCed(String cedula, List<String> validaciones) throws Exception;
 

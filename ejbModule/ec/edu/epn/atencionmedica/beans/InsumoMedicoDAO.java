@@ -46,5 +46,9 @@ public interface InsumoMedicoDAO {
 	 */
 	public Insumomedico obtenerInsumomedicoAsistente(String criterio);
 
+	List<Insumomedico> obtenerListaInsumosEnfMed(String criterio, Integer opcion);
+
+	Long countInsumosMedDesc();
+
 	
 }

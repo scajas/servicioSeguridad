@@ -33,5 +33,22 @@ public class HorasExigiblesEvalDAOImplement extends DaoGenericoImplement<HorasEx
 				return null;
 			}
 	}
+	
+	@Override
+	public Double numhorasExigiblesXPensum(Integer idPensum){		
+		try {
+			Query q = getEntityManager()
+					.createQuery(
+							"SELECT h.totalHorasExigibles FROM HorasExigiblesEval h WHERE h.idPensum=  ? ");
+			
+			q.setParameter(1, idPensum);			
+			
+			return (Double) q.getSingleResult();
+			} catch (NoResultException e) {
+				return null;
+			} catch (Exception e) {
+				return null;
+			}
+	}
 		
 }

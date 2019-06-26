@@ -36,4 +36,5 @@ public interface CatalogoDAO {
 	public boolean eliminarTipoPresentacionIM(Catalogo catalog, String operacion);
 	public List<Catalogo> obtenerListaTipoPresentacionInsumoMedico();
 	List<Catalogo> obtenerListaTipoAtencionMedicaNuevo();
+	List<Catalogo> obtenerListaTipoProducto();
 }

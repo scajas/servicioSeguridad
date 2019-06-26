@@ -56,12 +56,12 @@ public class EstudioDAOImplement extends DaoGenericoImplement<Estudio> implement
 	@Override
 	public List<Estudio> findEstudiosByParams(String nced) {
 		StringBuilder queryString = new StringBuilder(
-				"SELECT est FROM Estudio est WHERE est.nced =?0 ORDER BY est.idestudios");
+				"SELECT est FROM Estudio est WHERE est.emp.nced =?0 ORDER BY est.idestudios");
 
 		if (nced == "") {
 			return null;
 		}
-
+		
 		Query query = getEntityManager().createQuery(queryString.toString());
 		if (nced != "") {
 			query.setParameter(0, nced);

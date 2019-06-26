@@ -10,7 +10,6 @@ import javax.persistence.Query;
 
 import ec.edu.epn.generic.DAO.DaoGenericoImplement;
 import ec.edu.epn.gestionDocente.entities.IdiomasDocente;
-import ec.edu.epn.gestionDocente.entities.TituloFormacionAcademica;
 
 /**
  * Session Bean implementation class IdiomaDocenteDAOImplement
@@ -79,6 +78,46 @@ public class IdiomaDocenteDAOImplement extends DaoGenericoImplement<IdiomasDocen
 			}else{
 				valor=1;
 			}
+			
+		}else{
+			valor=0;
+		}
+					
+		return valor;		
+	}
+	
+	
+	
+	
+	@Override
+	public int countIdiomaXCedula(String cedula, String idIdiomaCat) throws Exception{
+		int valor=0;
+		String val="N";
+		StringBuilder queryString = new StringBuilder("SELECT i FROM IdiomasDocente i WHERE i.idioma.idIdioma=?1 AND i.nced=?2 AND i.estado!='D'");
+		Query query = getEntityManager().createQuery(queryString.toString());
+		query.setParameter(1, idIdiomaCat);
+		query.setParameter(2, cedula);		
+		
+		IdiomasDocente idiomasDocenteSelect=null;
+			
+		try {
+			query.getSingleResult();
+			val="S";
+		} catch (NoResultException e) {
+			val="N";
+			valor= 0;
+		}
+		
+		if(val.equals("S")){
+			idiomasDocenteSelect=(IdiomasDocente) query.getSingleResult();
+		}else{
+			idiomasDocenteSelect= null;
+		}
+		
+		
+		if(idiomasDocenteSelect!=null){			
+			valor=1;
+			
 			
 		}else{
 			valor=0;

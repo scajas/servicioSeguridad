@@ -14,4 +14,6 @@ public interface IdiomaDocenteDAO extends DaoGenerico<IdiomasDocente>{
 
 	int countIdiomaXIdIdiomaCat(String cedula, String idIdiomaCat, IdiomasDocente idiomasDocente) throws Exception;
 
+	int countIdiomaXCedula(String cedula, String idIdiomaCat) throws Exception;
+
 }
