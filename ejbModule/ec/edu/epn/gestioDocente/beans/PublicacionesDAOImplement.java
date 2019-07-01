@@ -336,9 +336,9 @@ public class PublicacionesDAOImplement extends DaoGenericoImplement<Publicacione
 	public List<Publicacione> listaPublicacionesXProyectoAC(List<String> cedulas, String tipoPublic, Integer idpensum,
 			Integer idproyecto, String titulo) {
 
-		StringBuilder queryString = new StringBuilder("SELECT DISTINCT p FROM Publicacione p, Emp e, "
-				+ " EmpleadoPublica ep where p.idPublic = ep.pub.idPublic " + " and e.nced = ep.emp.nced "
-				+ " and e.nced IN:list  " );
+		StringBuilder queryString = new StringBuilder("SELECT DISTINCT(p) FROM Publicacione p, Emp e, "
+				+ " EmpleadoPublica ep where p.idPublic = ep.pub.idPublic  and e.nced = ep.emp.nced "
+				+ " and ep.emp.nced IN:list  " );
 
 		if (tipoPublic != null) {
 			queryString.append(" and p.tipoPublicacion.idTipoPublic = ?2 ");
@@ -355,6 +355,13 @@ public class PublicacionesDAOImplement extends DaoGenericoImplement<Publicacione
 		if (titulo != null) {
 			queryString.append(" and p.tituloPublic = ?5 ");
 		}
+		
+		
+		queryString.append(" and p.catalogo != 'SCOPUS' ");
+		
+		
+		
+		
 
 		Query query = getEntityManager().createQuery(queryString.toString());
 		

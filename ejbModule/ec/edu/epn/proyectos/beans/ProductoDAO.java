@@ -14,4 +14,6 @@ public interface ProductoDAO extends DaoGenerico<Producto>{
 
 	List<Producto> findPublicacionesProyectoReports(Integer idproyecto, Integer idpensum);
 
+	List<Producto> findProductos(Integer idproyecto, Integer idpensum, Integer idTipo);
+
 }

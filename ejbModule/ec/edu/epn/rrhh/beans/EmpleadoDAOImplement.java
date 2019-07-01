@@ -76,6 +76,7 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 		if (nombre != null) {
 			query.setParameter(2, "%" + nombre + "%");
 		}
+		query.setMaxResults(1000);
 
 		return query.getResultList();
 	}
