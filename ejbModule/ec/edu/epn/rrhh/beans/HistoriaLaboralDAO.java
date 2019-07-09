@@ -61,8 +61,10 @@ public interface HistoriaLaboralDAO extends DaoGenerico<HistoriaLaboral> {
 
 	public boolean empleadoHasSubrogacionActivaEnFecha(Emp emp, Date fechaActual);
 
-	public boolean empleadoHasSubrogacionActivaEnFecha(Emp emp, Date fechaActual, Date fechaFin);
+	public boolean empleadoHasAnyDesignacionActivaOnFecha(Emp emp, Date fechaActual, Date fechaFin);
 
+	public List<HistoriaLaboral> getAllDesignacionesActivas();
+	
 	public boolean empleadoHasNombramientosSinFinalizar(Emp emp);
 
 	public boolean isEmpleadoOnDesignacionActiva(Emp emp);
@@ -77,6 +79,8 @@ public interface HistoriaLaboralDAO extends DaoGenerico<HistoriaLaboral> {
 
 	public HistoriaLaboral getMostRecentNombramientoByEmp(Emp emp);
 
+	public HistoriaLaboral getMostRecentNombramientoFinalizadoByEmp(Emp emp);
+	
 	public HistoriaLaboral getMostRecentNombramientoProvisionalByEmp(Emp emp);
 
 	public boolean empleadoHasNombramientosFinalizar(Emp emp);

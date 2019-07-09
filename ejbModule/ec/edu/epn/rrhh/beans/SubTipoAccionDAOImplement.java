@@ -17,7 +17,8 @@ public class SubTipoAccionDAOImplement extends DaoGenericoImplement<SubtipoAccio
 	public SubtipoAccion findSubTipoAccionPorNombre(String nombreSubTipoAccion) {
 
 		StringBuilder queryString = new StringBuilder(
-				"Select sta from SubtipoAccion " + "sta where TRIM(sta.nombreSubaccion) like ?1) ");
+				"Select sta from SubtipoAccion sta where TRIM(sta.nombreSubaccion) like ?1 "
+						+ "order by sta.idStpa asc  ");
 		Query query = getEntityManager().createQuery(queryString.toString());
 
 		query.setParameter(1, nombreSubTipoAccion);
