@@ -444,7 +444,7 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 				+ " and (hl.id.estado = 'Legalizado' or hl.id.estado = 'Finalizado') "
 				+ " and hl.accionP.subtipoAccion.nombreSubaccion = ?2 and "
 				+ " ((?3 between hl.fechaRige and hl.fechaFin) "
-				+ " or (?4 <=hl.fechaFin)) and "
+				+ " or (?4 between hl.fechaRige and hl.fechaFin)) and "
 				+ " hl.id.idHist not in (select histo.id.idHist from HistoriaLaboral histo "
 				+ " where (histo.id.estado = 'Anulado' or histo.id.estado = 'Insubsistente') and"
 				+ " histo.emp.nced = ?1 and "
@@ -515,15 +515,16 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 	public boolean empleadoHasAnyDesignacionActivaOnFecha(Emp emp, Date fechaRige, Date fechaFin) {
 		StringBuilder queryString = new StringBuilder("Select count(hist) from " 
 				+ "HistoriaLaboral hist where "
-				+ "hist.emp.nced=?1 and hist.id.estado=?2 and hist.accionP.subtipoAccion.idStpa= ?3 "
+				+ "hist.emp.nced=?1 and hist.id.estado=?2 and (hist.accionP.subtipoAccion.idStpa= ?3"
+				+ " or hist.accionP.subtipoAccion.tipoAccion.idTpa = ?7) "
 				+ "and hist.fechaFin is null and hist.designacion.estado = ?6 "
 				+ "and "
 				+ " ((?4 between hist.fechaRige and hist.fechaPrevistaFin) "
-				+ " or (?5 <=hist.fechaPrevistaFin)) and "
+				+ " or (?5 between hist.fechaRige and hist.fechaPrevistaFin)) and "
 				+ " hist.id.idHist not in (select fam.id.idHist from HistoriaLaboral fam "
 				+ " where (fam.id.estado = 'Anulado' or fam.id.estado = 'Insubsistente') and"
-				+ " fam.emp.nced = ?1 and fam.accionP.subtipoAccion.idStpa = ?3) ");
-		
+				+ " fam.emp.nced = ?1 and (fam.accionP.subtipoAccion.idStpa = ?3 "
+				+ " or hist.accionP.subtipoAccion.tipoAccion.idTpa = ?7)) ");
 		
 		Query query = getEntityManager().createQuery(queryString.toString());
 		query.setParameter(1, emp.getNced());
@@ -532,6 +533,7 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		query.setParameter(4, fechaRige);
 		query.setParameter(5, fechaFin);
 		query.setParameter(6, "Ejecucion");
+		query.setParameter(7, 14);
 		long count = (long) query.getSingleResult();
 		if (count == 0) {
 			return false;
@@ -1254,7 +1256,7 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 				+ " and hl.id.estado = ?3 "
 				+ " and hl.fechaFin is null " 
 				+ " and ((?4 between hl.fechaRige and hl.fechaPrevistaFin) or"
-				+ " (?5 <= hl.fechaPrevistaFin)) "
+				+ " (?5 between hl.fechaRige and hl.fechaPrevistaFin)) "
 				+ " and "
 				+ " hl.id.idHist not in (select histo.id.idHist from HistoriaLaboral histo "
 				+ " where (histo.id.estado = 'Anulado' or histo.id.estado = 'Insubsistente') and "
