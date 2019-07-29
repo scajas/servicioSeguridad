@@ -253,7 +253,8 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 						+ " and hist.fechaRige<=?2 " + " and (trim(hist.id.estado) = 'Finalizado' or "
 						+ " trim(hist.id.estado) = '\"Finalizado\"') and "
 						+ " hist.id.idHist not in (Select histo.id.idHist from HistoriaLaboral histo "
-						+ " where histo.emp.nced=?1 and (trim(histo.id.estado)= ?3 or" + " trim(histo.id.estado)=?4)"
+						+ " where histo.emp.nced=?1 and"
+						+ " (trim(histo.id.estado)= ?3 or trim(histo.id.estado)=?4 or trim(histo.id.estado) = 'Duplicado')"
 						+ " or (histo.accionP.subtipoAccion.nombreSubaccion like ?5 or "
 						+ " histo.accionP.subtipoAccion.nombreSubaccion like ?6 or "
 						+ " histo.accionP.subtipoAccion.nombreSubaccion like ?7 or  "
@@ -261,7 +262,8 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 						+ " histo.accionP.subtipoAccion.nombreSubaccion like ?9 "
 						+ " or histo.accionP.subtipoAccion.tipoAccion.idTpa = 13))) " + " and hl.id.idHist not in "
 						+ " (Select histo.id.idHist from HistoriaLaboral histo "
-						+ " where histo.emp.nced=?1 and (trim(histo.id.estado)= ?3 or" + " trim(histo.id.estado)=?4))"
+						+ " where histo.emp.nced=?1 and (trim(histo.id.estado)= ?3 or" + " trim(histo.id.estado)=?4"
+								+ " or trim(histo.id.estado) = 'Duplicado'))"
 						+ " order by hl.fechaRige desc ");
 
 		Query query = getEntityManager().createQuery(queryString.toString());
@@ -270,6 +272,7 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		query.setParameter(2, new Date());
 		query.setParameter(3, "Insubsistente");
 		query.setParameter(4, "Anulado");
+		
 		query.setParameter(5, "VACACI%");
 		query.setParameter(6, "LICENCIA POR MATERINDAD%");
 		query.setParameter(7, "LICENCIA POR PATERNIDAD%");
@@ -1285,7 +1288,7 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 				+ " and ((?2 between fam.fechaRige and fam.fechaPrevistaFin ) or"
 				+ " (?3 <= fam.fechaPrevistaFin)) "
 				+ " and fam.fechaFin is null and "
-				+ "(trim(fam.id.estado) = 'Legalizado' or (fam.id.estado) ='Finalizado') "
+				+ " (trim(fam.id.estado) = 'Legalizado' or (fam.id.estado) ='Finalizado') "
 				+ " and fam.id.idHist not in (Select hl.id.idHist from HistoriaLaboral hl "
 				+ " where hl.accionP.subtipoAccion.nombreSubaccion = 'LICENCIA POR CUIDADO DEL RECIEN NACIDO' "
 				+ " and hl.emp.nced = ?1) and "
