@@ -125,11 +125,32 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		return resultado;
 
 	}
+	
+	private String returnFilterStringSentence(int [] filtersAcciones, Emp empleado) {
+		
+		StringBuilder queryFilter = new StringBuilder(""
+				+ " and fam.id.idHist not in (Select "
+				+ " hfil.id.idHist from HistoriaLaboral hfil where hfil.emp.nced = \'" 
+				+ empleado.getNced() + "\' and ( " );
+		for(int i=0; i<filtersAcciones.length; i++) {
+			if(i>0) {
+				queryFilter.append(" or ");
+			}
+			String filter = " hfil.accionP.subtipoAccion.tipoAccion.idTpa = " +filtersAcciones[i];
+			queryFilter.append(filter);			
+		}
+		queryFilter.append("))");		
+		
+		return queryFilter.toString();
+	}
 
 	@Override
 	public List<HistoriaLaboral> findHistorias(Date inicio, Date ffinal, String nombreDependencia,
 			String nombreDependenciaDesignacion, String nombreCargo, String claseEmpleado, String nombreDesignacion,
-			Emp empleado, boolean isFullReport) {
+			Emp empleado, boolean isFullReport, int [] filtersAcciones) {
+		/*if(filtersAcciones==null) {
+			filtersAcciones = new int [0];
+		}*/
 		StringBuilder queryString = new StringBuilder("");
 		Query query = null;
 		queryString = new StringBuilder(
@@ -175,6 +196,10 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 			String filterMaxFechas = "and fam.id.fechaI = (Select max(t.id.fechaI) "
 					+ "from HistoriaLaboral t where t.id.idHist=fam.id.idHist ) ";
 			queryString.append(filterMaxFechas);
+		}
+		if(filtersAcciones.length >0) {
+			String filterAccionesSentence = returnFilterStringSentence(filtersAcciones, empleado);
+			queryString.append(filterAccionesSentence);
 		}
 		query = getEntityManager().createQuery(queryString.toString());
 		query.setParameter("inicio", inicio);
@@ -253,7 +278,8 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 						+ " and hist.fechaRige<=?2 " + " and (trim(hist.id.estado) = 'Finalizado' or "
 						+ " trim(hist.id.estado) = '\"Finalizado\"') and "
 						+ " hist.id.idHist not in (Select histo.id.idHist from HistoriaLaboral histo "
-						+ " where histo.emp.nced=?1 and (trim(histo.id.estado)= ?3 or" + " trim(histo.id.estado)=?4)"
+						+ " where histo.emp.nced=?1 and"
+						+ " (trim(histo.id.estado)= ?3 or trim(histo.id.estado)=?4 or trim(histo.id.estado) = 'Duplicado')"
 						+ " or (histo.accionP.subtipoAccion.nombreSubaccion like ?5 or "
 						+ " histo.accionP.subtipoAccion.nombreSubaccion like ?6 or "
 						+ " histo.accionP.subtipoAccion.nombreSubaccion like ?7 or  "
@@ -261,7 +287,8 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 						+ " histo.accionP.subtipoAccion.nombreSubaccion like ?9 "
 						+ " or histo.accionP.subtipoAccion.tipoAccion.idTpa = 13))) " + " and hl.id.idHist not in "
 						+ " (Select histo.id.idHist from HistoriaLaboral histo "
-						+ " where histo.emp.nced=?1 and (trim(histo.id.estado)= ?3 or" + " trim(histo.id.estado)=?4))"
+						+ " where histo.emp.nced=?1 and (trim(histo.id.estado)= ?3 or" + " trim(histo.id.estado)=?4"
+								+ " or trim(histo.id.estado) = 'Duplicado'))"
 						+ " order by hl.fechaRige desc ");
 
 		Query query = getEntityManager().createQuery(queryString.toString());
@@ -270,6 +297,7 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		query.setParameter(2, new Date());
 		query.setParameter(3, "Insubsistente");
 		query.setParameter(4, "Anulado");
+		
 		query.setParameter(5, "VACACI%");
 		query.setParameter(6, "LICENCIA POR MATERINDAD%");
 		query.setParameter(7, "LICENCIA POR PATERNIDAD%");
@@ -1198,12 +1226,12 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		Query query = getEntityManager().createQuery(queryString.toString());
 		query.setParameter(1, emp.getNced());
 		query.setParameter(2, nombreAccion + "%");
-		if (nombreAccion.compareTo("VACACIONES") != 0) {
-			query.setParameter(3, "Ejecucion");
-		} else {
+		if(nombreAccion.compareTo("VACACIONES")==0 || nombreAccion.startsWith("LICENCIA")) {
 			query.setParameter(3, "Elaborado");
+		}else {
+			query.setParameter(3, "Ejecucion");
 		}
-
+		
 		HistoriaLaboral resultado = null;
 		try {
 			resultado = (HistoriaLaboral) query.getSingleResult();
@@ -1285,7 +1313,7 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 				+ " and ((?2 between fam.fechaRige and fam.fechaPrevistaFin ) or"
 				+ " (?3 <= fam.fechaPrevistaFin)) "
 				+ " and fam.fechaFin is null and "
-				+ "(trim(fam.id.estado) = 'Legalizado' or (fam.id.estado) ='Finalizado') "
+				+ " (trim(fam.id.estado) = 'Legalizado' or (fam.id.estado) ='Finalizado') "
 				+ " and fam.id.idHist not in (Select hl.id.idHist from HistoriaLaboral hl "
 				+ " where hl.accionP.subtipoAccion.nombreSubaccion = 'LICENCIA POR CUIDADO DEL RECIEN NACIDO' "
 				+ " and hl.emp.nced = ?1) and "
