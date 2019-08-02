@@ -126,6 +126,8 @@ public interface EmpleadoDAO extends DaoGenerico<Emp> {
 
 	EmpleadoDTO buscarHistoriaEmpleado(String nced, Integer idPensum) throws Exception;
 
+	List<Emp> listaEmpleadonoContrato();
+
 /*	List<Emp> buscarempActualizar() throws Exception;
 
 	List<Emp> buscarempActualizarDatos() throws Exception;*/
