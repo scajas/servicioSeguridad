@@ -122,4 +122,8 @@ public class SubTipoAccionDAOImplement extends DaoGenericoImplement<SubtipoAccio
 		List<SubtipoAccion> resultado = query.getResultList();
 		return resultado;
 	}
+
+
+
+
 }
