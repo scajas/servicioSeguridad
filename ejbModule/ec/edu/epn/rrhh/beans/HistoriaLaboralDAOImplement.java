@@ -125,11 +125,32 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		return resultado;
 
 	}
+	
+	private String returnFilterStringSentence(int [] filtersAcciones, Emp empleado) {
+		
+		StringBuilder queryFilter = new StringBuilder(""
+				+ " and fam.id.idHist not in (Select "
+				+ " hfil.id.idHist from HistoriaLaboral hfil where hfil.emp.nced = \'" 
+				+ empleado.getNced() + "\' and ( " );
+		for(int i=0; i<filtersAcciones.length; i++) {
+			if(i>0) {
+				queryFilter.append(" or ");
+			}
+			String filter = " hfil.accionP.subtipoAccion.tipoAccion.idTpa = " +filtersAcciones[i];
+			queryFilter.append(filter);			
+		}
+		queryFilter.append("))");		
+		
+		return queryFilter.toString();
+	}
 
 	@Override
 	public List<HistoriaLaboral> findHistorias(Date inicio, Date ffinal, String nombreDependencia,
 			String nombreDependenciaDesignacion, String nombreCargo, String claseEmpleado, String nombreDesignacion,
-			Emp empleado, boolean isFullReport) {
+			Emp empleado, boolean isFullReport, int [] filtersAcciones) {
+		/*if(filtersAcciones==null) {
+			filtersAcciones = new int [0];
+		}*/
 		StringBuilder queryString = new StringBuilder("");
 		Query query = null;
 		queryString = new StringBuilder(
@@ -175,6 +196,10 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 			String filterMaxFechas = "and fam.id.fechaI = (Select max(t.id.fechaI) "
 					+ "from HistoriaLaboral t where t.id.idHist=fam.id.idHist ) ";
 			queryString.append(filterMaxFechas);
+		}
+		if(filtersAcciones.length >0) {
+			String filterAccionesSentence = returnFilterStringSentence(filtersAcciones, empleado);
+			queryString.append(filterAccionesSentence);
 		}
 		query = getEntityManager().createQuery(queryString.toString());
 		query.setParameter("inicio", inicio);
@@ -1201,12 +1226,12 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		Query query = getEntityManager().createQuery(queryString.toString());
 		query.setParameter(1, emp.getNced());
 		query.setParameter(2, nombreAccion + "%");
-		if (nombreAccion.compareTo("VACACIONES") != 0) {
-			query.setParameter(3, "Ejecucion");
-		} else {
+		if(nombreAccion.compareTo("VACACIONES")==0 || nombreAccion.startsWith("LICENCIA")) {
 			query.setParameter(3, "Elaborado");
+		}else {
+			query.setParameter(3, "Ejecucion");
 		}
-
+		
 		HistoriaLaboral resultado = null;
 		try {
 			resultado = (HistoriaLaboral) query.getSingleResult();
