@@ -1557,7 +1557,8 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 					+ " hist.id.fechaI in (Select max(histo.id.fechaI) from HistoriaLaboral histo "
 					+ " where histo.emp.nced=?1 and trim(histo.nroDocumento)=?2"
 					+ " and hist.id.idHist=histo.id.idHist and"
-					+ " (trim(histo.id.estado)= 'Ejecucion' or trim(histo.id.estado)='Elaborado' or trim(histo.id.estado)='Elaborada' )) "
+					+ " (trim(histo.id.estado)= 'Ejecucion' or trim(histo.id.estado)='Elaborado' or trim(histo.id.estado)='Elaborada' "
+					+ " or trim(histo.id.estado)='En revision')) "
 					+ " and hist.id.idHist not in (Select i.id.idHist from HistoriaLaboral i where (i.id.estado = 'Anulado' or i.id.estado='Duplicado') and i.emp.nced=?1)"
 					+ " order by hist.id.fechaI desc ");
 		}
