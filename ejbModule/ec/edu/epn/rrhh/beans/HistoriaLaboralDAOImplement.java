@@ -175,7 +175,7 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		}
 
 		if (claseEmpleado.compareTo("Todos") != 0) {
-			String claseEmpleadoPredicate = " and fam.emp.clasemp.descClase =" + "\'" + claseEmpleado + "\' ";
+			String claseEmpleadoPredicate = " and fam.cargosm.grupo =" + "\'" + claseEmpleado + "\' ";
 			queryString.append(claseEmpleadoPredicate);
 		}
 
