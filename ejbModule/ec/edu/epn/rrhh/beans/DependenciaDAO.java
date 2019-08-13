@@ -24,7 +24,7 @@ public interface DependenciaDAO extends DaoGenerico<Dependencia> {
 	
 	List<Dependencia> getDependenciasAdministrables();
 	
-	//Nuevos métodos
+	//Nuevos mÃ©todos
 	String getMaxIdDependencia();    
 	
 	Dependencia getDependenciaByNombre(String nombreDependencia);
@@ -38,3 +38,4 @@ public interface DependenciaDAO extends DaoGenerico<Dependencia> {
 	
 
 }
+
