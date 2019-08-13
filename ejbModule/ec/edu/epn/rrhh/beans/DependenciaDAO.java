@@ -8,7 +8,6 @@ import javax.ejb.Remote;
 import javax.persistence.NoResultException;
 
 import ec.edu.epn.generic.DAO.DaoGenerico;
-import ec.edu.epn.rrhh.movimientos.AccionP;
 import ec.edu.epn.rrhh.movimientos.Dependencia;
 
 @Remote
@@ -34,6 +33,8 @@ public interface DependenciaDAO extends DaoGenerico<Dependencia> {
 	List<Dependencia> getDependenciasAll();
 
 	List<Dependencia> findDependenciaAcademica();
+
+	List<Dependencia> findDependenciaActivaByTipoEmpleadoMigrado(String tipoEmpleado);
 
 	
 
