@@ -26,7 +26,7 @@ public class procedimientosAlmacenadosEval {
 		}
 	}
 
-	public List<CargaPlanificacionDTO> obtenerCargaAcademicaPlanificacion(String cedula, String añoPensum,
+	public List<CargaPlanificacionDTO> obtenerCargaAcademicaPlanificacion(String cedula, String aÃ±oPensum,
 			String numeroPensum) {
 		java.sql.ResultSet result = null;
 		try {
@@ -40,7 +40,7 @@ public class procedimientosAlmacenadosEval {
 			cst.setString(3, "");
 			cst.setString(4, "");
 
-			cst.setString(5, añoPensum);
+			cst.setString(5, aÃ±oPensum);
 			cst.setString(6, numeroPensum);
 
 			result = cst.executeQuery();
@@ -65,7 +65,7 @@ public class procedimientosAlmacenadosEval {
 				
 				carga.setValHetero(0.0);
 				
-				/*SE AGREGA NUEVOS CAMPOS PARA EL CALCULO DE LAS HORAS SEMANA EN CARGA ACADÉMICA PARA PLANIFICACIÓN DOCENTE 12-11-2018*/
+				/*SE AGREGA NUEVOS CAMPOS PARA EL CALCULO DE LAS HORAS SEMANA EN CARGA ACADÃ‰MICA PARA PLANIFICACIÃ“N DOCENTE 12-11-2018*/
 				
 				/*if(result.getString(21)!=null){
 					carga.setRegimen(result.getString(21));
@@ -211,6 +211,7 @@ public class procedimientosAlmacenadosEval {
 		}
 		
 	}
+	
 
 	/**
 	 * @return the pensumVigente
