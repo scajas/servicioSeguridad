@@ -8,11 +8,7 @@ import javax.persistence.NonUniqueResultException;
 import javax.persistence.Query;
 
 import ec.edu.epn.generic.DAO.DaoGenericoImplement;
-import ec.edu.epn.rrhh.entities.Dep;
-import ec.edu.epn.rrhh.entities.Emp;
-import ec.edu.epn.rrhh.movimientos.AccionP;
 import ec.edu.epn.rrhh.movimientos.Dependencia;
-import ec.edu.epn.rrhh.movimientos.HistoriaLaboral;
 
 @Stateless
 public class DependenciaDAOImplement extends DaoGenericoImplement<Dependencia> implements DependenciaDAO {
@@ -72,6 +68,70 @@ public class DependenciaDAOImplement extends DaoGenericoImplement<Dependencia> i
 
 		Query query = getEntityManager().createQuery(queryString.toString());
 		query.setParameter(1, codDependencia);
+		List<Dependencia> resultado = query.getResultList();
+
+		return resultado;
+
+	}
+	
+	
+	@Override
+	public List<Dependencia> findDependenciaAcademica() {
+		StringBuilder queryString = new StringBuilder("SELECT fam FROM Dependencia fam where "
+				+ "fam.nomDep like '%DEP%'  "
+				+ "and fam.tipo='DEP'");
+
+		Query query = getEntityManager().createQuery(queryString.toString());
+		List<Dependencia> resultado = query.getResultList();
+
+		return resultado;
+
+	}
+	
+	@Override
+	public List<Dependencia> findDependenciaActivaByTipoEmpleadoMigrado(String tipoEmpleado) {
+		StringBuilder queryString = null;
+		Query query = null;
+		if (tipoEmpleado.compareTo("DOCENTE") == 0 || tipoEmpleado.compareTo("PARADOCENTE")==0 ) {
+			queryString = new StringBuilder(" Select dep from Dependencia dep "
+					+ " where dep.estado = ?1 " 
+					+ "and dep.tipo =?2 ");
+			query = getEntityManager().createQuery(queryString.toString());
+			query.setParameter(1, "ACTIVO");
+			//query.setParameter(2, "FACULTADES");
+			query.setParameter(2, "DEP");
+		}
+		if(tipoEmpleado.compareTo("ADMINISTRATIVO")==0){
+			queryString = new StringBuilder(" Select dep from Dependencia dep "
+					+ " where dep.estado = ?1 and  " 
+					+ " (dep.tipo =?2 or dep.tipo =?3) and dep.dependencia IS NOT NULL");
+			query = getEntityManager().createQuery(queryString.toString());
+			query.setParameter(1, "ACTIVO");	
+			query.setParameter(2, "DEP");
+			query.setParameter(3, "ADM");
+		}if(tipoEmpleado.compareTo("OLD")==0){
+			queryString = new StringBuilder(" Select dep from Dependencia dep "
+					+ " where dep.estado = ?1 and  " 
+					+ " (dep.tipo =?2 or dep.tipo =?3 or dep.tipo = ?4) and dep.dependencia IS NOT NULL");
+			query = getEntityManager().createQuery(queryString.toString());
+			query.setParameter(1, "ACTIVO");	
+			query.setParameter(2, "DEP");
+			query.setParameter(3, "ADM");
+			query.setParameter(4, "OLD");
+		}if(tipoEmpleado.compareTo("SUB")==0 || tipoEmpleado.compareTo("APOYO DOC, INV, EXT")==0 ){
+			queryString = new StringBuilder(" Select dep from Dependencia dep "
+					+ " where (dep.estado = ?1 or dep.estado='MIGRADO') and  " 
+					+ " (dep.tipo =?2 or dep.tipo =?3 or dep.tipo = ?4) "
+					+ "and dep.dependencia IS NOT NULL");
+			query = getEntityManager().createQuery(queryString.toString());
+			query.setParameter(1, "ACTIVO");	
+			query.setParameter(2, "DEP");
+			query.setParameter(3, "ADM");
+			query.setParameter(4, "FAC");
+		}
+		
+		
+
 		List<Dependencia> resultado = query.getResultList();
 
 		return resultado;
@@ -226,21 +286,7 @@ public class DependenciaDAOImplement extends DaoGenericoImplement<Dependencia> i
 		}
 		
 	}
-	
-	
-	@Override
-	public List<Dependencia> findDependenciaAcademica() {
-		StringBuilder queryString = new StringBuilder("SELECT fam FROM Dependencia fam where "
-				+ "fam.nomDep like '%DEP%'  "
-				+ "and fam.tipo='DEP'");
-
-		Query query = getEntityManager().createQuery(queryString.toString());
-		List<Dependencia> resultado = query.getResultList();
-
-		return resultado;
-
-	}
-	
 
 	
 }
+
