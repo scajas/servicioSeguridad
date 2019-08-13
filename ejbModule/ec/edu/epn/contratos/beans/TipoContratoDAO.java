@@ -14,4 +14,5 @@ public interface TipoContratoDAO extends DaoGenerico<TipoContrato> {
 	TipoContrato buscarTCXNombre(String contrato);
 	List<TipoContrato> listaTiposContratos();
 	public List<TipoContrato> listaTiposContratosAdicional() throws Exception;
+	List<TipoContrato> listaTiposContratosPreplanif();
 }

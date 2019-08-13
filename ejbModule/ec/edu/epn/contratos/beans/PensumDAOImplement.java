@@ -106,7 +106,11 @@ public class PensumDAOImplement extends DaoGenericoImplement<Pensum> implements 
 
 		} else if (tipoEvaluacion.equals("COEVAL")) {
 			sbQuery.append(" WHERE pen.fechaCoe>= ?");
+			
+		} else if (tipoEvaluacion.equals("PREPLANIF")) {
+			sbQuery.append(" WHERE pen.fechaPreplanif>= ?");
 		}
+		
 
 		// sbQuery.append(" ORDER BY CONCAT(CAST(pen.añoPensum AS integer), '-'
 		// ,CAST(pen.numeroPensum AS integer)) ");

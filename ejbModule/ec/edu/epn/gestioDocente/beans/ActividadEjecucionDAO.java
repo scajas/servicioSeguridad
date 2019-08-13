@@ -19,6 +19,8 @@ public interface ActividadEjecucionDAO extends DaoGenerico<ActividadEjecucion>{
 
 	List<ActividadEjecucion> listActvEvalXIdEval(Integer idEvalAcademica) throws Exception;
 
+	Double sumValorActvEjec(Integer idEvalAcademica);
+
 	
 	
 }

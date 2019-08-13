@@ -72,5 +72,22 @@ public class ActividadEjecucionDAOImplement extends DaoGenericoImplement<Activid
 		
 		return q.getResultList();
 	}
+	
+	
+	@Override
+	public Double sumValorActvEjec(Integer idEvalAcademica) {
+		Query q = getEntityManager()
+				.createQuery(
+						"SELECT sum(a.valorAuto) FROM ActividadEjecucion a WHERE a.evaluacionAcademica.idEvalAcad=? ");
+
+		
+		q.setParameter(1, idEvalAcademica);		
+		try {
+			return (Double) q.getSingleResult();
+		} catch (Exception e) {
+			return 0.0;
+		}
+		
+	}
 		
 }

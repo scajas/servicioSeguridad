@@ -33,6 +33,8 @@ public interface DependenciaDAO extends DaoGenerico<Dependencia> {
 
 	List<Dependencia> getDependenciasAll();
 
+	List<Dependencia> findDependenciaAcademica();
+
 	
 
 }

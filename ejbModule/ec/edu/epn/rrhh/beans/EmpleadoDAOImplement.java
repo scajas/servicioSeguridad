@@ -2327,6 +2327,7 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 					Pensum pensum = new Pensum();
 					pensum = pensumDAO.obtenerPensumById(idPensum);
 					dto.setPeriodo(pensum == null ? "" : pensum.getMeses());
+					dto.setIdPeriodo(pensum.getIdPensum().toString());
 					
 					listDocPen.add(dto);
 				}
