@@ -91,7 +91,7 @@ public class DependenciaDAOImplement extends DaoGenericoImplement<Dependencia> i
 			Query query = getEntityManager().createQuery(queryFacultad.toString());
 			retorno = query.getResultList();
 		} catch (NoResultException e) {
-			throw new NoResultException("No se encontró facultades");
+			throw new NoResultException("No se encontrÃ³ facultades");
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception("Error al buscar las facultades");
@@ -143,7 +143,7 @@ public class DependenciaDAOImplement extends DaoGenericoImplement<Dependencia> i
 			}
 			retorno = query.getResultList();
 		} catch (NoResultException e) {
-			throw new NoResultException("No se encontró departamentos por la facultad buscada");
+			throw new NoResultException("No se encontrÃ³ departamentos por la facultad buscada");
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception("Error al buscar los departamentos");
@@ -201,11 +201,11 @@ public class DependenciaDAOImplement extends DaoGenericoImplement<Dependencia> i
 		return dependencia.getCodDep();
 	}
 	
-	//Nuevos métodos
+	//Nuevos mÃ©todos
 	@Override
 	public Dependencia getDependenciaByNombre(String nombreDependencia) {
 		StringBuilder queryString;
-		if(nombreDependencia.compareTo("ESCUELA POLITÉCNICA NACIONAL%")==0){
+		if(nombreDependencia.compareTo("ESCUELA POLITÃ‰CNICA NACIONAL%")==0){
 			queryString = new StringBuilder("SELECT fam FROM Dependencia fam "
 					+ "where fam.nomDep like ?1");
 		}else{
