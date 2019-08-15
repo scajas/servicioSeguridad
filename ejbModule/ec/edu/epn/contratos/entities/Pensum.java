@@ -23,8 +23,8 @@ public class Pensum implements Serializable {
 	@Column(name = "id_pensum")
 	private Integer idPensum;
 
-	@Column(name = "año_pensum")
-	private String añoPensum;
+	@Column(name = "aÃ±o_pensum")
+	private String aÃ±oPensum;
 
 	@Column(name = "id_pensum_anterior")
 	private Integer idPensumAnterior;
@@ -70,6 +70,13 @@ public class Pensum implements Serializable {
 
 	@Temporal(TemporalType.DATE)
 	private Date vipsreporta;
+	
+	@Temporal(TemporalType.DATE)
+	@Column(name = "fecha_preplanif")
+	private Date fechaPreplanif;
+	
+	
+	
 
 	public Pensum() {
 	}
@@ -82,12 +89,12 @@ public class Pensum implements Serializable {
 		this.idPensum = idPensum;
 	}
 
-	public String getAñoPensum() {
-		return this.añoPensum;
+	public String getAÃ±oPensum() {
+		return this.aÃ±oPensum;
 	}
 
-	public void setAñoPensum(String añoPensum) {
-		this.añoPensum = añoPensum;
+	public void setAÃ±oPensum(String aÃ±oPensum) {
+		this.aÃ±oPensum = aÃ±oPensum;
 	}
 
 	public String getEstado() {
@@ -237,6 +244,14 @@ public class Pensum implements Serializable {
 
 	public void setVipsreporta(Date vipsreporta) {
 		this.vipsreporta = vipsreporta;
+	}
+
+	public Date getFechaPreplanif() {
+		return fechaPreplanif;
+	}
+
+	public void setFechaPreplanif(Date fechaPreplanif) {
+		this.fechaPreplanif = fechaPreplanif;
 	}
 	
 
