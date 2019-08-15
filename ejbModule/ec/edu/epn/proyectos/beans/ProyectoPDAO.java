@@ -28,11 +28,11 @@ public interface ProyectoPDAO extends DaoGenerico<ProyectoP> {
 
 	ProyectoP buscarProyecto(Integer idProy) throws Exception;
 
-	List<ProyectoDTO> listProyectoPlanificacion(String cedula) throws SQLException;
-
 	List<ProyectoP> findproyectosActivos(String coddep, String nombre, String cedula);
 
 	String findDirectorXProyecto(Integer idProyecto);
+
+	List<ProyectoDTO> listProyectoPlanificacion(String cedula, Integer idPensum) throws SQLException;
 	
 	
 }

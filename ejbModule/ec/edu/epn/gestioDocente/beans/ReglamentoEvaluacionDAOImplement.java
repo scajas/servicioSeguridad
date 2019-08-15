@@ -15,13 +15,10 @@ import javax.ejb.Stateless;
 import javax.persistence.Query;
 import javax.sql.DataSource;
 
-import org.apache.poi.hssf.record.aggregates.MergedCellsTable;
-
 import ec.edu.epn.generic.DAO.DaoGenericoImplement;
 import ec.edu.epn.gestionDocente.DTO.CatalogoActividadesDTO;
 import ec.edu.epn.gestionDocente.DTO.ReglamentoEvalDTO;
 import ec.edu.epn.gestionDocente.entities.ReglamentoEvaluacion;
-import ec.edu.epn.rrhh.DTO.DocenteDTO;
 
 /**
  * Session Bean implementation class ActividadDocenciaDAOImplement
@@ -36,13 +33,14 @@ public class ReglamentoEvaluacionDAOImplement extends DaoGenericoImplement<Regla
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<CatalogoActividadesDTO> listReglamentoActvXTipo(Integer tipoActvEval) throws Exception {
+	public List<CatalogoActividadesDTO> listReglamentoActvXTipo(Integer tipoActvEval, String estado) throws Exception {
 		List<CatalogoActividadesDTO> listCatalogo = new ArrayList<CatalogoActividadesDTO>();
 		List<ReglamentoEvaluacion> listReglamento = new ArrayList<ReglamentoEvaluacion>();
 		Query q = getEntityManager().createQuery(
-				"SELECT r FROM ReglamentoEvaluacion r WHERE r.idTipoActvEval= ? ORDER BY idReglamentoEvaluacion");
+				"SELECT r FROM ReglamentoEvaluacion r WHERE r.idTipoActvEval= ? AND estado= ? ORDER BY idReglamentoEvaluacion");
 
 		q.setParameter(1, tipoActvEval);
+		q.setParameter(2, estado);
 
 		listReglamento = q.getResultList();
 
