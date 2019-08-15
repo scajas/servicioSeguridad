@@ -84,7 +84,8 @@ public class HistoriaLaboral implements Serializable {
 	private List<Docadjunto> docadjuntos;
 
 	//bi-directional many-to-one association to AccionP
-	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@ManyToOne(fetch=FetchType.EAGER, cascade={CascadeType.PERSIST, CascadeType.MERGE, 
+			CascadeType.REFRESH, CascadeType.DETACH})
 	@JoinColumns({
 		@JoinColumn(name="fecha_ini", referencedColumnName="fecha_ini"),
 		@JoinColumn(name="id_accionp", referencedColumnName="id_accionp")

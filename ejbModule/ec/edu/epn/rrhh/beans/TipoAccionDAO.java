@@ -10,11 +10,13 @@ import ec.edu.epn.rrhh.movimientos.TipoAccion;
 
 @Remote
 public interface TipoAccionDAO extends DaoGenerico<TipoAccion> {
-	//Nuevo m�todo
+	
+	
 	public SubtipoAccion findSubTipoAccionPorNombre(String nombreSubTipoAccion);
 	
 	public int findIdSubTipoAccionPorNombre(String nombreSubTipoAccion);
 
 	public List<TipoAccion> findSubTipoAccionPorAccion(String nombreAccion);
-
+	
+	public List<TipoAccion> getAccionesFiltrables();
 }

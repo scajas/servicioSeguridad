@@ -254,6 +254,9 @@ public class Emp implements Serializable {
 
 	private String voto;
 	
+	//bi-directional many-to-one association to RiesgosLaborale
+	@OneToMany(mappedBy="emp")
+	private List<RiesgosLaborale> riesgosLaborales;
 	
 	private String recategoriza;
 	private Date fecharecate;
@@ -1709,6 +1712,28 @@ public class Emp implements Serializable {
 	 */
 	public void setPasaporteExtranjero(String pasaporteExtranjero) {
 		this.pasaporteExtranjero = pasaporteExtranjero;
+	}
+	
+	public List<RiesgosLaborale> getRiesgosLaborales() {
+		return this.riesgosLaborales;
+	}
+
+	public void setRiesgosLaborales(List<RiesgosLaborale> riesgosLaborales) {
+		this.riesgosLaborales = riesgosLaborales;
+	}
+
+	public RiesgosLaborale addRiesgosLaborale(RiesgosLaborale riesgosLaborale) {
+		getRiesgosLaborales().add(riesgosLaborale);
+		riesgosLaborale.setEmp(this);
+
+		return riesgosLaborale;
+	}
+
+	public RiesgosLaborale removeRiesgosLaborale(RiesgosLaborale riesgosLaborale) {
+		getRiesgosLaborales().remove(riesgosLaborale);
+		riesgosLaborale.setEmp(null);
+
+		return riesgosLaborale;
 	}
 
 }

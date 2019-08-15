@@ -23,4 +23,6 @@ public interface SubTipoAccionDAO extends DaoGenerico<SubtipoAccion> {
 	public SubtipoAccion findSubTipoAccionPorNombreYTipo(String nombreSubTipoAccion, String tipoAccion);
 	
 	public List<SubtipoAccion> findAccionesAdministrablesPlantilla();
+	
+	
 }
