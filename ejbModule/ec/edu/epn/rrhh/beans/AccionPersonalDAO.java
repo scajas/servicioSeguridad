@@ -8,7 +8,8 @@ import ec.edu.epn.rrhh.movimientos.AccionP;
 
 @Remote
 public interface AccionPersonalDAO extends DaoGenerico<AccionP> {
-
+	
+	
 	Integer getMaxID();
 
 	

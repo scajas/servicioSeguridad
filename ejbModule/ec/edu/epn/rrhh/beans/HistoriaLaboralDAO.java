@@ -129,7 +129,7 @@ public interface HistoriaLaboralDAO extends DaoGenerico<HistoriaLaboral> {
 
 	public List<HistoriaLaboral> findHistorias(Date inicio, Date ffinal, String nombreDependencia,
 			String nombreDependenciaDesignacion, String nombreCargo, String claseEmpleado, String nombreDesignacion,
-			Emp empleado, boolean isFullReport);
+			Emp empleado, boolean isFullReport, int [] filtersAcciones);
 
 	public List<HistoriaLaboral> findHistorias(Date inicio, Date ffinal);
 
