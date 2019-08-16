@@ -145,6 +145,8 @@ public interface HistoriaLaboralDAO extends DaoGenerico<HistoriaLaboral> {
 	public List<HistoriaLaboral> getDesignacionesMultiplesByEmp(Emp emp);
 
 	public List<HistoriaLaboral> findContByEmp(Emp emp);
+	
+	public List<HistoriaLaboral> findContratosVencidosByEmp(Emp emp);
 
 	public HistoriaLaboral findHistoriaActualizacionByEmp(Emp emp);
 

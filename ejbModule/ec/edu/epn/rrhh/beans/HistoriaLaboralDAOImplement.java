@@ -2133,6 +2133,27 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 	}
 
 	@Override
+	public List<HistoriaLaboral> findContratosVencidosByEmp(Emp emp){
+		StringBuilder queryString = new StringBuilder(
+				"SELECT " + "fam FROM HistoriaLaboral fam where fam.emp.nced =?1 "
+						+ " and fam.accionP is null "
+						+ " and (fam.fechaPrevistaFin < ?2 ) "
+						+ " and (fam.id.estado != 'Anulado' or fam.id.estado != 'Insubsistente' "
+						+ " and fam.id.estado != 'Duplicado' )"
+						//+ "and fam.id.estado not in ('Anulado','Insubsistente', 'Duplicado')"
+						+ " order by fam.fechaRige desc ");
+
+		Query query = getEntityManager().createQuery(queryString.toString());
+
+		query.setParameter(1, emp.getNced());
+		query.setParameter(2, new Date());
+		List<HistoriaLaboral> resultado = query.getResultList();
+
+		return resultado;
+	}
+	
+	
+	@Override
 	public HistoriaLaboral findLastContByEmpActivo(Emp emp) {
 		HistoriaLaboral ultimoContrato = null;
 		StringBuilder queryString = new StringBuilder("SELECT " + "fam FROM HistoriaLaboral fam where "
