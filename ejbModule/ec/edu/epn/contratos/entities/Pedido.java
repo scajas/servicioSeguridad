@@ -3,6 +3,7 @@ package ec.edu.epn.contratos.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import ec.edu.epn.gestionDocente.entities.PreplanificacionDocencia;
 import ec.edu.epn.seguridad.vo.Usuario;
 
 import java.util.Date;
@@ -21,15 +22,26 @@ public class Pedido implements Serializable {
 	@Id
 	@Column(name = "id_pedido")
 	private Integer idPedido;
-	
+
 	@Column(name = "resolucion339")
 	private String resolucion339;
-	
+
 	@Column(name = "justificacion_devolucion")
 	private String obsDevolucion;
-	
+
 	@Column(name = "adenda")
 	private String adenda;
+
+	@OneToOne(mappedBy = "pedido")
+	private PreplanificacionDocencia prePlanifDocencia;
+
+	public PreplanificacionDocencia getPrePlanifDocencia() {
+		return prePlanifDocencia;
+	}
+
+	public void setPrePlanifDocencia(PreplanificacionDocencia prePlanifDocencia) {
+		this.prePlanifDocencia = prePlanifDocencia;
+	}
 
 	public String getAdenda() {
 		return adenda;
@@ -90,6 +102,13 @@ public class Pedido implements Serializable {
 	@Column(name = "fecha_fin")
 	private Date fechaFin;
 
+	@Column(name = "continuidad")
+	private String continuidad;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "fecha_continuidad")
+	private Date fechaContinuidad;
+
 	@Temporal(TemporalType.DATE)
 	@Column(name = "fecha_genera_contrato")
 	private Date fechaGeneraContrato;
@@ -121,10 +140,9 @@ public class Pedido implements Serializable {
 
 	@Column(name = "id_facultad")
 	private String idFacultad;
-	
+
 	@Column(name = "cod_dep")
 	private String codDep;
-	
 
 	/*
 	 * @Column(name="id_pensum") private Integer idPensum;
@@ -153,8 +171,9 @@ public class Pedido implements Serializable {
 
 	private String informe;
 
-	/*@Column(name = "monto_partida")
-	private double montoPartida;*/
+	/*
+	 * @Column(name = "monto_partida") private double montoPartida;
+	 */
 
 	@Column(name = "nacionalidad_docente")
 	private String nacionalidadDocente;
@@ -174,8 +193,6 @@ public class Pedido implements Serializable {
 	private String observacionrevision;
 
 	private String observacionverificado;
-	
-	
 
 	@Column(name = "path_archivo")
 	private String pathArchivo;
@@ -211,8 +228,6 @@ public class Pedido implements Serializable {
 	// bi-directional many-to-one association to CargaAcademica
 	@OneToMany(mappedBy = "pedido")
 	private List<CargaAcademica> cargaAcademicas;
-
-	
 
 	// bi-directional many-to-one association to Estado
 	@ManyToOne
@@ -424,8 +439,7 @@ public class Pedido implements Serializable {
 	/*
 	 * public Integer getIdUsuario() { return this.idUsuario; }
 	 * 
-	 * public void setIdUsuario(Integer idUsuario) { this.idUsuario = idUsuario;
-	 * }
+	 * public void setIdUsuario(Integer idUsuario) { this.idUsuario = idUsuario; }
 	 */
 
 	public Integer getIdUsuarioRevisor1() {
@@ -452,13 +466,12 @@ public class Pedido implements Serializable {
 		this.informe = informe;
 	}
 
-	/*public double getMontoPartida() {
-		return this.montoPartida;
-	}
-
-	public void setMontoPartida(double montoPartida) {
-		this.montoPartida = montoPartida;
-	}*/
+	/*
+	 * public double getMontoPartida() { return this.montoPartida; }
+	 * 
+	 * public void setMontoPartida(double montoPartida) { this.montoPartida =
+	 * montoPartida; }
+	 */
 
 	public String getNacionalidadDocente() {
 		return this.nacionalidadDocente;
@@ -656,11 +669,6 @@ public class Pedido implements Serializable {
 		return cargaAcademica;
 	}
 
-	
-
-
-	
-
 	public Estado getEstado() {
 		return this.estado;
 	}
@@ -734,13 +742,29 @@ public class Pedido implements Serializable {
 	public void setCodDep(String codDep) {
 		this.codDep = codDep;
 	}
-	
+
 	public String getResolucion339() {
 		return resolucion339;
 	}
 
 	public void setResolucion339(String resolucion339) {
 		this.resolucion339 = resolucion339;
+	}
+
+	public String getContinuidad() {
+		return continuidad;
+	}
+
+	public void setContinuidad(String continuidad) {
+		this.continuidad = continuidad;
+	}
+
+	public Date getFechaContinuidad() {
+		return fechaContinuidad;
+	}
+
+	public void setFechaContinuidad(Date fechaContinuidad) {
+		this.fechaContinuidad = fechaContinuidad;
 	}
 
 }

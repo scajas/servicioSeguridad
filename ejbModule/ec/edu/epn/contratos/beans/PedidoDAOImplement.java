@@ -508,19 +508,17 @@ public class PedidoDAOImplement extends DaoGenericoImplement<Pedido> implements 
 			 * 
 			 * queryString.append(" ORDER BY ped.fechaPedido ASC");
 			 * 
-			 * Query query =
-			 * getEntityManager().createQuery(queryString.toString());
+			 * Query query = getEntityManager().createQuery(queryString.toString());
 			 * 
-			 * if (nombre != null && !nombre.equals("")) { query.setParameter(5,
-			 * "%" + nombre + "%"); }
+			 * if (nombre != null && !nombre.equals("")) { query.setParameter(5, "%" +
+			 * nombre + "%"); }
 			 * 
-			 * if (cedula != null && !cedula.equals("")) { query.setParameter(6,
-			 * cedula); }
+			 * if (cedula != null && !cedula.equals("")) { query.setParameter(6, cedula); }
 			 * 
-			 * query.setParameter(1, "%" + idFacultad + "%");
-			 * query.setParameter(2, idPensum); query.setParameter(3, 2);
-			 * query.setParameter(4, "%TIEMPO COMPLETO%"); query.setParameter(7,
-			 * idPensum); query.setParameter(8, "%" + idFacultad + "%");
+			 * query.setParameter(1, "%" + idFacultad + "%"); query.setParameter(2,
+			 * idPensum); query.setParameter(3, 2); query.setParameter(4,
+			 * "%TIEMPO COMPLETO%"); query.setParameter(7, idPensum); query.setParameter(8,
+			 * "%" + idFacultad + "%");
 			 */
 			// return query.getResultList();
 
@@ -604,8 +602,7 @@ public class PedidoDAOImplement extends DaoGenericoImplement<Pedido> implements 
 			queryString.append(" and ped.nombresDocente like ?3 ");
 		}
 		Query q = getEntityManager().createQuery(queryString.toString());
-		
-		
+
 		if (idFacultad != null && !idFacultad.equals("")) {
 			q.setParameter(1, "%" + idFacultad + "%");
 		}
@@ -783,7 +780,7 @@ public class PedidoDAOImplement extends DaoGenericoImplement<Pedido> implements 
 		}
 
 		if (!perfilDecano.equals("Revisor 1 Talento Humano") && !perfilDecano.equals("Revisor 2 Talento Humano")
-				&& !perfilDecano.equals("Supervisor Talento Humano")&& !perfilDecano.equals("Control Contratos"))
+				&& !perfilDecano.equals("Supervisor Talento Humano") && !perfilDecano.equals("Control Contratos"))
 			if (!id_facultad.equals("")) {
 				queryString.append(" and ped.usuario.facultad.idFacultad = ?5 ");
 			}
@@ -828,7 +825,7 @@ public class PedidoDAOImplement extends DaoGenericoImplement<Pedido> implements 
 		}
 
 		if (!perfilDecano.equals("Revisor 1 Talento Humano") && !perfilDecano.equals("Revisor 2 Talento Humano")
-				&& !perfilDecano.equals("Supervisor Talento Humano")&& !perfilDecano.equals("Control Contratos"))
+				&& !perfilDecano.equals("Supervisor Talento Humano") && !perfilDecano.equals("Control Contratos"))
 			if (!id_facultad.equals("")) {
 				query.setParameter(5, id_facultad);
 			}
