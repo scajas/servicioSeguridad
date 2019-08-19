@@ -131,18 +131,64 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 	}
 	
 	@Override
-	public List<Emp> listaEmpleadonoContrato() {
-		StringBuilder queryString = new StringBuilder("SELECT e FROM Emp e where e.estemp = '1' "
+	public List<Emp> listaEmpleadonoContrato(int firstResult, int maxResults) {
+		StringBuilder queryString = new StringBuilder("SELECT e FROM Emp e where (e.estemp = '1') "
+				+ "and e.nced in (SELECT h.emp.nced FROM HistoriaLaboral h where h.accionP is null and h.fechaFin<now() and "
+				+ "h.fechaRige = (Select max(hl.fechaRige) from HistoriaLaboral hl where h.emp.nced = hl.emp.nced ) "
+				+ "and h.id.fechaI = (Select max(t.id.fechaI) "
+				+ "from HistoriaLaboral t where t.id.idHist=h.id.idHist and h.emp.nced = t.emp.nced ) "
+				+ "and h.id.idHist not in (Select g.id.idHist FROM HistoriaLaboral g where "
+				+ " (trim(g.id.estado) = 'Duplicado' or trim(g.id.estado) = 'Anulado' or "
+				+ " trim(g.id.estado) = 'Insubsistente' ) and h.emp.nced = g.emp.nced)) ");
+		Query query = getEntityManager().createQuery(queryString.toString());
+		if (firstResult > 0) {
+			query.setFirstResult(firstResult);
+		}
+
+		if (maxResults > 0) {
+			query.setMaxResults(maxResults);
+		}
+		return query.getResultList();
+	}
+	
+	@Override
+	public List<Emp> findEmpsByCedula(String nced, int firstResult, int maxResults){
+		StringBuilder queryString = new StringBuilder("SELECT e FROM Emp e where (e.estemp = '1') "
 				+ "and e.nced in (SELECT h.emp.nced FROM HistoriaLaboral h where h.accionP is null and h.fechaFin<now() and "
 				+ "h.fechaRige = (Select max(hl.fechaRige) from HistoriaLaboral hl where h.emp.nced = hl.emp.nced )"
 				+ "and h.id.fechaI = (Select max(t.id.fechaI) "
-				+ "from HistoriaLaboral t where t.id.idHist=h.id.idHist) "
+				+ "from HistoriaLaboral t where t.id.idHist=h.id.idHist and h.emp.nced = t.emp.nced ) "
 				+ "and h.id.idHist not in (Select g.id.idHist FROM HistoriaLaboral g where "
 				+ " (trim(g.id.estado) = 'Duplicado' or trim(g.id.estado) = 'Anulado' or "
-				+ " trim(g.id.estado) = 'Insubsistente' ))) ");
-		Query query = getEntityManager().createQuery(queryString.toString());
+				+ " trim(g.id.estado) = 'Insubsistente' ) and h.emp.nced = g.emp.nced)) and  e.nced like :cedula ");
+		Query query = getEntityManager().createQuery(queryString.toString());	
+		query.setParameter("cedula", nced);
+		
+		if (firstResult > 0) {
+			query.setFirstResult(firstResult);
+		}
+
+		if (maxResults > 0) {
+			query.setMaxResults(maxResults);
+		}
 		return query.getResultList();
 	}
+	
+	
+	@Override
+	public long getCountEmpContrato() {
+		StringBuilder queryString = new StringBuilder("SELECT count(e) FROM Emp e where (e.estemp = '1')"
+				+ "and e.nced in (SELECT h.emp.nced FROM HistoriaLaboral h where h.accionP is null and h.fechaFin<now() and "
+				+ "h.fechaRige = (Select max(hl.fechaRige) from HistoriaLaboral hl where h.emp.nced = hl.emp.nced ) "
+				+ "and h.id.fechaI = (Select max(t.id.fechaI) "
+				+ "from HistoriaLaboral t where t.id.idHist=h.id.idHist and h.emp.nced = t.emp.nced ) "
+				+ "and h.id.idHist not in (Select g.id.idHist FROM HistoriaLaboral g where "
+				+ " (trim(g.id.estado) = 'Duplicado' or trim(g.id.estado) = 'Anulado' or "
+				+ " trim(g.id.estado) = 'Insubsistente' ) and h.emp.nced = g.emp.nced)) ");
+		Query query = getEntityManager().createQuery(queryString.toString());
+		return (long) query.getSingleResult();
+	}
+	
 
 	@SuppressWarnings("unchecked")
 	@Override
