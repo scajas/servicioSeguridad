@@ -338,7 +338,7 @@ public class PublicacionesDAOImplement extends DaoGenericoImplement<Publicacione
 
 		StringBuilder queryString = new StringBuilder("SELECT DISTINCT(p) FROM Publicacione p, Emp e, "
 				+ " EmpleadoPublica ep where p.idPublic = ep.pub.idPublic  and e.nced = ep.emp.nced "
-				+ " and ep.emp.nced IN:list  " );
+				+ " and ep.emp.nced IN:list  ");
 
 		if (tipoPublic != null) {
 			queryString.append(" and p.tipoPublicacion.idTipoPublic = ?2 ");
@@ -355,17 +355,14 @@ public class PublicacionesDAOImplement extends DaoGenericoImplement<Publicacione
 		if (titulo != null) {
 			queryString.append(" and p.tituloPublic = ?5 ");
 		}
-		
-		
-		queryString.append(" and p.catalogo != 'SCOPUS' ");
-		
-		
-		
-		
+
+		if (tipoPublic.equals("1")) {
+
+			queryString.append(" and p.catalogo != 'SCOPUS' ");
+		}
 
 		Query query = getEntityManager().createQuery(queryString.toString());
-		
-		
+
 		query.setParameter("list", cedulas);
 
 		if (tipoPublic != null) {
@@ -407,8 +404,8 @@ public class PublicacionesDAOImplement extends DaoGenericoImplement<Publicacione
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Publicacione> listaPublicacionesXProyectoPonencia(List<String> cedulas, String tipoPublic, Integer idpensum,
-			Integer idproyecto, String titulo) {
+	public List<Publicacione> listaPublicacionesXProyectoPonencia(List<String> cedulas, String tipoPublic,
+			Integer idpensum, Integer idproyecto, String titulo) {
 
 		StringBuilder queryString = new StringBuilder(
 				"SELECT DISTINCT(p) FROM Publicacione p " + " where p.nced IN:list ");

@@ -71,10 +71,10 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 		query.setParameter(0, "%" + cedula + "%");
 
 		if (apellidos != null) {
-			query.setParameter(1, "%" + apellidos + "%");
+			query.setParameter(1, "%" + apellidos.toUpperCase() + "%");
 		}
 		if (nombre != null) {
-			query.setParameter(2, "%" + nombre + "%");
+			query.setParameter(2, "%" + nombre.toUpperCase() + "%");
 		}
 		query.setMaxResults(1000);
 
