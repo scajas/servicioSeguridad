@@ -95,8 +95,8 @@ public class DependenciaDAOImplement extends DaoGenericoImplement<Dependencia> i
 	@Override
 	public List<Dependencia> findDependenciaAcademica() {
 		StringBuilder queryString = new StringBuilder("SELECT fam FROM Dependencia fam where "
-				+ "fam.nomDep like '%DEP%'  "
-				+ "and fam.tipo='DEP'");
+				+ "(fam.nomDep like '%DEP%' or fam.nomDep like '%ESCUELA%') "
+				+ "and fam.tipo='DEP' and fam.estado='ACTIVO'");
 
 		Query query = getEntityManager().createQuery(queryString.toString());
 		List<Dependencia> resultado = query.getResultList();

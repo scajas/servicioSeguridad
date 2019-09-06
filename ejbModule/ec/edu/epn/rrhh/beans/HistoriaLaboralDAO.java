@@ -245,4 +245,6 @@ public interface HistoriaLaboralDAO extends DaoGenerico<HistoriaLaboral> {
 
 	public HistoriaLaboral findCurrentHistoriaLaboralByEstadoActivoEmp(Emp emp);
 
+	public Integer findHistoriaNumberByTipoAccion(String subtipoAccion);
+
 }
