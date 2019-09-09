@@ -132,11 +132,14 @@ public interface EmpleadoDAO extends DaoGenerico<Emp> {
 	
 	List<Emp> findEmpsByCedula(String nced, int firstResult, int maxResults);
 
-/*	List<Emp> buscarempActualizar() throws Exception;
+	List<DocenteDTO> buscarEmpHistoriaLab(String nced, Integer idPensum, String apel, String nom, String dep)
+			throws Exception;
 
-	List<Emp> buscarempActualizarDatos() throws Exception;*/
+	List<DocenteDTO> presentarCargoDedicacionRelLab(Integer idPensum, String nced, String apel, String nom, String dep)
+			throws Exception;
 
+	List<Emp> listaEmpleadonoContrato();
 	
-
-
 }
+
+

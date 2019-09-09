@@ -1,5 +1,6 @@
 package ec.edu.epn.atencionmedica.beans;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -29,15 +30,15 @@ public class InsumoMedicoDAOImplement extends DaoGenericoImplement<Insumomedico>
 		if (criterio.isEmpty() || criterio.equals("") || criterio.equals(" ") || criterio.equals("0")) { // criterio=
 																											// ""
 
-			q = "SELECT ins FROM Insumomedico ins WHERE ins.esodontIns = false";
+			q = "SELECT ins FROM Insumomedico ins WHERE ins.esodontIns = false AND ins.fechaIngreso>'2018-12-31'";
 			q = q + " order by ins.nombreIsm";
 
 			queryString = new StringBuilder(q);
 			query = getEntityManager().createQuery(queryString.toString());
 
-		} else { // criterio = xxx
+		} else { 
 
-			q = "SELECT ins FROM Insumomedico ins " + " WHERE ins.nombreIsm like ?0 AND ins.esodontIns = false";
+			q = "SELECT ins FROM Insumomedico ins " + " WHERE ins.nombreIsm like ?0 AND ins.esodontIns = false AND ins.fechaIngreso>'2018-12-31'";
 			queryString = new StringBuilder(q);
 			query = getEntityManager().createQuery(queryString.toString());
 			query.setParameter(0, "%" + criterio.trim() + "%");
@@ -55,6 +56,7 @@ public class InsumoMedicoDAOImplement extends DaoGenericoImplement<Insumomedico>
 	@Override
 	public Insumomedico obtenerInsumomedico(String criterio) {
 		Insumomedico i = null;
+		List<Insumomedico> listInv = new ArrayList<Insumomedico>();
 
 		if (!criterio.isEmpty() && !criterio.equals("") && !criterio.equals(" ") && !criterio.equals("0")) { // criterio=
 
@@ -73,7 +75,11 @@ public class InsumoMedicoDAOImplement extends DaoGenericoImplement<Insumomedico>
 			}
 
 			try {
-				i = (Insumomedico) query.getSingleResult();
+				listInv =  query.getResultList();
+				if(!listInv.isEmpty()){
+					i= listInv.get(0);
+				}
+				
 				System.out.println(
 						"=============================INSUMO: =====" + i.getIdInsumomed() + " " + i.getNombreIsm());
 			} catch (NoResultException e) {
@@ -81,7 +87,10 @@ public class InsumoMedicoDAOImplement extends DaoGenericoImplement<Insumomedico>
 				i = null;
 			} catch (NonUniqueResultException e) {
 				System.out.println("==================MAS DE UN OBJETO ENCONTRADO: =====" + criterio);
-				i = (Insumomedico) query.getSingleResult();
+				listInv =  query.getResultList();
+				if(!listInv.isEmpty()){
+					i= listInv.get(0);
+				}
 			} catch (Exception e) {
 				i = null;
 				System.out.println("=============================INSUMO: =====" + i);
@@ -184,6 +193,45 @@ public class InsumoMedicoDAOImplement extends DaoGenericoImplement<Insumomedico>
 		}
 
 		return i;
+	}
+	
+	
+	@Override
+	public List<Insumomedico> obtenerListaInsumosEnfMed(String criterio, Integer opcion) {
+
+		if (criterio.isEmpty() || criterio.equals("") || criterio.equals(" ") || criterio.equals("0")) { // criterio=
+																											// ""
+
+			q = "SELECT ins FROM Insumomedico ins WHERE ins.esodontIns = false AND ins.tipoInsumo= ?0 AND ins.estado= 'S' AND ins.fechaIngreso>'2018-12-31'";
+			q = q + " order by ins.nombreIsm";
+
+			queryString = new StringBuilder(q);
+			query = getEntityManager().createQuery(queryString.toString());
+			query.setParameter(0, opcion);
+
+		} else { // criterio = xxx
+
+			q = "SELECT ins FROM Insumomedico ins " + " WHERE ins.nombreIsm like ?0 AND ins.tipoInsumo= ?1 AND ins.esodontIns = false AND ins.estado= 'S' AND ins.fechaIngreso>'2018-12-31'";
+			queryString = new StringBuilder(q);
+			query = getEntityManager().createQuery(queryString.toString());
+			query.setParameter(0, "%" + criterio.trim() + "%");
+			query.setParameter(1, opcion);
+
+		}
+
+		return query.getResultList();
+	}
+	
+	
+	
+	@Override
+	public Long countInsumosMedDesc() {																
+
+			q = "SELECT COUNT(ins) FROM Insumomedico ins WHERE ins.cantidadactualIsm < ins.cantidadreordenIsm AND ins.estado= 'S' AND ins.fechaIngreso>'2018-12-31'";
+			queryString = new StringBuilder(q);
+			query = getEntityManager().createQuery(queryString.toString());
+		
+		return (Long) query.getSingleResult();
 	}
 
 }

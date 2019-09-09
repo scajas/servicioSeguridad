@@ -23,7 +23,7 @@ public class ConsultaReportesDAOImplement extends DaoGenericoImplement<Reporte2>
 
 	private static final String TIPO_QUERY_NATIVE = "NATIVE";
 	private static final String TIPO_QUERY_TYPED = "TYPED";
-	private static final String TIPO_QUERY_NAMED = "NAMED";
+	//private static final String TIPO_QUERY_NAMED = "NAMED";
 	private static final String TIPO_QUERY_CON_RANGO = "TIPO_QUERY_CON_RANGO";
 	private static final String TIPO_QUERY_SIN_RANGO = "TIPO_QUERY_SIN_RANGO";
 	
@@ -37,8 +37,8 @@ public class ConsultaReportesDAOImplement extends DaoGenericoImplement<Reporte2>
 		String rangoNombreQuery = "";
 		DateFormat format1=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		DateFormat format2=new SimpleDateFormat("yyyy-MM-dd");
-		DateFormat format3=new SimpleDateFormat("HH:mm:ss");
-		DateFormat format4=new SimpleDateFormat("dd/MM/yyyy");
+		//DateFormat format3=new SimpleDateFormat("HH:mm:ss");
+		//DateFormat format4=new SimpleDateFormat("dd/MM/yyyy");
 		
 		Date fechaCorte;
 		

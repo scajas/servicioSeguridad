@@ -48,7 +48,12 @@ public class EvaluacionAcademica implements Serializable {
 	@Column(name="nced_dir")
 	private String ncedDir;
 	
-
+	
+	/*@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="estado", insertable = false, updatable = false)
+	private EstadoEvaluacion estadoEvaluacion;*/
+	
+	
 
 	@Column(name="val_final_auto")
 	private double valFinalAuto;
@@ -106,6 +111,18 @@ public class EvaluacionAcademica implements Serializable {
 	
 	@Column(name="hrs_planif_total")
 	private Double hrsPlanifTotal;
+	
+	
+	@Column(name="calf_ponderada_doc")
+	private Double calfPonderadaDoc;
+	
+	@Column(name="calf_ponderada_inv")
+	private Double calfPonderadaInv;
+	
+	@Column(name="calf_ponderada_gest")
+	private Double calfPonderadaGest;
+	
+
 	
 	 
 	
@@ -413,7 +430,49 @@ public class EvaluacionAcademica implements Serializable {
 		this.hrsPlanifTotal = hrsPlanifTotal;
 	}
 
-	
+	/**
+	 * @return the calfPonderadaDoc
+	 */
+	public Double getCalfPonderadaDoc() {
+		return calfPonderadaDoc;
+	}
+
+	/**
+	 * @return the calfPonderadaInv
+	 */
+	public Double getCalfPonderadaInv() {
+		return calfPonderadaInv;
+	}
+
+	/**
+	 * @return the calfPonderadaGest
+	 */
+	public Double getCalfPonderadaGest() {
+		return calfPonderadaGest;
+	}
+
+	/**
+	 * @param calfPonderadaDoc the calfPonderadaDoc to set
+	 */
+	public void setCalfPonderadaDoc(Double calfPonderadaDoc) {
+		this.calfPonderadaDoc = calfPonderadaDoc;
+	}
+
+	/**
+	 * @param calfPonderadaInv the calfPonderadaInv to set
+	 */
+	public void setCalfPonderadaInv(Double calfPonderadaInv) {
+		this.calfPonderadaInv = calfPonderadaInv;
+	}
+
+	/**
+	 * @param calfPonderadaGest the calfPonderadaGest to set
+	 */
+	public void setCalfPonderadaGest(Double calfPonderadaGest) {
+		this.calfPonderadaGest = calfPonderadaGest;
+	}
+
+
 
 	
 

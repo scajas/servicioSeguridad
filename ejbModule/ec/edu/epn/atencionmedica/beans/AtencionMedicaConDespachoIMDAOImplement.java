@@ -1,8 +1,13 @@
 package ec.edu.epn.atencionmedica.beans;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -78,6 +83,33 @@ public class AtencionMedicaConDespachoIMDAOImplement extends DaoGenericoImplemen
 
 		return listaAtencionesEncontradas;
 	}
+	
+	
+	@Override
+	public List<Movimientoinventario> obtenerListaDespachosPendientesXFecha(Date fechaInicio, Date fechaFinal) {
+		List<Movimientoinventario> listaAtencionesEncontradas = new ArrayList<Movimientoinventario>();
+		
+		Calendar calendar = Calendar.getInstance();
+	    calendar.setTime(fechaFinal); 
+	    calendar.add(Calendar.DAY_OF_YEAR, 1);  
+	    fechaFinal= calendar.getTime();
+				
+		q = "SELECT distinct m from Movimientoinventario m "
+				+ " WHERE m.catalogotipoestadomov.idCatalogo = 27 "
+				+ " and (m.catalogotipomovinventario.idCatalogo = 25 or m.catalogotipomovinventario.idCatalogo = 26) "
+				+ " and fechahoraMov BETWEEN  ?0 AND  ?1 "
+				+ " order by m asc ";
+		
+		queryString = new StringBuilder(q);
+		query = getEntityManager().createQuery(queryString.toString());	
+		query.setParameter(0, new Timestamp(fechaInicio.getTime()));
+		query.setParameter(1, new Timestamp(fechaFinal.getTime()));
+
+		listaAtencionesEncontradas = query.getResultList();
+
+
+		return listaAtencionesEncontradas;
+	}
 
 	@Override
 	public boolean guardarAtencionMedicaConMovimientosInventarioLista(List<Movimientoinventario> listMovimentosInventario, Atencionmedica atencion) {
@@ -119,10 +151,15 @@ public class AtencionMedicaConDespachoIMDAOImplement extends DaoGenericoImplemen
 	public List<Movimientoinventario> obtenerListaDespachosEjecutados(Integer idMedico, Date fechaDesde, Date fechaHasta) throws Exception{
 		DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-DD");
 		
+		Calendar calendar = Calendar.getInstance();
+	    calendar.setTime(fechaHasta); 
+	    calendar.add(Calendar.DAY_OF_YEAR, 1);  
+	    fechaHasta= calendar.getTime();
+		
 		q = "SELECT distinct m from Movimientoinventario m "
 				+ " WHERE m.catalogotipoestadomov.idCatalogo = 28 "
-				+ " AND (m.catalogotipomovinventario.idCatalogo = 25 or m.catalogotipomovinventario.idCatalogo = 26) ";
-				//+ " AND m.fechahoraMov BETWEEN ?0 AND ?1 ";
+				+ " AND (m.catalogotipomovinventario.idCatalogo = 25 or m.catalogotipomovinventario.idCatalogo = 26) "
+				+ " AND m.fechahoraMov BETWEEN ?0 AND ?1 ";
 		
 		
 		if(idMedico!=0){
@@ -134,8 +171,8 @@ public class AtencionMedicaConDespachoIMDAOImplement extends DaoGenericoImplemen
 		
 		queryString = new StringBuilder(q);
 		query = getEntityManager().createQuery(queryString.toString());
-		//query.setParameter(0, dateFormat.parse(dateFormat.format(fechaDesde)));
-		//query.setParameter(1, dateFormat.parse(dateFormat.format(fechaHasta)));
+		query.setParameter(0, new Timestamp(fechaDesde.getTime()));
+		query.setParameter(1, new Timestamp(fechaHasta.getTime()));		
 		
 		if(idMedico!=0){
 			query.setParameter(2, idMedico);

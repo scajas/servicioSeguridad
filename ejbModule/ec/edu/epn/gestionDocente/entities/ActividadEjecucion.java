@@ -85,7 +85,8 @@ public class ActividadEjecucion implements Serializable {
 	@Column(name="id_actv_eval")
 	private Integer idActvEvaluacion;
 	
-	
+/*	@Column(name="semestre_acad")
+	private Double semestreAcad;*/
 
 	@ManyToOne
 	@JoinColumn(name="id_catalogo_actividad")
@@ -422,7 +423,6 @@ public class ActividadEjecucion implements Serializable {
 		this.idActvEvaluacion = idActvEvaluacion;
 	}
 
-	
 	
 	
 }

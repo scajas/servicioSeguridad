@@ -38,5 +38,6 @@ public interface AtencionMedicaDAO {
 	
 	public List<Atencionmedica> obtenerListaProcedimientos(String criterio);
 	Atencionmedica obtenerAtencionMedicaPaciente(Integer idPaciente);
+	List<Atencionmedica> obtenerListaAtencionesXMovimientos(String criterio);
 		
 }

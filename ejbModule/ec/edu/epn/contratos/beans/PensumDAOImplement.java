@@ -71,7 +71,7 @@ public class PensumDAOImplement extends DaoGenericoImplement<Pensum> implements 
 	 * 
 	 * @param orden
 	 *            - string para escribir el orden que quiere desplegar la lista
-	 *            : asc ó desc
+	 *            : asc Ã³ desc
 	 * @return lista de entidades por el orden enviado
 	 */
 	@SuppressWarnings("unchecked")
@@ -79,7 +79,7 @@ public class PensumDAOImplement extends DaoGenericoImplement<Pensum> implements 
 	public List<Pensum> listaPensum(String orden) {
 		StringBuilder sbQuery = new StringBuilder();
 		sbQuery.append(" SELECT pen FROM Pensum pen ");
-		sbQuery.append(" ORDER BY CONCAT(pen.añoPensum, '-' ,pen.numeroPensum) ");
+		sbQuery.append(" ORDER BY CONCAT(pen.aÃ±oPensum, '-' ,pen.numeroPensum) ");
 		sbQuery.append(orden);
 		Query q = getEntityManager().createQuery(sbQuery.toString());
 		return q.getResultList();
@@ -106,12 +106,16 @@ public class PensumDAOImplement extends DaoGenericoImplement<Pensum> implements 
 
 		} else if (tipoEvaluacion.equals("COEVAL")) {
 			sbQuery.append(" WHERE pen.fechaCoe>= ?");
+			
+		} else if (tipoEvaluacion.equals("PREPLANIF")) {
+			sbQuery.append(" WHERE pen.fechaPreplanif>= ?");
 		}
+		
 
-		// sbQuery.append(" ORDER BY CONCAT(CAST(pen.añoPensum AS integer), '-'
+		// sbQuery.append(" ORDER BY CONCAT(CAST(pen.aÃ±oPensum AS integer), '-'
 		// ,CAST(pen.numeroPensum AS integer)) ");
 		// sbQuery.append("DESC");
-		sbQuery.append(" ORDER BY pen.añoPensum DESC ");
+		sbQuery.append(" ORDER BY pen.aÃ±oPensum DESC ");
 		Query q = getEntityManager().createQuery(sbQuery.toString());
 		q.setParameter(1, new Date());
 		return q.getResultList();
@@ -122,7 +126,7 @@ public class PensumDAOImplement extends DaoGenericoImplement<Pensum> implements 
 	public List<Pensum> listaPensumVIPS(String orden) {
 		StringBuilder sbQuery = new StringBuilder();
 		sbQuery.append(" SELECT pen FROM Pensum pen where pen.visibledips = 'S' ");
-		sbQuery.append(" ORDER BY CONCAT(pen.añoPensum, '-' ,pen.numeroPensum) ");
+		sbQuery.append(" ORDER BY CONCAT(pen.aÃ±oPensum, '-' ,pen.numeroPensum) ");
 		sbQuery.append(orden);
 		Query q = getEntityManager().createQuery(sbQuery.toString());
 		return q.getResultList();
@@ -148,10 +152,10 @@ public class PensumDAOImplement extends DaoGenericoImplement<Pensum> implements 
 			sbQuery.append(" WHERE pen.vipsreporta>= ?");
 
 		}
-		// sbQuery.append(" ORDER BY CONCAT(CAST(pen.añoPensum AS integer), '-'
+		// sbQuery.append(" ORDER BY CONCAT(CAST(pen.aÃ±oPensum AS integer), '-'
 		// ,CAST(pen.numeroPensum AS integer)) ");
 		// sbQuery.append("DESC");
-		sbQuery.append(" ORDER BY pen.añoPensum DESC ");
+		sbQuery.append(" ORDER BY pen.aÃ±oPensum DESC ");
 		Query q = getEntityManager().createQuery(sbQuery.toString());
 		q.setParameter(1, new Date());
 		return q.getResultList();

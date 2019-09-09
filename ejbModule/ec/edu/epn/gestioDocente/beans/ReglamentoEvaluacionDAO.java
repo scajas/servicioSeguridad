@@ -12,13 +12,13 @@ import ec.edu.epn.gestionDocente.entities.ReglamentoEvaluacion;
 @Local
 public interface ReglamentoEvaluacionDAO extends DaoGenerico<ReglamentoEvaluacion>{
 
-	List<CatalogoActividadesDTO> listReglamentoActvXTipo(Integer tipoActvEval) throws Exception;
-
 	List<ReglamentoEvalDTO> listCoevalReglamento(Integer idPensum, String nced, String apel, String nom, String codDep)
 			throws Exception;
 
 	List<CatalogoActividadesDTO> listReglamentoAll() throws Exception;
 
 	ReglamentoEvalDTO reglamentoReporte() throws Exception;
+
+	List<CatalogoActividadesDTO> listReglamentoActvXTipo(Integer tipoActvEval, String estado) throws Exception;
 	
 }

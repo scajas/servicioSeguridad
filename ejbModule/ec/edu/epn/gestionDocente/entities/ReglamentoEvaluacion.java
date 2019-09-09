@@ -25,6 +25,8 @@ public class ReglamentoEvaluacion implements Serializable {
 
 	@Column(name="id_tipo_actv_eval")
 	private Integer idTipoActvEval;
+	
+	private String estado;
 
 	public ReglamentoEvaluacion() {
 	}
@@ -59,6 +61,14 @@ public class ReglamentoEvaluacion implements Serializable {
 
 	public void setIdTipoActvEval(Integer idTipoActvEval) {
 		this.idTipoActvEval = idTipoActvEval;
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
 
 }
