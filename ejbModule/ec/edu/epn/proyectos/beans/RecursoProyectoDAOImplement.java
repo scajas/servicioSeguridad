@@ -140,5 +140,14 @@ public class RecursoProyectoDAOImplement extends DaoGenericoImplement<RecursohPr
 		return qUsuario.getResultList();
 
 	}
+	
+	@Override
+	public List<RecursohPr> findrecProyEPN(Integer idproy) {
+		Query qUsuario = getEntityManager().createQuery(
+				"select rec from RecursohPr rec where rec.proyecto.idProy = ?1 and rec.externo is null order by rec.rolProyecto.idRolProy");
+		qUsuario.setParameter(1, idproy);
+		return qUsuario.getResultList();
+
+	}
 
 }

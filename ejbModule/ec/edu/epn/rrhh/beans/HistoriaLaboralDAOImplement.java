@@ -427,6 +427,21 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		return resultado.size();
 
 	}
+	
+	@Override
+	public Integer findHistoriaNumberByTipoAccion(String tipoAccion) {
+		StringBuilder queryString = new StringBuilder(
+				"SELECT fam FROM HistoriaLaboral fam where  fam.accionP.subtipoAccion.tipoAccion.nombreAccion like '%"
+						+ tipoAccion + "'" + "and fam.id.fechaI = " + "(Select max(t.id.fechaI) "
+						+ "from HistoriaLaboral t where t.id.idHist=fam.id.idHist)");
+
+		Query query = getEntityManager().createQuery(queryString.toString());
+		List<HistoriaLaboral> resultado = query.getResultList();
+
+		return resultado.size();
+
+	}
+	
 
 	@Override
 	public boolean findVacacionActivaByEmpleado(Emp emp, Date fechaActual) {
@@ -1208,25 +1223,23 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 
 	@Override
 	public boolean isAccionPorFinalizar(String nombreAccion, Emp emp) {
-		StringBuilder queryString = new StringBuilder("Select count(hl) from HistoriaLaboral "
+		StringBuilder queryString = new StringBuilder("Select hl from HistoriaLaboral "
 				+ "hl where hl.id.fechaI = (Select max(hist.id.fechaI) from HistoriaLaboral hist where "
 				+ " hist.emp.nced=?1 " + " and hist.accionP.subtipoAccion.tipoAccion.nombreAccion like ?2 "
 				+ " and (hist.id.estado= 'Elaborado' or hist.id.estado = 'Ejecucion') "
-				+ " and hl.id.idHist not in (Select fam.id.idHist from HistoriaLaboral fam"
-				+ " where fam.accionP.subtipoAccion.tipoAccion.nombreAccion like ?2 "
-				+ " and fam.id.idHist not in (Select histo.id.idHist from HistoriaLaboral histo "
+				+ " and hl.id.idHist not in (Select histo.id.idHist from HistoriaLaboral histo "
 				+ " where histo.accionP.subtipoAccion.tipoAccion.nombreAccion like ?2 "
 				+ " and histo.emp.nced = ?1 and (histo.id.estado = 'Anulado' or histo.id.estado "
 				+ " = 'Insubsistente')) and fam.emp.nced = ?1 and (fam.id.estado = 'Finalizado' "
-				+ " or fam.id.estado = 'Legalizado' or fam.id.estado = 'Legalizada')))"
+				+ " or fam.id.estado = 'Legalizado' or fam.id.estado = 'Legalizada'))"
 				+ " and hl.emp.nced = ?1 and hl.accionP.subtipoAccion.tipoAccion.nombreAccion like ?2");
 
 		Query query = getEntityManager().createQuery(queryString.toString());
 		query.setParameter(1, emp.getNced());
 		query.setParameter(2, nombreAccion + "%");
-
+		query.getResultList();
 		long resultado = 0;
-		resultado = (long) query.getSingleResult();
+		//resultado = (long) query.getSingleResult();
 		if(resultado>0) {
 			return true;
 		}else {
@@ -1285,7 +1298,7 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 
 		StringBuilder queryRefactored = new StringBuilder("SELECT count(fam) from HistoriaLaboral fam "
 				+ " where fam.emp.nced = ?1 and fam.accionP.subtipoAccion.tipoAccion.nombreAccion like 'LICENCIA%' "
-				+ " and ((?2 between fam.fechaRige and fam.fechaPrevistaFin ) or" + " (?3 <= fam.fechaPrevistaFin)) "
+				+ " and ((fam.fechaRige between ?2 and ?3 ) or" + " (fam.fechaPrevistaFin between ?2 and ?3)) "
 				+ " and fam.fechaFin is null and "
 				+ " (trim(fam.id.estado) = 'Legalizado' or (fam.id.estado) ='Finalizado') "
 				+ " and fam.id.idHist not in (Select hl.id.idHist from HistoriaLaboral hl "
@@ -2132,6 +2145,28 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		return resultado;
 	}
 
+	@Override
+	public List<HistoriaLaboral> findContratosVencidosByEmp(Emp emp){
+		StringBuilder queryString = new StringBuilder(
+				"SELECT fam FROM HistoriaLaboral fam where fam.emp.nced =?1 "
+						+ " and fam.accionP is null "
+						+ " and (fam.fechaPrevistaFin < ?2 ) "
+						+ " and (fam.id.estado != 'Anulado' or fam.id.estado != 'Insubsistente' "
+						+ " and fam.id.estado != 'Duplicado' ) "
+						+ " and fam.id.fechaI = (select max(h.id.fechaI) from HistoriaLaboral h"
+						+ " where fam.emp.nced = h.emp.nced and h.id.idHist = fam.id.idHist) "
+						+ " order by fam.fechaRige desc ");
+
+		Query query = getEntityManager().createQuery(queryString.toString());
+
+		query.setParameter(1, emp.getNced());
+		query.setParameter(2, new Date());
+		List<HistoriaLaboral> resultado = query.getResultList();
+
+		return resultado;
+	}
+	
+	
 	@Override
 	public HistoriaLaboral findLastContByEmpActivo(Emp emp) {
 		HistoriaLaboral ultimoContrato = null;
