@@ -30,7 +30,7 @@ public class TipoAccion implements Serializable {
 	@Column(name="es_filtrable")
 	private Boolean esFiltrable;
 	
-	//bi-directional many-to-one association to SubtipoAccion
+	// bi-directional many-to-one association to SubtipoAccion
 	@OneToMany(mappedBy="tipoAccion", fetch=FetchType.EAGER)
 	private List<SubtipoAccion> subtipoAccions;
 
