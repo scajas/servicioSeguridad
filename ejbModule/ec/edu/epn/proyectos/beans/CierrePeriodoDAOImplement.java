@@ -256,5 +256,26 @@ public class CierrePeriodoDAOImplement extends DaoGenericoImplement<CierrePeriod
 		return query.getResultList();
 
 	}
+	
+	
+	@Override
+	public Double consultarMaxReporte(Integer id_proy, String tipo){ //Paciente //numerohclPac
+		Query q = getEntityManager().createQuery("select max(e.avance) from CierrePeriodo e where e.tipo = ?1 and e.proyecto.idProy = ?2 ");
+		Double numero = null;
+		try {
+			
+			q.setParameter(1, tipo);
+			q.setParameter(2, id_proy);
+			numero =(Double) q.setMaxResults(1).getSingleResult();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			numero = null;
+		}
+		if (numero==null)
+			numero = 0.00;
+		
+		return numero;
+	}
 
 }
