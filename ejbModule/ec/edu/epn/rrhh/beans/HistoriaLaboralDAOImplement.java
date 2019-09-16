@@ -1230,8 +1230,8 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 				+ " and hl.id.idHist not in (Select histo.id.idHist from HistoriaLaboral histo "
 				+ " where histo.accionP.subtipoAccion.tipoAccion.nombreAccion like ?2 "
 				+ " and histo.emp.nced = ?1 and (histo.id.estado = 'Anulado' or histo.id.estado "
-				+ " = 'Insubsistente')) and fam.emp.nced = ?1 and (fam.id.estado = 'Finalizado' "
-				+ " or fam.id.estado = 'Legalizado' or fam.id.estado = 'Legalizada'))"
+				+ " = 'Insubsistente')) and hist.emp.nced = ?1 and (hist.id.estado = 'Finalizado' "
+				+ " or hist.id.estado = 'Legalizado' or hist.id.estado = 'Legalizada'))"
 				+ " and hl.emp.nced = ?1 and hl.accionP.subtipoAccion.tipoAccion.nombreAccion like ?2");
 
 		Query query = getEntityManager().createQuery(queryString.toString());
