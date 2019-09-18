@@ -52,8 +52,8 @@ public class SubTipoAccionDAOImplement extends DaoGenericoImplement<SubtipoAccio
 		StringBuilder queryString = new StringBuilder(
 				"  Select sta from SubtipoAccion sta where sta.tipoAccion.nombreAccion like ?1 "
 				+ " and sta.idStpa not in (select stac.idStpa from SubtipoAccion stac where "
-				+ " (stac.nombreSubaccion like 'RECTIFICACI%' or stac.idStpa in (47,416))) "
-				+ "");
+				+ " (stac.nombreSubaccion like 'RECTIFICACI%' or stac.idStpa in (47,416, 330, 331, 332,333,329"
+				+ ", 336,376,337,338))) ");
 		Query query = getEntityManager().createQuery(queryString.toString());
 		query.setParameter(1, nombreAccion);
 
