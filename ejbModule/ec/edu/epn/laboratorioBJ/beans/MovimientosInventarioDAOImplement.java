@@ -12,6 +12,7 @@ import ec.edu.epn.generic.DAO.DaoGenericoImplement;
 import ec.edu.epn.laboratorioBJ.entities.Existencia;
 import ec.edu.epn.laboratorioBJ.entities.Hidratacion;
 import ec.edu.epn.laboratorioBJ.entities.Movimientosinventario;
+import ec.edu.epn.laboratorioBJ.entities.SaldoExistencia;
 
 /**
  * Session Bean implementation class MovimientosInventarioDAOImplement
@@ -59,5 +60,32 @@ public class MovimientosInventarioDAOImplement extends DaoGenericoImplement<Movi
 		}
 
 	}
+	
+	@Override
+	public SaldoExistencia validarSaldoExistencia(String fecha) {
+		
+		String[] parts = fecha.split("-");
+		
+		String anio = parts[0];
+		String mes = parts[1];
+		
+		System.out.println("Este es el año: " + anio + " y este es el mes: " + mes);
+		
+		StringBuilder querys = new StringBuilder("SELECT s FROM SaldoExistencia s where s.Id.mes like '%" + mes + "%'");
+		Query query = getEntityManager().createQuery(querys.toString());
+		query.setMaxResults(1);
+
+		try {
+			SaldoExistencia saldoExistencia = (SaldoExistencia) query.getSingleResult();
+			
+			return saldoExistencia;
+		} catch (NoResultException nre) {
+			return null;
+		} catch (NonUniqueResultException nure) {
+			return null;
+		}
+
+	}
+	
 
 }

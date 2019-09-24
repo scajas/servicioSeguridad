@@ -17,15 +17,17 @@ public class Movimientosinventario implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@SequenceGenerator(name="MOVINVENTARIO_IDMOVIMIENTO_GENERATOR", sequenceName="secuencia_movinventario",allocationSize=1, catalog="bddcorpepn",schema="`Laboratorios`")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="MOVINVENTARIO_IDMOVIMIENTO_GENERATOR")
 	@Column(name="id_movimiento")
-	private String idMovimiento;
+	private int idMovimiento;
 
 	private String aux1;
 
 	private String aux2;
 
 	@Column(name="cantidad_dmt")
-	private String cantidadDmt;
+	private int cantidadDmt;
 
 	@Column(name="cantidad_mov")
 	private BigDecimal cantidadMov;
@@ -66,11 +68,11 @@ public class Movimientosinventario implements Serializable {
 	public Movimientosinventario() {
 	}
 
-	public String getIdMovimiento() {
+	public int getIdMovimiento() {
 		return this.idMovimiento;
 	}
 
-	public void setIdMovimiento(String idMovimiento) {
+	public void setIdMovimiento(int idMovimiento) {
 		this.idMovimiento = idMovimiento;
 	}
 
@@ -90,11 +92,11 @@ public class Movimientosinventario implements Serializable {
 		this.aux2 = aux2;
 	}
 
-	public String getCantidadDmt() {
+	public int getCantidadDmt() {
 		return this.cantidadDmt;
 	}
 
-	public void setCantidadDmt(String cantidadDmt) {
+	public void setCantidadDmt(int cantidadDmt) {
 		this.cantidadDmt = cantidadDmt;
 	}
 
