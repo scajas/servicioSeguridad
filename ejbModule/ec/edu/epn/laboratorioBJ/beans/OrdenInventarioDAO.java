@@ -12,6 +12,7 @@ import ec.edu.epn.laboratorioBJ.entities.Existencia;
 import ec.edu.epn.laboratorioBJ.entities.Metodo;
 import ec.edu.epn.laboratorioBJ.entities.Movimientosinventario;
 import ec.edu.epn.laboratorioBJ.entities.Ordeninventario;
+import ec.edu.epn.laboratorioBJ.entities.UnidadLabo;
 
 @Local
 public interface OrdenInventarioDAO extends DaoGenerico<Ordeninventario> {
@@ -29,4 +30,10 @@ public interface OrdenInventarioDAO extends DaoGenerico<Ordeninventario> {
 	Existencia findExistenciaById(String id);
 
 	List<Ordeninventario> listaOI(int id);
+
+	List<Ordeninventario> getListOIById(String id);
+
+	String maxIdOrdenI(int id, String fecha);
+
+	UnidadLabo obtenerUnidad(int id);
 }
