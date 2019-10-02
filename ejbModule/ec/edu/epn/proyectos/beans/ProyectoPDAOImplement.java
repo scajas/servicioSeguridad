@@ -321,7 +321,7 @@ public class ProyectoPDAOImplement extends
 			queryString.append(" ,RecursohPr rp   ");
 		}
 		
-		queryString.append(" where pr.estado IN ('En ejecución', 'Prórroga Ordinaria', 'Prórroga Extraordinaria','Proceso de cierre','Suspendido') ");
+		queryString.append(" where pr.estado IN ('En ejecución', 'Prórroga Ordinaria', 'Prórroga Extraordinaria','Proceso de cierre','Suspendido') and pr.tipoProyecto.idTipoProy != 4 ");
 		
 		if (cedula != null) {
 			queryString.append(" and rp.proyecto.idProy = pr.idProy   ");

@@ -356,10 +356,10 @@ public class PublicacionesDAOImplement extends DaoGenericoImplement<Publicacione
 			queryString.append(" and p.tituloPublic = ?5 ");
 		}
 
-		if (tipoPublic.equals("1")) {
-
-			queryString.append(" and p.catalogo != 'SCOPUS' ");
-		}
+//		if (tipoPublic.equals("1")) {
+//
+//			queryString.append(" and p.catalogo != 'SCOPUS' ");
+//		}
 
 		Query query = getEntityManager().createQuery(queryString.toString());
 

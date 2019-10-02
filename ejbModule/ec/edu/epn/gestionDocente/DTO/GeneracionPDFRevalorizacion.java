@@ -5134,7 +5134,18 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			cell = new PdfPCell(new Phrase("Porcentaje Total de Avance Acumulado del Proyecto", fuente));
 			cell.setBackgroundColor(new BaseColor(197, 217, 241));
 			tablaObjGeneralPorcen.addCell(cell);
-			cell = new PdfPCell(new Phrase(cierre.getAvance().toString(), fuenteContenido));
+			
+			if(cierre.getAvance() == null)
+			{
+				cell = new PdfPCell(new Phrase("0", fuenteContenido));
+			}
+			else
+			{
+				cell = new PdfPCell(new Phrase(cierre.getAvance().toString(), fuenteContenido));
+			}
+			
+			
+			
 			tablaObjGeneralPorcen.addCell(cell);
 			document.add(tablaObjGeneralPorcen);
 
