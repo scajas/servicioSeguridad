@@ -7,10 +7,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import ec.edu.epn.contratos.entities.Pedido;
 
 
 /**
@@ -71,8 +75,18 @@ public class PreplanificacionDocencia implements Serializable {
 	@Column(name="relacion_lab")
 	private String relacionLab;
 	
+	@OneToOne
+	@JoinColumn(name = "id_pedido")
+	private Pedido pedido;
 	
-	
+	public Pedido getPedido() {
+		return pedido;
+	}
+
+	public void setPedido(Pedido pedido) {
+		this.pedido = pedido;
+	}
+
 	private String dedicacion;
 	
 	
