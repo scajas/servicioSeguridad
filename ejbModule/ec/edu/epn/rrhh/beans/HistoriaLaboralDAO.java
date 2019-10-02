@@ -129,7 +129,7 @@ public interface HistoriaLaboralDAO extends DaoGenerico<HistoriaLaboral> {
 
 	public List<HistoriaLaboral> findHistorias(Date inicio, Date ffinal, String nombreDependencia,
 			String nombreDependenciaDesignacion, String nombreCargo, String claseEmpleado, String nombreDesignacion,
-			Emp empleado, boolean isFullReport);
+			Emp empleado, boolean isFullReport, int [] filtersAcciones);
 
 	public List<HistoriaLaboral> findHistorias(Date inicio, Date ffinal);
 
@@ -145,6 +145,8 @@ public interface HistoriaLaboralDAO extends DaoGenerico<HistoriaLaboral> {
 	public List<HistoriaLaboral> getDesignacionesMultiplesByEmp(Emp emp);
 
 	public List<HistoriaLaboral> findContByEmp(Emp emp);
+	
+	public List<HistoriaLaboral> findContratosVencidosByEmp(Emp emp);
 
 	public HistoriaLaboral findHistoriaActualizacionByEmp(Emp emp);
 
@@ -242,5 +244,7 @@ public interface HistoriaLaboralDAO extends DaoGenerico<HistoriaLaboral> {
 	public HistoriaLaboral findLastContByEmpActivo(Emp emp);
 
 	public HistoriaLaboral findCurrentHistoriaLaboralByEstadoActivoEmp(Emp emp);
+
+	public Integer findHistoriaNumberByTipoAccion(String subtipoAccion);
 
 }

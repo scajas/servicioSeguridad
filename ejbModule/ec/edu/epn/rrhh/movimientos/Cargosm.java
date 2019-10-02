@@ -3,6 +3,7 @@ package ec.edu.epn.rrhh.movimientos;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import ec.edu.epn.rrhh.entities.RiesgosLaborale;
 import ec.edu.epn.rrhh.entities.TipoRelacionXcargo;
 
 import java.util.List;
@@ -42,6 +43,10 @@ public class Cargosm implements Serializable {
 	private Integer horas;
 
 	private Double remun;
+	
+	//bi-directional many-to-one association to RiesgosLaborale
+	@OneToMany(mappedBy="cargosm")
+	private List<RiesgosLaborale> riesgosLaborales;
 
 	// bi-directional many-to-one association to HistoriaLaboral
 	@OneToMany(mappedBy = "cargosm")
@@ -76,6 +81,28 @@ public class Cargosm implements Serializable {
 		tipoRelacionXcargo.setCargosm(null);
 
 		return tipoRelacionXcargo;
+	}
+	
+	public List<RiesgosLaborale> getRiesgosLaborales() {
+		return this.riesgosLaborales;
+	}
+
+	public void setRiesgosLaborales(List<RiesgosLaborale> riesgosLaborales) {
+		this.riesgosLaborales = riesgosLaborales;
+	}
+
+	public RiesgosLaborale addRiesgosLaborale(RiesgosLaborale riesgosLaborale) {
+		getRiesgosLaborales().add(riesgosLaborale);
+		riesgosLaborale.setCargosm(this);
+
+		return riesgosLaborale;
+	}
+
+	public RiesgosLaborale removeRiesgosLaborale(RiesgosLaborale riesgosLaborale) {
+		getRiesgosLaborales().remove(riesgosLaborale);
+		riesgosLaborale.setCargosm(null);
+
+		return riesgosLaborale;
 	}
 
 	public Cargosm() {
@@ -190,5 +217,19 @@ public class Cargosm implements Serializable {
 
 		return historiaLaboral;
 	}
+	
+	public boolean equals(Object o){
+	    if(o == null)                return false;
+	    if(!(o instanceof Cargosm)) return false;
+
+	    Cargosm other = (Cargosm) o;
+	    if(this.idCargo != other.idCargo) return false;
+	    if(! this.nombreCargo.equals(other.nombreCargo)) return false;
+	    return true;
+	  }
+	
+	public int hashCode(){
+	    return (int) idCargo;
+	  }
 
 }

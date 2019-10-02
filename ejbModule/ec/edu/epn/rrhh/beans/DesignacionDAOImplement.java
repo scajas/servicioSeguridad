@@ -30,8 +30,9 @@ public class DesignacionDAOImplement extends DaoGenericoImplement<Designacion> i
 		StringBuilder queryString = new StringBuilder
 				("SELECT desi from Designacion desi where "
 						+ " desi.designacionCatalogo.nombre =?1 "
-						+ "and desi.estado = ?2 and desi.fechaRealFin is null"
-						+ " and desi.tipoDesignacion = ?3");
+						+ " and desi.estado = ?2   "
+						+ " and desi.tipoDesignacion = ?3 order by "
+						+ " desi.fechaInicio desc ");
 		
 		Query query = getEntityManager().createQuery(queryString.toString());
 		query.setParameter(1, dignidad);
@@ -44,6 +45,7 @@ public class DesignacionDAOImplement extends DaoGenericoImplement<Designacion> i
 			return resultado;
 		}catch (NonUniqueResultException e){
 			System.out.println("Más de un "+ tipoDesignacion +" activo ....");
+			return (Designacion) query.getResultList().get(0);
 		}
 			
 		return resultado;

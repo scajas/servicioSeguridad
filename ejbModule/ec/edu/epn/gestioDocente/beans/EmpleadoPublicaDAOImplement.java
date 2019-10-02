@@ -20,11 +20,28 @@ public class EmpleadoPublicaDAOImplement extends DaoGenericoImplement<EmpleadoPu
 	public List<EmpleadoPublica> finaAutoresporPublicacion(String tipo, Integer Idpub) throws Exception {
 
 		StringBuilder queryString = new StringBuilder(
-				"SELECT s from EmpleadoPublica s where s.pub.idPublic =?0 and s.tipo =?1 order by s.emp.apel ");
+				"SELECT s from EmpleadoPublica s where s.pub.idPublic =?0   ");
+		
+		
+		
+		if(tipo != null)
+		{
+			queryString.append(" and s.tipo =?1 ");
+		}
+		
+		queryString.append(" order by s.emp.apel ");
+		
+		
 		Query query = getEntityManager().createQuery(queryString.toString());
 		
 		query.setParameter(0, Idpub);
-		query.setParameter(1, tipo);
+		
+		if(tipo != null)
+		{
+			query.setParameter(1, tipo);
+		}
+		
+		
 		
 		
 		return query.getResultList();

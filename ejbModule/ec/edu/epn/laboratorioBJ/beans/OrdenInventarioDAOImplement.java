@@ -11,7 +11,6 @@ import javax.persistence.NonUniqueResultException;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-
 import ec.edu.epn.generic.DAO.DaoGenericoImplement;
 
 import ec.edu.epn.laboratorioBJ.entities.Detallemetodo;
@@ -19,6 +18,9 @@ import ec.edu.epn.laboratorioBJ.entities.Existencia;
 import ec.edu.epn.laboratorioBJ.entities.Metodo;
 import ec.edu.epn.laboratorioBJ.entities.Movimientosinventario;
 import ec.edu.epn.laboratorioBJ.entities.Ordeninventario;
+import ec.edu.epn.laboratorioBJ.entities.Posgiro;
+import ec.edu.epn.laboratorioBJ.entities.SaldoExistencia;
+import ec.edu.epn.laboratorioBJ.entities.UnidadLabo;
 
 /**
  * Session Bean implementation class OrdenInventarioDAOImplement
@@ -116,7 +118,7 @@ public class OrdenInventarioDAOImplement extends DaoGenericoImplement<Ordeninven
 		List<Movimientosinventario> resultados = query.getResultList();
 		return resultados;
 	}
-	
+
 	@Override
 	public List<Ordeninventario> listaOI(int id) {
 		StringBuilder queryString = new StringBuilder("SELECT o FROM Ordeninventario o where id_unidad = ?1 ");
@@ -125,6 +127,59 @@ public class OrdenInventarioDAOImplement extends DaoGenericoImplement<Ordeninven
 
 		List<Ordeninventario> resultados = query.getResultList();
 		return resultados;
+	}
+
+	@Override
+	public List<Ordeninventario> getListOIById(String id) {
+
+		System.out.println("idUnidad: " + id);
+		StringBuilder queryString = new StringBuilder(
+				"SELECT o FROM Ordeninventario o where o.idOrdeninventario like '%" + id + "%'");
+		Query query = getEntityManager().createQuery(queryString.toString());
+
+		List<Ordeninventario> resultados = query.getResultList();
+		return resultados;
+	}
+
+	@Override
+	public String maxIdOrdenI(int id, String fecha) {
+		String[] parts = fecha.split("-");
+
+		String anio = parts[0];
+		System.out.println("Este es el año: " + anio);
+
+		StringBuilder queryString = new StringBuilder(
+				"SELECT max(o.idOrdeninventario) FROM Ordeninventario o where o.unidad.idUnidad = ?"
+						+ "AND o.idOrdeninventario like '%"+anio+"%'");
+		// new StringBuilder("SELECT b FROM Servicio b where id_Unidad = ?1 ");
+		Query query = getEntityManager().createQuery(queryString.toString());
+		query.setParameter(1, id);
+
+		try {
+			String idOrdeninventario = (String) query.getSingleResult();
+			return idOrdeninventario;
+		} catch (NoResultException nre) {
+			return null;
+		} catch (NonUniqueResultException nure) {
+			return null;
+		}
+	}
+	
+	@Override
+	public UnidadLabo obtenerUnidad(int id) {
+		StringBuilder querys = new StringBuilder("SELECT u FROM UnidadLabo u where u.idUnidad = '"+id+"'");
+		Query query = getEntityManager().createQuery(querys.toString());
+		query.setMaxResults(1);
+
+		try {
+			UnidadLabo unidadLabo = (UnidadLabo) query.getSingleResult();
+			return unidadLabo;
+		} catch (NoResultException nre) {
+			return null;
+		} catch (NonUniqueResultException nure) {
+			return null;
+		}
+
 	}
 
 }
