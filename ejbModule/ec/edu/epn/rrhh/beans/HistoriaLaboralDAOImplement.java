@@ -1230,8 +1230,8 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 				+ " and hl.id.idHist not in (Select histo.id.idHist from HistoriaLaboral histo "
 				+ " where histo.accionP.subtipoAccion.tipoAccion.nombreAccion like ?2 "
 				+ " and histo.emp.nced = ?1 and (histo.id.estado = 'Anulado' or histo.id.estado "
-				+ " = 'Insubsistente')) and fam.emp.nced = ?1 and (fam.id.estado = 'Finalizado' "
-				+ " or fam.id.estado = 'Legalizado' or fam.id.estado = 'Legalizada'))"
+				+ " = 'Insubsistente')) and hist.emp.nced = ?1 and (hist.id.estado = 'Finalizado' "
+				+ " or hist.id.estado = 'Legalizado' or hist.id.estado = 'Legalizada'))"
 				+ " and hl.emp.nced = ?1 and hl.accionP.subtipoAccion.tipoAccion.nombreAccion like ?2");
 
 		Query query = getEntityManager().createQuery(queryString.toString());
@@ -1804,7 +1804,7 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		}
 
 	}
-
+ //
 	public long getCountLicenciasVencidas() {
 		Date currentDate = new Date();
 		StringBuilder queryString = new StringBuilder("SELECT count(fam) from HistoriaLaboral fam where "
@@ -1837,21 +1837,20 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		StringBuilder queryString = new StringBuilder(
 				"SELECT fam from HistoriaLaboral fam where (fam.accionP.subtipoAccion.tipoAccion.nombreAccion like ?1 "
 						+ "or fam.accionP.subtipoAccion.tipoAccion.nombreAccion like 'PERMISO' )"
-						+ "and fam.fechaFin is NULL and (fam.id.estado is ?3 or fam.id.estado is 'Legalizada' or "
+						+ "and fam.fechaFin is NULL and (fam.id.estado is ?2 or fam.id.estado is 'Legalizada' or "
 						+ " fam.id.estado is 'Finalizado' ) " + "and fam.fechaRige >= '01/01/2014' "
 						+ "and fam.id.idHist not in (Select histo.id.idHist from HistoriaLaboral histo "
-						+ "where (histo.id.estado= ?4 or histo.id.estado=?5) "
+						+ "where (histo.id.estado= ?3 or histo.id.estado=?4) "
 						+ " and (histo.accionP.subtipoAccion.tipoAccion.nombreAccion like 'LICENCIA%' "
 						+ " or histo.accionP.subtipoAccion.tipoAccion.nombreAccion like 'PERMISO') "
-						+ " and fam.fechaPrevistaFin <= ?6) ");
+						+ " and fam.fechaPrevistaFin <= ?5) ");
 
 		Query query = getEntityManager().createQuery(queryString.toString());
-		query.setParameter(1, "LICENCIA");
-		query.setParameter(2, "LICENCIA%");
-		query.setParameter(3, "Legalizado");
-		query.setParameter(4, "Anulado");
-		query.setParameter(5, "Insubsistente");
-		query.setParameter(6, currentDate);
+		query.setParameter(1, "LICENCIA%");
+		query.setParameter(2, "Legalizado");
+		query.setParameter(3, "Anulado");
+		query.setParameter(4, "Insubsistente");
+		query.setParameter(5, currentDate);
 		List<HistoriaLaboral> licencia = null;
 
 		licencia = query.getResultList();
@@ -1896,7 +1895,8 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 					+ "and  fam.fechaFin is NULL and (fam.id.estado = ?2 or fam.id.estado = 'Legalizado' or fam.id.estado ='Legalizada') "
 					+ " and fam.id.idHist not in (Select histo.id.idHist from HistoriaLaboral histo "
 					+ "where histo.emp.nced=?1 and (histo.id.estado= ?3 or histo.id.estado=?4)"
-					+ "and histo.accionP.subtipoAccion.nombreSubaccion like 'LICENCIA CON REMUNERACION%')");
+					+ "and histo.accionP.subtipoAccion.nombreSubaccion like 'LICENCIA CON REMUNERACION% "
+					+ "order by fam.fechaI desc')");
 			//
 
 			Query query = getEntityManager().createQuery(queryString.toString());
@@ -1912,8 +1912,9 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 				return null;
 
 			} catch (NonUniqueResultException e) {
-				e.printStackTrace();
-				return null;
+			    HistoriaLaboral resultado = (HistoriaLaboral) query.getResultList().get(0);
+				System.out.println("El empleado tiene mas de una licencia activa");
+				return resultado;
 			}
 			return licencia;
 		}

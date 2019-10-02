@@ -3905,5 +3905,58 @@ public class procedimientosAlmacenados {
 		}
 
 	}
+	
+	
+	@SuppressWarnings("finally")
+	public List<TesisDocenteDTO> spEstudiantesMatriculados(String unico, String nombres) {
+		List<TesisDocenteDTO> listTesisDocente = new ArrayList<TesisDocenteDTO>();
+		conexionSQL sql = new conexionSQL();
+		try {
+			java.sql.ResultSet result = null;
+
+			sql.getConnection();
+			// LLAMADA AL SP
+
+			CallableStatement cst = sql.getConection().prepareCall("{call pa_saematri  (?,?,?,?,?)}");
+
+			// PARAMETROS
+			cst.setString(1, "CP");
+			cst.setString(2, "");
+			cst.setString(3, "");
+			cst.setString(4, unico);
+			cst.setString(5, nombres);
+			
+
+			result = cst.executeQuery();
+			while (result.next()) {
+
+				TesisDocenteDTO tesis = new TesisDocenteDTO();
+				
+					tesis.setNroTesis(result.getString(1));	
+					tesis.setEstudiante(result.getString(2));	
+					tesis.setCarrera(result.getString(3));
+					listTesisDocente.add(tesis);
+				
+
+			}
+
+			sql.closeConnection();
+		} catch (Exception e) {
+
+			sql.closeConnection();
+
+			listTesisDocente = new ArrayList<TesisDocenteDTO>();
+
+		}
+
+		finally {
+			sql.closeConnection();
+			return listTesisDocente;
+
+		}
+
+	}
+	
+	
 
 }

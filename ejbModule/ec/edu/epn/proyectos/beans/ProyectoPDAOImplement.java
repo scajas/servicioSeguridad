@@ -239,7 +239,7 @@ public class ProyectoPDAOImplement extends
 	
 	
 	@Override
-	public List<ProyectoDTO> listProyectoPlanificacion(String cedula) throws SQLException {
+	public List<ProyectoDTO> listProyectoPlanificacion(String cedula, Integer idPensum) throws SQLException {
 		Connection con = null;
 		PreparedStatement ps = null;
 		
@@ -249,14 +249,18 @@ public class ProyectoPDAOImplement extends
 			con = getDataSource().getConnection();
 			if (con != null) {
 				ps = con.prepareStatement(
-						"SELECT p.id_proy, p.codigo_pr, p.nombre_pr, rp.rol_proy, r.nro_horas, p.fechaini, (p.fechaf -p.fechaini) AS estimado, r.idpensum "+
-						"FROM \"Proyectos\".proyecto p, \"Proyectos\".recursoh_pr r, \"Proyectos\".rol_proyecto rp "+
+						"SELECT p.id_proy, p.codigo_pr, p.nombre_pr, rp.rol_proy, re.valor, p.fechaini, (p.fechaf -p.fechaini) AS estimado, r.idpensum "+
+						"FROM \"Proyectos\".proyecto p, \"Proyectos\".recursoh_pr r, \"Proyectos\".rol_proyecto rp, \"Proyectos\".recursoavance re "+
 						"WHERE p.id_proy= r.id_proy "+
+						"AND re.id_recurso= r.id_rh_pr "+
+						"AND re.tipo = 'P' "+						
 						"AND r.id_rol_proy=rp.id_rol_proy "+
 						"AND p.estado IN ('En ejecución', 'Prórroga Ordinaria', 'Prórroga Extraordinaria') "+
-						"AND r.nced=?");
+						"AND r.nced=? "+
+						"AND re.idpensum= ? ") ;
 		
 				ps.setString(1, cedula);
+				ps.setInt(2, idPensum);
 				
 
 				ResultSet rs = ps.executeQuery();

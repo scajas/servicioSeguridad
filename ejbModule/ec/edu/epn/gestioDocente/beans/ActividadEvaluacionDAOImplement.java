@@ -118,4 +118,23 @@ public class ActividadEvaluacionDAOImplement extends DaoGenericoImplement<Activi
 		return (Long) q.getSingleResult();
 	}
 	
+	
+	@Override
+	public Double sumValorActEval(Integer idEvalAcademica) {
+		Query q = getEntityManager()
+				.createQuery(
+						"SELECT sum(a.valor16Planif) FROM ActividadEvaluacion a WHERE a.evaluacionAcademica.idEvalAcad=? AND a.idTipoActvEval= ? AND a.reglamentoEvaluacion.idReglamentoEvaluacion= ? ");
+
+		
+		q.setParameter(1, idEvalAcademica);		
+		
+		try {
+			return (Double) q.getSingleResult();
+		} catch (Exception e) {
+			return 0.0;
+		}
+		
+	}
+	
+	
 }

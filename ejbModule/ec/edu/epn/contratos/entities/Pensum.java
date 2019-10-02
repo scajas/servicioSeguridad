@@ -70,6 +70,13 @@ public class Pensum implements Serializable {
 
 	@Temporal(TemporalType.DATE)
 	private Date vipsreporta;
+	
+	@Temporal(TemporalType.DATE)
+	@Column(name = "fecha_preplanif")
+	private Date fechaPreplanif;
+	
+	
+	
 
 	public Pensum() {
 	}
@@ -237,6 +244,14 @@ public class Pensum implements Serializable {
 
 	public void setVipsreporta(Date vipsreporta) {
 		this.vipsreporta = vipsreporta;
+	}
+
+	public Date getFechaPreplanif() {
+		return fechaPreplanif;
+	}
+
+	public void setFechaPreplanif(Date fechaPreplanif) {
+		this.fechaPreplanif = fechaPreplanif;
 	}
 	
 

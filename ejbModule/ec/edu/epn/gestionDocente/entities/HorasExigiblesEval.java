@@ -39,6 +39,10 @@ public class HorasExigiblesEval implements Serializable {
 
 	@Column(name="total_horas_exigibles")
 	private double totalHorasExigibles;
+	
+	@Column(name="total_horas_preplanif")
+	private double totalHorasPreplanif;
+	
 
 	public HorasExigiblesEval() {
 	}
@@ -97,6 +101,14 @@ public class HorasExigiblesEval implements Serializable {
 
 	public void setTotalHorasExigibles(double totalHorasExigibles) {
 		this.totalHorasExigibles = totalHorasExigibles;
+	}
+
+	public double getTotalHorasPreplanif() {
+		return totalHorasPreplanif;
+	}
+
+	public void setTotalHorasPreplanif(double totalHorasPreplanif) {
+		this.totalHorasPreplanif = totalHorasPreplanif;
 	}
 
 }

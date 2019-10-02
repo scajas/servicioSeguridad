@@ -20,4 +20,6 @@ public interface AtencionMedicaConDespachoIMDAO {
 	List<Movimientoinventario> obtenerListaDespachosEjecutados(Integer idMedico, Date fechaDesde, Date fechaHasta)
 			throws Exception;
 
+	List<Movimientoinventario> obtenerListaDespachosPendientesXFecha(Date fechaInicio, Date fechaFinal);
+
 }

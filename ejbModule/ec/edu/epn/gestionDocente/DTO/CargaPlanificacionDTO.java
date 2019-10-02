@@ -14,6 +14,8 @@ public class CargaPlanificacionDTO {
 	private Integer capacidadAlumnosSAE;
 	private Double valHetero;
 	private String aula;
+	private String nivel;
+	private String regimen;
 	
 	private Integer horasRemdiales;
 	
@@ -213,6 +215,38 @@ public class CargaPlanificacionDTO {
 	 */
 	public void setAula(String aula) {
 		this.aula = aula;
+	}
+
+
+	/**
+	 * @return the nivel
+	 */
+	public String getNivel() {
+		return nivel;
+	}
+
+
+	/**
+	 * @return the regimen
+	 */
+	public String getRegimen() {
+		return regimen;
+	}
+
+
+	/**
+	 * @param nivel the nivel to set
+	 */
+	public void setNivel(String nivel) {
+		this.nivel = nivel;
+	}
+
+
+	/**
+	 * @param regimen the regimen to set
+	 */
+	public void setRegimen(String regimen) {
+		this.regimen = regimen;
 	}
 
 

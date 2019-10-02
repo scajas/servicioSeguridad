@@ -170,7 +170,8 @@ public class Atencionmedica implements Serializable {
 	@Column(name="atencion_tipo")
 	private Integer atencionTipo;
 	
-	
+	@Transient
+	private boolean poseeMoviemientoInvEntrega;
 
 	//bi-directional many-to-one association to Catalogo
 	@ManyToOne
@@ -694,6 +695,20 @@ public class Atencionmedica implements Serializable {
 
 	public void setAtencionTipo(Integer atencionTipo) {
 		this.atencionTipo = atencionTipo;
+	}
+
+	/**
+	 * @return the poseeMoviemientoInvEntrega
+	 */
+	public boolean isPoseeMoviemientoInvEntrega() {
+		return poseeMoviemientoInvEntrega;
+	}
+
+	/**
+	 * @param poseeMoviemientoInvEntrega the poseeMoviemientoInvEntrega to set
+	 */
+	public void setPoseeMoviemientoInvEntrega(boolean poseeMoviemientoInvEntrega) {
+		this.poseeMoviemientoInvEntrega = poseeMoviemientoInvEntrega;
 	}
 
 	

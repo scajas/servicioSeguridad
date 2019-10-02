@@ -46,4 +46,14 @@ public class TipoContratoDAOImplement extends
 		Query query = getEntityManager().createQuery(queryString.toString());
 		return query.getResultList();
 	}
+	
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<TipoContrato> listaTiposContratosPreplanif() {
+		StringBuilder queryString = new StringBuilder(
+				"SELECT contr FROM TipoContrato contr where contr.idTcont in (2,3,13,14)");
+		Query query = getEntityManager().createQuery(queryString.toString());
+		return query.getResultList();
+	}
 }
