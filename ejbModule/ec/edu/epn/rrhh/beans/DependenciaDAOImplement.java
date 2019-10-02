@@ -141,7 +141,11 @@ public class DependenciaDAOImplement extends DaoGenericoImplement<Dependencia> i
 			query.setParameter(2, "DEP");
 			query.setParameter(3, "ADM");
 			query.setParameter(4, "FAC");
+			
+			
 		}
+		
+		
 		
 		
 

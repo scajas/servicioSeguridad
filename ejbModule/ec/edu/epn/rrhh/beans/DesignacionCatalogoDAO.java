@@ -13,6 +13,7 @@ public interface DesignacionCatalogoDAO extends DaoGenerico<DesignacionCatalogo>
 	public int getMaxIDDesignacionCatalogo();
 	
 	public List<DesignacionCatalogo> findAllDesignacionesActivas();
+
 	
 	public List<DesignacionCatalogo> findAllDesignaciones();
 	
