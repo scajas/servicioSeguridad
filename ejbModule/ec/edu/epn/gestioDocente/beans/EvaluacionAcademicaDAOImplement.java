@@ -1103,8 +1103,6 @@ public class EvaluacionAcademicaDAOImplement extends DaoGenericoImplement<Evalua
 				
 				
 				return dto;
-			
-			
 
 		} catch (Exception e) {
 			dto.setIdEvalAcad(0);
