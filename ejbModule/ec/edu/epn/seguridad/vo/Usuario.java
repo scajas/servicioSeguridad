@@ -30,9 +30,7 @@ public class Usuario implements Serializable {
 	private String nombreUsuario;
 
 	private String clave;
-
 	private String cedula;
-
 	private String activo;
 
 
