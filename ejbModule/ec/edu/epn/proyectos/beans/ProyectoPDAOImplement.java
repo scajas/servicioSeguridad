@@ -3,7 +3,6 @@
  */
 package ec.edu.epn.proyectos.beans;
 
-import java.sql.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -255,7 +254,7 @@ public class ProyectoPDAOImplement extends
 						"AND re.id_recurso= r.id_rh_pr "+
 						"AND re.tipo = 'P' "+						
 						"AND r.id_rol_proy=rp.id_rol_proy "+
-						"AND p.estado IN ('En ejecuci贸n', 'Pr贸rroga Ordinaria', 'Pr贸rroga Extraordinaria') "+
+						"AND p.estado IN ('En ejecuci髇', 'Pr髍roga Ordinaria', 'Pr髍roga Extraordinaria') "+
 						"AND r.nced=? "+
 						"AND re.idpensum= ? ") ;
 		
@@ -321,7 +320,7 @@ public class ProyectoPDAOImplement extends
 			queryString.append(" ,RecursohPr rp   ");
 		}
 		
-		queryString.append(" where pr.estado IN ('En ejecuci贸n', 'Pr贸rroga Ordinaria', 'Pr贸rroga Extraordinaria','Proceso de cierre','Suspendido') ");
+		queryString.append(" where pr.estado IN ('En ejecuci髇', 'Pr髍roga Ordinaria', 'Pr髍roga Extraordinaria','Proceso de cierre','Suspendido') ");
 		
 		if (cedula != null) {
 			queryString.append(" and rp.proyecto.idProy = pr.idProy   ");

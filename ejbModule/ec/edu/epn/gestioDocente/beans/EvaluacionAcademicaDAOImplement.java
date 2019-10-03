@@ -104,10 +104,10 @@ public class EvaluacionAcademicaDAOImplement extends DaoGenericoImplement<Evalua
 		try {
 		Query q = getEntityManager()
 				.createQuery(
-						"SELECT e FROM EvaluacionAcademica e WHERE e.nced=? AND e.idPensum= ? AND e.estado  like ? ");
+						"SELECT e FROM EvaluacionAcademica e WHERE e.nced like ? AND e.idPensum= ? AND e.estado  like ? ");
 
 		
-		q.setParameter(1, nced);
+		q.setParameter(1, "%"+ nced + "%");
 		q.setParameter(2, idPensum);
 		q.setParameter(3, estado);
 		
@@ -150,10 +150,10 @@ public class EvaluacionAcademicaDAOImplement extends DaoGenericoImplement<Evalua
 		
 			Query q = getEntityManager()
 					.createQuery(
-							"SELECT e FROM EvaluacionAcademica e WHERE e.nced=? AND e.idPensum= ? AND (e.estado  like ? OR e.estado  like ?) ");
+							"SELECT e FROM EvaluacionAcademica e WHERE e.nced like ? AND e.idPensum= ? AND (e.estado  like ? OR e.estado  like ?) ");
 	
 			
-			q.setParameter(1, nced);
+			q.setParameter(1, "%" + nced + "%");
 			q.setParameter(2, idPensum);
 			q.setParameter(3, estado);
 			q.setParameter(4, estado2);
@@ -177,10 +177,10 @@ public class EvaluacionAcademicaDAOImplement extends DaoGenericoImplement<Evalua
 		
 		Query q = getEntityManager()
 				.createQuery(
-						"SELECT count(e) FROM EvaluacionAcademica e WHERE e.nced=? AND e.idPensum= ? AND (e.estado  like ? OR e.estado  like ?) ");
+						"SELECT count(e) FROM EvaluacionAcademica e WHERE e.nced like ? AND e.idPensum= ? AND (e.estado  like ? OR e.estado  like ?) ");
 
 		
-		q.setParameter(1, nced);
+		q.setParameter(1, "%" + nced + "%");
 		q.setParameter(2, idPensum);
 		q.setParameter(3, estado);
 		q.setParameter(4, estado2);
@@ -632,6 +632,26 @@ public class EvaluacionAcademicaDAOImplement extends DaoGenericoImplement<Evalua
 	}
 	
 	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<EvaluacionAcademica> listEvalXEstadosDocente(String nced, String estado){		
+		try {
+			
+			Query q = getEntityManager()
+					.createQuery(
+							"SELECT e FROM EvaluacionAcademica e WHERE e.nced= ? AND e.estado =? AND e.idPensum>9 ORDER BY idPensum DESC  ");
+			
+			q.setParameter(1, nced);	
+			q.setParameter(2, estado);
+			return  q.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();			
+			return null;
+		}
+		
+	}
+	
+	
 	
 	@Override
 	public void generarReplicaPlanificacionXPeriodo(String nced, Integer idPensumActual, Integer idPensumRepl, EvaluacionAcademica evalAcadActual, Long idUser){
@@ -985,7 +1005,7 @@ public class EvaluacionAcademicaDAOImplement extends DaoGenericoImplement<Evalua
 				
 				if(evaluacionAcademica!=null){
 					EstadoEvaluacion estado= estadoEvaluacionDAO.estadoEvalXNombre(evaluacionAcademica.getEstado());
-					dto.setObservacionPlanificacion(evaluacionAcademica.getIdEvalAcad().toString());
+					dto.setCategoria(evaluacionAcademica.getIdEvalAcad().toString());					
 					dto.setEstado(estado.getDescripcion());
 					dto.setTotalHorasPlanificacion(evaluacionAcademica.getTotalHorasPlanificadas());
 					dto.setObservacionPlanificacion(evaluacionAcademica.getJustificarPlanificacion());

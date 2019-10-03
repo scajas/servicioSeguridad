@@ -33,7 +33,7 @@ public class Usuario implements Serializable {
 
 	private String cedula;
 
-
+	private String activo;
 
 
 	@Temporal(TemporalType.DATE)
@@ -236,6 +236,20 @@ public class Usuario implements Serializable {
 
 	public void setUsercambio(String usercambio) {
 		this.usercambio = usercambio;
+	}
+
+	/**
+	 * @return the activo
+	 */
+	public String getActivo() {
+		return activo;
+	}
+
+	/**
+	 * @param activo the activo to set
+	 */
+	public void setActivo(String activo) {
+		this.activo = activo;
 	}
 
 }
