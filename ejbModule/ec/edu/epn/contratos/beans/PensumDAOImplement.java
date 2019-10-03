@@ -69,9 +69,7 @@ public class PensumDAOImplement extends DaoGenericoImplement<Pensum> implements 
 	/**
 	 * Lista las entidades pensum ordenado descendente o ascendentemete
 	 * 
-	 * @param orden
-	 *            - string para escribir el orden que quiere desplegar la lista
-	 *            : asc Ã³ desc
+	 * @param orden string para escribir el orden que quiere desplegar la lista
 	 * @return lista de entidades por el orden enviado
 	 */
 	@SuppressWarnings("unchecked")
