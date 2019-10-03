@@ -20,5 +20,7 @@ public interface ReglamentoEvaluacionDAO extends DaoGenerico<ReglamentoEvaluacio
 	ReglamentoEvalDTO reglamentoReporte() throws Exception;
 
 	List<CatalogoActividadesDTO> listReglamentoActvXTipo(Integer tipoActvEval, String estado) throws Exception;
+
+	List<CatalogoActividadesDTO> listReglamentoActvXTipo(Integer tipoActvEval) throws Exception;
 	
 }

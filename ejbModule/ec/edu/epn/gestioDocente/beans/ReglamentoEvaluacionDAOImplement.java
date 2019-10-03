@@ -61,6 +61,35 @@ public class ReglamentoEvaluacionDAOImplement extends DaoGenericoImplement<Regla
 		return listCatalogo;
 	}
 
+	@Override
+	public List<CatalogoActividadesDTO> listReglamentoActvXTipo(Integer tipoActvEval) throws Exception {
+		List<CatalogoActividadesDTO> listCatalogo = new ArrayList<CatalogoActividadesDTO>();
+		List<ReglamentoEvaluacion> listReglamento = new ArrayList<ReglamentoEvaluacion>();
+		Query q = getEntityManager().createQuery(
+				"SELECT r FROM ReglamentoEvaluacion r WHERE r.idTipoActvEval= ?  ORDER BY idReglamentoEvaluacion");
+
+		q.setParameter(1, tipoActvEval);
+		
+		listReglamento = q.getResultList();
+
+		if (!listReglamento.isEmpty()) {
+			for (ReglamentoEvaluacion dto : listReglamento) {
+				CatalogoActividadesDTO catalogoActividadesDTO = new CatalogoActividadesDTO();
+				catalogoActividadesDTO.setActividad(dto.getActividad());
+				catalogoActividadesDTO.setAsignacionHoras(dto.getAsignacionHoras());
+				catalogoActividadesDTO.setIdTipoActvEval(dto.getIdTipoActvEval());
+				catalogoActividadesDTO.setIdReglamentoEvaluacion(dto.getIdReglamentoEvaluacion());
+				catalogoActividadesDTO.setValor(0.0);
+				catalogoActividadesDTO.setCumplimiento(100.00);
+				catalogoActividadesDTO.setAsignar(false);
+				listCatalogo.add(catalogoActividadesDTO);
+			}
+		}
+
+		return listCatalogo;
+	}
+	
+	
 	@SuppressWarnings("unchecked")
 	public List<CatalogoActividadesDTO> listReglamentoAll() throws Exception {
 		List<CatalogoActividadesDTO> listCatalogo = new ArrayList<CatalogoActividadesDTO>();

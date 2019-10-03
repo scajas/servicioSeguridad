@@ -26,7 +26,7 @@ public class EstadoEvaluacionDAOImplement extends DaoGenericoImplement<EstadoEva
 						"SELECT e FROM EstadoEvaluacion e WHERE e.nombre like ? ");
 
 		
-		q.setParameter(1, "%" + nombre + "%");
+		q.setParameter(1, nombre );
 		
 		
 		

@@ -130,6 +130,9 @@ public class PreplanificacionDocenciaDAOImplement extends
 					EstadoEvaluacion estadoEval= estadoEvaluacionDAO.estadoEvalXNombre(dto.getEstado());
 					docente.setEstado(estadoEval.getDescripcion());
 					
+					docente.setDedicacion(dto.getDedicacion());
+					docente.setCargo(dto.getRelacionLab());
+					
 					listaDocenteDTO.add(docente);
 				}
 			}
