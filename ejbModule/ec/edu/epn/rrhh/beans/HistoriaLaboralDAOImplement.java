@@ -147,13 +147,10 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 	public List<HistoriaLaboral> findHistorias(Date inicio, Date ffinal, String nombreDependencia,
 			String nombreDependenciaDesignacion, String nombreCargo, String claseEmpleado, String nombreDesignacion,
 			Emp empleado, boolean isFullReport, int[] filtersAcciones) {
-		/*
-		 * if(filtersAcciones==null) { filtersAcciones = new int [0]; }
-		 */
 		StringBuilder queryString = new StringBuilder("");
 		Query query = null;
 		queryString = new StringBuilder(
-				"SELECT " + "fam FROM HistoriaLaboral fam where " + " (fam.fechaRige BETWEEN :inicio and :final)  ");
+				"SELECT " + " fam FROM HistoriaLaboral fam where " + " (fam.fechaRige BETWEEN :inicio and :final)");
 		if (empleado != null) {
 			String empleadoPredicate = " and fam.emp.nced = " + "\'" + empleado.getNced() + "\' ";
 			queryString.append(empleadoPredicate);
@@ -427,7 +424,7 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		return resultado.size();
 
 	}
-	
+
 	@Override
 	public Integer findHistoriaNumberByTipoAccion(String tipoAccion) {
 		StringBuilder queryString = new StringBuilder(
@@ -441,7 +438,6 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		return resultado.size();
 
 	}
-	
 
 	@Override
 	public boolean findVacacionActivaByEmpleado(Emp emp, Date fechaActual) {
@@ -1239,10 +1235,10 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		query.setParameter(2, nombreAccion + "%");
 		query.getResultList();
 		long resultado = 0;
-		//resultado = (long) query.getSingleResult();
-		if(resultado>0) {
+		// resultado = (long) query.getSingleResult();
+		if (resultado > 0) {
 			return true;
-		}else {
+		} else {
 			return false;
 		}
 
@@ -1804,7 +1800,8 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		}
 
 	}
- //
+
+	//
 	public long getCountLicenciasVencidas() {
 		Date currentDate = new Date();
 		StringBuilder queryString = new StringBuilder("SELECT count(fam) from HistoriaLaboral fam where "
@@ -1912,7 +1909,7 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 				return null;
 
 			} catch (NonUniqueResultException e) {
-			    HistoriaLaboral resultado = (HistoriaLaboral) query.getResultList().get(0);
+				HistoriaLaboral resultado = (HistoriaLaboral) query.getResultList().get(0);
 				System.out.println("El empleado tiene mas de una licencia activa");
 				return resultado;
 			}
@@ -2147,16 +2144,14 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 	}
 
 	@Override
-	public List<HistoriaLaboral> findContratosVencidosByEmp(Emp emp){
-		StringBuilder queryString = new StringBuilder(
-				"SELECT fam FROM HistoriaLaboral fam where fam.emp.nced =?1 "
-						+ " and fam.accionP is null "
-						+ " and (fam.fechaPrevistaFin < ?2 ) "
-						+ " and (fam.id.estado != 'Anulado' or fam.id.estado != 'Insubsistente' "
-						+ " and fam.id.estado != 'Duplicado' ) "
-						+ " and fam.id.fechaI = (select max(h.id.fechaI) from HistoriaLaboral h"
-						+ " where fam.emp.nced = h.emp.nced and h.id.idHist = fam.id.idHist) "
-						+ " order by fam.fechaRige desc ");
+	public List<HistoriaLaboral> findContratosVencidosByEmp(Emp emp) {
+		StringBuilder queryString = new StringBuilder("SELECT fam FROM HistoriaLaboral fam where fam.emp.nced =?1 "
+				+ " and fam.accionP is null " + " and (fam.fechaPrevistaFin < ?2 ) "
+				+ " and (fam.id.estado != 'Anulado' or fam.id.estado != 'Insubsistente' "
+				+ " and fam.id.estado != 'Duplicado' ) "
+				+ " and fam.id.fechaI = (select max(h.id.fechaI) from HistoriaLaboral h"
+				+ " where fam.emp.nced = h.emp.nced and h.id.idHist = fam.id.idHist) "
+				+ " order by fam.fechaRige desc ");
 
 		Query query = getEntityManager().createQuery(queryString.toString());
 
@@ -2166,8 +2161,7 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 
 		return resultado;
 	}
-	
-	
+
 	@Override
 	public HistoriaLaboral findLastContByEmpActivo(Emp emp) {
 		HistoriaLaboral ultimoContrato = null;
