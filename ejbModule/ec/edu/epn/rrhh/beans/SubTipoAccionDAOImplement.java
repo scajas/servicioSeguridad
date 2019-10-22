@@ -128,6 +128,16 @@ public class SubTipoAccionDAOImplement extends DaoGenericoImplement<SubtipoAccio
 		return resultado;
 	}
 
+	@Override
+	public List<SubtipoAccion> getAllAccionesSinRegistro() {
+		StringBuilder queryString = new StringBuilder(
+				"Select sta from SubtipoAccion " 
+		      + "sta where sta.tipoAccion.idTpa in (413,414,415,416)");
+		Query query = getEntityManager().createQuery(queryString.toString());
+		List<SubtipoAccion> resultado = query.getResultList();
+		return resultado;
+	}
+
 
 
 
