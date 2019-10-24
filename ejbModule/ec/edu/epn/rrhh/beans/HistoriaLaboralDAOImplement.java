@@ -426,6 +426,18 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 	}
 
 	@Override
+	public long getCountOfHistoriasSinRegistro() {
+		StringBuilder queryString = new StringBuilder(
+				"SELECT count(fam) FROM HistoriaLaboral fam where  fam.accionP.subtipoAccion.tipoAccion.idTpa "
+				+ "in (413,414,415,416) and fam.id.fechaI = " + "(Select max(t.id.fechaI) "
+						+ "from HistoriaLaboral t where t.id.idHist=fam.id.idHist)");
+
+		Query query = getEntityManager().createQuery(queryString.toString());
+		long count = (long) query.getSingleResult();
+		return count;
+	}
+
+	@Override
 	public Integer findHistoriaNumberByTipoAccion(String tipoAccion) {
 		StringBuilder queryString = new StringBuilder(
 				"SELECT fam FROM HistoriaLaboral fam where  fam.accionP.subtipoAccion.tipoAccion.nombreAccion like '%"

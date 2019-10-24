@@ -240,7 +240,7 @@ public interface HistoriaLaboralDAO extends DaoGenerico<HistoriaLaboral> {
 
 	public Integer findHistoriaNumberBySubtipo(String subtipoAccion);
 
-
+    public long getCountOfHistoriasSinRegistro();
 	public HistoriaLaboral findLastContByEmpActivo(Emp emp);
 
 	public HistoriaLaboral findCurrentHistoriaLaboralByEstadoActivoEmp(Emp emp);
