@@ -1,6 +1,3 @@
-/**
- * 
- */
 package ec.edu.epn.rrhh.beans;
 
 import java.sql.Connection;

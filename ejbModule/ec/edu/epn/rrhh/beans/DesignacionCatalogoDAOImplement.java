@@ -51,4 +51,6 @@ public class DesignacionCatalogoDAOImplement extends DaoGenericoImplement<Design
 		return (int) query.getSingleResult();
 	}
 
+	
+
 }
