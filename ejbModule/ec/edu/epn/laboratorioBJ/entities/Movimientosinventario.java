@@ -26,8 +26,8 @@ public class Movimientosinventario implements Serializable {
 
 	private String aux2;
 
-	@Column(name="cantidad_dmt")
-	private int cantidadDmt;
+	@Column(name="cantidad_dmt", unique = true, nullable = false)
+	private Integer cantidadDmt;
 
 	@Column(name="cantidad_mov")
 	private BigDecimal cantidadMov;
@@ -92,11 +92,11 @@ public class Movimientosinventario implements Serializable {
 		this.aux2 = aux2;
 	}
 
-	public int getCantidadDmt() {
+	public Integer getCantidadDmt() {
 		return this.cantidadDmt;
 	}
 
-	public void setCantidadDmt(int cantidadDmt) {
+	public void setCantidadDmt(Integer cantidadDmt) {
 		this.cantidadDmt = cantidadDmt;
 	}
 
