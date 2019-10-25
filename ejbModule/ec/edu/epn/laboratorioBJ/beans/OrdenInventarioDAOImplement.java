@@ -117,6 +117,7 @@ public class OrdenInventarioDAOImplement extends DaoGenericoImplement<Ordeninven
 
 		List<Movimientosinventario> resultados = query.getResultList();
 		return resultados;
+		
 	}
 
 	@Override
