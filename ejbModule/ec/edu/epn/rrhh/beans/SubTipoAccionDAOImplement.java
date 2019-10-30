@@ -110,7 +110,6 @@ public class SubTipoAccionDAOImplement extends DaoGenericoImplement<SubtipoAccio
 		try{
 			resultado = (SubtipoAccion) query.getSingleResult();
 		}catch (NonUniqueResultException e){
-			e.printStackTrace();
 			resultado = (SubtipoAccion) query.getResultList().get(0);
 		}
 
