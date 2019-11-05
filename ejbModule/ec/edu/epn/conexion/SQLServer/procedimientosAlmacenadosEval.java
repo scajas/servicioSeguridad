@@ -26,7 +26,7 @@ public class procedimientosAlmacenadosEval {
 		}
 	}
 
-	public List<CargaPlanificacionDTO> obtenerCargaAcademicaPlanificacion(String cedula, String aï¿½oPensum,
+	public List<CargaPlanificacionDTO> obtenerCargaAcademicaPlanificacion(String cedula, String añoPensum,
 			String numeroPensum) {
 		java.sql.ResultSet result = null;
 		try {
@@ -40,7 +40,7 @@ public class procedimientosAlmacenadosEval {
 			cst.setString(3, "");
 			cst.setString(4, "");
 
-			cst.setString(5, aï¿½oPensum);
+			cst.setString(5, añoPensum);
 			cst.setString(6, numeroPensum);
 
 			result = cst.executeQuery();

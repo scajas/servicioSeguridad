@@ -57,6 +57,9 @@ public class AccionP implements Serializable {
 	@Column(name = "fecha_acta_concurso")
 	private Date fechaActaConcurso;
 
+	@Column(name = "resp_registro")
+	private String  responsableRegistro;
+	
 	public String getCargoAut() {
 		return cargoAut;
 	}
@@ -240,6 +243,16 @@ public class AccionP implements Serializable {
 	public void setFechaActaConcurso(Date fechaActaConcurso) {
 		this.fechaActaConcurso = fechaActaConcurso;
 	}
+
+	public String getResponsableRegistro() {
+		return responsableRegistro;
+	}
+
+	public void setResponsableRegistro(String responsableRegistro) {
+		this.responsableRegistro = responsableRegistro;
+	}
+	
+	
 	
 	
 
