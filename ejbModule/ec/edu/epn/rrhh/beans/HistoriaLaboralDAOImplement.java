@@ -14,6 +14,7 @@ import javax.persistence.Query;
 
 import ec.edu.epn.generic.DAO.DaoGenericoImplement;
 import ec.edu.epn.rrhh.DTO.DocenteDTO;
+import ec.edu.epn.rrhh.DTO.DocenteDTORrhh;
 import ec.edu.epn.rrhh.entities.Emp;
 import ec.edu.epn.rrhh.movimientos.Designacion;
 import ec.edu.epn.rrhh.movimientos.HistoriaLaboral;
@@ -3127,11 +3128,11 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 	}
 	
 	@Override
-	public List<DocenteDTO> historiaLaboralxPeriodo(Integer idPensum,  String nced, String nombre, String apellido, String dependenciaId)throws Exception {
+	public List<DocenteDTORrhh> historiaLaboralxPeriodo(Integer idPensum,  String nced, String nombre, String apellido, String dependenciaId)throws Exception {
 		
-		List<DocenteDTO> val = new ArrayList<DocenteDTO>();
+		List<DocenteDTORrhh> val = new ArrayList<DocenteDTORrhh>();
 		Query query = null;
-		query = getEntityManager().createNativeQuery("SELECT  * FROM \"Rrhh\".bi_reportecargodeprrhh(?,?,?,?,?);");
+		query = getEntityManager().createNativeQuery("SELECT  * FROM \"Rrhh\".bi_reportecargodeprrhh_th(?,?,?,?,?);");
 		
 		query.setParameter(1, idPensum);
 		query.setParameter(2, nced);
@@ -3143,7 +3144,7 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		
 		if (!lists.isEmpty()) {
 			for (Object list : lists) {
-				DocenteDTO oval = new DocenteDTO();
+				DocenteDTORrhh oval = new DocenteDTORrhh();
 				Object[] col = (Object[]) list;
 				if (col[0] != null && col[0].toString().length() != 0)
 					oval.setnCed(col[0]==null? "" : col[0].toString());
