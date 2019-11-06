@@ -24,6 +24,7 @@ public interface CargoDAO extends DaoGenerico<Cargosm> {
 	Integer getMaxId();
 	public List<Cargosm> findCargosAll();
 	public List<Cargosm> findCargosActivosMigrados();
+	public List<Cargosm> findCargosByNombreRmuAndGrupo(String nombreCargo, String grupo, Double rmu);
 
 	
 
