@@ -137,10 +137,11 @@ public class PreplanificacionDocenciaDAOImplement extends DaoGenericoImplement<P
 	public List<PreplanificacionDocencia> listaDocentePreplanifc(Integer idPensum, Integer idFacultad) {
 		try {
 			Query q = getEntityManager().createQuery(
-					"SELECT p FROM PreplanificacionDocencia p WHERE  p.idPensum = ? AND p.codDep in (select d.codDep from Dependencia d where d.idFacultad = ?) and p.nced is null");
+					"SELECT p FROM PreplanificacionDocencia p WHERE  p.idPensum = ? AND p.codDep in (select d.codDep from Dependencia d where d.idFacultad = ?) and p.nced is null and p.estado = ?");
 
 			q.setParameter(1, idPensum);
 			q.setParameter(2, idFacultad);
+			q.setParameter(2, "PREPLANIF");
 
 			return q.getResultList();
 		} catch (Exception e) {
