@@ -110,7 +110,6 @@ public class CargoDAOImplement extends DaoGenericoImplement<Cargosm> implements 
 		StringBuilder queryString = new StringBuilder(
 				"SELECT fam FROM Cargosm fam where fam.estado ='activo'"
 				+ "and fam.grupo = ?1 and fam.nombreCargo like ?2 and fam.remun = ?3");
-		
 		Query query = getEntityManager().createQuery(queryString.toString());
 		query.setParameter(1, grupo);
 		query.setParameter(2, "%"+nombreCargo);
