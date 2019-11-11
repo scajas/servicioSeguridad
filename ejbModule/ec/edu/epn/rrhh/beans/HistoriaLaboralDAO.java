@@ -109,9 +109,14 @@ public interface HistoriaLaboralDAO extends DaoGenerico<HistoriaLaboral> {
 
 	public List<HistoriaLaboral> getLicenciasActivasByEmpleado(Emp emp);
 	
-	public List<HistoriaLaboral> getAllLicenciasVencidas();
+	public List<HistoriaLaboral> getAllLicenciasVencidas(int firstResult, int maxResult);
 	
+	public List<HistoriaLaboral> getAllLicenciasVencidasByEmp(String nced, int firstResult, int maxResult);
+	
+	public List<HistoriaLaboral> getAllLicenciasVencidasByEmpApel(String apel, int firstResult, int maxResult);
 	public long getCountLicenciasVencidas();
+	
+	public long getCountLicenciasVencidasByEmp (String nced);
 
 	public HistoriaLaboral getAnioPeriodoSabaticoActivoByEmpleado(Emp emp);
 

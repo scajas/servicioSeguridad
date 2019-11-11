@@ -429,7 +429,7 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 	public long getCountOfHistoriasSinRegistro() {
 		StringBuilder queryString = new StringBuilder(
 				"SELECT count(fam) FROM HistoriaLaboral fam where  fam.accionP.subtipoAccion.tipoAccion.idTpa "
-				+ "in (413,414,415,416) and fam.id.fechaI = " + "(Select max(t.id.fechaI) "
+						+ "in (413,414,415,416) and fam.id.fechaI = " + "(Select max(t.id.fechaI) "
 						+ "from HistoriaLaboral t where t.id.idHist=fam.id.idHist)");
 
 		Query query = getEntityManager().createQuery(queryString.toString());
@@ -1768,6 +1768,81 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 			}
 		}
 	}
+
+	@Override
+	public List<HistoriaLaboral> getAllLicenciasVencidasByEmp(String nced, int firstResult, int maxResult) {
+		Date currentDate = new Date();
+		StringBuilder queryString = new StringBuilder("SELECT fam from HistoriaLaboral fam where "
+				+ "fam.accionP.subtipoAccion.tipoAccion.nombreAccion = ?1 " + "and fam.emp.nced = :cedula "
+				+ "and fam.accionP.subtipoAccion.nombreSubaccion like ?2 "
+				+ "and fam.fechaFin is NULL and (fam.id.estado is ?3 or fam.id.estado is 'Legalizada' or "
+				+ " fam.id.estado is 'Finalizado' ) " + "and fam.fechaRige >= '01/01/2014' "
+				+ "and fam.id.idHist not in (Select histo.id.idHist from HistoriaLaboral histo "
+				+ "where (histo.id.estado= ?4 or histo.id.estado=?5) "
+				+ " and histo.emp.nced = :cedula "
+				+ " and  histo.accionP.subtipoAccion.nombreSubaccion like ?2"
+				+ " and histo.accionP.subtipoAccion.tipoAccion.nombreAccion like 'LICENCIA%' "
+				+ " )and fam.fechaPrevistaFin <= ?6 ");
+
+		Query query = getEntityManager().createQuery(queryString.toString());
+		query.setParameter(1, "LICENCIA");
+		query.setParameter(2, "LICENCIA%");
+		query.setParameter(3, "Legalizado");
+		query.setParameter(4, "Anulado");
+		query.setParameter(5, "Insubsistente");
+		query.setParameter(6, currentDate);
+		query.setParameter("cedula", nced);
+
+		if (firstResult > 0) {
+			query.setFirstResult(firstResult);
+		}
+
+		if (maxResult > 0) {
+			query.setMaxResults(maxResult);
+		}
+		List<HistoriaLaboral> licenciasVencidas = query.getResultList();
+
+		return licenciasVencidas;
+
+	}
+	
+	@Override
+	public List<HistoriaLaboral> getAllLicenciasVencidasByEmpApel(String apel, int firstResult, int maxResult){
+		Date currentDate = new Date();
+		StringBuilder queryString = new StringBuilder("SELECT fam from HistoriaLaboral fam where "
+				+ "fam.accionP.subtipoAccion.tipoAccion.nombreAccion = ?1 " + "and fam.emp.apel like  '" 
+				+ apel.toUpperCase() + "' " 
+				+ "and fam.accionP.subtipoAccion.nombreSubaccion like ?2 "
+				+ "and fam.fechaFin is NULL and (fam.id.estado is ?3 or fam.id.estado is 'Legalizada' or "
+				+ " fam.id.estado is 'Finalizado' ) " + "and fam.fechaRige >= '01/01/2014' "
+				+ "and fam.id.idHist not in (Select histo.id.idHist from HistoriaLaboral histo "
+				+ "where (histo.id.estado= ?4 or histo.id.estado=?5) "
+				+ " and histo.emp.apel like '"  + apel.toUpperCase() + "' "
+				+ " and  histo.accionP.subtipoAccion.nombreSubaccion like ?2"
+				+ " and histo.accionP.subtipoAccion.tipoAccion.nombreAccion like 'LICENCIA%' "
+				+ " )and fam.fechaPrevistaFin <= ?6 ");
+
+		Query query = getEntityManager().createQuery(queryString.toString());
+		query.setParameter(1, "LICENCIA");
+		query.setParameter(2, "LICENCIA%");
+		query.setParameter(3, "Legalizado");
+		query.setParameter(4, "Anulado");
+		query.setParameter(5, "Insubsistente");
+		query.setParameter(6, currentDate);
+
+
+		if (firstResult > 0) {
+			query.setFirstResult(firstResult);
+		}
+
+		if (maxResult > 0) {
+			query.setMaxResults(maxResult);
+		}
+		List<HistoriaLaboral> licenciasVencidas = query.getResultList();
+
+		return licenciasVencidas;
+	}
+
 	// Get Licencias Activas
 
 	@Override
@@ -1777,7 +1852,6 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 				+ " or fam.accionP.subtipoAccion.tipoAccion.nombreAccion like 'PERMISO')");
 
 		Query firstQuery = getEntityManager().createQuery(queryFirst.toString());
-
 		firstQuery.setParameter(1, emp.getNced());
 		List<HistoriaLaboral> firstResult = firstQuery.getResultList();
 		if (firstResult.isEmpty()) {
@@ -1840,7 +1914,35 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		return count;
 	}
 
-	public List<HistoriaLaboral> getAllLicenciasVencidas() {
+	public long getCountLicenciasVencidasByEmp(String nced) {
+		Date currentDate = new Date();
+		StringBuilder queryString = new StringBuilder("SELECT count(fam) from HistoriaLaboral fam where "
+				+ "fam.accionP.subtipoAccion.tipoAccion.nombreAccion = ?1 " + "and fam.emp.nced = :cedula "
+				+ "and fam.accionP.subtipoAccion.nombreSubaccion like ?2 "
+				+ "and fam.fechaFin is NULL and (fam.id.estado is ?3 or fam.id.estado is 'Legalizada' or "
+				+ " fam.id.estado is 'Finalizado' ) " + "and fam.fechaRige >= '01/01/2014' "
+				+ "and fam.id.idHist not in (Select histo.id.idHist from HistoriaLaboral histo "
+				+ "where (histo.id.estado= ?4 or histo.id.estado=?5) "
+				+ " and histo.emp.nced = :cedula "
+				+ " and  histo.accionP.subtipoAccion.nombreSubaccion like ?2"
+				+ " and histo.accionP.subtipoAccion.tipoAccion.nombreAccion like 'LICENCIA%' "
+				+ " )and fam.fechaPrevistaFin <= ?6 ");
+
+		Query query = getEntityManager().createQuery(queryString.toString());
+		query.setParameter(1, "LICENCIA");
+		query.setParameter(2, "LICENCIA%");
+		query.setParameter(3, "Legalizado");
+		query.setParameter(4, "Anulado");
+		query.setParameter(5, "Insubsistente");
+		query.setParameter(6, currentDate);
+		query.setParameter("cedula", nced);
+
+		long count = (long) query.getSingleResult();
+
+		return count;
+	}
+
+	public List<HistoriaLaboral> getAllLicenciasVencidas(int firstResult, int maxResults) {
 
 		Date currentDate = new Date();
 		StringBuilder queryString = new StringBuilder(
@@ -1860,11 +1962,16 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		query.setParameter(3, "Anulado");
 		query.setParameter(4, "Insubsistente");
 		query.setParameter(5, currentDate);
-		List<HistoriaLaboral> licencia = null;
+		if (firstResult > 0) {
+			query.setFirstResult(firstResult);
+		}
 
-		licencia = query.getResultList();
+		if (maxResults > 0) {
+			query.setMaxResults(maxResults);
+		}
+		List<HistoriaLaboral> licenciasVencidas = query.getResultList();
 
-		return licencia;
+		return licenciasVencidas;
 
 	}
 
