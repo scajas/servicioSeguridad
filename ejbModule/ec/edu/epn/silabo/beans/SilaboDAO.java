@@ -31,6 +31,10 @@ public interface SilaboDAO extends DaoGenerico<Silabo>{
 
 	List<Silabo> listConsultaMateriaXCarrera(String codcarrera);
 
+	List<Silabo> consultarSilaboPensum(Integer idpensum);
+
+	List<Silabo> consultarSilaboPensumByEMp(Integer idpensum, String nced);
+
 }
 
 

@@ -249,20 +249,14 @@ public class ProyectoPDAOImplement extends
 			con = getDataSource().getConnection();
 			if (con != null) {
 				ps = con.prepareStatement(
-						"SELECT p.id_proy, p.codigo_pr, p.nombre_pr, rp.rol_proy, re.valor, p.fechaini, (p.fechaf -p.fechaini) AS estimado, r.idpensum "+
-						"FROM \"Proyectos\".proyecto p, \"Proyectos\".recursoh_pr r, \"Proyectos\".rol_proyecto rp, \"Proyectos\".recursoavance re "+
-						"WHERE p.id_proy= r.id_proy "+
-						"AND re.id_recurso= r.id_rh_pr "+
-						"AND re.tipo = 'P' "+						
+						"SELECT p.id_proy, p.codigo_pr, p.nombre_pr, rp.rol_proy, p.fechaini, (p.fechaf -p.fechaini) AS estimado "+
+						"FROM \"Proyectos\".proyecto p, \"Proyectos\".recursoh_pr r, \"Proyectos\".rol_proyecto rp "+
+						"WHERE p.id_proy= r.id_proy "+				
 						"AND r.id_rol_proy=rp.id_rol_proy "+
-						"AND p.estado IN ('En ejecución', 'Prórroga Ordinaria', 'Prórroga Extraordinaria') "+
-						"AND r.nced=? "+
-						"AND re.idpensum= ? ") ;
+						"AND p.estado IN ('En ejecución', 'Prórroga Ordinaria', 'Prórroga Extraordinaria','Proceso de cierre','Suspendido') "+
+						"AND r.nced=? ") ;
 		
 				ps.setString(1, cedula);
-				ps.setInt(2, idPensum);
-				
-
 				ResultSet rs = ps.executeQuery();
 				List<ProyectoDTO> listProyectoDtos = new ArrayList<ProyectoDTO>();
 
@@ -272,11 +266,9 @@ public class ProyectoPDAOImplement extends
 					dto.setCodidoProy(rs.getString(2)==null?"":rs.getString(2));
 					dto.setNombreProyecto(rs.getString(3)==null?"":rs.getString(3));
 					dto.setRol(rs.getString(4)==null?"":rs.getString(4));
-					dto.setHoras(rs.getString(5)==null?"":rs.getString(5));
-					dto.setFechaInicio(rs.getString(6)==null?"":rs.getString(6));
-					dto.setTiempoEstimado(rs.getString(7)==null?"":rs.getString(7));
-					dto.setIdPensum((rs.getString(8)==null || rs.getString(8).equals(""))?0: rs.getInt(8));
-
+					dto.setHoras("0");
+					dto.setFechaInicio(rs.getString(5)==null?"":rs.getString(5));
+					dto.setTiempoEstimado(rs.getString(6)==null?"":rs.getString(6));
 					listProyectoDtos.add(dto);
 				}
 				return listProyectoDtos;
@@ -292,6 +284,61 @@ public class ProyectoPDAOImplement extends
 		}
 
 	}
+	
+//	@Override
+//	public List<ProyectoDTO> listProyectoPlanificacion(String cedula, Integer idPensum) throws SQLException {
+//		Connection con = null;
+//		PreparedStatement ps = null;
+//		
+//				
+//
+//		try {
+//			con = getDataSource().getConnection();
+//			if (con != null) {
+//				ps = con.prepareStatement(
+//						"SELECT p.id_proy, p.codigo_pr, p.nombre_pr, rp.rol_proy, re.valor, p.fechaini, (p.fechaf -p.fechaini) AS estimado, r.idpensum "+
+//						"FROM \"Proyectos\".proyecto p, \"Proyectos\".recursoh_pr r, \"Proyectos\".rol_proyecto rp, \"Proyectos\".recursoavance re "+
+//						"WHERE p.id_proy= r.id_proy "+
+//						"AND re.id_recurso= r.id_rh_pr "+
+//						"AND re.tipo = 'P' "+						
+//						"AND r.id_rol_proy=rp.id_rol_proy "+
+//						"AND p.estado IN ('En ejecución', 'Prórroga Ordinaria', 'Prórroga Extraordinaria','Proceso de cierre','Suspendido') "+
+//						"AND r.nced=? "+
+//						"AND re.idpensum= ? ") ;
+//		
+//				ps.setString(1, cedula);
+//				ps.setInt(2, idPensum);
+//				
+//
+//				ResultSet rs = ps.executeQuery();
+//				List<ProyectoDTO> listProyectoDtos = new ArrayList<ProyectoDTO>();
+//
+//				while (rs.next()) {
+//					ProyectoDTO dto = new ProyectoDTO();
+//					dto.setIdProyecto(rs.getInt(1));
+//					dto.setCodidoProy(rs.getString(2)==null?"":rs.getString(2));
+//					dto.setNombreProyecto(rs.getString(3)==null?"":rs.getString(3));
+//					dto.setRol(rs.getString(4)==null?"":rs.getString(4));
+//					dto.setHoras(rs.getString(5)==null?"":rs.getString(5));
+//					dto.setFechaInicio(rs.getString(6)==null?"":rs.getString(6));
+//					dto.setTiempoEstimado(rs.getString(7)==null?"":rs.getString(7));
+//					dto.setIdPensum((rs.getString(8)==null || rs.getString(8).equals(""))?0: rs.getInt(8));
+//
+//					listProyectoDtos.add(dto);
+//				}
+//				return listProyectoDtos;
+//			} else {
+//				return null;
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//			return null;
+//		} finally {
+//			con.close();
+//			ps.close();
+//		}
+//
+//	}
 
 	
 	
@@ -321,7 +368,7 @@ public class ProyectoPDAOImplement extends
 			queryString.append(" ,RecursohPr rp   ");
 		}
 		
-		queryString.append(" where pr.estado IN ('En ejecución', 'Prórroga Ordinaria', 'Prórroga Extraordinaria','Proceso de cierre','Suspendido') and pr.tipoProyecto.idTipoProy != 4 ");
+		queryString.append(" where pr.estado IN ('En ejecución', 'Prórroga Ordinaria', 'Prórroga Extraordinaria','Proceso de cierre','Suspendido') ");
 		
 		if (cedula != null) {
 			queryString.append(" and rp.proyecto.idProy = pr.idProy   ");

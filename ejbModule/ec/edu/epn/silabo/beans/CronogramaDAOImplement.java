@@ -47,6 +47,21 @@ public class CronogramaDAOImplement extends DaoGenericoImplement<CronogramaDesar
 		return query.getResultList();
 
 	}
+	
+	
+	@Override
+	public CronogramaDesarrollo consultarCronogramaById(Integer idcrono) {
+
+		StringBuilder querys = new StringBuilder(
+				"SELECT e From CronogramaDesarrollo e where e.idCronograma = ?1 ");
+
+		Query query = getEntityManager().createQuery(querys.toString());
+		query.setParameter(1, idcrono);
+		
+
+		return (CronogramaDesarrollo) query.getSingleResult();
+
+	}
 
 	@Override
 	public int maxIdActividades() {
@@ -87,5 +102,63 @@ public class CronogramaDAOImplement extends DaoGenericoImplement<CronogramaDesar
 		}
 		return idPagosV;
 	}
+	
+	
+	@Override
+	public int maxNumCronoIndice(Silabo silabo) {
+		Query q = getEntityManager().createQuery("SELECT MAX(p.indice) FROM CronogramaDesarrollo p where p.silabo.idSilabo = ?1 and p.fechaCrono > '2019-10-02' ");
+		Integer idPagosV = null;
+		
+		q.setParameter(1, silabo.getIdSilabo());
+
+		try {
+			idPagosV = (Integer) q.setMaxResults(1).getSingleResult();
+		} catch (Exception e) {
+			e.printStackTrace();
+			idPagosV = null;
+		}
+		if (idPagosV == null) {
+			idPagosV = 1;
+		} else {
+			++idPagosV;
+		}
+		return idPagosV;
+	}
+	
+	@Override
+	public List<CronogramaDesarrollo> consultarCronogramaUpdate(Integer idsilado) {
+
+		StringBuilder querys = new StringBuilder(
+				"SELECT e From CronogramaDesarrollo e where e.silabo.idSilabo = ?1 and e.reemplazado = 'N'  order by e.indice ASC");
+
+		Query query = getEntityManager().createQuery(querys.toString());
+		query.setParameter(1, idsilado);
+
+		return query.getResultList();
+		
+
+	}
+	
+	@Override
+	public int maxNumCronoIndiceID(Integer idsilado) {
+		Query q = getEntityManager().createQuery("SELECT MAX(p.idCronograma) FROM CronogramaDesarrollo p where p.silabo.idSilabo = ?1 and p.reemplazado = 'S' ");
+		Integer idPagosV = null;
+		
+		q.setParameter(1, idsilado);
+
+		try {
+			idPagosV = (Integer) q.setMaxResults(1).getSingleResult();
+		} catch (Exception e) {
+			e.printStackTrace();
+			idPagosV = null;
+		}
+		if (idPagosV == null) {
+			idPagosV = 1;
+		} else {
+			idPagosV = idPagosV;
+		}
+		return idPagosV;
+	}
+	
 
 }
