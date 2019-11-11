@@ -1,6 +1,7 @@
 package ec.edu.epn.proyectos.DTO;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class EquipoProyectoDTO implements Serializable {
 
@@ -16,6 +17,8 @@ public class EquipoProyectoDTO implements Serializable {
 	private Double Hplanif;
 	private Double Hreport;
 	private String justificacion;
+	private Date fvincula;
+	private Date fdesvincula;
 	public String getRol() {
 		return rol;
 	}
@@ -57,6 +60,18 @@ public class EquipoProyectoDTO implements Serializable {
 	}
 	public void setJustificacion(String justificacion) {
 		this.justificacion = justificacion;
+	}
+	public Date getFvincula() {
+		return fvincula;
+	}
+	public void setFvincula(Date fvincula) {
+		this.fvincula = fvincula;
+	}
+	public Date getFdesvincula() {
+		return fdesvincula;
+	}
+	public void setFdesvincula(Date fdesvincula) {
+		this.fdesvincula = fdesvincula;
 	}
 
 	

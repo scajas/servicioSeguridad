@@ -52,12 +52,14 @@ import ec.edu.epn.gestionDocente.entities.TituloFormacionAcademica;
 import ec.edu.epn.proyectos.DTO.EquipoProyectoDTO;
 import ec.edu.epn.proyectos.beans.AutorProyectoDAO;
 import ec.edu.epn.proyectos.entities.AutoresProducto;
+import ec.edu.epn.proyectos.entities.Avanceestud;
 import ec.edu.epn.proyectos.entities.CierrePeriodo;
 import ec.edu.epn.proyectos.entities.Cronogramaavance;
 import ec.edu.epn.proyectos.entities.Lineasproy;
 import ec.edu.epn.proyectos.entities.Objetivoavance;
 import ec.edu.epn.proyectos.entities.Producto;
 import ec.edu.epn.proyectos.entities.ProyectoP;
+import ec.edu.epn.proyectos.entities.Proyectocarrera;
 import ec.edu.epn.proyectos.entities.Recursoavance;
 import ec.edu.epn.proyectos.entities.RecursohPr;
 import ec.edu.epn.publik.beans.UsuarioService;
@@ -2081,8 +2083,11 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 	public String generarPdfInvestifacionReporte(List<EquipoProyectoDTO> recursos, List<Lineasproy> lineas,
 			ProyectoP proyecto, List<Objetivoavance> objetivos, CierrePeriodo cierre,
 			List<Cronogramaavance> actividades, String pathDocs, RecursohPr director, Pensum periodo, String sigla,
-			Emp jefeDep, Dep dep, String firmaJD, String firmaDr,List<Producto> presentaciones,List<Producto> pubRegionales,List<Producto> pubMemorias,List<Producto> pubReportTecnico,List<Producto> pubDifusion,
-			List<Producto> tesisproyecto,List<Producto>  pubProyM,List<Producto> pubPat,List<Producto> pubLib,List<Producto> pubCap,List<Producto> pubOtros,List<Producto> pubScopus) {
+			Emp jefeDep, Dep dep, String firmaJD, String firmaDr, List<Producto> presentaciones,
+			List<Producto> pubRegionales, List<Producto> pubMemorias, List<Producto> pubReportTecnico,
+			List<Producto> pubDifusion, List<Producto> tesisproyecto, List<Producto> pubProyM, List<Producto> pubPat,
+			List<Producto> pubLib, List<Producto> pubCap, List<Producto> pubOtros, List<Producto> pubScopus,
+			List<Proyectocarrera> carreras, List<EquipoProyectoDTO> estudiantes) {
 		String url = "";
 		try {
 
@@ -2198,11 +2203,46 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			cell = new PdfPCell(new Phrase(linea, fuenteContenido));
 			cell.setColspan(3);
 			tablageneral.addCell(cell);
+
+			if (proyecto.getTipoProyecto().getIdTipoProy() == 4) {
+
+				cell = new PdfPCell(new Phrase("Carrera", fuente));
+				cell.setBackgroundColor(new BaseColor(197, 217, 241));
+				tablageneral.addCell(cell);
+
+				String carrera = "";
+				for (Proyectocarrera car : carreras) {
+					carrera += car.getNombre() + "  ";
+				}
+				cell = new PdfPCell(new Phrase(carrera, fuenteContenido));
+				cell.setColspan(3);
+				tablageneral.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Organización Colaboradora", fuente));
+				cell.setBackgroundColor(new BaseColor(197, 217, 241));
+				tablageneral.addCell(cell);
+
+				cell = new PdfPCell(new Phrase(proyecto.getBeneficiarioPr(), fuenteContenido));
+				cell.setColspan(3);
+				tablageneral.addCell(cell);
+
+			}
+
 			document.add(tablageneral);
 
 			////////////////////// tabla equipo del
 			////////////////////// proyecto////////////////////////
 
+			PdfPTable tablaLeyedanda = new PdfPTable(1);
+			tablaLeyedanda.setWidthPercentage(100);
+			float[] columnWidthLey = new float[] { 100f };
+			tablaLeyedanda.setWidths(columnWidthLey);
+			cell = new PdfPCell(new Phrase("A1. EQUIPO DE TRABAJO DEL PROYECTO", fuenteLeyenda));
+			cell.setBackgroundColor(new BaseColor(83, 141, 213));
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			tablaLeyedanda.addCell(cell);
+			document.add(tablaLeyedanda);
+			
 			PdfPTable tablaEquipoP = new PdfPTable(6);
 
 			tablaEquipoP.setWidthPercentage(100);
@@ -2267,15 +2307,111 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 
 			document.add(tablaEquipoP);
 
-			PdfPTable tablaLeyedanda = new PdfPTable(1);
-			tablaLeyedanda.setWidthPercentage(100);
-			float[] columnWidthLey = new float[] { 100f };
-			tablaLeyedanda.setWidths(columnWidthLey);
-			cell = new PdfPCell(new Phrase("A. OBJETIVOS DEL PROYECTO", fuenteLeyenda));
+			if (proyecto.getTipoProyecto().getIdTipoProy() == 4) {
+
+				////////////////////// tabla equipo del
+				////////////////////// proyecto////////////////////////
+
+				PdfPTable tablaLeyedandaE = new PdfPTable(1);
+				tablaLeyedandaE.setWidthPercentage(100);
+				
+				tablaLeyedandaE.setWidths(columnWidthLey);
+				cell = new PdfPCell(new Phrase("A2. ESTUDIANTES", fuenteLeyenda));
+				cell.setBackgroundColor(new BaseColor(83, 141, 213));
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				tablaLeyedandaE.addCell(cell);
+				document.add(tablaLeyedandaE);
+				
+				PdfPTable tablaEstud = new PdfPTable(7);
+
+				tablaEstud.setWidthPercentage(100);
+				float[] columnWidthest1 = new float[] { 20f, 20f, 20f, 10f, 10f, 10f, 10f };
+				tablaEstud.setWidths(columnWidthest1);
+
+				cell = new PdfPCell(new Phrase("Apellidos y Nombres", fuente));
+				cell.setBackgroundColor(new BaseColor(217, 217, 217));
+
+				tablaEstud.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Cédula.", fuente));
+				cell.setBackgroundColor(new BaseColor(217, 217, 217));
+
+				tablaEstud.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Carrera", fuente));
+				cell.setBackgroundColor(new BaseColor(217, 217, 217));
+
+				tablaEstud.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("F. Vinculación", fuente));
+				cell.setBackgroundColor(new BaseColor(217, 217, 217));
+				tablaEstud.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("F. Desvinculación", fuente));
+				cell.setBackgroundColor(new BaseColor(217, 217, 217));
+				tablaEstud.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Horas Pnalificadas\n" + periodo.getMeses(), fuente));
+				cell.setBackgroundColor(new BaseColor(197, 217, 241));
+				tablaEstud.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Horas Repostadas\n" + periodo.getMeses(), fuente));
+				cell.setBackgroundColor(new BaseColor(197, 217, 241));
+				tablaEstud.addCell(cell);
+
+				for (EquipoProyectoDTO avac : estudiantes) {
+					cell = new PdfPCell(new Phrase(avac.getNombres(), fuente));
+
+					tablaEstud.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(avac.getCargo(), fuenteContenido));
+					tablaEstud.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(avac.getDepar(), fuenteContenido));
+					tablaEstud.addCell(cell);
+
+					if (avac.getFvincula() == null) {
+						cell = new PdfPCell(new Phrase("", fuenteContenido));
+						tablaEstud.addCell(cell);
+					}
+
+					else {
+
+						cell = new PdfPCell(new Phrase(avac.getFvincula().toString(), fuenteContenido));
+						tablaEstud.addCell(cell);
+					}
+
+					if (avac.getFdesvincula() == null) {
+						cell = new PdfPCell(new Phrase("", fuenteContenido));
+						tablaEstud.addCell(cell);
+					}
+
+					else {
+
+						cell = new PdfPCell(new Phrase(avac.getFdesvincula().toString(), fuenteContenido));
+						tablaEstud.addCell(cell);
+					}
+
+					cell = new PdfPCell(new Phrase(avac.getHplanif().toString(), fuenteContenido));
+					tablaEstud.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(avac.getHreport().toString(), fuenteContenido));
+					tablaEstud.addCell(cell);
+
+				}
+
+				document.add(tablaEstud);
+			}
+
+			PdfPTable tablaLeyedandaO = new PdfPTable(1);
+			tablaLeyedandaO.setWidthPercentage(100);
+			
+			tablaLeyedandaO.setWidths(columnWidthLey);
+			cell = new PdfPCell(new Phrase("B. OBJETIVOS DEL PROYECTO", fuenteLeyenda));
 			cell.setBackgroundColor(new BaseColor(83, 141, 213));
 			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-			tablaLeyedanda.addCell(cell);
-			document.add(tablaLeyedanda);
+			tablaLeyedandaO.addCell(cell);
+			document.add(tablaLeyedandaO);
 
 			//////////////////// OBJETIVO GENERAL
 
@@ -2340,7 +2476,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			PdfPTable tablaObjGeneralPorcen = new PdfPTable(2);
 			tablaObjGeneralPorcen.setWidthPercentage(100);
 			tablaObjGeneral.setWidths(columnWidthObjG);
-			cell = new PdfPCell(new Phrase("", fuente));
+			cell = new PdfPCell(new Phrase("Porcentaje Total de Avance Acumulado del Proyecto", fuente));
 			cell.setBackgroundColor(new BaseColor(197, 217, 241));
 			tablaObjGeneralPorcen.addCell(cell);
 			cell = new PdfPCell(new Phrase(cierre.getAvance().toString(), fuenteContenido));
@@ -2353,7 +2489,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			tablaLeyedandaCrono.setWidthPercentage(100);
 
 			tablaLeyedandaCrono.setWidths(columnWidthLey);
-			cell = new PdfPCell(new Phrase("B. CRONOGRAMA DE AVANCE DEL PROYECTO EN EL PERIODO " + cierre.getMeses(),
+			cell = new PdfPCell(new Phrase("C. CRONOGRAMA DE AVANCE DEL PROYECTO EN EL PERIODO " + cierre.getMeses(),
 					fuenteLeyenda));
 			cell.setBackgroundColor(new BaseColor(83, 141, 213));
 			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -2428,973 +2564,942 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			}
 
 			document.add(tablaActividades);
-			
+
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 			String fechaComoCadena = sdf.format(new Date());
 
-	///////// TABLA PRODUCTOS///////////////////////////////
+			///////// TABLA PRODUCTOS///////////////////////////////
 
-					PdfPTable tablaLeyedandaProducto = new PdfPTable(1);
-					tablaLeyedandaProducto.setWidthPercentage(100);
-					tablaLeyedandaProducto.setWidths(columnWidthLey);
-					cell = new PdfPCell(new Phrase("PRODUCTOS GENERADOS DURANTE EL PERIODO ACADÉMICO " + periodo.getMeses()
-							+ "\n", fuenteLeyenda));
-					cell.setBackgroundColor(new BaseColor(250, 191, 143));
-					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-					tablaLeyedandaProducto.addCell(cell);
-					document.add(tablaLeyedandaProducto);
+			PdfPTable tablaLeyedandaProducto = new PdfPTable(1);
+			tablaLeyedandaProducto.setWidthPercentage(100);
+			tablaLeyedandaProducto.setWidths(columnWidthLey);
+			cell = new PdfPCell(new Phrase(
+					"PRODUCTOS GENERADOS DURANTE EL PERIODO ACADÉMICO " + periodo.getMeses() + "\n", fuenteLeyenda));
+			cell.setBackgroundColor(new BaseColor(250, 191, 143));
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			tablaLeyedandaProducto.addCell(cell);
+			document.add(tablaLeyedandaProducto);
 
-					if (presentaciones.size() > 0) {
+			if (presentaciones.size() > 0 && proyecto.getTipoProyecto().getIdTipoProy() != 4) {
 
-						PdfPTable tablaLeyedandaProductoPUBLICACIONES = new PdfPTable(1);
-						tablaLeyedandaProductoPUBLICACIONES.setWidthPercentage(100);
-						tablaLeyedandaProductoPUBLICACIONES.setWidths(columnWidthLey);
+				PdfPTable tablaLeyedandaProductoPUBLICACIONES = new PdfPTable(1);
+				tablaLeyedandaProductoPUBLICACIONES.setWidthPercentage(100);
+				tablaLeyedandaProductoPUBLICACIONES.setWidths(columnWidthLey);
+				cell = new PdfPCell(
+						new Phrase("A. PRESENTACIONES EN EVENTOS (NACIONALES O INTERNACIONALES)", fuenteLeyenda));
+				cell.setBackgroundColor(new BaseColor(250, 191, 143));
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				tablaLeyedandaProductoPUBLICACIONES.addCell(cell);
+				document.add(tablaLeyedandaProductoPUBLICACIONES);
+
+				PdfPTable tablapUB = new PdfPTable(8);
+				tablapUB.setWidthPercentage(100);
+				float[] columnWidtpUB = new float[] { 5f, 15f, 15f, 15f, 15f, 15f, 10F, 10F };
+				tablapUB.setWidths(columnWidtpUB);
+
+				cell = new PdfPCell(new Phrase("N°", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapUB.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Tipo de presentación", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapUB.addCell(cell);
+				cell = new PdfPCell(new Phrase("Título", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapUB.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Expositor", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapUB.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Nombre del evento", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapUB.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("País", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapUB.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Ciudad", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapUB.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Fecha de presentación", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapUB.addCell(cell);
+
+				for (int i = 0; i < presentaciones.size(); i++) {
+					Integer numeral = i + 1;
+
+					cell = new PdfPCell(new Phrase(numeral.toString(), fuente));
+					tablapUB.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(presentaciones.get(i).getTipopresentacion(), fuenteContenido));
+					tablapUB.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(presentaciones.get(i).getTitulo(), fuenteContenido));
+					tablapUB.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(presentaciones.get(i).getExpositor(), fuenteContenido));
+					tablapUB.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(presentaciones.get(i).getEvento(), fuenteContenido));
+					tablapUB.addCell(cell);
+					cell = new PdfPCell(new Phrase(presentaciones.get(i).getLugar(), fuenteContenido));
+					tablapUB.addCell(cell);
+					cell = new PdfPCell(new Phrase(presentaciones.get(i).getCarrera(), fuenteContenido));
+					tablapUB.addCell(cell);
+
+					if (presentaciones.get(i).getAnio() != null && presentaciones.get(i).getMes() != null) {
+						cell = new PdfPCell(new Phrase(presentaciones.get(i).getMes().toString() + "-"
+								+ presentaciones.get(i).getAnio().toString(), fuenteContenido));
+						tablapUB.addCell(cell);
+					}
+
+					else {
+						cell = new PdfPCell(new Phrase("", fuenteContenido));
+						tablapUB.addCell(cell);
+					}
+
+				}
+				document.add(tablapUB);
+
+			}
+
+			if (pubScopus.size() > 0 && proyecto.getTipoProyecto().getIdTipoProy() != 4) {
+				PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
+				tablaLeyedandaProductopON.setWidthPercentage(100);
+				tablaLeyedandaProductopON.setWidths(columnWidthLey);
+				cell = new PdfPCell(new Phrase("B.1 PUBLICACIONES EN SCOPUS", fuenteLeyenda));
+				cell.setBackgroundColor(new BaseColor(250, 191, 143));
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				tablaLeyedandaProductopON.addCell(cell);
+				document.add(tablaLeyedandaProductopON);
+
+				PdfPTable tablappON = new PdfPTable(5);
+				tablappON.setWidthPercentage(100);
+				float[] columnWidtppON = new float[] { 5f, 30f, 25f, 20f, 20f };
+				tablappON.setWidths(columnWidtppON);
+
+				cell = new PdfPCell(new Phrase("N°", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Autores con filiación EPN", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Título de la publicación", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Fecha de publicación", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Nombre revista", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				for (int i = 0; i < pubScopus.size(); i++) {
+					Integer numeral = i + 1;
+
+					cell = new PdfPCell(new Phrase(numeral.toString(), fuente));
+					tablappON.addCell(cell);
+
+					if (pubScopus.get(i).getAutores().size() > 0) {
+						String nomnbres = "";
+						for (AutoresProducto au : pubScopus.get(i).getAutores()) {
+							nomnbres = nomnbres + au.getNombres() + "\n";
+						}
+
+						cell = new PdfPCell(new Phrase(nomnbres, fuenteContenido));
+						tablappON.addCell(cell);
+					}
+
+					else {
+						cell = new PdfPCell(new Phrase("", fuenteContenido));
+						tablappON.addCell(cell);
+
+					}
+
+					cell = new PdfPCell(new Phrase(pubScopus.get(i).getTitulo(), fuenteContenido));
+					tablappON.addCell(cell);
+
+					if (pubScopus.get(i).getFechapresenta() != null) {
 						cell = new PdfPCell(
-								new Phrase("A. PRESENTACIONES EN EVENTOS (NACIONALES O INTERNACIONALES)", fuenteLeyenda));
-						cell.setBackgroundColor(new BaseColor(250, 191, 143));
-						cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-						tablaLeyedandaProductoPUBLICACIONES.addCell(cell);
-						document.add(tablaLeyedandaProductoPUBLICACIONES);
-
-						PdfPTable tablapUB = new PdfPTable(8);
-						tablapUB.setWidthPercentage(100);
-						float[] columnWidtpUB = new float[] { 5f, 15f, 15f, 15f, 15f, 15f, 10F, 10F };
-						tablapUB.setWidths(columnWidtpUB);
-
-						cell = new PdfPCell(new Phrase("N°", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablapUB.addCell(cell);
-
-						cell = new PdfPCell(new Phrase("Tipo de presentación", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablapUB.addCell(cell);
-						cell = new PdfPCell(new Phrase("Título", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablapUB.addCell(cell);
-
-						cell = new PdfPCell(new Phrase("Expositor", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablapUB.addCell(cell);
-
-						cell = new PdfPCell(new Phrase("Nombre del evento", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablapUB.addCell(cell);
-
-						cell = new PdfPCell(new Phrase("País", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablapUB.addCell(cell);
-
-						cell = new PdfPCell(new Phrase("Ciudad", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablapUB.addCell(cell);
-
-						cell = new PdfPCell(new Phrase("Fecha de presentación", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablapUB.addCell(cell);
-
-						for (int i = 0; i < presentaciones.size(); i++) {
-							Integer numeral = i + 1;
-
-							cell = new PdfPCell(new Phrase(numeral.toString(), fuente));
-							tablapUB.addCell(cell);
-
-							cell = new PdfPCell(new Phrase(presentaciones.get(i).getTipopresentacion(), fuenteContenido));
-							tablapUB.addCell(cell);
-
-							cell = new PdfPCell(new Phrase(presentaciones.get(i).getTitulo(), fuenteContenido));
-							tablapUB.addCell(cell);
-
-							cell = new PdfPCell(new Phrase(presentaciones.get(i).getExpositor(), fuenteContenido));
-							tablapUB.addCell(cell);
-
-							cell = new PdfPCell(new Phrase(presentaciones.get(i).getEvento(), fuenteContenido));
-							tablapUB.addCell(cell);
-							cell = new PdfPCell(new Phrase(presentaciones.get(i).getLugar(), fuenteContenido));
-							tablapUB.addCell(cell);
-							cell = new PdfPCell(new Phrase(presentaciones.get(i).getCarrera(), fuenteContenido));
-							tablapUB.addCell(cell);
-
-							if (presentaciones.get(i).getAnio() != null && presentaciones.get(i).getMes() != null ) {
-								cell = new PdfPCell(
-										new Phrase(presentaciones.get(i).getMes().toString() + "-"+presentaciones.get(i).getAnio().toString(), fuenteContenido));
-								tablapUB.addCell(cell);
-							}
-
-							else {
-								cell = new PdfPCell(new Phrase("", fuenteContenido));
-								tablapUB.addCell(cell);
-							}
-
-						}
-						document.add(tablapUB);
-
+								new Phrase(sdf.format(pubScopus.get(i).getFechapresenta()), fuenteContenido));
+						tablappON.addCell(cell);
 					}
-					
-					
-					if (pubScopus.size() > 0) {
-						PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
-						tablaLeyedandaProductopON.setWidthPercentage(100);
-						tablaLeyedandaProductopON.setWidths(columnWidthLey);
-						cell = new PdfPCell(new Phrase("B.1 PUBLICACIONES EN SCOPUS", fuenteLeyenda));
-						cell.setBackgroundColor(new BaseColor(250, 191, 143));
-						cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-						tablaLeyedandaProductopON.addCell(cell);
-						document.add(tablaLeyedandaProductopON);
 
-						PdfPTable tablappON = new PdfPTable(5);
-						tablappON.setWidthPercentage(100);
-						float[] columnWidtppON = new float[] { 5f, 30f, 25f, 20f, 20f};
-						tablappON.setWidths(columnWidtppON);
-
-						cell = new PdfPCell(new Phrase("N°", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
+					else {
+						cell = new PdfPCell(new Phrase("", fuenteContenido));
 						tablappON.addCell(cell);
-
-						cell = new PdfPCell(new Phrase("Autores con filiación EPN", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablappON.addCell(cell);
-
-						cell = new PdfPCell(new Phrase("Título de la publicación", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablappON.addCell(cell);
-
-						cell = new PdfPCell(new Phrase("Fecha de publicación", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablappON.addCell(cell);
-
-						cell = new PdfPCell(new Phrase("Nombre revista", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablappON.addCell(cell);
-
-						
-
-						for (int i = 0; i < pubScopus.size(); i++) {
-							Integer numeral = i + 1;
-
-							cell = new PdfPCell(new Phrase(numeral.toString(), fuente));
-							tablappON.addCell(cell);
-
-							if (pubScopus.get(i).getAutores().size() > 0) {
-								String nomnbres = "";
-								for (AutoresProducto au : pubScopus.get(i).getAutores()) {
-									nomnbres = nomnbres + au.getNombres() + "\n";
-								}
-
-								cell = new PdfPCell(new Phrase(nomnbres, fuenteContenido));
-								tablappON.addCell(cell);
-							}
-
-							else {
-								cell = new PdfPCell(new Phrase("", fuenteContenido));
-								tablappON.addCell(cell);
-
-							}
-
-							cell = new PdfPCell(new Phrase(pubScopus.get(i).getTitulo(), fuenteContenido));
-							tablappON.addCell(cell);
-
-							if (pubScopus.get(i).getFechapresenta() != null) {
-								cell = new PdfPCell(
-										new Phrase(sdf.format(pubScopus.get(i).getFechapresenta()), fuenteContenido));
-								tablappON.addCell(cell);
-							}
-
-							else {
-								cell = new PdfPCell(new Phrase("", fuenteContenido));
-								tablappON.addCell(cell);
-							}
-
-							cell = new PdfPCell(new Phrase(pubScopus.get(i).getEvento(), fuenteContenido));
-							tablappON.addCell(cell);
-
-							
-
-							
-
-						}
-						document.add(tablappON);
-
 					}
-					
-					if (pubRegionales.size() > 0) {
-						PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
-						tablaLeyedandaProductopON.setWidthPercentage(100);
-						tablaLeyedandaProductopON.setWidths(columnWidthLey);
-						cell = new PdfPCell(new Phrase("B.2 PUBLICACIONES REGIONALES", fuenteLeyenda));
-						cell.setBackgroundColor(new BaseColor(250, 191, 143));
-						cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-						tablaLeyedandaProductopON.addCell(cell);
-						document.add(tablaLeyedandaProductopON);
 
-						PdfPTable tablappON = new PdfPTable(6);
-						tablappON.setWidthPercentage(100);
-						float[] columnWidtppON = new float[] { 5f, 20f, 20f, 20f, 20f, 15f };
-						tablappON.setWidths(columnWidtppON);
+					cell = new PdfPCell(new Phrase(pubScopus.get(i).getEvento(), fuenteContenido));
+					tablappON.addCell(cell);
 
-						cell = new PdfPCell(new Phrase("N°", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablappON.addCell(cell);
+				}
+				document.add(tablappON);
 
-						cell = new PdfPCell(new Phrase("Autores con filiación EPN", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablappON.addCell(cell);
+			}
 
-						cell = new PdfPCell(new Phrase("Título de la publicación", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablappON.addCell(cell);
+			if (pubRegionales.size() > 0 && proyecto.getTipoProyecto().getIdTipoProy() != 4) {
+				PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
+				tablaLeyedandaProductopON.setWidthPercentage(100);
+				tablaLeyedandaProductopON.setWidths(columnWidthLey);
+				cell = new PdfPCell(new Phrase("B.2 PUBLICACIONES REGIONALES", fuenteLeyenda));
+				cell.setBackgroundColor(new BaseColor(250, 191, 143));
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				tablaLeyedandaProductopON.addCell(cell);
+				document.add(tablaLeyedandaProductopON);
 
-						cell = new PdfPCell(new Phrase("Fecha de publicación", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablappON.addCell(cell);
+				PdfPTable tablappON = new PdfPTable(6);
+				tablappON.setWidthPercentage(100);
+				float[] columnWidtppON = new float[] { 5f, 20f, 20f, 20f, 20f, 15f };
+				tablappON.setWidths(columnWidtppON);
 
-						cell = new PdfPCell(new Phrase("Nombre revista", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablappON.addCell(cell);
+				cell = new PdfPCell(new Phrase("N°", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
 
-						cell = new PdfPCell(new Phrase("Indexación de la revista", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablappON.addCell(cell);
+				cell = new PdfPCell(new Phrase("Autores con filiación EPN", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
 
-						for (int i = 0; i < pubRegionales.size(); i++) {
-							Integer numeral = i + 1;
+				cell = new PdfPCell(new Phrase("Título de la publicación", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
 
-							cell = new PdfPCell(new Phrase(numeral.toString(), fuente));
-							tablappON.addCell(cell);
+				cell = new PdfPCell(new Phrase("Fecha de publicación", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
 
-							if (pubRegionales.get(i).getAutores().size() > 0) {
-								String nomnbres = "";
-								for (AutoresProducto au : pubRegionales.get(i).getAutores()) {
-									nomnbres = nomnbres + au.getNombres() + "\n";
-								}
+				cell = new PdfPCell(new Phrase("Nombre revista", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
 
-								cell = new PdfPCell(new Phrase(nomnbres, fuenteContenido));
-								tablappON.addCell(cell);
-							}
+				cell = new PdfPCell(new Phrase("Indexación de la revista", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
 
-							else {
-								cell = new PdfPCell(new Phrase("", fuenteContenido));
-								tablappON.addCell(cell);
+				for (int i = 0; i < pubRegionales.size(); i++) {
+					Integer numeral = i + 1;
 
-							}
+					cell = new PdfPCell(new Phrase(numeral.toString(), fuente));
+					tablappON.addCell(cell);
 
-							cell = new PdfPCell(new Phrase(pubRegionales.get(i).getTitulo(), fuenteContenido));
-							tablappON.addCell(cell);
-
-							if (pubRegionales.get(i).getAnio() != null && pubRegionales.get(i).getMes() != null ) {
-								cell = new PdfPCell(
-										new Phrase(pubRegionales.get(i).getMes().toString() + "-"+pubRegionales.get(i).getAnio().toString(), fuenteContenido));
-								tablappON.addCell(cell);
-							}
-
-							else {
-								cell = new PdfPCell(new Phrase("", fuenteContenido));
-								tablappON.addCell(cell);
-							}
-
-							cell = new PdfPCell(new Phrase(pubRegionales.get(i).getEvento(), fuenteContenido));
-							tablappON.addCell(cell);
-
-							cell = new PdfPCell(new Phrase(pubRegionales.get(i).getCatalogo(), fuenteContenido));
-							tablappON.addCell(cell);
-
-							
-
+					if (pubRegionales.get(i).getAutores().size() > 0) {
+						String nomnbres = "";
+						for (AutoresProducto au : pubRegionales.get(i).getAutores()) {
+							nomnbres = nomnbres + au.getNombres() + "\n";
 						}
-						document.add(tablappON);
 
+						cell = new PdfPCell(new Phrase(nomnbres, fuenteContenido));
+						tablappON.addCell(cell);
 					}
-					
-					
 
-					if (pubMemorias.size() > 0) {
-						PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
-						tablaLeyedandaProductopON.setWidthPercentage(100);
-						tablaLeyedandaProductopON.setWidths(columnWidthLey);
-						cell = new PdfPCell(new Phrase("B.3 MEMORIAS DE EVENTOS ACADÉMICOS REGIONALES", fuenteLeyenda));
-						cell.setBackgroundColor(new BaseColor(250, 191, 143));
-						cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-						tablaLeyedandaProductopON.addCell(cell);
-						document.add(tablaLeyedandaProductopON);
-
-						PdfPTable tablappON = new PdfPTable(7);
-						tablappON.setWidthPercentage(100);
-						float[] columnWidtppON = new float[] { 5f, 20f, 20f, 20f, 15f, 10f, 10f };
-						tablappON.setWidths(columnWidtppON);
-
-						cell = new PdfPCell(new Phrase("N°", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
+					else {
+						cell = new PdfPCell(new Phrase("", fuenteContenido));
 						tablappON.addCell(cell);
-
-						cell = new PdfPCell(new Phrase("Autores con filiación EPN", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablappON.addCell(cell);
-
-						cell = new PdfPCell(new Phrase("Título de la publicación", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablappON.addCell(cell);
-
-						cell = new PdfPCell(new Phrase("Fecha del evento", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablappON.addCell(cell);
-
-						cell = new PdfPCell(new Phrase("Nombre del evento académico", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablappON.addCell(cell);
-
-						cell = new PdfPCell(new Phrase("País", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablappON.addCell(cell);
-
-						cell = new PdfPCell(new Phrase("Ciudad", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablappON.addCell(cell);
-
-						for (int i = 0; i < pubMemorias.size(); i++) {
-							Integer numeral = i + 1;
-
-							cell = new PdfPCell(new Phrase(numeral.toString(), fuente));
-							tablappON.addCell(cell);
-
-							if (pubMemorias.get(i).getAutores().size() > 0) {
-								String nomnbres = "";
-								for (AutoresProducto au : pubMemorias.get(i).getAutores()) {
-									nomnbres = nomnbres + au.getNombres() + "\n";
-								}
-
-								cell = new PdfPCell(new Phrase(nomnbres, fuenteContenido));
-								tablappON.addCell(cell);
-							}
-
-							else {
-								cell = new PdfPCell(new Phrase("", fuenteContenido));
-								tablappON.addCell(cell);
-
-							}
-
-							cell = new PdfPCell(new Phrase(pubMemorias.get(i).getTitulo(), fuenteContenido));
-							tablappON.addCell(cell);
-
-							if (pubMemorias.get(i).getAnio() != null && pubMemorias.get(i).getMes() != null ) {
-								cell = new PdfPCell(
-										new Phrase(pubMemorias.get(i).getMes().toString() + "-"+pubMemorias.get(i).getAnio().toString(), fuenteContenido));
-								tablappON.addCell(cell);
-							}
-
-							else {
-								cell = new PdfPCell(new Phrase("", fuenteContenido));
-								tablappON.addCell(cell);
-							}
-
-							cell = new PdfPCell(new Phrase(pubMemorias.get(i).getEvento(), fuenteContenido));
-							tablappON.addCell(cell);
-
-							cell = new PdfPCell(new Phrase(pubMemorias.get(i).getLugar(), fuenteContenido));
-							tablappON.addCell(cell);
-
-							cell = new PdfPCell(new Phrase(pubMemorias.get(i).getExpositor(), fuenteContenido));
-							tablappON.addCell(cell);
-
-						}
-						document.add(tablappON);
-
-					}
-					
-					if (pubReportTecnico.size() > 0) {
-						PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
-						tablaLeyedandaProductopON.setWidthPercentage(100);
-						tablaLeyedandaProductopON.setWidths(columnWidthLey);
-						cell = new PdfPCell(new Phrase("C REPORTES TÉCNICOS", fuenteLeyenda));
-						cell.setBackgroundColor(new BaseColor(250, 191, 143));
-						cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-						tablaLeyedandaProductopON.addCell(cell);
-						document.add(tablaLeyedandaProductopON);
-
-						PdfPTable tablappON = new PdfPTable(5);
-						tablappON.setWidthPercentage(100);
-						float[] columnWidtppON = new float[] { 5f, 20f, 20f, 20f, 20f  };
-						tablappON.setWidths(columnWidtppON);
-
-						cell = new PdfPCell(new Phrase("N°", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablappON.addCell(cell);
-						
-						cell = new PdfPCell(new Phrase("Título del artículo", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablappON.addCell(cell);
-
-						cell = new PdfPCell(new Phrase("Autores", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablappON.addCell(cell);
-						
-						cell = new PdfPCell(new Phrase("Estado", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablappON.addCell(cell);
-
-						
-
-						cell = new PdfPCell(new Phrase("Revista", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablappON.addCell(cell);
-
-						for (int i = 0; i < pubReportTecnico.size(); i++) {
-							Integer numeral = i + 1;
-
-							cell = new PdfPCell(new Phrase(numeral.toString(), fuente));
-							tablappON.addCell(cell);
-							
-							cell = new PdfPCell(new Phrase(pubReportTecnico.get(i).getTitulo(), fuenteContenido));
-							tablappON.addCell(cell);
-							
-							cell = new PdfPCell(new Phrase(pubReportTecnico.get(i).getAutorexterno(), fuenteContenido));
-							tablappON.addCell(cell);
-							
-							cell = new PdfPCell(new Phrase(pubReportTecnico.get(i).getEstado(), fuenteContenido));
-							tablappON.addCell(cell);
-							
-							
-						
-							cell = new PdfPCell(new Phrase(pubReportTecnico.get(i).getEvento(), fuenteContenido));
-							tablappON.addCell(cell);
-
-						}
-						document.add(tablappON);
-
-					}
-					
-					if (pubDifusion.size() > 0) {
-						PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
-						tablaLeyedandaProductopON.setWidthPercentage(100);
-						tablaLeyedandaProductopON.setWidths(columnWidthLey);
-						cell = new PdfPCell(new Phrase("D. DIFUSIÓN A LA COMUNIDAD POLITÉCNICA", fuenteLeyenda));
-						cell.setBackgroundColor(new BaseColor(250, 191, 143));
-						cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-						tablaLeyedandaProductopON.addCell(cell);
-						document.add(tablaLeyedandaProductopON);
-
-						PdfPTable tablappON = new PdfPTable(6);
-						tablappON.setWidthPercentage(100);
-						float[] columnWidtppON = new float[] { 5f, 20f, 20f, 20f, 20f, 15f };
-						tablappON.setWidths(columnWidtppON);
-
-						cell = new PdfPCell(new Phrase("N°", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablappON.addCell(cell);
-						
-						cell = new PdfPCell(new Phrase("Título de la difusión", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablappON.addCell(cell);
-
-						cell = new PdfPCell(new Phrase("Tipo", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablappON.addCell(cell);
-						
-						cell = new PdfPCell(new Phrase("Expositor", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablappON.addCell(cell);
-
-						cell = new PdfPCell(new Phrase("Título del evento", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablappON.addCell(cell);
-
-						cell = new PdfPCell(new Phrase("Fecha de presentación", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablappON.addCell(cell);
-
-						for (int i = 0; i < pubDifusion.size(); i++) {
-							Integer numeral = i + 1;
-
-							cell = new PdfPCell(new Phrase(numeral.toString(), fuente));
-							tablappON.addCell(cell);
-							
-							cell = new PdfPCell(new Phrase(pubDifusion.get(i).getTitulo(), fuenteContenido));
-							tablappON.addCell(cell);
-							
-							cell = new PdfPCell(new Phrase(pubDifusion.get(i).getEstado(), fuenteContenido));
-							tablappON.addCell(cell);
-							
-							cell = new PdfPCell(new Phrase(pubDifusion.get(i).getExpositor(), fuenteContenido));
-							tablappON.addCell(cell);
-							
-							cell = new PdfPCell(new Phrase(pubDifusion.get(i).getEvento(), fuenteContenido));
-							tablappON.addCell(cell);
-							
-							if (pubDifusion.get(i).getAnio() != null && pubDifusion.get(i).getMes() != null ) {
-								cell = new PdfPCell(
-										new Phrase(pubDifusion.get(i).getMes().toString() + "-"+pubDifusion.get(i).getAnio().toString(), fuenteContenido));
-								tablappON.addCell(cell);
-							}
-
-							else {
-								cell = new PdfPCell(new Phrase("", fuenteContenido));
-								tablappON.addCell(cell);
-							}
-						
-							
-
-						}
-						document.add(tablappON);
 
 					}
 
-					if (tesisproyecto.size() > 0) {
+					cell = new PdfPCell(new Phrase(pubRegionales.get(i).getTitulo(), fuenteContenido));
+					tablappON.addCell(cell);
 
-						PdfPTable tablaLeyedandaProductoTESIS = new PdfPTable(1);
-						tablaLeyedandaProductoTESIS.setWidthPercentage(100);
-						tablaLeyedandaProductoTESIS.setWidths(columnWidthLey);
-						cell = new PdfPCell(new Phrase("E. PROYECTO DE TITULACIÓN DE PREGRADO / TESIS DE POSGRADO", fuenteLeyenda));
-						cell.setBackgroundColor(new BaseColor(250, 191, 143));
-						cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-						tablaLeyedandaProductoTESIS.addCell(cell);
-						document.add(tablaLeyedandaProductoTESIS);
-
-						PdfPTable tablapTES = new PdfPTable(5);
-						tablapTES.setWidthPercentage(100);
-						float[] columnWidtptES = new float[] { 5f, 30f, 25f, 20f, 20f };
-						tablapTES.setWidths(columnWidtptES);
-
-						cell = new PdfPCell(new Phrase("N°", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablapTES.addCell(cell);
-
-						cell = new PdfPCell(new Phrase("Título del proyecto de titulación", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablapTES.addCell(cell);
-
-						cell = new PdfPCell(new Phrase("Estudiante(s)", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablapTES.addCell(cell);
-
-						cell = new PdfPCell(new Phrase("Carrera/Programa", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablapTES.addCell(cell);
-
-						cell = new PdfPCell(new Phrase("Estado", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablapTES.addCell(cell);
-
-						for (int i = 0; i < tesisproyecto.size(); i++) {
-							Integer numeral = i + 1;
-
-							cell = new PdfPCell(new Phrase(numeral.toString(), fuente));
-							tablapTES.addCell(cell);
-
-							cell = new PdfPCell(new Phrase(tesisproyecto.get(i).getTitulo(), fuenteContenido));
-							tablapTES.addCell(cell);
-
-							cell = new PdfPCell(new Phrase(tesisproyecto.get(i).getEstuadiante(), fuenteContenido));
-							tablapTES.addCell(cell);
-
-							cell = new PdfPCell(new Phrase(tesisproyecto.get(i).getCarrera(), fuenteContenido));
-							tablapTES.addCell(cell);
-
-							cell = new PdfPCell(new Phrase(tesisproyecto.get(i).getEstado(), fuenteContenido));
-							tablapTES.addCell(cell);
-
-						}
-						document.add(tablapTES);
-					}
-					
-					
-					if (pubProyM.size() > 0) {
-
-						PdfPTable tablaLeyedandaProductoTESIS = new PdfPTable(1);
-						tablaLeyedandaProductoTESIS.setWidthPercentage(100);
-						tablaLeyedandaProductoTESIS.setWidths(columnWidthLey);
-						cell = new PdfPCell(new Phrase("F. PLANTEAMIENTO DE UN PROYECTO DE MAYOR ALCANCE", fuenteLeyenda));
-						cell.setBackgroundColor(new BaseColor(250, 191, 143));
-						cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-						tablaLeyedandaProductoTESIS.addCell(cell);
-						document.add(tablaLeyedandaProductoTESIS);
-
-						PdfPTable tablapTES = new PdfPTable(4);
-						tablapTES.setWidthPercentage(100);
-						float[] columnWidtptES = new float[] { 5f, 45f, 30f, 20f };
-						tablapTES.setWidths(columnWidtptES);
-
-						cell = new PdfPCell(new Phrase("N°", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablapTES.addCell(cell);
-
-						cell = new PdfPCell(new Phrase("Título", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablapTES.addCell(cell);
-
-						cell = new PdfPCell(new Phrase("Tipo de proyecto de la EPN o Externo", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablapTES.addCell(cell);
-
-						cell = new PdfPCell(new Phrase("Institución que financia", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablapTES.addCell(cell);
-
-						
-
-						for (int i = 0; i < pubProyM.size(); i++) {
-							Integer numeral = i + 1;
-
-							cell = new PdfPCell(new Phrase(numeral.toString(), fuente));
-							tablapTES.addCell(cell);
-
-							cell = new PdfPCell(new Phrase(pubProyM.get(i).getTitulo(), fuenteContenido));
-							tablapTES.addCell(cell);
-							
-							cell = new PdfPCell(new Phrase(pubProyM.get(i).getTipopresentacion(), fuenteContenido));
-							tablapTES.addCell(cell);
-
-							cell = new PdfPCell(new Phrase(pubProyM.get(i).getExpositor(), fuenteContenido));
-							tablapTES.addCell(cell);
-
-							
-
-						}
-						document.add(tablapTES);
-					}
-					
-					
-					
-					if (pubPat.size() > 0) {
-
-						PdfPTable tablaLeyedandaProductoTESIS = new PdfPTable(1);
-						tablaLeyedandaProductoTESIS.setWidthPercentage(100);
-						tablaLeyedandaProductoTESIS.setWidths(columnWidthLey);
-						cell = new PdfPCell(new Phrase("G. PATENTE", fuenteLeyenda));
-						cell.setBackgroundColor(new BaseColor(250, 191, 143));
-						cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-						tablaLeyedandaProductoTESIS.addCell(cell);
-						document.add(tablaLeyedandaProductoTESIS);
-
-						PdfPTable tablapTES = new PdfPTable(6);
-						tablapTES.setWidthPercentage(100);
-						float[] columnWidtptES = new float[] { 5f, 20f, 20f, 20f,20,15 };
-						tablapTES.setWidths(columnWidtptES);
-
-						cell = new PdfPCell(new Phrase("N°", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablapTES.addCell(cell);
-
-						cell = new PdfPCell(new Phrase("Denominación", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablapTES.addCell(cell);
-
-						cell = new PdfPCell(new Phrase("Tipo de activo intangible", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablapTES.addCell(cell);
-
-						cell = new PdfPCell(new Phrase("Fecha de ingreso a trámite", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablapTES.addCell(cell);
-						
-						cell = new PdfPCell(new Phrase("Fecha de registro", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablapTES.addCell(cell);
-						
-						cell = new PdfPCell(new Phrase("Código SENADI", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablapTES.addCell(cell);
-
-						
-
-						for (int i = 0; i < pubPat.size(); i++) {
-							Integer numeral = i + 1;
-
-							cell = new PdfPCell(new Phrase(numeral.toString(), fuente));
-							tablapTES.addCell(cell);
-
-							cell = new PdfPCell(new Phrase(pubPat.get(i).getTitulo(), fuenteContenido));
-							tablapTES.addCell(cell);
-							
-							cell = new PdfPCell(new Phrase(pubPat.get(i).getEvento(), fuenteContenido));
-							tablapTES.addCell(cell);
-							
-							if (pubPat.get(i).getFechaingreso() != null) {
-								cell = new PdfPCell(
-										new Phrase(sdf.format(pubPat.get(i).getFechaingreso()), fuenteContenido));
-								tablapTES.addCell(cell);
-							}
-
-							else {
-								cell = new PdfPCell(new Phrase("", fuenteContenido));
-								tablapTES.addCell(cell);
-							}
-							
-							if (pubPat.get(i).getFechapresenta() != null) {
-								cell = new PdfPCell(
-										new Phrase(sdf.format(pubPat.get(i).getFechapresenta()), fuenteContenido));
-								tablapTES.addCell(cell);
-							}
-
-							else {
-								cell = new PdfPCell(new Phrase("", fuenteContenido));
-								tablapTES.addCell(cell);
-							}
-							
-							cell = new PdfPCell(new Phrase(pubPat.get(i).getVolumen(), fuenteContenido));
-							tablapTES.addCell(cell);
-
-						}
-						document.add(tablapTES);
-					}
-					
-					
-					
-					
-					if (pubLib.size() > 0) {
-						PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
-						tablaLeyedandaProductopON.setWidthPercentage(100);
-						tablaLeyedandaProductopON.setWidths(columnWidthLey);
-						cell = new PdfPCell(new Phrase("H.1 LIBROS", fuenteLeyenda));
-						cell.setBackgroundColor(new BaseColor(250, 191, 143));
-						cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-						tablaLeyedandaProductopON.addCell(cell);
-						document.add(tablaLeyedandaProductopON);
-
-						PdfPTable tablappON = new PdfPTable(6);
-						tablappON.setWidthPercentage(100);
-						float[] columnWidtppON = new float[] { 5f, 20f, 20f, 20f, 20f, 15f };
-						tablappON.setWidths(columnWidtppON);
-
-						cell = new PdfPCell(new Phrase("N°", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
+					if (pubRegionales.get(i).getAnio() != null && pubRegionales.get(i).getMes() != null) {
+						cell = new PdfPCell(new Phrase(pubRegionales.get(i).getMes().toString() + "-"
+								+ pubRegionales.get(i).getAnio().toString(), fuenteContenido));
 						tablappON.addCell(cell);
-
-						cell = new PdfPCell(new Phrase("Autores con filiación EPN", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablappON.addCell(cell);
-
-						cell = new PdfPCell(new Phrase("Título del libro", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablappON.addCell(cell);
-
-						cell = new PdfPCell(new Phrase("Fecha de publicación", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablappON.addCell(cell);
-
-						cell = new PdfPCell(new Phrase("Link de la publicación", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablappON.addCell(cell);
-
-						cell = new PdfPCell(new Phrase("ISBN", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablappON.addCell(cell);
-
-						for (int i = 0; i < pubLib.size(); i++) {
-							Integer numeral = i + 1;
-
-							cell = new PdfPCell(new Phrase(numeral.toString(), fuente));
-							tablappON.addCell(cell);
-
-							if (pubLib.get(i).getAutores().size() > 0) {
-								String nomnbres = "";
-								for (AutoresProducto au : pubLib.get(i).getAutores()) {
-									nomnbres = nomnbres + au.getNombres() + "\n";
-								}
-
-								cell = new PdfPCell(new Phrase(nomnbres, fuenteContenido));
-								tablappON.addCell(cell);
-							}
-
-							else {
-								cell = new PdfPCell(new Phrase("", fuenteContenido));
-								tablappON.addCell(cell);
-
-							}
-
-							cell = new PdfPCell(new Phrase(pubLib.get(i).getTitulo(), fuenteContenido));
-							tablappON.addCell(cell);
-
-							if (pubLib.get(i).getAnio() != null && pubLib.get(i).getMes() != null ) {
-								cell = new PdfPCell(
-										new Phrase(pubLib.get(i).getMes().toString() + "-"+pubLib.get(i).getAnio().toString(), fuenteContenido));
-								tablappON.addCell(cell);
-							}
-
-							else {
-								cell = new PdfPCell(new Phrase("", fuenteContenido));
-								tablappON.addCell(cell);
-							}
-
-							cell = new PdfPCell(new Phrase(pubLib.get(i).getUrl(), fuenteContenido));
-							tablappON.addCell(cell);
-
-							cell = new PdfPCell(new Phrase(pubLib.get(i).getCatalogo(), fuenteContenido));
-							tablappON.addCell(cell);
-
-							
-
-						}
-						document.add(tablappON);
-
-					}
-					
-					
-					if (pubCap.size() > 0) {
-						PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
-						tablaLeyedandaProductopON.setWidthPercentage(100);
-						tablaLeyedandaProductopON.setWidths(columnWidthLey);
-						cell = new PdfPCell(new Phrase("H.2 CAPÍTULO DE LIBRO", fuenteLeyenda));
-						cell.setBackgroundColor(new BaseColor(250, 191, 143));
-						cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-						tablaLeyedandaProductopON.addCell(cell);
-						document.add(tablaLeyedandaProductopON);
-
-						PdfPTable tablappON = new PdfPTable(7);
-						tablappON.setWidthPercentage(100);
-						float[] columnWidtppON = new float[] { 5f, 20f,15f, 15f, 15f, 15f, 15f };
-						tablappON.setWidths(columnWidtppON);
-
-						cell = new PdfPCell(new Phrase("N°", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablappON.addCell(cell);
-
-						cell = new PdfPCell(new Phrase("Autores con filiación EPN", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablappON.addCell(cell);
-
-						cell = new PdfPCell(new Phrase("Título del libro", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablappON.addCell(cell);
-						
-						cell = new PdfPCell(new Phrase("Título del capítulo", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablappON.addCell(cell);
-
-						cell = new PdfPCell(new Phrase("Fecha de publicación", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablappON.addCell(cell);
-
-						cell = new PdfPCell(new Phrase("Link de la publicación", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablappON.addCell(cell);
-
-						cell = new PdfPCell(new Phrase("ISBN", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablappON.addCell(cell);
-
-						for (int i = 0; i < pubCap.size(); i++) {
-							Integer numeral = i + 1;
-
-							cell = new PdfPCell(new Phrase(numeral.toString(), fuente));
-							tablappON.addCell(cell);
-
-							if (pubCap.get(i).getAutores().size() > 0) {
-								String nomnbres = "";
-								for (AutoresProducto au : pubCap.get(i).getAutores()) {
-									nomnbres = nomnbres + au.getNombres() + "\n";
-								}
-
-								cell = new PdfPCell(new Phrase(nomnbres, fuenteContenido));
-								tablappON.addCell(cell);
-							}
-
-							else {
-								cell = new PdfPCell(new Phrase("", fuenteContenido));
-								tablappON.addCell(cell);
-
-							}
-
-							cell = new PdfPCell(new Phrase(pubCap.get(i).getTitulo(), fuenteContenido));
-							tablappON.addCell(cell);
-							cell = new PdfPCell(new Phrase(pubCap.get(i).getCarrera(), fuenteContenido));
-							tablappON.addCell(cell);
-
-							if (pubCap.get(i).getAnio() != null && pubCap.get(i).getMes() != null ) {
-								cell = new PdfPCell(
-										new Phrase(pubCap.get(i).getMes().toString() + "-"+pubCap.get(i).getAnio().toString(), fuenteContenido));
-								tablappON.addCell(cell);
-							}
-
-							else {
-								cell = new PdfPCell(new Phrase("", fuenteContenido));
-								tablappON.addCell(cell);
-							}
-
-
-							cell = new PdfPCell(new Phrase(pubCap.get(i).getUrl(), fuenteContenido));
-							tablappON.addCell(cell);
-
-							cell = new PdfPCell(new Phrase(pubCap.get(i).getCatalogo(), fuenteContenido));
-							tablappON.addCell(cell);
-
-							
-
-						}
-						document.add(tablappON);
-
-					}
-					
-					
-					
-					if (pubOtros.size() > 0) {
-
-						PdfPTable tablaLeyedandaProductoTESIS = new PdfPTable(1);
-						tablaLeyedandaProductoTESIS.setWidthPercentage(100);
-						tablaLeyedandaProductoTESIS.setWidths(columnWidthLey);
-						cell = new PdfPCell(new Phrase("I. OTROS", fuenteLeyenda));
-						cell.setBackgroundColor(new BaseColor(250, 191, 143));
-						cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-						tablaLeyedandaProductoTESIS.addCell(cell);
-						document.add(tablaLeyedandaProductoTESIS);
-						
-						
-
-						PdfPTable tablapTES = new PdfPTable(5);
-						tablapTES.setWidthPercentage(100);
-						float[] columnWidtptES = new float[] { 5f, 20f, 20f, 20f,35 };
-						tablapTES.setWidths(columnWidtptES);
-
-						cell = new PdfPCell(new Phrase("N°", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablapTES.addCell(cell);
-
-						cell = new PdfPCell(new Phrase("Nombre del producto", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablapTES.addCell(cell);
-
-						cell = new PdfPCell(new Phrase("Responsable", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablapTES.addCell(cell);
-
-						cell = new PdfPCell(new Phrase("Fecha ", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablapTES.addCell(cell);
-						
-						cell = new PdfPCell(new Phrase("Observaciones", fuente));
-						cell.setBackgroundColor(new BaseColor(252, 213, 180));
-						tablapTES.addCell(cell);
-						
-
-						for (int i = 0; i < pubOtros.size(); i++) {
-							Integer numeral = i + 1;
-
-							cell = new PdfPCell(new Phrase(numeral.toString(), fuente));
-							tablapTES.addCell(cell);
-
-							cell = new PdfPCell(new Phrase(pubOtros.get(i).getTitulo(), fuenteContenido));
-							tablapTES.addCell(cell);
-							
-							cell = new PdfPCell(new Phrase(pubOtros.get(i).getAutorexterno(), fuenteContenido));
-							tablapTES.addCell(cell);
-							
-							if (pubOtros.get(i).getAnio() != null && pubOtros.get(i).getMes() != null ) {
-								cell = new PdfPCell(
-										new Phrase(pubOtros.get(i).getMes().toString() + "-"+pubOtros.get(i).getAnio().toString(), fuenteContenido));
-								tablapTES.addCell(cell);
-							}
-
-							else {
-								cell = new PdfPCell(new Phrase("", fuenteContenido));
-								tablapTES.addCell(cell);
-							}
-							
-							
-							cell = new PdfPCell(new Phrase(pubOtros.get(i).getEvento(), fuenteContenido));
-							tablapTES.addCell(cell);
-
-						}
-						document.add(tablapTES);
 					}
 
-	
+					else {
+						cell = new PdfPCell(new Phrase("", fuenteContenido));
+						tablappON.addCell(cell);
+					}
+
+					cell = new PdfPCell(new Phrase(pubRegionales.get(i).getEvento(), fuenteContenido));
+					tablappON.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(pubRegionales.get(i).getCatalogo(), fuenteContenido));
+					tablappON.addCell(cell);
+
+				}
+				document.add(tablappON);
+
+			}
+
+			if (pubMemorias.size() > 0 && proyecto.getTipoProyecto().getIdTipoProy() != 4) {
+				PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
+				tablaLeyedandaProductopON.setWidthPercentage(100);
+				tablaLeyedandaProductopON.setWidths(columnWidthLey);
+				cell = new PdfPCell(new Phrase("B.3 MEMORIAS DE EVENTOS ACADÉMICOS REGIONALES", fuenteLeyenda));
+				cell.setBackgroundColor(new BaseColor(250, 191, 143));
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				tablaLeyedandaProductopON.addCell(cell);
+				document.add(tablaLeyedandaProductopON);
+
+				PdfPTable tablappON = new PdfPTable(7);
+				tablappON.setWidthPercentage(100);
+				float[] columnWidtppON = new float[] { 5f, 20f, 20f, 20f, 15f, 10f, 10f };
+				tablappON.setWidths(columnWidtppON);
+
+				cell = new PdfPCell(new Phrase("N°", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Autores con filiación EPN", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Título de la publicación", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Fecha del evento", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Nombre del evento académico", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("País", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Ciudad", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				for (int i = 0; i < pubMemorias.size(); i++) {
+					Integer numeral = i + 1;
+
+					cell = new PdfPCell(new Phrase(numeral.toString(), fuente));
+					tablappON.addCell(cell);
+
+					if (pubMemorias.get(i).getAutores().size() > 0) {
+						String nomnbres = "";
+						for (AutoresProducto au : pubMemorias.get(i).getAutores()) {
+							nomnbres = nomnbres + au.getNombres() + "\n";
+						}
+
+						cell = new PdfPCell(new Phrase(nomnbres, fuenteContenido));
+						tablappON.addCell(cell);
+					}
+
+					else {
+						cell = new PdfPCell(new Phrase("", fuenteContenido));
+						tablappON.addCell(cell);
+
+					}
+
+					cell = new PdfPCell(new Phrase(pubMemorias.get(i).getTitulo(), fuenteContenido));
+					tablappON.addCell(cell);
+
+					if (pubMemorias.get(i).getAnio() != null && pubMemorias.get(i).getMes() != null) {
+						cell = new PdfPCell(new Phrase(
+								pubMemorias.get(i).getMes().toString() + "-" + pubMemorias.get(i).getAnio().toString(),
+								fuenteContenido));
+						tablappON.addCell(cell);
+					}
+
+					else {
+						cell = new PdfPCell(new Phrase("", fuenteContenido));
+						tablappON.addCell(cell);
+					}
+
+					cell = new PdfPCell(new Phrase(pubMemorias.get(i).getEvento(), fuenteContenido));
+					tablappON.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(pubMemorias.get(i).getLugar(), fuenteContenido));
+					tablappON.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(pubMemorias.get(i).getExpositor(), fuenteContenido));
+					tablappON.addCell(cell);
+
+				}
+				document.add(tablappON);
+
+			}
+
+			if (pubReportTecnico.size() > 0 && proyecto.getTipoProyecto().getIdTipoProy() != 4) {
+				PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
+				tablaLeyedandaProductopON.setWidthPercentage(100);
+				tablaLeyedandaProductopON.setWidths(columnWidthLey);
+				cell = new PdfPCell(new Phrase("C REPORTES TÉCNICOS", fuenteLeyenda));
+				cell.setBackgroundColor(new BaseColor(250, 191, 143));
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				tablaLeyedandaProductopON.addCell(cell);
+				document.add(tablaLeyedandaProductopON);
+
+				PdfPTable tablappON = new PdfPTable(5);
+				tablappON.setWidthPercentage(100);
+				float[] columnWidtppON = new float[] { 5f, 20f, 20f, 20f, 20f };
+				tablappON.setWidths(columnWidtppON);
+
+				cell = new PdfPCell(new Phrase("N°", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Título del artículo", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Autores", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Estado", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Revista", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				for (int i = 0; i < pubReportTecnico.size(); i++) {
+					Integer numeral = i + 1;
+
+					cell = new PdfPCell(new Phrase(numeral.toString(), fuente));
+					tablappON.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(pubReportTecnico.get(i).getTitulo(), fuenteContenido));
+					tablappON.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(pubReportTecnico.get(i).getAutorexterno(), fuenteContenido));
+					tablappON.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(pubReportTecnico.get(i).getEstado(), fuenteContenido));
+					tablappON.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(pubReportTecnico.get(i).getEvento(), fuenteContenido));
+					tablappON.addCell(cell);
+
+				}
+				document.add(tablappON);
+
+			}
+
+			if (pubDifusion.size() > 0 && proyecto.getTipoProyecto().getIdTipoProy() != 4) {
+				PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
+				tablaLeyedandaProductopON.setWidthPercentage(100);
+				tablaLeyedandaProductopON.setWidths(columnWidthLey);
+				cell = new PdfPCell(new Phrase("D. DIFUSIÓN A LA COMUNIDAD POLITÉCNICA", fuenteLeyenda));
+				cell.setBackgroundColor(new BaseColor(250, 191, 143));
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				tablaLeyedandaProductopON.addCell(cell);
+				document.add(tablaLeyedandaProductopON);
+
+				PdfPTable tablappON = new PdfPTable(6);
+				tablappON.setWidthPercentage(100);
+				float[] columnWidtppON = new float[] { 5f, 20f, 20f, 20f, 20f, 15f };
+				tablappON.setWidths(columnWidtppON);
+
+				cell = new PdfPCell(new Phrase("N°", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Título de la difusión", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Tipo", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Expositor", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Título del evento", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Fecha de presentación", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				for (int i = 0; i < pubDifusion.size(); i++) {
+					Integer numeral = i + 1;
+
+					cell = new PdfPCell(new Phrase(numeral.toString(), fuente));
+					tablappON.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(pubDifusion.get(i).getTitulo(), fuenteContenido));
+					tablappON.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(pubDifusion.get(i).getEstado(), fuenteContenido));
+					tablappON.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(pubDifusion.get(i).getExpositor(), fuenteContenido));
+					tablappON.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(pubDifusion.get(i).getEvento(), fuenteContenido));
+					tablappON.addCell(cell);
+
+					if (pubDifusion.get(i).getAnio() != null && pubDifusion.get(i).getMes() != null) {
+						cell = new PdfPCell(new Phrase(
+								pubDifusion.get(i).getMes().toString() + "-" + pubDifusion.get(i).getAnio().toString(),
+								fuenteContenido));
+						tablappON.addCell(cell);
+					}
+
+					else {
+						cell = new PdfPCell(new Phrase("", fuenteContenido));
+						tablappON.addCell(cell);
+					}
+
+				}
+				document.add(tablappON);
+
+			}
+
+			if (tesisproyecto.size() > 0 && proyecto.getTipoProyecto().getIdTipoProy() != 4) {
+
+				PdfPTable tablaLeyedandaProductoTESIS = new PdfPTable(1);
+				tablaLeyedandaProductoTESIS.setWidthPercentage(100);
+				tablaLeyedandaProductoTESIS.setWidths(columnWidthLey);
+				cell = new PdfPCell(
+						new Phrase("E. PROYECTO DE TITULACIÓN DE PREGRADO / TESIS DE POSGRADO", fuenteLeyenda));
+				cell.setBackgroundColor(new BaseColor(250, 191, 143));
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				tablaLeyedandaProductoTESIS.addCell(cell);
+				document.add(tablaLeyedandaProductoTESIS);
+
+				PdfPTable tablapTES = new PdfPTable(5);
+				tablapTES.setWidthPercentage(100);
+				float[] columnWidtptES = new float[] { 5f, 30f, 25f, 20f, 20f };
+				tablapTES.setWidths(columnWidtptES);
+
+				cell = new PdfPCell(new Phrase("N°", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapTES.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Título del proyecto de titulación", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapTES.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Estudiante(s)", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapTES.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Carrera/Programa", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapTES.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Estado", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapTES.addCell(cell);
+
+				for (int i = 0; i < tesisproyecto.size(); i++) {
+					Integer numeral = i + 1;
+
+					cell = new PdfPCell(new Phrase(numeral.toString(), fuente));
+					tablapTES.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(tesisproyecto.get(i).getTitulo(), fuenteContenido));
+					tablapTES.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(tesisproyecto.get(i).getEstuadiante(), fuenteContenido));
+					tablapTES.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(tesisproyecto.get(i).getCarrera(), fuenteContenido));
+					tablapTES.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(tesisproyecto.get(i).getEstado(), fuenteContenido));
+					tablapTES.addCell(cell);
+
+				}
+				document.add(tablapTES);
+			}
+
+			if (pubProyM.size() > 0 && proyecto.getTipoProyecto().getIdTipoProy() != 4) {
+
+				PdfPTable tablaLeyedandaProductoTESIS = new PdfPTable(1);
+				tablaLeyedandaProductoTESIS.setWidthPercentage(100);
+				tablaLeyedandaProductoTESIS.setWidths(columnWidthLey);
+				cell = new PdfPCell(new Phrase("F. PLANTEAMIENTO DE UN PROYECTO DE MAYOR ALCANCE", fuenteLeyenda));
+				cell.setBackgroundColor(new BaseColor(250, 191, 143));
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				tablaLeyedandaProductoTESIS.addCell(cell);
+				document.add(tablaLeyedandaProductoTESIS);
+
+				PdfPTable tablapTES = new PdfPTable(4);
+				tablapTES.setWidthPercentage(100);
+				float[] columnWidtptES = new float[] { 5f, 45f, 30f, 20f };
+				tablapTES.setWidths(columnWidtptES);
+
+				cell = new PdfPCell(new Phrase("N°", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapTES.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Título", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapTES.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Tipo de proyecto de la EPN o Externo", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapTES.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Institución que financia", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapTES.addCell(cell);
+
+				for (int i = 0; i < pubProyM.size(); i++) {
+					Integer numeral = i + 1;
+
+					cell = new PdfPCell(new Phrase(numeral.toString(), fuente));
+					tablapTES.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(pubProyM.get(i).getTitulo(), fuenteContenido));
+					tablapTES.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(pubProyM.get(i).getTipopresentacion(), fuenteContenido));
+					tablapTES.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(pubProyM.get(i).getExpositor(), fuenteContenido));
+					tablapTES.addCell(cell);
+
+				}
+				document.add(tablapTES);
+			}
+
+			if (pubPat.size() > 0 && proyecto.getTipoProyecto().getIdTipoProy() != 4) {
+
+				PdfPTable tablaLeyedandaProductoTESIS = new PdfPTable(1);
+				tablaLeyedandaProductoTESIS.setWidthPercentage(100);
+				tablaLeyedandaProductoTESIS.setWidths(columnWidthLey);
+				cell = new PdfPCell(new Phrase("G. PATENTE", fuenteLeyenda));
+				cell.setBackgroundColor(new BaseColor(250, 191, 143));
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				tablaLeyedandaProductoTESIS.addCell(cell);
+				document.add(tablaLeyedandaProductoTESIS);
+
+				PdfPTable tablapTES = new PdfPTable(6);
+				tablapTES.setWidthPercentage(100);
+				float[] columnWidtptES = new float[] { 5f, 20f, 20f, 20f, 20, 15 };
+				tablapTES.setWidths(columnWidtptES);
+
+				cell = new PdfPCell(new Phrase("N°", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapTES.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Denominación", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapTES.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Tipo de activo intangible", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapTES.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Fecha de ingreso a trámite", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapTES.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Fecha de registro", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapTES.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Código SENADI", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapTES.addCell(cell);
+
+				for (int i = 0; i < pubPat.size(); i++) {
+					Integer numeral = i + 1;
+
+					cell = new PdfPCell(new Phrase(numeral.toString(), fuente));
+					tablapTES.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(pubPat.get(i).getTitulo(), fuenteContenido));
+					tablapTES.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(pubPat.get(i).getEvento(), fuenteContenido));
+					tablapTES.addCell(cell);
+
+					if (pubPat.get(i).getFechaingreso() != null) {
+						cell = new PdfPCell(new Phrase(sdf.format(pubPat.get(i).getFechaingreso()), fuenteContenido));
+						tablapTES.addCell(cell);
+					}
+
+					else {
+						cell = new PdfPCell(new Phrase("", fuenteContenido));
+						tablapTES.addCell(cell);
+					}
+
+					if (pubPat.get(i).getFechapresenta() != null) {
+						cell = new PdfPCell(new Phrase(sdf.format(pubPat.get(i).getFechapresenta()), fuenteContenido));
+						tablapTES.addCell(cell);
+					}
+
+					else {
+						cell = new PdfPCell(new Phrase("", fuenteContenido));
+						tablapTES.addCell(cell);
+					}
+
+					cell = new PdfPCell(new Phrase(pubPat.get(i).getVolumen(), fuenteContenido));
+					tablapTES.addCell(cell);
+
+				}
+				document.add(tablapTES);
+			}
+
+			if (pubLib.size() > 0 && proyecto.getTipoProyecto().getIdTipoProy() != 4) {
+				PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
+				tablaLeyedandaProductopON.setWidthPercentage(100);
+				tablaLeyedandaProductopON.setWidths(columnWidthLey);
+				cell = new PdfPCell(new Phrase("H.1 LIBROS", fuenteLeyenda));
+				cell.setBackgroundColor(new BaseColor(250, 191, 143));
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				tablaLeyedandaProductopON.addCell(cell);
+				document.add(tablaLeyedandaProductopON);
+
+				PdfPTable tablappON = new PdfPTable(6);
+				tablappON.setWidthPercentage(100);
+				float[] columnWidtppON = new float[] { 5f, 20f, 20f, 20f, 20f, 15f };
+				tablappON.setWidths(columnWidtppON);
+
+				cell = new PdfPCell(new Phrase("N°", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Autores con filiación EPN", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Título del libro", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Fecha de publicación", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Link de la publicación", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("ISBN", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				for (int i = 0; i < pubLib.size(); i++) {
+					Integer numeral = i + 1;
+
+					cell = new PdfPCell(new Phrase(numeral.toString(), fuente));
+					tablappON.addCell(cell);
+
+					if (pubLib.get(i).getAutores().size() > 0) {
+						String nomnbres = "";
+						for (AutoresProducto au : pubLib.get(i).getAutores()) {
+							nomnbres = nomnbres + au.getNombres() + "\n";
+						}
+
+						cell = new PdfPCell(new Phrase(nomnbres, fuenteContenido));
+						tablappON.addCell(cell);
+					}
+
+					else {
+						cell = new PdfPCell(new Phrase("", fuenteContenido));
+						tablappON.addCell(cell);
+
+					}
+
+					cell = new PdfPCell(new Phrase(pubLib.get(i).getTitulo(), fuenteContenido));
+					tablappON.addCell(cell);
+
+					if (pubLib.get(i).getAnio() != null && pubLib.get(i).getMes() != null) {
+						cell = new PdfPCell(
+								new Phrase(pubLib.get(i).getMes().toString() + "-" + pubLib.get(i).getAnio().toString(),
+										fuenteContenido));
+						tablappON.addCell(cell);
+					}
+
+					else {
+						cell = new PdfPCell(new Phrase("", fuenteContenido));
+						tablappON.addCell(cell);
+					}
+
+					cell = new PdfPCell(new Phrase(pubLib.get(i).getUrl(), fuenteContenido));
+					tablappON.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(pubLib.get(i).getCatalogo(), fuenteContenido));
+					tablappON.addCell(cell);
+
+				}
+				document.add(tablappON);
+
+			}
+
+			if (pubCap.size() > 0 && proyecto.getTipoProyecto().getIdTipoProy() != 4) {
+				PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
+				tablaLeyedandaProductopON.setWidthPercentage(100);
+				tablaLeyedandaProductopON.setWidths(columnWidthLey);
+				cell = new PdfPCell(new Phrase("H.2 CAPÍTULO DE LIBRO", fuenteLeyenda));
+				cell.setBackgroundColor(new BaseColor(250, 191, 143));
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				tablaLeyedandaProductopON.addCell(cell);
+				document.add(tablaLeyedandaProductopON);
+
+				PdfPTable tablappON = new PdfPTable(7);
+				tablappON.setWidthPercentage(100);
+				float[] columnWidtppON = new float[] { 5f, 20f, 15f, 15f, 15f, 15f, 15f };
+				tablappON.setWidths(columnWidtppON);
+
+				cell = new PdfPCell(new Phrase("N°", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Autores con filiación EPN", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Título del libro", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Título del capítulo", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Fecha de publicación", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Link de la publicación", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("ISBN", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				for (int i = 0; i < pubCap.size(); i++) {
+					Integer numeral = i + 1;
+
+					cell = new PdfPCell(new Phrase(numeral.toString(), fuente));
+					tablappON.addCell(cell);
+
+					if (pubCap.get(i).getAutores().size() > 0) {
+						String nomnbres = "";
+						for (AutoresProducto au : pubCap.get(i).getAutores()) {
+							nomnbres = nomnbres + au.getNombres() + "\n";
+						}
+
+						cell = new PdfPCell(new Phrase(nomnbres, fuenteContenido));
+						tablappON.addCell(cell);
+					}
+
+					else {
+						cell = new PdfPCell(new Phrase("", fuenteContenido));
+						tablappON.addCell(cell);
+
+					}
+
+					cell = new PdfPCell(new Phrase(pubCap.get(i).getTitulo(), fuenteContenido));
+					tablappON.addCell(cell);
+					cell = new PdfPCell(new Phrase(pubCap.get(i).getCarrera(), fuenteContenido));
+					tablappON.addCell(cell);
+
+					if (pubCap.get(i).getAnio() != null && pubCap.get(i).getMes() != null) {
+						cell = new PdfPCell(
+								new Phrase(pubCap.get(i).getMes().toString() + "-" + pubCap.get(i).getAnio().toString(),
+										fuenteContenido));
+						tablappON.addCell(cell);
+					}
+
+					else {
+						cell = new PdfPCell(new Phrase("", fuenteContenido));
+						tablappON.addCell(cell);
+					}
+
+					cell = new PdfPCell(new Phrase(pubCap.get(i).getUrl(), fuenteContenido));
+					tablappON.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(pubCap.get(i).getCatalogo(), fuenteContenido));
+					tablappON.addCell(cell);
+
+				}
+				document.add(tablappON);
+
+			}
+
+			if (pubOtros.size() > 0) {
+
+				PdfPTable tablaLeyedandaProductoTESIS = new PdfPTable(1);
+				tablaLeyedandaProductoTESIS.setWidthPercentage(100);
+				tablaLeyedandaProductoTESIS.setWidths(columnWidthLey);
+
+				if (proyecto.getTipoProyecto().getIdTipoProy() == 4) {
+					cell = new PdfPCell(new Phrase("A. PRODUCTOS", fuenteLeyenda));
+				}
+
+				else {
+					cell = new PdfPCell(new Phrase("I. OTROS", fuenteLeyenda));
+				}
+
+				cell.setBackgroundColor(new BaseColor(250, 191, 143));
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				tablaLeyedandaProductoTESIS.addCell(cell);
+				document.add(tablaLeyedandaProductoTESIS);
+
+				PdfPTable tablapTES = new PdfPTable(5);
+				tablapTES.setWidthPercentage(100);
+				float[] columnWidtptES = new float[] { 5f, 20f, 20f, 20f, 35 };
+				tablapTES.setWidths(columnWidtptES);
+
+				cell = new PdfPCell(new Phrase("N°", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapTES.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Nombre del producto", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapTES.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Responsable", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapTES.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Fecha ", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapTES.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Observaciones", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapTES.addCell(cell);
+
+				for (int i = 0; i < pubOtros.size(); i++) {
+					Integer numeral = i + 1;
+
+					cell = new PdfPCell(new Phrase(numeral.toString(), fuente));
+					tablapTES.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(pubOtros.get(i).getTitulo(), fuenteContenido));
+					tablapTES.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(pubOtros.get(i).getAutorexterno(), fuenteContenido));
+					tablapTES.addCell(cell);
+
+					if (pubOtros.get(i).getAnio() != null && pubOtros.get(i).getMes() != null) {
+						cell = new PdfPCell(new Phrase(
+								pubOtros.get(i).getMes().toString() + "-" + pubOtros.get(i).getAnio().toString(),
+								fuenteContenido));
+						tablapTES.addCell(cell);
+					}
+
+					else {
+						cell = new PdfPCell(new Phrase("", fuenteContenido));
+						tablapTES.addCell(cell);
+					}
+
+					cell = new PdfPCell(new Phrase(pubOtros.get(i).getEvento(), fuenteContenido));
+					tablapTES.addCell(cell);
+
+				}
+				document.add(tablapTES);
+			}
 
 			PdfPTable tablaFirma = new PdfPTable(4);
 
@@ -3440,7 +3545,24 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			tablaFirma.addCell(cell);
 
 			document.add(tablaFirma);
-			
+
+			fechaComoCadena = "";
+			String fechaComoCadena1 = "";
+
+			if (cierre.getFechacierredocente() == null) {
+				fechaComoCadena = "Sin envío JD.";
+
+			} else {
+				fechaComoCadena = sdf.format(cierre.getFechacierredocente());
+			}
+
+			if (cierre.getFechacierrejd() == null) {
+				fechaComoCadena1 = "Sin envío DI.";
+
+			} else {
+				fechaComoCadena1 = sdf.format(cierre.getFechacierrejd());
+			}
+
 			Paragraph ingreso = new Paragraph();
 			String ing = "\n Fecha envío Jefe Departamento: " + fechaComoCadena;
 			fuente = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.BOLD);
@@ -3449,6 +3571,15 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			ingreso.add(ing);
 
 			document.add(ingreso);
+
+			Paragraph ingreso2 = new Paragraph();
+			String ing2 = "\n Fecha envío a la DIrección de Investigación: " + fechaComoCadena1;
+			fuente = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.BOLD);
+			ingreso2.setFont(fuente);
+			ingreso2.setAlignment(Element.ALIGN_LEFT);
+			ingreso2.add(ing2);
+
+			document.add(ingreso2);
 
 			document.close();
 			writer.close();
@@ -3466,17 +3597,16 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 
 	}
 
-
 	public String generarPdfInvestifacionReporteUpdate(List<EquipoProyectoDTO> recursos, List<Lineasproy> lineas,
 			ProyectoP proyecto, List<Objetivoavance> objetivos, CierrePeriodo cierre,
 			List<Cronogramaavance> actividades, String pathDocs, RecursohPr director, Pensum periodo, String sigla,
-			Emp jefeDep, Dep dep, String firmaJD, String firmaDr, Integer idversion,List<Producto> presentaciones, List<Producto> pubRegionales,
-			List<Producto> pubMemorias, List<Producto> pubReportTecnico, List<Producto> pubDifusion,
-			List<Producto> tesisproyecto, List<Producto> pubProyM, List<Producto> pubPat, List<Producto> pubLib,
-			List<Producto> pubCap, List<Producto> pubOtros, List<Producto> pubScopus) {
+			Emp jefeDep, Dep dep, String firmaJD, String firmaDr, Integer idversion, List<Producto> presentaciones,
+			List<Producto> pubRegionales, List<Producto> pubMemorias, List<Producto> pubReportTecnico,
+			List<Producto> pubDifusion, List<Producto> tesisproyecto, List<Producto> pubProyM, List<Producto> pubPat,
+			List<Producto> pubLib, List<Producto> pubCap, List<Producto> pubOtros, List<Producto> pubScopus) {
 		String url = "";
 		try {
-			
+
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 
 			System.out.println("Entro a crear archivo");
@@ -3845,970 +3975,931 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			}
 
 			document.add(tablaActividades);
-			
-	///////// TABLA PRODUCTOS///////////////////////////////
 
-				PdfPTable tablaLeyedandaProducto = new PdfPTable(1);
-				tablaLeyedandaProducto.setWidthPercentage(100);
-				tablaLeyedandaProducto.setWidths(columnWidthLey);
-				cell = new PdfPCell(new Phrase("PRODUCTOS GENERADOS DURANTE EL PERIODO ACADÉMICO " + periodo.getMeses()
-						+ "\n", fuenteLeyenda));
+			///////// TABLA PRODUCTOS///////////////////////////////
+
+			PdfPTable tablaLeyedandaProducto = new PdfPTable(1);
+			tablaLeyedandaProducto.setWidthPercentage(100);
+			tablaLeyedandaProducto.setWidths(columnWidthLey);
+			cell = new PdfPCell(new Phrase(
+					"PRODUCTOS GENERADOS DURANTE EL PERIODO ACADÉMICO " + periodo.getMeses() + "\n", fuenteLeyenda));
+			cell.setBackgroundColor(new BaseColor(250, 191, 143));
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			tablaLeyedandaProducto.addCell(cell);
+			document.add(tablaLeyedandaProducto);
+
+			if (presentaciones.size() > 0) {
+
+				PdfPTable tablaLeyedandaProductoPUBLICACIONES = new PdfPTable(1);
+				tablaLeyedandaProductoPUBLICACIONES.setWidthPercentage(100);
+				tablaLeyedandaProductoPUBLICACIONES.setWidths(columnWidthLey);
+				cell = new PdfPCell(
+						new Phrase("A. PRESENTACIONES EN EVENTOS (NACIONALES O INTERNACIONALES)", fuenteLeyenda));
 				cell.setBackgroundColor(new BaseColor(250, 191, 143));
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-				tablaLeyedandaProducto.addCell(cell);
-				document.add(tablaLeyedandaProducto);
+				tablaLeyedandaProductoPUBLICACIONES.addCell(cell);
+				document.add(tablaLeyedandaProductoPUBLICACIONES);
 
-				if (presentaciones.size() > 0) {
+				PdfPTable tablapUB = new PdfPTable(8);
+				tablapUB.setWidthPercentage(100);
+				float[] columnWidtpUB = new float[] { 5f, 15f, 15f, 15f, 15f, 15f, 10F, 10F };
+				tablapUB.setWidths(columnWidtpUB);
 
-					PdfPTable tablaLeyedandaProductoPUBLICACIONES = new PdfPTable(1);
-					tablaLeyedandaProductoPUBLICACIONES.setWidthPercentage(100);
-					tablaLeyedandaProductoPUBLICACIONES.setWidths(columnWidthLey);
-					cell = new PdfPCell(
-							new Phrase("A. PRESENTACIONES EN EVENTOS (NACIONALES O INTERNACIONALES)", fuenteLeyenda));
-					cell.setBackgroundColor(new BaseColor(250, 191, 143));
-					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-					tablaLeyedandaProductoPUBLICACIONES.addCell(cell);
-					document.add(tablaLeyedandaProductoPUBLICACIONES);
+				cell = new PdfPCell(new Phrase("N°", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapUB.addCell(cell);
 
-					PdfPTable tablapUB = new PdfPTable(8);
-					tablapUB.setWidthPercentage(100);
-					float[] columnWidtpUB = new float[] { 5f, 15f, 15f, 15f, 15f, 15f, 10F, 10F };
-					tablapUB.setWidths(columnWidtpUB);
+				cell = new PdfPCell(new Phrase("Tipo de presentación", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapUB.addCell(cell);
+				cell = new PdfPCell(new Phrase("Título", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapUB.addCell(cell);
 
-					cell = new PdfPCell(new Phrase("N°", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				cell = new PdfPCell(new Phrase("Expositor", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapUB.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Nombre del evento", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapUB.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("País", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapUB.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Ciudad", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapUB.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Fecha de presentación", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapUB.addCell(cell);
+
+				for (int i = 0; i < presentaciones.size(); i++) {
+					Integer numeral = i + 1;
+
+					cell = new PdfPCell(new Phrase(numeral.toString(), fuente));
 					tablapUB.addCell(cell);
 
-					cell = new PdfPCell(new Phrase("Tipo de presentación", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablapUB.addCell(cell);
-					cell = new PdfPCell(new Phrase("Título", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
+					cell = new PdfPCell(new Phrase(presentaciones.get(i).getTipopresentacion(), fuenteContenido));
 					tablapUB.addCell(cell);
 
-					cell = new PdfPCell(new Phrase("Expositor", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
+					cell = new PdfPCell(new Phrase(presentaciones.get(i).getTitulo(), fuenteContenido));
 					tablapUB.addCell(cell);
 
-					cell = new PdfPCell(new Phrase("Nombre del evento", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
+					cell = new PdfPCell(new Phrase(presentaciones.get(i).getExpositor(), fuenteContenido));
 					tablapUB.addCell(cell);
 
-					cell = new PdfPCell(new Phrase("País", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
+					cell = new PdfPCell(new Phrase(presentaciones.get(i).getEvento(), fuenteContenido));
+					tablapUB.addCell(cell);
+					cell = new PdfPCell(new Phrase(presentaciones.get(i).getLugar(), fuenteContenido));
+					tablapUB.addCell(cell);
+					cell = new PdfPCell(new Phrase(presentaciones.get(i).getCarrera(), fuenteContenido));
 					tablapUB.addCell(cell);
 
-					cell = new PdfPCell(new Phrase("Ciudad", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablapUB.addCell(cell);
-
-					cell = new PdfPCell(new Phrase("Fecha de presentación", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablapUB.addCell(cell);
-
-					for (int i = 0; i < presentaciones.size(); i++) {
-						Integer numeral = i + 1;
-
-						cell = new PdfPCell(new Phrase(numeral.toString(), fuente));
+					if (presentaciones.get(i).getAnio() != null && presentaciones.get(i).getMes() != null) {
+						cell = new PdfPCell(new Phrase(presentaciones.get(i).getMes().toString() + "-"
+								+ presentaciones.get(i).getAnio().toString(), fuenteContenido));
 						tablapUB.addCell(cell);
+					}
 
-						cell = new PdfPCell(new Phrase(presentaciones.get(i).getTipopresentacion(), fuenteContenido));
+					else {
+						cell = new PdfPCell(new Phrase("", fuenteContenido));
 						tablapUB.addCell(cell);
-
-						cell = new PdfPCell(new Phrase(presentaciones.get(i).getTitulo(), fuenteContenido));
-						tablapUB.addCell(cell);
-
-						cell = new PdfPCell(new Phrase(presentaciones.get(i).getExpositor(), fuenteContenido));
-						tablapUB.addCell(cell);
-
-						cell = new PdfPCell(new Phrase(presentaciones.get(i).getEvento(), fuenteContenido));
-						tablapUB.addCell(cell);
-						cell = new PdfPCell(new Phrase(presentaciones.get(i).getLugar(), fuenteContenido));
-						tablapUB.addCell(cell);
-						cell = new PdfPCell(new Phrase(presentaciones.get(i).getCarrera(), fuenteContenido));
-						tablapUB.addCell(cell);
-
-						if (presentaciones.get(i).getAnio() != null && presentaciones.get(i).getMes() != null ) {
-							cell = new PdfPCell(
-									new Phrase(presentaciones.get(i).getMes().toString() + "-"+presentaciones.get(i).getAnio().toString(), fuenteContenido));
-							tablapUB.addCell(cell);
-						}
-
-						else {
-							cell = new PdfPCell(new Phrase("", fuenteContenido));
-							tablapUB.addCell(cell);
-						}
-
 					}
-					document.add(tablapUB);
 
 				}
-				
-				
-				if (pubScopus.size() > 0) {
-					PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
-					tablaLeyedandaProductopON.setWidthPercentage(100);
-					tablaLeyedandaProductopON.setWidths(columnWidthLey);
-					cell = new PdfPCell(new Phrase("B.1 PUBLICACIONES EN SCOPUS", fuenteLeyenda));
-					cell.setBackgroundColor(new BaseColor(250, 191, 143));
-					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-					tablaLeyedandaProductopON.addCell(cell);
-					document.add(tablaLeyedandaProductopON);
+				document.add(tablapUB);
 
-					PdfPTable tablappON = new PdfPTable(5);
-					tablappON.setWidthPercentage(100);
-					float[] columnWidtppON = new float[] { 5f, 30f, 25f, 20f, 20f};
-					tablappON.setWidths(columnWidtppON);
+			}
 
-					cell = new PdfPCell(new Phrase("N°", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
+			if (pubScopus.size() > 0) {
+				PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
+				tablaLeyedandaProductopON.setWidthPercentage(100);
+				tablaLeyedandaProductopON.setWidths(columnWidthLey);
+				cell = new PdfPCell(new Phrase("B.1 PUBLICACIONES EN SCOPUS", fuenteLeyenda));
+				cell.setBackgroundColor(new BaseColor(250, 191, 143));
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				tablaLeyedandaProductopON.addCell(cell);
+				document.add(tablaLeyedandaProductopON);
+
+				PdfPTable tablappON = new PdfPTable(5);
+				tablappON.setWidthPercentage(100);
+				float[] columnWidtppON = new float[] { 5f, 30f, 25f, 20f, 20f };
+				tablappON.setWidths(columnWidtppON);
+
+				cell = new PdfPCell(new Phrase("N°", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Autores con filiación EPN", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Título de la publicación", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Fecha de publicación", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Nombre revista", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				for (int i = 0; i < pubScopus.size(); i++) {
+					Integer numeral = i + 1;
+
+					cell = new PdfPCell(new Phrase(numeral.toString(), fuente));
 					tablappON.addCell(cell);
 
-					cell = new PdfPCell(new Phrase("Autores con filiación EPN", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablappON.addCell(cell);
+					if (pubScopus.get(i).getAutores().size() > 0) {
+						String nomnbres = "";
+						for (AutoresProducto au : pubScopus.get(i).getAutores()) {
+							nomnbres = nomnbres + au.getNombres() + "\n";
+						}
 
-					cell = new PdfPCell(new Phrase("Título de la publicación", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablappON.addCell(cell);
-
-					cell = new PdfPCell(new Phrase("Fecha de publicación", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablappON.addCell(cell);
-
-					cell = new PdfPCell(new Phrase("Nombre revista", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablappON.addCell(cell);
-
-					
-
-					for (int i = 0; i < pubScopus.size(); i++) {
-						Integer numeral = i + 1;
-
-						cell = new PdfPCell(new Phrase(numeral.toString(), fuente));
+						cell = new PdfPCell(new Phrase(nomnbres, fuenteContenido));
 						tablappON.addCell(cell);
-
-						if (pubScopus.get(i).getAutores().size() > 0) {
-							String nomnbres = "";
-							for (AutoresProducto au : pubScopus.get(i).getAutores()) {
-								nomnbres = nomnbres + au.getNombres() + "\n";
-							}
-
-							cell = new PdfPCell(new Phrase(nomnbres, fuenteContenido));
-							tablappON.addCell(cell);
-						}
-
-						else {
-							cell = new PdfPCell(new Phrase("", fuenteContenido));
-							tablappON.addCell(cell);
-
-						}
-
-						cell = new PdfPCell(new Phrase(pubScopus.get(i).getTitulo(), fuenteContenido));
-						tablappON.addCell(cell);
-
-						if (pubScopus.get(i).getFechapresenta() != null) {
-							cell = new PdfPCell(
-									new Phrase(sdf.format(pubScopus.get(i).getFechapresenta()), fuenteContenido));
-							tablappON.addCell(cell);
-						}
-
-						else {
-							cell = new PdfPCell(new Phrase("", fuenteContenido));
-							tablappON.addCell(cell);
-						}
-
-						cell = new PdfPCell(new Phrase(pubScopus.get(i).getEvento(), fuenteContenido));
-						tablappON.addCell(cell);
-
-						
-
-						
-
 					}
-					document.add(tablappON);
 
-				}
-				
-				if (pubRegionales.size() > 0) {
-					PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
-					tablaLeyedandaProductopON.setWidthPercentage(100);
-					tablaLeyedandaProductopON.setWidths(columnWidthLey);
-					cell = new PdfPCell(new Phrase("B.2 PUBLICACIONES REGIONALES", fuenteLeyenda));
-					cell.setBackgroundColor(new BaseColor(250, 191, 143));
-					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-					tablaLeyedandaProductopON.addCell(cell);
-					document.add(tablaLeyedandaProductopON);
-
-					PdfPTable tablappON = new PdfPTable(6);
-					tablappON.setWidthPercentage(100);
-					float[] columnWidtppON = new float[] { 5f, 20f, 20f, 20f, 20f, 15f };
-					tablappON.setWidths(columnWidtppON);
-
-					cell = new PdfPCell(new Phrase("N°", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablappON.addCell(cell);
-
-					cell = new PdfPCell(new Phrase("Autores con filiación EPN", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablappON.addCell(cell);
-
-					cell = new PdfPCell(new Phrase("Título de la publicación", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablappON.addCell(cell);
-
-					cell = new PdfPCell(new Phrase("Fecha de publicación", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablappON.addCell(cell);
-
-					cell = new PdfPCell(new Phrase("Nombre revista", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablappON.addCell(cell);
-
-					cell = new PdfPCell(new Phrase("Indexación de la revista", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablappON.addCell(cell);
-
-					for (int i = 0; i < pubRegionales.size(); i++) {
-						Integer numeral = i + 1;
-
-						cell = new PdfPCell(new Phrase(numeral.toString(), fuente));
-						tablappON.addCell(cell);
-
-						if (pubRegionales.get(i).getAutores().size() > 0) {
-							String nomnbres = "";
-							for (AutoresProducto au : pubRegionales.get(i).getAutores()) {
-								nomnbres = nomnbres + au.getNombres() + "\n";
-							}
-
-							cell = new PdfPCell(new Phrase(nomnbres, fuenteContenido));
-							tablappON.addCell(cell);
-						}
-
-						else {
-							cell = new PdfPCell(new Phrase("", fuenteContenido));
-							tablappON.addCell(cell);
-
-						}
-
-						cell = new PdfPCell(new Phrase(pubRegionales.get(i).getTitulo(), fuenteContenido));
-						tablappON.addCell(cell);
-
-						if (pubRegionales.get(i).getAnio() != null && pubRegionales.get(i).getMes() != null ) {
-							cell = new PdfPCell(
-									new Phrase(pubRegionales.get(i).getMes().toString() + "-"+pubRegionales.get(i).getAnio().toString(), fuenteContenido));
-							tablappON.addCell(cell);
-						}
-
-						else {
-							cell = new PdfPCell(new Phrase("", fuenteContenido));
-							tablappON.addCell(cell);
-						}
-
-						cell = new PdfPCell(new Phrase(pubRegionales.get(i).getEvento(), fuenteContenido));
-						tablappON.addCell(cell);
-
-						cell = new PdfPCell(new Phrase(pubRegionales.get(i).getCatalogo(), fuenteContenido));
-						tablappON.addCell(cell);
-
-						
-
-					}
-					document.add(tablappON);
-
-				}
-				
-				
-
-				if (pubMemorias.size() > 0) {
-					PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
-					tablaLeyedandaProductopON.setWidthPercentage(100);
-					tablaLeyedandaProductopON.setWidths(columnWidthLey);
-					cell = new PdfPCell(new Phrase("B.3 MEMORIAS DE EVENTOS ACADÉMICOS REGIONALES", fuenteLeyenda));
-					cell.setBackgroundColor(new BaseColor(250, 191, 143));
-					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-					tablaLeyedandaProductopON.addCell(cell);
-					document.add(tablaLeyedandaProductopON);
-
-					PdfPTable tablappON = new PdfPTable(7);
-					tablappON.setWidthPercentage(100);
-					float[] columnWidtppON = new float[] { 5f, 20f, 20f, 20f, 15f, 10f, 10f };
-					tablappON.setWidths(columnWidtppON);
-
-					cell = new PdfPCell(new Phrase("N°", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablappON.addCell(cell);
-
-					cell = new PdfPCell(new Phrase("Autores con filiación EPN", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablappON.addCell(cell);
-
-					cell = new PdfPCell(new Phrase("Título de la publicación", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablappON.addCell(cell);
-
-					cell = new PdfPCell(new Phrase("Fecha del evento", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablappON.addCell(cell);
-
-					cell = new PdfPCell(new Phrase("Nombre del evento académico", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablappON.addCell(cell);
-
-					cell = new PdfPCell(new Phrase("País", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablappON.addCell(cell);
-
-					cell = new PdfPCell(new Phrase("Ciudad", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablappON.addCell(cell);
-
-					for (int i = 0; i < pubMemorias.size(); i++) {
-						Integer numeral = i + 1;
-
-						cell = new PdfPCell(new Phrase(numeral.toString(), fuente));
-						tablappON.addCell(cell);
-
-						if (pubMemorias.get(i).getAutores().size() > 0) {
-							String nomnbres = "";
-							for (AutoresProducto au : pubMemorias.get(i).getAutores()) {
-								nomnbres = nomnbres + au.getNombres() + "\n";
-							}
-
-							cell = new PdfPCell(new Phrase(nomnbres, fuenteContenido));
-							tablappON.addCell(cell);
-						}
-
-						else {
-							cell = new PdfPCell(new Phrase("", fuenteContenido));
-							tablappON.addCell(cell);
-
-						}
-
-						cell = new PdfPCell(new Phrase(pubMemorias.get(i).getTitulo(), fuenteContenido));
-						tablappON.addCell(cell);
-
-						if (pubMemorias.get(i).getAnio() != null && pubMemorias.get(i).getMes() != null ) {
-							cell = new PdfPCell(
-									new Phrase(pubMemorias.get(i).getMes().toString() + "-"+pubMemorias.get(i).getAnio().toString(), fuenteContenido));
-							tablappON.addCell(cell);
-						}
-
-						else {
-							cell = new PdfPCell(new Phrase("", fuenteContenido));
-							tablappON.addCell(cell);
-						}
-
-						cell = new PdfPCell(new Phrase(pubMemorias.get(i).getEvento(), fuenteContenido));
-						tablappON.addCell(cell);
-
-						cell = new PdfPCell(new Phrase(pubMemorias.get(i).getLugar(), fuenteContenido));
-						tablappON.addCell(cell);
-
-						cell = new PdfPCell(new Phrase(pubMemorias.get(i).getExpositor(), fuenteContenido));
+					else {
+						cell = new PdfPCell(new Phrase("", fuenteContenido));
 						tablappON.addCell(cell);
 
 					}
-					document.add(tablappON);
+
+					cell = new PdfPCell(new Phrase(pubScopus.get(i).getTitulo(), fuenteContenido));
+					tablappON.addCell(cell);
+
+					if (pubScopus.get(i).getFechapresenta() != null) {
+						cell = new PdfPCell(
+								new Phrase(sdf.format(pubScopus.get(i).getFechapresenta()), fuenteContenido));
+						tablappON.addCell(cell);
+					}
+
+					else {
+						cell = new PdfPCell(new Phrase("", fuenteContenido));
+						tablappON.addCell(cell);
+					}
+
+					cell = new PdfPCell(new Phrase(pubScopus.get(i).getEvento(), fuenteContenido));
+					tablappON.addCell(cell);
 
 				}
-				
-				if (pubReportTecnico.size() > 0) {
-					PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
-					tablaLeyedandaProductopON.setWidthPercentage(100);
-					tablaLeyedandaProductopON.setWidths(columnWidthLey);
-					cell = new PdfPCell(new Phrase("C REPORTES TÉCNICOS", fuenteLeyenda));
-					cell.setBackgroundColor(new BaseColor(250, 191, 143));
-					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-					tablaLeyedandaProductopON.addCell(cell);
-					document.add(tablaLeyedandaProductopON);
+				document.add(tablappON);
 
-					PdfPTable tablappON = new PdfPTable(5);
-					tablappON.setWidthPercentage(100);
-					float[] columnWidtppON = new float[] { 5f, 20f, 20f, 20f, 20f  };
-					tablappON.setWidths(columnWidtppON);
+			}
 
-					cell = new PdfPCell(new Phrase("N°", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
+			if (pubRegionales.size() > 0) {
+				PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
+				tablaLeyedandaProductopON.setWidthPercentage(100);
+				tablaLeyedandaProductopON.setWidths(columnWidthLey);
+				cell = new PdfPCell(new Phrase("B.2 PUBLICACIONES REGIONALES", fuenteLeyenda));
+				cell.setBackgroundColor(new BaseColor(250, 191, 143));
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				tablaLeyedandaProductopON.addCell(cell);
+				document.add(tablaLeyedandaProductopON);
+
+				PdfPTable tablappON = new PdfPTable(6);
+				tablappON.setWidthPercentage(100);
+				float[] columnWidtppON = new float[] { 5f, 20f, 20f, 20f, 20f, 15f };
+				tablappON.setWidths(columnWidtppON);
+
+				cell = new PdfPCell(new Phrase("N°", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Autores con filiación EPN", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Título de la publicación", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Fecha de publicación", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Nombre revista", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Indexación de la revista", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				for (int i = 0; i < pubRegionales.size(); i++) {
+					Integer numeral = i + 1;
+
+					cell = new PdfPCell(new Phrase(numeral.toString(), fuente));
 					tablappON.addCell(cell);
-					
-					cell = new PdfPCell(new Phrase("Título del artículo", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablappON.addCell(cell);
 
-					cell = new PdfPCell(new Phrase("Autores", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablappON.addCell(cell);
-					
-					cell = new PdfPCell(new Phrase("Estado", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablappON.addCell(cell);
+					if (pubRegionales.get(i).getAutores().size() > 0) {
+						String nomnbres = "";
+						for (AutoresProducto au : pubRegionales.get(i).getAutores()) {
+							nomnbres = nomnbres + au.getNombres() + "\n";
+						}
 
-					
-
-					cell = new PdfPCell(new Phrase("Revista", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablappON.addCell(cell);
-
-					for (int i = 0; i < pubReportTecnico.size(); i++) {
-						Integer numeral = i + 1;
-
-						cell = new PdfPCell(new Phrase(numeral.toString(), fuente));
+						cell = new PdfPCell(new Phrase(nomnbres, fuenteContenido));
 						tablappON.addCell(cell);
-						
-						cell = new PdfPCell(new Phrase(pubReportTecnico.get(i).getTitulo(), fuenteContenido));
-						tablappON.addCell(cell);
-						
-						cell = new PdfPCell(new Phrase(pubReportTecnico.get(i).getAutorexterno(), fuenteContenido));
-						tablappON.addCell(cell);
-						
-						cell = new PdfPCell(new Phrase(pubReportTecnico.get(i).getEstado(), fuenteContenido));
-						tablappON.addCell(cell);
-						
-						
-					
-						cell = new PdfPCell(new Phrase(pubReportTecnico.get(i).getEvento(), fuenteContenido));
+					}
+
+					else {
+						cell = new PdfPCell(new Phrase("", fuenteContenido));
 						tablappON.addCell(cell);
 
 					}
-					document.add(tablappON);
+
+					cell = new PdfPCell(new Phrase(pubRegionales.get(i).getTitulo(), fuenteContenido));
+					tablappON.addCell(cell);
+
+					if (pubRegionales.get(i).getAnio() != null && pubRegionales.get(i).getMes() != null) {
+						cell = new PdfPCell(new Phrase(pubRegionales.get(i).getMes().toString() + "-"
+								+ pubRegionales.get(i).getAnio().toString(), fuenteContenido));
+						tablappON.addCell(cell);
+					}
+
+					else {
+						cell = new PdfPCell(new Phrase("", fuenteContenido));
+						tablappON.addCell(cell);
+					}
+
+					cell = new PdfPCell(new Phrase(pubRegionales.get(i).getEvento(), fuenteContenido));
+					tablappON.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(pubRegionales.get(i).getCatalogo(), fuenteContenido));
+					tablappON.addCell(cell);
 
 				}
-				
-				if (pubDifusion.size() > 0) {
-					PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
-					tablaLeyedandaProductopON.setWidthPercentage(100);
-					tablaLeyedandaProductopON.setWidths(columnWidthLey);
-					cell = new PdfPCell(new Phrase("D. DIFUSIÓN A LA COMUNIDAD POLITÉCNICA", fuenteLeyenda));
-					cell.setBackgroundColor(new BaseColor(250, 191, 143));
-					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-					tablaLeyedandaProductopON.addCell(cell);
-					document.add(tablaLeyedandaProductopON);
+				document.add(tablappON);
 
-					PdfPTable tablappON = new PdfPTable(6);
-					tablappON.setWidthPercentage(100);
-					float[] columnWidtppON = new float[] { 5f, 20f, 20f, 20f, 20f, 15f };
-					tablappON.setWidths(columnWidtppON);
+			}
 
-					cell = new PdfPCell(new Phrase("N°", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
+			if (pubMemorias.size() > 0) {
+				PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
+				tablaLeyedandaProductopON.setWidthPercentage(100);
+				tablaLeyedandaProductopON.setWidths(columnWidthLey);
+				cell = new PdfPCell(new Phrase("B.3 MEMORIAS DE EVENTOS ACADÉMICOS REGIONALES", fuenteLeyenda));
+				cell.setBackgroundColor(new BaseColor(250, 191, 143));
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				tablaLeyedandaProductopON.addCell(cell);
+				document.add(tablaLeyedandaProductopON);
+
+				PdfPTable tablappON = new PdfPTable(7);
+				tablappON.setWidthPercentage(100);
+				float[] columnWidtppON = new float[] { 5f, 20f, 20f, 20f, 15f, 10f, 10f };
+				tablappON.setWidths(columnWidtppON);
+
+				cell = new PdfPCell(new Phrase("N°", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Autores con filiación EPN", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Título de la publicación", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Fecha del evento", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Nombre del evento académico", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("País", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Ciudad", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				for (int i = 0; i < pubMemorias.size(); i++) {
+					Integer numeral = i + 1;
+
+					cell = new PdfPCell(new Phrase(numeral.toString(), fuente));
 					tablappON.addCell(cell);
-					
-					cell = new PdfPCell(new Phrase("Título de la difusión", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablappON.addCell(cell);
 
-					cell = new PdfPCell(new Phrase("Tipo", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablappON.addCell(cell);
-					
-					cell = new PdfPCell(new Phrase("Expositor", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablappON.addCell(cell);
-
-					cell = new PdfPCell(new Phrase("Título del evento", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablappON.addCell(cell);
-
-					cell = new PdfPCell(new Phrase("Fecha de presentación", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablappON.addCell(cell);
-
-					for (int i = 0; i < pubDifusion.size(); i++) {
-						Integer numeral = i + 1;
-
-						cell = new PdfPCell(new Phrase(numeral.toString(), fuente));
-						tablappON.addCell(cell);
-						
-						cell = new PdfPCell(new Phrase(pubDifusion.get(i).getTitulo(), fuenteContenido));
-						tablappON.addCell(cell);
-						
-						cell = new PdfPCell(new Phrase(pubDifusion.get(i).getEstado(), fuenteContenido));
-						tablappON.addCell(cell);
-						
-						cell = new PdfPCell(new Phrase(pubDifusion.get(i).getExpositor(), fuenteContenido));
-						tablappON.addCell(cell);
-						
-						cell = new PdfPCell(new Phrase(pubDifusion.get(i).getEvento(), fuenteContenido));
-						tablappON.addCell(cell);
-						
-						if (pubDifusion.get(i).getAnio() != null && pubDifusion.get(i).getMes() != null ) {
-							cell = new PdfPCell(
-									new Phrase(pubDifusion.get(i).getMes().toString() + "-"+pubDifusion.get(i).getAnio().toString(), fuenteContenido));
-							tablappON.addCell(cell);
+					if (pubMemorias.get(i).getAutores().size() > 0) {
+						String nomnbres = "";
+						for (AutoresProducto au : pubMemorias.get(i).getAutores()) {
+							nomnbres = nomnbres + au.getNombres() + "\n";
 						}
 
-						else {
-							cell = new PdfPCell(new Phrase("", fuenteContenido));
-							tablappON.addCell(cell);
-						}
-					
-						
+						cell = new PdfPCell(new Phrase(nomnbres, fuenteContenido));
+						tablappON.addCell(cell);
+					}
+
+					else {
+						cell = new PdfPCell(new Phrase("", fuenteContenido));
+						tablappON.addCell(cell);
 
 					}
-					document.add(tablappON);
+
+					cell = new PdfPCell(new Phrase(pubMemorias.get(i).getTitulo(), fuenteContenido));
+					tablappON.addCell(cell);
+
+					if (pubMemorias.get(i).getAnio() != null && pubMemorias.get(i).getMes() != null) {
+						cell = new PdfPCell(new Phrase(
+								pubMemorias.get(i).getMes().toString() + "-" + pubMemorias.get(i).getAnio().toString(),
+								fuenteContenido));
+						tablappON.addCell(cell);
+					}
+
+					else {
+						cell = new PdfPCell(new Phrase("", fuenteContenido));
+						tablappON.addCell(cell);
+					}
+
+					cell = new PdfPCell(new Phrase(pubMemorias.get(i).getEvento(), fuenteContenido));
+					tablappON.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(pubMemorias.get(i).getLugar(), fuenteContenido));
+					tablappON.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(pubMemorias.get(i).getExpositor(), fuenteContenido));
+					tablappON.addCell(cell);
 
 				}
+				document.add(tablappON);
 
-				if (tesisproyecto.size() > 0) {
+			}
 
-					PdfPTable tablaLeyedandaProductoTESIS = new PdfPTable(1);
-					tablaLeyedandaProductoTESIS.setWidthPercentage(100);
-					tablaLeyedandaProductoTESIS.setWidths(columnWidthLey);
-					cell = new PdfPCell(new Phrase("E. PROYECTO DE TITULACIÓN DE PREGRADO / TESIS DE POSGRADO", fuenteLeyenda));
-					cell.setBackgroundColor(new BaseColor(250, 191, 143));
-					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-					tablaLeyedandaProductoTESIS.addCell(cell);
-					document.add(tablaLeyedandaProductoTESIS);
+			if (pubReportTecnico.size() > 0) {
+				PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
+				tablaLeyedandaProductopON.setWidthPercentage(100);
+				tablaLeyedandaProductopON.setWidths(columnWidthLey);
+				cell = new PdfPCell(new Phrase("C REPORTES TÉCNICOS", fuenteLeyenda));
+				cell.setBackgroundColor(new BaseColor(250, 191, 143));
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				tablaLeyedandaProductopON.addCell(cell);
+				document.add(tablaLeyedandaProductopON);
 
-					PdfPTable tablapTES = new PdfPTable(5);
-					tablapTES.setWidthPercentage(100);
-					float[] columnWidtptES = new float[] { 5f, 30f, 25f, 20f, 20f };
-					tablapTES.setWidths(columnWidtptES);
+				PdfPTable tablappON = new PdfPTable(5);
+				tablappON.setWidthPercentage(100);
+				float[] columnWidtppON = new float[] { 5f, 20f, 20f, 20f, 20f };
+				tablappON.setWidths(columnWidtppON);
 
-					cell = new PdfPCell(new Phrase("N°", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				cell = new PdfPCell(new Phrase("N°", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Título del artículo", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Autores", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Estado", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Revista", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				for (int i = 0; i < pubReportTecnico.size(); i++) {
+					Integer numeral = i + 1;
+
+					cell = new PdfPCell(new Phrase(numeral.toString(), fuente));
+					tablappON.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(pubReportTecnico.get(i).getTitulo(), fuenteContenido));
+					tablappON.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(pubReportTecnico.get(i).getAutorexterno(), fuenteContenido));
+					tablappON.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(pubReportTecnico.get(i).getEstado(), fuenteContenido));
+					tablappON.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(pubReportTecnico.get(i).getEvento(), fuenteContenido));
+					tablappON.addCell(cell);
+
+				}
+				document.add(tablappON);
+
+			}
+
+			if (pubDifusion.size() > 0) {
+				PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
+				tablaLeyedandaProductopON.setWidthPercentage(100);
+				tablaLeyedandaProductopON.setWidths(columnWidthLey);
+				cell = new PdfPCell(new Phrase("D. DIFUSIÓN A LA COMUNIDAD POLITÉCNICA", fuenteLeyenda));
+				cell.setBackgroundColor(new BaseColor(250, 191, 143));
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				tablaLeyedandaProductopON.addCell(cell);
+				document.add(tablaLeyedandaProductopON);
+
+				PdfPTable tablappON = new PdfPTable(6);
+				tablappON.setWidthPercentage(100);
+				float[] columnWidtppON = new float[] { 5f, 20f, 20f, 20f, 20f, 15f };
+				tablappON.setWidths(columnWidtppON);
+
+				cell = new PdfPCell(new Phrase("N°", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Título de la difusión", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Tipo", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Expositor", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Título del evento", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Fecha de presentación", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				for (int i = 0; i < pubDifusion.size(); i++) {
+					Integer numeral = i + 1;
+
+					cell = new PdfPCell(new Phrase(numeral.toString(), fuente));
+					tablappON.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(pubDifusion.get(i).getTitulo(), fuenteContenido));
+					tablappON.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(pubDifusion.get(i).getEstado(), fuenteContenido));
+					tablappON.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(pubDifusion.get(i).getExpositor(), fuenteContenido));
+					tablappON.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(pubDifusion.get(i).getEvento(), fuenteContenido));
+					tablappON.addCell(cell);
+
+					if (pubDifusion.get(i).getAnio() != null && pubDifusion.get(i).getMes() != null) {
+						cell = new PdfPCell(new Phrase(
+								pubDifusion.get(i).getMes().toString() + "-" + pubDifusion.get(i).getAnio().toString(),
+								fuenteContenido));
+						tablappON.addCell(cell);
+					}
+
+					else {
+						cell = new PdfPCell(new Phrase("", fuenteContenido));
+						tablappON.addCell(cell);
+					}
+
+				}
+				document.add(tablappON);
+
+			}
+
+			if (tesisproyecto.size() > 0) {
+
+				PdfPTable tablaLeyedandaProductoTESIS = new PdfPTable(1);
+				tablaLeyedandaProductoTESIS.setWidthPercentage(100);
+				tablaLeyedandaProductoTESIS.setWidths(columnWidthLey);
+				cell = new PdfPCell(
+						new Phrase("E. PROYECTO DE TITULACIÓN DE PREGRADO / TESIS DE POSGRADO", fuenteLeyenda));
+				cell.setBackgroundColor(new BaseColor(250, 191, 143));
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				tablaLeyedandaProductoTESIS.addCell(cell);
+				document.add(tablaLeyedandaProductoTESIS);
+
+				PdfPTable tablapTES = new PdfPTable(5);
+				tablapTES.setWidthPercentage(100);
+				float[] columnWidtptES = new float[] { 5f, 30f, 25f, 20f, 20f };
+				tablapTES.setWidths(columnWidtptES);
+
+				cell = new PdfPCell(new Phrase("N°", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapTES.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Título del proyecto de titulación", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapTES.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Estudiante(s)", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapTES.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Carrera/Programa", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapTES.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Estado", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapTES.addCell(cell);
+
+				for (int i = 0; i < tesisproyecto.size(); i++) {
+					Integer numeral = i + 1;
+
+					cell = new PdfPCell(new Phrase(numeral.toString(), fuente));
 					tablapTES.addCell(cell);
 
-					cell = new PdfPCell(new Phrase("Título del proyecto de titulación", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
+					cell = new PdfPCell(new Phrase(tesisproyecto.get(i).getTitulo(), fuenteContenido));
 					tablapTES.addCell(cell);
 
-					cell = new PdfPCell(new Phrase("Estudiante(s)", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
+					cell = new PdfPCell(new Phrase(tesisproyecto.get(i).getEstuadiante(), fuenteContenido));
 					tablapTES.addCell(cell);
 
-					cell = new PdfPCell(new Phrase("Carrera/Programa", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
+					cell = new PdfPCell(new Phrase(tesisproyecto.get(i).getCarrera(), fuenteContenido));
 					tablapTES.addCell(cell);
 
-					cell = new PdfPCell(new Phrase("Estado", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
+					cell = new PdfPCell(new Phrase(tesisproyecto.get(i).getEstado(), fuenteContenido));
 					tablapTES.addCell(cell);
 
-					for (int i = 0; i < tesisproyecto.size(); i++) {
-						Integer numeral = i + 1;
+				}
+				document.add(tablapTES);
+			}
 
-						cell = new PdfPCell(new Phrase(numeral.toString(), fuente));
-						tablapTES.addCell(cell);
+			if (pubProyM.size() > 0) {
 
-						cell = new PdfPCell(new Phrase(tesisproyecto.get(i).getTitulo(), fuenteContenido));
-						tablapTES.addCell(cell);
+				PdfPTable tablaLeyedandaProductoTESIS = new PdfPTable(1);
+				tablaLeyedandaProductoTESIS.setWidthPercentage(100);
+				tablaLeyedandaProductoTESIS.setWidths(columnWidthLey);
+				cell = new PdfPCell(new Phrase("F. PLANTEAMIENTO DE UN PROYECTO DE MAYOR ALCANCE", fuenteLeyenda));
+				cell.setBackgroundColor(new BaseColor(250, 191, 143));
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				tablaLeyedandaProductoTESIS.addCell(cell);
+				document.add(tablaLeyedandaProductoTESIS);
 
-						cell = new PdfPCell(new Phrase(tesisproyecto.get(i).getEstuadiante(), fuenteContenido));
-						tablapTES.addCell(cell);
+				PdfPTable tablapTES = new PdfPTable(4);
+				tablapTES.setWidthPercentage(100);
+				float[] columnWidtptES = new float[] { 5f, 45f, 30f, 20f };
+				tablapTES.setWidths(columnWidtptES);
 
-						cell = new PdfPCell(new Phrase(tesisproyecto.get(i).getCarrera(), fuenteContenido));
-						tablapTES.addCell(cell);
+				cell = new PdfPCell(new Phrase("N°", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapTES.addCell(cell);
 
-						cell = new PdfPCell(new Phrase(tesisproyecto.get(i).getEstado(), fuenteContenido));
+				cell = new PdfPCell(new Phrase("Título", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapTES.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Tipo de proyecto de la EPN o Externo", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapTES.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Institución que financia", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapTES.addCell(cell);
+
+				for (int i = 0; i < pubProyM.size(); i++) {
+					Integer numeral = i + 1;
+
+					cell = new PdfPCell(new Phrase(numeral.toString(), fuente));
+					tablapTES.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(pubProyM.get(i).getTitulo(), fuenteContenido));
+					tablapTES.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(pubProyM.get(i).getTipopresentacion(), fuenteContenido));
+					tablapTES.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(pubProyM.get(i).getExpositor(), fuenteContenido));
+					tablapTES.addCell(cell);
+
+				}
+				document.add(tablapTES);
+			}
+
+			if (pubPat.size() > 0) {
+
+				PdfPTable tablaLeyedandaProductoTESIS = new PdfPTable(1);
+				tablaLeyedandaProductoTESIS.setWidthPercentage(100);
+				tablaLeyedandaProductoTESIS.setWidths(columnWidthLey);
+				cell = new PdfPCell(new Phrase("G. PATENTE", fuenteLeyenda));
+				cell.setBackgroundColor(new BaseColor(250, 191, 143));
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				tablaLeyedandaProductoTESIS.addCell(cell);
+				document.add(tablaLeyedandaProductoTESIS);
+
+				PdfPTable tablapTES = new PdfPTable(6);
+				tablapTES.setWidthPercentage(100);
+				float[] columnWidtptES = new float[] { 5f, 20f, 20f, 20f, 20, 15 };
+				tablapTES.setWidths(columnWidtptES);
+
+				cell = new PdfPCell(new Phrase("N°", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapTES.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Denominación", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapTES.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Tipo de activo intangible", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapTES.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Fecha de ingreso a trámite", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapTES.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Fecha de registro", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapTES.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Código SENADI", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapTES.addCell(cell);
+
+				for (int i = 0; i < pubPat.size(); i++) {
+					Integer numeral = i + 1;
+
+					cell = new PdfPCell(new Phrase(numeral.toString(), fuente));
+					tablapTES.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(pubPat.get(i).getTitulo(), fuenteContenido));
+					tablapTES.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(pubPat.get(i).getEvento(), fuenteContenido));
+					tablapTES.addCell(cell);
+
+					if (pubPat.get(i).getFechaingreso() != null) {
+						cell = new PdfPCell(new Phrase(sdf.format(pubPat.get(i).getFechaingreso()), fuenteContenido));
 						tablapTES.addCell(cell);
+					}
+
+					else {
+						cell = new PdfPCell(new Phrase("", fuenteContenido));
+						tablapTES.addCell(cell);
+					}
+
+					if (pubPat.get(i).getFechapresenta() != null) {
+						cell = new PdfPCell(new Phrase(sdf.format(pubPat.get(i).getFechapresenta()), fuenteContenido));
+						tablapTES.addCell(cell);
+					}
+
+					else {
+						cell = new PdfPCell(new Phrase("", fuenteContenido));
+						tablapTES.addCell(cell);
+					}
+
+					cell = new PdfPCell(new Phrase(pubPat.get(i).getVolumen(), fuenteContenido));
+					tablapTES.addCell(cell);
+
+				}
+				document.add(tablapTES);
+			}
+
+			if (pubLib.size() > 0) {
+				PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
+				tablaLeyedandaProductopON.setWidthPercentage(100);
+				tablaLeyedandaProductopON.setWidths(columnWidthLey);
+				cell = new PdfPCell(new Phrase("H.1 LIBROS", fuenteLeyenda));
+				cell.setBackgroundColor(new BaseColor(250, 191, 143));
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				tablaLeyedandaProductopON.addCell(cell);
+				document.add(tablaLeyedandaProductopON);
+
+				PdfPTable tablappON = new PdfPTable(6);
+				tablappON.setWidthPercentage(100);
+				float[] columnWidtppON = new float[] { 5f, 20f, 20f, 20f, 20f, 15f };
+				tablappON.setWidths(columnWidtppON);
+
+				cell = new PdfPCell(new Phrase("N°", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Autores con filiación EPN", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Título del libro", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Fecha de publicación", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Link de la publicación", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("ISBN", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
+
+				for (int i = 0; i < pubLib.size(); i++) {
+					Integer numeral = i + 1;
+
+					cell = new PdfPCell(new Phrase(numeral.toString(), fuente));
+					tablappON.addCell(cell);
+
+					if (pubLib.get(i).getAutores().size() > 0) {
+						String nomnbres = "";
+						for (AutoresProducto au : pubLib.get(i).getAutores()) {
+							nomnbres = nomnbres + au.getNombres() + "\n";
+						}
+
+						cell = new PdfPCell(new Phrase(nomnbres, fuenteContenido));
+						tablappON.addCell(cell);
+					}
+
+					else {
+						cell = new PdfPCell(new Phrase("", fuenteContenido));
+						tablappON.addCell(cell);
 
 					}
-					document.add(tablapTES);
+
+					cell = new PdfPCell(new Phrase(pubLib.get(i).getTitulo(), fuenteContenido));
+					tablappON.addCell(cell);
+
+					if (pubLib.get(i).getAnio() != null && pubLib.get(i).getMes() != null) {
+						cell = new PdfPCell(
+								new Phrase(pubLib.get(i).getMes().toString() + "-" + pubLib.get(i).getAnio().toString(),
+										fuenteContenido));
+						tablappON.addCell(cell);
+					}
+
+					else {
+						cell = new PdfPCell(new Phrase("", fuenteContenido));
+						tablappON.addCell(cell);
+					}
+
+					cell = new PdfPCell(new Phrase(pubLib.get(i).getUrl(), fuenteContenido));
+					tablappON.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(pubLib.get(i).getCatalogo(), fuenteContenido));
+					tablappON.addCell(cell);
+
 				}
-				
-				
-				if (pubProyM.size() > 0) {
+				document.add(tablappON);
 
-					PdfPTable tablaLeyedandaProductoTESIS = new PdfPTable(1);
-					tablaLeyedandaProductoTESIS.setWidthPercentage(100);
-					tablaLeyedandaProductoTESIS.setWidths(columnWidthLey);
-					cell = new PdfPCell(new Phrase("F. PLANTEAMIENTO DE UN PROYECTO DE MAYOR ALCANCE", fuenteLeyenda));
-					cell.setBackgroundColor(new BaseColor(250, 191, 143));
-					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-					tablaLeyedandaProductoTESIS.addCell(cell);
-					document.add(tablaLeyedandaProductoTESIS);
+			}
 
-					PdfPTable tablapTES = new PdfPTable(4);
-					tablapTES.setWidthPercentage(100);
-					float[] columnWidtptES = new float[] { 5f, 45f, 30f, 20f };
-					tablapTES.setWidths(columnWidtptES);
+			if (pubCap.size() > 0) {
+				PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
+				tablaLeyedandaProductopON.setWidthPercentage(100);
+				tablaLeyedandaProductopON.setWidths(columnWidthLey);
+				cell = new PdfPCell(new Phrase("H.2 CAPÍTULO DE LIBRO", fuenteLeyenda));
+				cell.setBackgroundColor(new BaseColor(250, 191, 143));
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				tablaLeyedandaProductopON.addCell(cell);
+				document.add(tablaLeyedandaProductopON);
 
-					cell = new PdfPCell(new Phrase("N°", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablapTES.addCell(cell);
+				PdfPTable tablappON = new PdfPTable(7);
+				tablappON.setWidthPercentage(100);
+				float[] columnWidtppON = new float[] { 5f, 20f, 15f, 15f, 15f, 15f, 15f };
+				tablappON.setWidths(columnWidtppON);
 
-					cell = new PdfPCell(new Phrase("Título", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablapTES.addCell(cell);
+				cell = new PdfPCell(new Phrase("N°", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
 
-					cell = new PdfPCell(new Phrase("Tipo de proyecto de la EPN o Externo", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablapTES.addCell(cell);
+				cell = new PdfPCell(new Phrase("Autores con filiación EPN", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
 
-					cell = new PdfPCell(new Phrase("Institución que financia", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablapTES.addCell(cell);
+				cell = new PdfPCell(new Phrase("Título del libro", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
 
-					
+				cell = new PdfPCell(new Phrase("Título del capítulo", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
 
-					for (int i = 0; i < pubProyM.size(); i++) {
-						Integer numeral = i + 1;
+				cell = new PdfPCell(new Phrase("Fecha de publicación", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
 
-						cell = new PdfPCell(new Phrase(numeral.toString(), fuente));
-						tablapTES.addCell(cell);
+				cell = new PdfPCell(new Phrase("Link de la publicación", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
 
-						cell = new PdfPCell(new Phrase(pubProyM.get(i).getTitulo(), fuenteContenido));
-						tablapTES.addCell(cell);
-						
-						cell = new PdfPCell(new Phrase(pubProyM.get(i).getTipopresentacion(), fuenteContenido));
-						tablapTES.addCell(cell);
+				cell = new PdfPCell(new Phrase("ISBN", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablappON.addCell(cell);
 
-						cell = new PdfPCell(new Phrase(pubProyM.get(i).getExpositor(), fuenteContenido));
-						tablapTES.addCell(cell);
+				for (int i = 0; i < pubCap.size(); i++) {
+					Integer numeral = i + 1;
 
-						
+					cell = new PdfPCell(new Phrase(numeral.toString(), fuente));
+					tablappON.addCell(cell);
+
+					if (pubCap.get(i).getAutores().size() > 0) {
+						String nomnbres = "";
+						for (AutoresProducto au : pubCap.get(i).getAutores()) {
+							nomnbres = nomnbres + au.getNombres() + "\n";
+						}
+
+						cell = new PdfPCell(new Phrase(nomnbres, fuenteContenido));
+						tablappON.addCell(cell);
+					}
+
+					else {
+						cell = new PdfPCell(new Phrase("", fuenteContenido));
+						tablappON.addCell(cell);
 
 					}
-					document.add(tablapTES);
-				}
-				
-				
-				
-				if (pubPat.size() > 0) {
 
-					PdfPTable tablaLeyedandaProductoTESIS = new PdfPTable(1);
-					tablaLeyedandaProductoTESIS.setWidthPercentage(100);
-					tablaLeyedandaProductoTESIS.setWidths(columnWidthLey);
-					cell = new PdfPCell(new Phrase("G. PATENTE", fuenteLeyenda));
-					cell.setBackgroundColor(new BaseColor(250, 191, 143));
-					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-					tablaLeyedandaProductoTESIS.addCell(cell);
-					document.add(tablaLeyedandaProductoTESIS);
+					cell = new PdfPCell(new Phrase(pubCap.get(i).getTitulo(), fuenteContenido));
+					tablappON.addCell(cell);
+					cell = new PdfPCell(new Phrase(pubCap.get(i).getCarrera(), fuenteContenido));
+					tablappON.addCell(cell);
 
-					PdfPTable tablapTES = new PdfPTable(6);
-					tablapTES.setWidthPercentage(100);
-					float[] columnWidtptES = new float[] { 5f, 20f, 20f, 20f,20,15 };
-					tablapTES.setWidths(columnWidtptES);
-
-					cell = new PdfPCell(new Phrase("N°", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablapTES.addCell(cell);
-
-					cell = new PdfPCell(new Phrase("Denominación", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablapTES.addCell(cell);
-
-					cell = new PdfPCell(new Phrase("Tipo de activo intangible", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablapTES.addCell(cell);
-
-					cell = new PdfPCell(new Phrase("Fecha de ingreso a trámite", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablapTES.addCell(cell);
-					
-					cell = new PdfPCell(new Phrase("Fecha de registro", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablapTES.addCell(cell);
-					
-					cell = new PdfPCell(new Phrase("Código SENADI", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablapTES.addCell(cell);
-
-					
-
-					for (int i = 0; i < pubPat.size(); i++) {
-						Integer numeral = i + 1;
-
-						cell = new PdfPCell(new Phrase(numeral.toString(), fuente));
-						tablapTES.addCell(cell);
-
-						cell = new PdfPCell(new Phrase(pubPat.get(i).getTitulo(), fuenteContenido));
-						tablapTES.addCell(cell);
-						
-						cell = new PdfPCell(new Phrase(pubPat.get(i).getEvento(), fuenteContenido));
-						tablapTES.addCell(cell);
-						
-						if (pubPat.get(i).getFechaingreso() != null) {
-							cell = new PdfPCell(
-									new Phrase(sdf.format(pubPat.get(i).getFechaingreso()), fuenteContenido));
-							tablapTES.addCell(cell);
-						}
-
-						else {
-							cell = new PdfPCell(new Phrase("", fuenteContenido));
-							tablapTES.addCell(cell);
-						}
-						
-						if (pubPat.get(i).getFechapresenta() != null) {
-							cell = new PdfPCell(
-									new Phrase(sdf.format(pubPat.get(i).getFechapresenta()), fuenteContenido));
-							tablapTES.addCell(cell);
-						}
-
-						else {
-							cell = new PdfPCell(new Phrase("", fuenteContenido));
-							tablapTES.addCell(cell);
-						}
-						
-						cell = new PdfPCell(new Phrase(pubPat.get(i).getVolumen(), fuenteContenido));
-						tablapTES.addCell(cell);
-
+					if (pubCap.get(i).getAnio() != null && pubCap.get(i).getMes() != null) {
+						cell = new PdfPCell(
+								new Phrase(pubCap.get(i).getMes().toString() + "-" + pubCap.get(i).getAnio().toString(),
+										fuenteContenido));
+						tablappON.addCell(cell);
 					}
-					document.add(tablapTES);
-				}
-				
-				
-				
-				
-				if (pubLib.size() > 0) {
-					PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
-					tablaLeyedandaProductopON.setWidthPercentage(100);
-					tablaLeyedandaProductopON.setWidths(columnWidthLey);
-					cell = new PdfPCell(new Phrase("H.1 LIBROS", fuenteLeyenda));
-					cell.setBackgroundColor(new BaseColor(250, 191, 143));
-					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-					tablaLeyedandaProductopON.addCell(cell);
-					document.add(tablaLeyedandaProductopON);
 
-					PdfPTable tablappON = new PdfPTable(6);
-					tablappON.setWidthPercentage(100);
-					float[] columnWidtppON = new float[] { 5f, 20f, 20f, 20f, 20f, 15f };
-					tablappON.setWidths(columnWidtppON);
-
-					cell = new PdfPCell(new Phrase("N°", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablappON.addCell(cell);
-
-					cell = new PdfPCell(new Phrase("Autores con filiación EPN", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablappON.addCell(cell);
-
-					cell = new PdfPCell(new Phrase("Título del libro", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablappON.addCell(cell);
-
-					cell = new PdfPCell(new Phrase("Fecha de publicación", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablappON.addCell(cell);
-
-					cell = new PdfPCell(new Phrase("Link de la publicación", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablappON.addCell(cell);
-
-					cell = new PdfPCell(new Phrase("ISBN", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablappON.addCell(cell);
-
-					for (int i = 0; i < pubLib.size(); i++) {
-						Integer numeral = i + 1;
-
-						cell = new PdfPCell(new Phrase(numeral.toString(), fuente));
+					else {
+						cell = new PdfPCell(new Phrase("", fuenteContenido));
 						tablappON.addCell(cell);
-
-						if (pubLib.get(i).getAutores().size() > 0) {
-							String nomnbres = "";
-							for (AutoresProducto au : pubLib.get(i).getAutores()) {
-								nomnbres = nomnbres + au.getNombres() + "\n";
-							}
-
-							cell = new PdfPCell(new Phrase(nomnbres, fuenteContenido));
-							tablappON.addCell(cell);
-						}
-
-						else {
-							cell = new PdfPCell(new Phrase("", fuenteContenido));
-							tablappON.addCell(cell);
-
-						}
-
-						cell = new PdfPCell(new Phrase(pubLib.get(i).getTitulo(), fuenteContenido));
-						tablappON.addCell(cell);
-
-						if (pubLib.get(i).getAnio() != null && pubLib.get(i).getMes() != null ) {
-							cell = new PdfPCell(
-									new Phrase(pubLib.get(i).getMes().toString() + "-"+pubLib.get(i).getAnio().toString(), fuenteContenido));
-							tablappON.addCell(cell);
-						}
-
-						else {
-							cell = new PdfPCell(new Phrase("", fuenteContenido));
-							tablappON.addCell(cell);
-						}
-
-						cell = new PdfPCell(new Phrase(pubLib.get(i).getUrl(), fuenteContenido));
-						tablappON.addCell(cell);
-
-						cell = new PdfPCell(new Phrase(pubLib.get(i).getCatalogo(), fuenteContenido));
-						tablappON.addCell(cell);
-
-						
-
 					}
-					document.add(tablappON);
+
+					cell = new PdfPCell(new Phrase(pubCap.get(i).getUrl(), fuenteContenido));
+					tablappON.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(pubCap.get(i).getCatalogo(), fuenteContenido));
+					tablappON.addCell(cell);
 
 				}
-				
-				
-				if (pubCap.size() > 0) {
-					PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
-					tablaLeyedandaProductopON.setWidthPercentage(100);
-					tablaLeyedandaProductopON.setWidths(columnWidthLey);
-					cell = new PdfPCell(new Phrase("H.2 CAPÍTULO DE LIBRO", fuenteLeyenda));
-					cell.setBackgroundColor(new BaseColor(250, 191, 143));
-					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-					tablaLeyedandaProductopON.addCell(cell);
-					document.add(tablaLeyedandaProductopON);
+				document.add(tablappON);
 
-					PdfPTable tablappON = new PdfPTable(7);
-					tablappON.setWidthPercentage(100);
-					float[] columnWidtppON = new float[] { 5f, 20f,15f, 15f, 15f, 15f, 15f };
-					tablappON.setWidths(columnWidtppON);
+			}
 
-					cell = new PdfPCell(new Phrase("N°", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablappON.addCell(cell);
+			if (pubOtros.size() > 0) {
 
-					cell = new PdfPCell(new Phrase("Autores con filiación EPN", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablappON.addCell(cell);
+				PdfPTable tablaLeyedandaProductoTESIS = new PdfPTable(1);
+				tablaLeyedandaProductoTESIS.setWidthPercentage(100);
+				tablaLeyedandaProductoTESIS.setWidths(columnWidthLey);
+				cell = new PdfPCell(new Phrase("I. OTROS", fuenteLeyenda));
+				cell.setBackgroundColor(new BaseColor(250, 191, 143));
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				tablaLeyedandaProductoTESIS.addCell(cell);
+				document.add(tablaLeyedandaProductoTESIS);
 
-					cell = new PdfPCell(new Phrase("Título del libro", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablappON.addCell(cell);
-					
-					cell = new PdfPCell(new Phrase("Título del capítulo", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablappON.addCell(cell);
+				PdfPTable tablapTES = new PdfPTable(5);
+				tablapTES.setWidthPercentage(100);
+				float[] columnWidtptES = new float[] { 5f, 20f, 20f, 20f, 35 };
+				tablapTES.setWidths(columnWidtptES);
 
-					cell = new PdfPCell(new Phrase("Fecha de publicación", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablappON.addCell(cell);
+				cell = new PdfPCell(new Phrase("N°", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapTES.addCell(cell);
 
-					cell = new PdfPCell(new Phrase("Link de la publicación", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablappON.addCell(cell);
+				cell = new PdfPCell(new Phrase("Nombre del producto", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapTES.addCell(cell);
 
-					cell = new PdfPCell(new Phrase("ISBN", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablappON.addCell(cell);
+				cell = new PdfPCell(new Phrase("Responsable", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapTES.addCell(cell);
 
-					for (int i = 0; i < pubCap.size(); i++) {
-						Integer numeral = i + 1;
+				cell = new PdfPCell(new Phrase("Fecha ", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapTES.addCell(cell);
 
-						cell = new PdfPCell(new Phrase(numeral.toString(), fuente));
-						tablappON.addCell(cell);
+				cell = new PdfPCell(new Phrase("Observaciones", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablapTES.addCell(cell);
 
-						if (pubCap.get(i).getAutores().size() > 0) {
-							String nomnbres = "";
-							for (AutoresProducto au : pubCap.get(i).getAutores()) {
-								nomnbres = nomnbres + au.getNombres() + "\n";
-							}
+				for (int i = 0; i < pubOtros.size(); i++) {
+					Integer numeral = i + 1;
 
-							cell = new PdfPCell(new Phrase(nomnbres, fuenteContenido));
-							tablappON.addCell(cell);
-						}
+					cell = new PdfPCell(new Phrase(numeral.toString(), fuente));
+					tablapTES.addCell(cell);
 
-						else {
-							cell = new PdfPCell(new Phrase("", fuenteContenido));
-							tablappON.addCell(cell);
+					cell = new PdfPCell(new Phrase(pubOtros.get(i).getTitulo(), fuenteContenido));
+					tablapTES.addCell(cell);
 
-						}
+					cell = new PdfPCell(new Phrase(pubOtros.get(i).getAutorexterno(), fuenteContenido));
+					tablapTES.addCell(cell);
 
-						cell = new PdfPCell(new Phrase(pubCap.get(i).getTitulo(), fuenteContenido));
-						tablappON.addCell(cell);
-						cell = new PdfPCell(new Phrase(pubCap.get(i).getCarrera(), fuenteContenido));
-						tablappON.addCell(cell);
-
-						if (pubCap.get(i).getAnio() != null && pubCap.get(i).getMes() != null ) {
-							cell = new PdfPCell(
-									new Phrase(pubCap.get(i).getMes().toString() + "-"+pubCap.get(i).getAnio().toString(), fuenteContenido));
-							tablappON.addCell(cell);
-						}
-
-						else {
-							cell = new PdfPCell(new Phrase("", fuenteContenido));
-							tablappON.addCell(cell);
-						}
-
-
-						cell = new PdfPCell(new Phrase(pubCap.get(i).getUrl(), fuenteContenido));
-						tablappON.addCell(cell);
-
-						cell = new PdfPCell(new Phrase(pubCap.get(i).getCatalogo(), fuenteContenido));
-						tablappON.addCell(cell);
-
-						
-
+					if (pubOtros.get(i).getAnio() != null && pubOtros.get(i).getMes() != null) {
+						cell = new PdfPCell(new Phrase(
+								pubOtros.get(i).getMes().toString() + "-" + pubOtros.get(i).getAnio().toString(),
+								fuenteContenido));
+						tablapTES.addCell(cell);
 					}
-					document.add(tablappON);
 
-				}
-				
-				
-				
-				if (pubOtros.size() > 0) {
-
-					PdfPTable tablaLeyedandaProductoTESIS = new PdfPTable(1);
-					tablaLeyedandaProductoTESIS.setWidthPercentage(100);
-					tablaLeyedandaProductoTESIS.setWidths(columnWidthLey);
-					cell = new PdfPCell(new Phrase("I. OTROS", fuenteLeyenda));
-					cell.setBackgroundColor(new BaseColor(250, 191, 143));
-					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-					tablaLeyedandaProductoTESIS.addCell(cell);
-					document.add(tablaLeyedandaProductoTESIS);
-					
-					
-
-					PdfPTable tablapTES = new PdfPTable(5);
-					tablapTES.setWidthPercentage(100);
-					float[] columnWidtptES = new float[] { 5f, 20f, 20f, 20f,35 };
-					tablapTES.setWidths(columnWidtptES);
-
-					cell = new PdfPCell(new Phrase("N°", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablapTES.addCell(cell);
-
-					cell = new PdfPCell(new Phrase("Nombre del producto", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablapTES.addCell(cell);
-
-					cell = new PdfPCell(new Phrase("Responsable", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablapTES.addCell(cell);
-
-					cell = new PdfPCell(new Phrase("Fecha ", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablapTES.addCell(cell);
-					
-					cell = new PdfPCell(new Phrase("Observaciones", fuente));
-					cell.setBackgroundColor(new BaseColor(252, 213, 180));
-					tablapTES.addCell(cell);
-					
-
-					for (int i = 0; i < pubOtros.size(); i++) {
-						Integer numeral = i + 1;
-
-						cell = new PdfPCell(new Phrase(numeral.toString(), fuente));
+					else {
+						cell = new PdfPCell(new Phrase("", fuenteContenido));
 						tablapTES.addCell(cell);
-
-						cell = new PdfPCell(new Phrase(pubOtros.get(i).getTitulo(), fuenteContenido));
-						tablapTES.addCell(cell);
-						
-						cell = new PdfPCell(new Phrase(pubOtros.get(i).getAutorexterno(), fuenteContenido));
-						tablapTES.addCell(cell);
-						
-						if (pubOtros.get(i).getAnio() != null && pubOtros.get(i).getMes() != null ) {
-							cell = new PdfPCell(
-									new Phrase(pubOtros.get(i).getMes().toString() + "-"+pubOtros.get(i).getAnio().toString(), fuenteContenido));
-							tablapTES.addCell(cell);
-						}
-
-						else {
-							cell = new PdfPCell(new Phrase("", fuenteContenido));
-							tablapTES.addCell(cell);
-						}
-						
-						
-						cell = new PdfPCell(new Phrase(pubOtros.get(i).getEvento(), fuenteContenido));
-						tablapTES.addCell(cell);
-
 					}
-					document.add(tablapTES);
-				}
 
-			
+					cell = new PdfPCell(new Phrase(pubOtros.get(i).getEvento(), fuenteContenido));
+					tablapTES.addCell(cell);
+
+				}
+				document.add(tablapTES);
+			}
 
 			PdfPTable tablaFirma = new PdfPTable(4);
 
@@ -4858,14 +4949,14 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 
 	}
 
-	
 	public String generarPdfInvestifacionReporteVistaPrevia(List<EquipoProyectoDTO> recursos, List<Lineasproy> lineas,
 			ProyectoP proyecto, List<Objetivoavance> objetivos, List<Cronogramaavance> actividades, String pathDocs,
 			Emp autoridad, Pensum periodo, String sigla, String pathFirmaDir, String pathFirmaJefe, RecursohPr director,
 			Dep dep, CierrePeriodo cierre, List<Producto> presentaciones, List<Producto> pubRegionales,
 			List<Producto> pubMemorias, List<Producto> pubReportTecnico, List<Producto> pubDifusion,
 			List<Producto> tesisproyecto, List<Producto> pubProyM, List<Producto> pubPat, List<Producto> pubLib,
-			List<Producto> pubCap, List<Producto> pubOtros, List<Producto> pubScopus) {
+			List<Producto> pubCap, List<Producto> pubOtros, List<Producto> pubScopus, List<Proyectocarrera> carreras,
+			List<EquipoProyectoDTO> estudiantes) {
 		String url = "";
 		try {
 
@@ -4916,7 +5007,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			cabecera.addCell(createImageCell(pathDocs + "/logo_epn.jpg"));
 			cabecera.addCell(createLabelCabecera(
 					"ESCUELA POLITECNICA NACIONAL\nVICERRECTORADO DE INVESTIGACIÓN, INNOVACIÓN Y VINCULACIÓN\nDIRECCIÓN DE INVESTIGACIÓN "));
-			
+
 			cabecera.addCell(createImageCell(pathDocs + "/150.png"));
 			document.add(cabecera);
 
@@ -4987,17 +5078,54 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			cell = new PdfPCell(new Phrase(linea, fuenteContenido));
 			cell.setColspan(3);
 			tablageneral.addCell(cell);
+
+			if (proyecto.getTipoProyecto().getIdTipoProy() == 4) {
+
+				cell = new PdfPCell(new Phrase("Carrera", fuente));
+				cell.setBackgroundColor(new BaseColor(197, 217, 241));
+				tablageneral.addCell(cell);
+
+				String carrera = "";
+				for (Proyectocarrera car : carreras) {
+					carrera += car.getNombre() + "  ";
+				}
+				cell = new PdfPCell(new Phrase(carrera, fuenteContenido));
+				cell.setColspan(3);
+				tablageneral.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Organización Colaboradora", fuente));
+				cell.setBackgroundColor(new BaseColor(197, 217, 241));
+				tablageneral.addCell(cell);
+
+				cell = new PdfPCell(new Phrase(proyecto.getBeneficiarioPr(), fuenteContenido));
+				cell.setColspan(3);
+				tablageneral.addCell(cell);
+
+			}
+
 			document.add(tablageneral);
 
 			////////////////////// tabla equipo del
 			////////////////////// proyecto////////////////////////
 
+			
+			PdfPTable tablaLeyedanda = new PdfPTable(1);
+			tablaLeyedanda.setWidthPercentage(100);
+			float[] columnWidthLey = new float[] { 100f };
+			tablaLeyedanda.setWidths(columnWidthLey);
+			cell = new PdfPCell(new Phrase("A1. EQUIPO DE TRABAJO DEL PROEYCTO", fuenteLeyenda));
+			cell.setBackgroundColor(new BaseColor(83, 141, 213));
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			tablaLeyedanda.addCell(cell);
+			document.add(tablaLeyedanda);
+			
+			
 			PdfPTable tablaEquipoP = new PdfPTable(6);
 
 			tablaEquipoP.setWidthPercentage(100);
 			float[] columnWidthEqp = new float[] { 20f, 30f, 15f, 15f, 10f, 10f };
 			tablaEquipoP.setWidths(columnWidthEqp);
-			cell = new PdfPCell(new Phrase("Equipo de trabajo del proyecto", fuente));
+			cell = new PdfPCell(new Phrase("Rol", fuente));
 			cell.setBackgroundColor(new BaseColor(217, 217, 217));
 			cell.setRowspan(2);
 			tablaEquipoP.addCell(cell);
@@ -5056,15 +5184,111 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 
 			document.add(tablaEquipoP);
 
-			PdfPTable tablaLeyedanda = new PdfPTable(1);
-			tablaLeyedanda.setWidthPercentage(100);
-			float[] columnWidthLey = new float[] { 100f };
-			tablaLeyedanda.setWidths(columnWidthLey);
-			cell = new PdfPCell(new Phrase("A. OBJETIVOS DEL PROYECTO", fuenteLeyenda));
+			if (proyecto.getTipoProyecto().getIdTipoProy() == 4) {
+
+				////////////////////// tabla equipo del
+				////////////////////// proyecto////////////////////////
+
+				PdfPTable tablaLeyedandaES = new PdfPTable(1);
+				tablaLeyedandaES.setWidthPercentage(100);
+				
+				tablaLeyedandaES.setWidths(columnWidthLey);
+				cell = new PdfPCell(new Phrase("A2. ESTUDIANTES", fuenteLeyenda));
+				cell.setBackgroundColor(new BaseColor(83, 141, 213));
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				tablaLeyedandaES.addCell(cell);
+				document.add(tablaLeyedandaES);
+				
+				PdfPTable tablaEstud = new PdfPTable(7);
+
+				tablaEstud.setWidthPercentage(100);
+				float[] columnWidthest1 = new float[] { 20f, 20f, 20f, 10f, 10f, 10f, 10f };
+				tablaEstud.setWidths(columnWidthest1);
+
+				cell = new PdfPCell(new Phrase("Apellidos y Nombres", fuente));
+				cell.setBackgroundColor(new BaseColor(217, 217, 217));
+
+				tablaEstud.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Cédula.", fuente));
+				cell.setBackgroundColor(new BaseColor(217, 217, 217));
+
+				tablaEstud.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Carrera", fuente));
+				cell.setBackgroundColor(new BaseColor(217, 217, 217));
+
+				tablaEstud.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("F. Vinculación", fuente));
+				cell.setBackgroundColor(new BaseColor(217, 217, 217));
+				tablaEstud.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("F. Desvinculación", fuente));
+				cell.setBackgroundColor(new BaseColor(217, 217, 217));
+				tablaEstud.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Horas Pnalificadas\n" + periodo.getMeses(), fuente));
+				cell.setBackgroundColor(new BaseColor(197, 217, 241));
+				tablaEstud.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Horas Repostadas\n" + periodo.getMeses(), fuente));
+				cell.setBackgroundColor(new BaseColor(197, 217, 241));
+				tablaEstud.addCell(cell);
+
+				for (EquipoProyectoDTO avac : estudiantes) {
+					cell = new PdfPCell(new Phrase(avac.getNombres(), fuente));
+
+					tablaEstud.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(avac.getCargo(), fuenteContenido));
+					tablaEstud.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(avac.getDepar(), fuenteContenido));
+					tablaEstud.addCell(cell);
+
+					if (avac.getFvincula() == null) {
+						cell = new PdfPCell(new Phrase("", fuenteContenido));
+						tablaEstud.addCell(cell);
+					}
+
+					else {
+
+						cell = new PdfPCell(new Phrase(avac.getFvincula().toString(), fuenteContenido));
+						tablaEstud.addCell(cell);
+					}
+
+					if (avac.getFdesvincula() == null) {
+						cell = new PdfPCell(new Phrase("", fuenteContenido));
+						tablaEstud.addCell(cell);
+					}
+
+					else {
+
+						cell = new PdfPCell(new Phrase(avac.getFdesvincula().toString(), fuenteContenido));
+						tablaEstud.addCell(cell);
+					}
+
+					cell = new PdfPCell(new Phrase(avac.getHplanif().toString(), fuenteContenido));
+					tablaEstud.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(avac.getHreport().toString(), fuenteContenido));
+					tablaEstud.addCell(cell);
+
+				}
+
+				document.add(tablaEstud);
+			}
+
+			PdfPTable tablaLeyedandaoBJ = new PdfPTable(1);
+			tablaLeyedandaoBJ.setWidthPercentage(100);
+			
+			tablaLeyedandaoBJ.setWidths(columnWidthLey);
+			cell = new PdfPCell(new Phrase("B. OBJETIVOS DEL PROYECTO", fuenteLeyenda));
 			cell.setBackgroundColor(new BaseColor(83, 141, 213));
 			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-			tablaLeyedanda.addCell(cell);
-			document.add(tablaLeyedanda);
+			tablaLeyedandaoBJ.addCell(cell);
+			document.add(tablaLeyedandaoBJ);
 
 			//////////////////// OBJETIVO GENERAL
 
@@ -5123,8 +5347,6 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				tablaObjEsp.addCell(cell);
 
 			}
-			
-			
 
 			document.add(tablaObjEsp);
 
@@ -5134,18 +5356,13 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			cell = new PdfPCell(new Phrase("Porcentaje Total de Avance Acumulado del Proyecto", fuente));
 			cell.setBackgroundColor(new BaseColor(197, 217, 241));
 			tablaObjGeneralPorcen.addCell(cell);
-			
-			if(cierre.getAvance() == null)
-			{
+
+			if (cierre.getAvance() == null) {
 				cell = new PdfPCell(new Phrase("0", fuenteContenido));
-			}
-			else
-			{
+			} else {
 				cell = new PdfPCell(new Phrase(cierre.getAvance().toString(), fuenteContenido));
 			}
-			
-			
-			
+
 			tablaObjGeneralPorcen.addCell(cell);
 			document.add(tablaObjGeneralPorcen);
 
@@ -5155,7 +5372,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			tablaLeyedandaCrono.setWidthPercentage(100);
 
 			tablaLeyedandaCrono.setWidths(columnWidthLey);
-			cell = new PdfPCell(new Phrase("B. CRONOGRAMA DE AVANCE DEL PROYECTO EN EL PERIODO " + periodo.getMeses(),
+			cell = new PdfPCell(new Phrase("C. CRONOGRAMA DE AVANCE DEL PROYECTO EN EL PERIODO " + periodo.getMeses(),
 					fuenteLeyenda));
 			cell.setBackgroundColor(new BaseColor(83, 141, 213));
 			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -5232,23 +5449,20 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			document.add(tablaActividades);
 
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-			 
-			
-			
-			
+
 			///////// TABLA PRODUCTOS///////////////////////////////
 
 			PdfPTable tablaLeyedandaProducto = new PdfPTable(1);
 			tablaLeyedandaProducto.setWidthPercentage(100);
 			tablaLeyedandaProducto.setWidths(columnWidthLey);
-			cell = new PdfPCell(new Phrase("PRODUCTOS GENERADOS DURANTE EL PERIODO ACADÉMICO " + periodo.getMeses()
-					+ "\n", fuenteLeyenda));
+			cell = new PdfPCell(new Phrase(
+					"PRODUCTOS GENERADOS DURANTE EL PERIODO ACADÉMICO " + periodo.getMeses() + "\n", fuenteLeyenda));
 			cell.setBackgroundColor(new BaseColor(250, 191, 143));
 			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			tablaLeyedandaProducto.addCell(cell);
 			document.add(tablaLeyedandaProducto);
 
-			if (presentaciones.size() > 0) {
+			if (presentaciones.size() > 0 && proyecto.getTipoProyecto().getIdTipoProy() != 4) {
 
 				PdfPTable tablaLeyedandaProductoPUBLICACIONES = new PdfPTable(1);
 				tablaLeyedandaProductoPUBLICACIONES.setWidthPercentage(100);
@@ -5318,9 +5532,9 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 					cell = new PdfPCell(new Phrase(presentaciones.get(i).getCarrera(), fuenteContenido));
 					tablapUB.addCell(cell);
 
-					if (presentaciones.get(i).getAnio() != null && presentaciones.get(i).getMes() != null ) {
-						cell = new PdfPCell(
-								new Phrase(presentaciones.get(i).getMes().toString() + "-"+presentaciones.get(i).getAnio().toString(), fuenteContenido));
+					if (presentaciones.get(i).getAnio() != null && presentaciones.get(i).getMes() != null) {
+						cell = new PdfPCell(new Phrase(presentaciones.get(i).getMes().toString() + "-"
+								+ presentaciones.get(i).getAnio().toString(), fuenteContenido));
 						tablapUB.addCell(cell);
 					}
 
@@ -5333,9 +5547,8 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				document.add(tablapUB);
 
 			}
-			
-			
-			if (pubScopus.size() > 0) {
+
+			if (pubScopus.size() > 0 && proyecto.getTipoProyecto().getIdTipoProy() != 4) {
 				PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
 				tablaLeyedandaProductopON.setWidthPercentage(100);
 				tablaLeyedandaProductopON.setWidths(columnWidthLey);
@@ -5347,7 +5560,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 
 				PdfPTable tablappON = new PdfPTable(5);
 				tablappON.setWidthPercentage(100);
-				float[] columnWidtppON = new float[] { 5f, 30f, 25f, 20f, 20f};
+				float[] columnWidtppON = new float[] { 5f, 30f, 25f, 20f, 20f };
 				tablappON.setWidths(columnWidtppON);
 
 				cell = new PdfPCell(new Phrase("N°", fuente));
@@ -5369,8 +5582,6 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				cell = new PdfPCell(new Phrase("Nombre revista", fuente));
 				cell.setBackgroundColor(new BaseColor(252, 213, 180));
 				tablappON.addCell(cell);
-
-				
 
 				for (int i = 0; i < pubScopus.size(); i++) {
 					Integer numeral = i + 1;
@@ -5411,16 +5622,12 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 					cell = new PdfPCell(new Phrase(pubScopus.get(i).getEvento(), fuenteContenido));
 					tablappON.addCell(cell);
 
-					
-
-					
-
 				}
 				document.add(tablappON);
 
 			}
-			
-			if (pubRegionales.size() > 0) {
+
+			if (pubRegionales.size() > 0 && proyecto.getTipoProyecto().getIdTipoProy() != 4) {
 				PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
 				tablaLeyedandaProductopON.setWidthPercentage(100);
 				tablaLeyedandaProductopON.setWidths(columnWidthLey);
@@ -5484,9 +5691,9 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 					cell = new PdfPCell(new Phrase(pubRegionales.get(i).getTitulo(), fuenteContenido));
 					tablappON.addCell(cell);
 
-					if (pubRegionales.get(i).getAnio() != null && pubRegionales.get(i).getMes() != null ) {
-						cell = new PdfPCell(
-								new Phrase(pubRegionales.get(i).getMes().toString() + "-"+pubRegionales.get(i).getAnio().toString(), fuenteContenido));
+					if (pubRegionales.get(i).getAnio() != null && pubRegionales.get(i).getMes() != null) {
+						cell = new PdfPCell(new Phrase(pubRegionales.get(i).getMes().toString() + "-"
+								+ pubRegionales.get(i).getAnio().toString(), fuenteContenido));
 						tablappON.addCell(cell);
 					}
 
@@ -5501,16 +5708,12 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 					cell = new PdfPCell(new Phrase(pubRegionales.get(i).getCatalogo(), fuenteContenido));
 					tablappON.addCell(cell);
 
-					
-
 				}
 				document.add(tablappON);
 
 			}
-			
-			
 
-			if (pubMemorias.size() > 0) {
+			if (pubMemorias.size() > 0 && proyecto.getTipoProyecto().getIdTipoProy() != 4) {
 				PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
 				tablaLeyedandaProductopON.setWidthPercentage(100);
 				tablaLeyedandaProductopON.setWidths(columnWidthLey);
@@ -5578,9 +5781,10 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 					cell = new PdfPCell(new Phrase(pubMemorias.get(i).getTitulo(), fuenteContenido));
 					tablappON.addCell(cell);
 
-					if (pubMemorias.get(i).getAnio() != null && pubMemorias.get(i).getMes() != null ) {
-						cell = new PdfPCell(
-								new Phrase(pubMemorias.get(i).getMes().toString() + "-"+pubMemorias.get(i).getAnio().toString(), fuenteContenido));
+					if (pubMemorias.get(i).getAnio() != null && pubMemorias.get(i).getMes() != null) {
+						cell = new PdfPCell(new Phrase(
+								pubMemorias.get(i).getMes().toString() + "-" + pubMemorias.get(i).getAnio().toString(),
+								fuenteContenido));
 						tablappON.addCell(cell);
 					}
 
@@ -5602,8 +5806,8 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				document.add(tablappON);
 
 			}
-			
-			if (pubReportTecnico.size() > 0) {
+
+			if (pubReportTecnico.size() > 0 && proyecto.getTipoProyecto().getIdTipoProy() != 4) {
 				PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
 				tablaLeyedandaProductopON.setWidthPercentage(100);
 				tablaLeyedandaProductopON.setWidths(columnWidthLey);
@@ -5615,13 +5819,13 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 
 				PdfPTable tablappON = new PdfPTable(5);
 				tablappON.setWidthPercentage(100);
-				float[] columnWidtppON = new float[] { 5f, 20f, 20f, 20f, 20f  };
+				float[] columnWidtppON = new float[] { 5f, 20f, 20f, 20f, 20f };
 				tablappON.setWidths(columnWidtppON);
 
 				cell = new PdfPCell(new Phrase("N°", fuente));
 				cell.setBackgroundColor(new BaseColor(252, 213, 180));
 				tablappON.addCell(cell);
-				
+
 				cell = new PdfPCell(new Phrase("Título del artículo", fuente));
 				cell.setBackgroundColor(new BaseColor(252, 213, 180));
 				tablappON.addCell(cell);
@@ -5629,12 +5833,10 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				cell = new PdfPCell(new Phrase("Autores", fuente));
 				cell.setBackgroundColor(new BaseColor(252, 213, 180));
 				tablappON.addCell(cell);
-				
+
 				cell = new PdfPCell(new Phrase("Estado", fuente));
 				cell.setBackgroundColor(new BaseColor(252, 213, 180));
 				tablappON.addCell(cell);
-
-				
 
 				cell = new PdfPCell(new Phrase("Revista", fuente));
 				cell.setBackgroundColor(new BaseColor(252, 213, 180));
@@ -5645,18 +5847,16 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 
 					cell = new PdfPCell(new Phrase(numeral.toString(), fuente));
 					tablappON.addCell(cell);
-					
+
 					cell = new PdfPCell(new Phrase(pubReportTecnico.get(i).getTitulo(), fuenteContenido));
 					tablappON.addCell(cell);
-					
+
 					cell = new PdfPCell(new Phrase(pubReportTecnico.get(i).getAutorexterno(), fuenteContenido));
 					tablappON.addCell(cell);
-					
+
 					cell = new PdfPCell(new Phrase(pubReportTecnico.get(i).getEstado(), fuenteContenido));
 					tablappON.addCell(cell);
-					
-					
-				
+
 					cell = new PdfPCell(new Phrase(pubReportTecnico.get(i).getEvento(), fuenteContenido));
 					tablappON.addCell(cell);
 
@@ -5664,8 +5864,8 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				document.add(tablappON);
 
 			}
-			
-			if (pubDifusion.size() > 0) {
+
+			if (pubDifusion.size() > 0 && proyecto.getTipoProyecto().getIdTipoProy() != 4) {
 				PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
 				tablaLeyedandaProductopON.setWidthPercentage(100);
 				tablaLeyedandaProductopON.setWidths(columnWidthLey);
@@ -5683,7 +5883,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				cell = new PdfPCell(new Phrase("N°", fuente));
 				cell.setBackgroundColor(new BaseColor(252, 213, 180));
 				tablappON.addCell(cell);
-				
+
 				cell = new PdfPCell(new Phrase("Título de la difusión", fuente));
 				cell.setBackgroundColor(new BaseColor(252, 213, 180));
 				tablappON.addCell(cell);
@@ -5691,7 +5891,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				cell = new PdfPCell(new Phrase("Tipo", fuente));
 				cell.setBackgroundColor(new BaseColor(252, 213, 180));
 				tablappON.addCell(cell);
-				
+
 				cell = new PdfPCell(new Phrase("Expositor", fuente));
 				cell.setBackgroundColor(new BaseColor(252, 213, 180));
 				tablappON.addCell(cell);
@@ -5709,22 +5909,23 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 
 					cell = new PdfPCell(new Phrase(numeral.toString(), fuente));
 					tablappON.addCell(cell);
-					
+
 					cell = new PdfPCell(new Phrase(pubDifusion.get(i).getTitulo(), fuenteContenido));
 					tablappON.addCell(cell);
-					
+
 					cell = new PdfPCell(new Phrase(pubDifusion.get(i).getEstado(), fuenteContenido));
 					tablappON.addCell(cell);
-					
+
 					cell = new PdfPCell(new Phrase(pubDifusion.get(i).getExpositor(), fuenteContenido));
 					tablappON.addCell(cell);
-					
+
 					cell = new PdfPCell(new Phrase(pubDifusion.get(i).getEvento(), fuenteContenido));
 					tablappON.addCell(cell);
-					
-					if (pubDifusion.get(i).getAnio() != null && pubDifusion.get(i).getMes() != null ) {
-						cell = new PdfPCell(
-								new Phrase(pubDifusion.get(i).getMes().toString() + "-"+pubDifusion.get(i).getAnio().toString(), fuenteContenido));
+
+					if (pubDifusion.get(i).getAnio() != null && pubDifusion.get(i).getMes() != null) {
+						cell = new PdfPCell(new Phrase(
+								pubDifusion.get(i).getMes().toString() + "-" + pubDifusion.get(i).getAnio().toString(),
+								fuenteContenido));
 						tablappON.addCell(cell);
 					}
 
@@ -5732,20 +5933,19 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 						cell = new PdfPCell(new Phrase("", fuenteContenido));
 						tablappON.addCell(cell);
 					}
-				
-					
 
 				}
 				document.add(tablappON);
 
 			}
 
-			if (tesisproyecto.size() > 0) {
+			if (tesisproyecto.size() > 0 && proyecto.getTipoProyecto().getIdTipoProy() != 4) {
 
 				PdfPTable tablaLeyedandaProductoTESIS = new PdfPTable(1);
 				tablaLeyedandaProductoTESIS.setWidthPercentage(100);
 				tablaLeyedandaProductoTESIS.setWidths(columnWidthLey);
-				cell = new PdfPCell(new Phrase("E. PROYECTO DE TITULACIÓN DE PREGRADO / TESIS DE POSGRADO", fuenteLeyenda));
+				cell = new PdfPCell(
+						new Phrase("E. PROYECTO DE TITULACIÓN DE PREGRADO / TESIS DE POSGRADO", fuenteLeyenda));
 				cell.setBackgroundColor(new BaseColor(250, 191, 143));
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				tablaLeyedandaProductoTESIS.addCell(cell);
@@ -5797,9 +5997,8 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				}
 				document.add(tablapTES);
 			}
-			
-			
-			if (pubProyM.size() > 0) {
+
+			if (pubProyM.size() > 0 && proyecto.getTipoProyecto().getIdTipoProy() != 4) {
 
 				PdfPTable tablaLeyedandaProductoTESIS = new PdfPTable(1);
 				tablaLeyedandaProductoTESIS.setWidthPercentage(100);
@@ -5831,8 +6030,6 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				cell.setBackgroundColor(new BaseColor(252, 213, 180));
 				tablapTES.addCell(cell);
 
-				
-
 				for (int i = 0; i < pubProyM.size(); i++) {
 					Integer numeral = i + 1;
 
@@ -5841,22 +6038,18 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 
 					cell = new PdfPCell(new Phrase(pubProyM.get(i).getTitulo(), fuenteContenido));
 					tablapTES.addCell(cell);
-					
+
 					cell = new PdfPCell(new Phrase(pubProyM.get(i).getTipopresentacion(), fuenteContenido));
 					tablapTES.addCell(cell);
 
 					cell = new PdfPCell(new Phrase(pubProyM.get(i).getExpositor(), fuenteContenido));
 					tablapTES.addCell(cell);
 
-					
-
 				}
 				document.add(tablapTES);
 			}
-			
-			
-			
-			if (pubPat.size() > 0) {
+
+			if (pubPat.size() > 0 && proyecto.getTipoProyecto().getIdTipoProy() != 4) {
 
 				PdfPTable tablaLeyedandaProductoTESIS = new PdfPTable(1);
 				tablaLeyedandaProductoTESIS.setWidthPercentage(100);
@@ -5869,7 +6062,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 
 				PdfPTable tablapTES = new PdfPTable(6);
 				tablapTES.setWidthPercentage(100);
-				float[] columnWidtptES = new float[] { 5f, 20f, 20f, 20f,20,15 };
+				float[] columnWidtptES = new float[] { 5f, 20f, 20f, 20f, 20, 15 };
 				tablapTES.setWidths(columnWidtptES);
 
 				cell = new PdfPCell(new Phrase("N°", fuente));
@@ -5887,16 +6080,14 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				cell = new PdfPCell(new Phrase("Fecha de ingreso a trámite", fuente));
 				cell.setBackgroundColor(new BaseColor(252, 213, 180));
 				tablapTES.addCell(cell);
-				
+
 				cell = new PdfPCell(new Phrase("Fecha de registro", fuente));
 				cell.setBackgroundColor(new BaseColor(252, 213, 180));
 				tablapTES.addCell(cell);
-				
+
 				cell = new PdfPCell(new Phrase("Código SENADI", fuente));
 				cell.setBackgroundColor(new BaseColor(252, 213, 180));
 				tablapTES.addCell(cell);
-
-				
 
 				for (int i = 0; i < pubPat.size(); i++) {
 					Integer numeral = i + 1;
@@ -5906,13 +6097,12 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 
 					cell = new PdfPCell(new Phrase(pubPat.get(i).getTitulo(), fuenteContenido));
 					tablapTES.addCell(cell);
-					
+
 					cell = new PdfPCell(new Phrase(pubPat.get(i).getEvento(), fuenteContenido));
 					tablapTES.addCell(cell);
-					
+
 					if (pubPat.get(i).getFechaingreso() != null) {
-						cell = new PdfPCell(
-								new Phrase(sdf.format(pubPat.get(i).getFechaingreso()), fuenteContenido));
+						cell = new PdfPCell(new Phrase(sdf.format(pubPat.get(i).getFechaingreso()), fuenteContenido));
 						tablapTES.addCell(cell);
 					}
 
@@ -5920,10 +6110,9 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 						cell = new PdfPCell(new Phrase("", fuenteContenido));
 						tablapTES.addCell(cell);
 					}
-					
+
 					if (pubPat.get(i).getFechapresenta() != null) {
-						cell = new PdfPCell(
-								new Phrase(sdf.format(pubPat.get(i).getFechapresenta()), fuenteContenido));
+						cell = new PdfPCell(new Phrase(sdf.format(pubPat.get(i).getFechapresenta()), fuenteContenido));
 						tablapTES.addCell(cell);
 					}
 
@@ -5931,18 +6120,15 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 						cell = new PdfPCell(new Phrase("", fuenteContenido));
 						tablapTES.addCell(cell);
 					}
-					
+
 					cell = new PdfPCell(new Phrase(pubPat.get(i).getVolumen(), fuenteContenido));
 					tablapTES.addCell(cell);
 
 				}
 				document.add(tablapTES);
 			}
-			
-			
-			
-			
-			if (pubLib.size() > 0) {
+
+			if (pubLib.size() > 0 && proyecto.getTipoProyecto().getIdTipoProy() != 4) {
 				PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
 				tablaLeyedandaProductopON.setWidthPercentage(100);
 				tablaLeyedandaProductopON.setWidths(columnWidthLey);
@@ -6006,9 +6192,10 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 					cell = new PdfPCell(new Phrase(pubLib.get(i).getTitulo(), fuenteContenido));
 					tablappON.addCell(cell);
 
-					if (pubLib.get(i).getAnio() != null && pubLib.get(i).getMes() != null ) {
+					if (pubLib.get(i).getAnio() != null && pubLib.get(i).getMes() != null) {
 						cell = new PdfPCell(
-								new Phrase(pubLib.get(i).getMes().toString() + "-"+pubLib.get(i).getAnio().toString(), fuenteContenido));
+								new Phrase(pubLib.get(i).getMes().toString() + "-" + pubLib.get(i).getAnio().toString(),
+										fuenteContenido));
 						tablappON.addCell(cell);
 					}
 
@@ -6023,15 +6210,12 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 					cell = new PdfPCell(new Phrase(pubLib.get(i).getCatalogo(), fuenteContenido));
 					tablappON.addCell(cell);
 
-					
-
 				}
 				document.add(tablappON);
 
 			}
-			
-			
-			if (pubCap.size() > 0) {
+
+			if (pubCap.size() > 0 && proyecto.getTipoProyecto().getIdTipoProy() != 4) {
 				PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
 				tablaLeyedandaProductopON.setWidthPercentage(100);
 				tablaLeyedandaProductopON.setWidths(columnWidthLey);
@@ -6043,7 +6227,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 
 				PdfPTable tablappON = new PdfPTable(7);
 				tablappON.setWidthPercentage(100);
-				float[] columnWidtppON = new float[] { 5f, 20f,15f, 15f, 15f, 15f, 15f };
+				float[] columnWidtppON = new float[] { 5f, 20f, 15f, 15f, 15f, 15f, 15f };
 				tablappON.setWidths(columnWidtppON);
 
 				cell = new PdfPCell(new Phrase("N°", fuente));
@@ -6057,7 +6241,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				cell = new PdfPCell(new Phrase("Título del libro", fuente));
 				cell.setBackgroundColor(new BaseColor(252, 213, 180));
 				tablappON.addCell(cell);
-				
+
 				cell = new PdfPCell(new Phrase("Título del capítulo", fuente));
 				cell.setBackgroundColor(new BaseColor(252, 213, 180));
 				tablappON.addCell(cell);
@@ -6101,9 +6285,10 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 					cell = new PdfPCell(new Phrase(pubCap.get(i).getCarrera(), fuenteContenido));
 					tablappON.addCell(cell);
 
-					if (pubCap.get(i).getAnio() != null && pubCap.get(i).getMes() != null ) {
+					if (pubCap.get(i).getAnio() != null && pubCap.get(i).getMes() != null) {
 						cell = new PdfPCell(
-								new Phrase(pubCap.get(i).getMes().toString() + "-"+pubCap.get(i).getAnio().toString(), fuenteContenido));
+								new Phrase(pubCap.get(i).getMes().toString() + "-" + pubCap.get(i).getAnio().toString(),
+										fuenteContenido));
 						tablappON.addCell(cell);
 					}
 
@@ -6112,38 +6297,38 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 						tablappON.addCell(cell);
 					}
 
-
 					cell = new PdfPCell(new Phrase(pubCap.get(i).getUrl(), fuenteContenido));
 					tablappON.addCell(cell);
 
 					cell = new PdfPCell(new Phrase(pubCap.get(i).getCatalogo(), fuenteContenido));
 					tablappON.addCell(cell);
 
-					
-
 				}
 				document.add(tablappON);
 
 			}
-			
-			
-			
+
 			if (pubOtros.size() > 0) {
 
 				PdfPTable tablaLeyedandaProductoTESIS = new PdfPTable(1);
 				tablaLeyedandaProductoTESIS.setWidthPercentage(100);
 				tablaLeyedandaProductoTESIS.setWidths(columnWidthLey);
-				cell = new PdfPCell(new Phrase("I. OTROS", fuenteLeyenda));
+
+				if (proyecto.getTipoProyecto().getIdTipoProy() == 4) {
+					cell = new PdfPCell(new Phrase("A. PRODUCTOS", fuenteLeyenda));
+				} else {
+					cell = new PdfPCell(new Phrase("I. OTROS", fuenteLeyenda));
+
+				}
+
 				cell.setBackgroundColor(new BaseColor(250, 191, 143));
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				tablaLeyedandaProductoTESIS.addCell(cell);
 				document.add(tablaLeyedandaProductoTESIS);
-				
-				
 
 				PdfPTable tablapTES = new PdfPTable(5);
 				tablapTES.setWidthPercentage(100);
-				float[] columnWidtptES = new float[] { 5f, 20f, 20f, 20f,35 };
+				float[] columnWidtptES = new float[] { 5f, 20f, 20f, 20f, 35 };
 				tablapTES.setWidths(columnWidtptES);
 
 				cell = new PdfPCell(new Phrase("N°", fuente));
@@ -6161,11 +6346,10 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				cell = new PdfPCell(new Phrase("Fecha ", fuente));
 				cell.setBackgroundColor(new BaseColor(252, 213, 180));
 				tablapTES.addCell(cell);
-				
+
 				cell = new PdfPCell(new Phrase("Observaciones", fuente));
 				cell.setBackgroundColor(new BaseColor(252, 213, 180));
 				tablapTES.addCell(cell);
-				
 
 				for (int i = 0; i < pubOtros.size(); i++) {
 					Integer numeral = i + 1;
@@ -6175,13 +6359,14 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 
 					cell = new PdfPCell(new Phrase(pubOtros.get(i).getTitulo(), fuenteContenido));
 					tablapTES.addCell(cell);
-					
+
 					cell = new PdfPCell(new Phrase(pubOtros.get(i).getAutorexterno(), fuenteContenido));
 					tablapTES.addCell(cell);
-					
-					if (pubOtros.get(i).getAnio() != null && pubOtros.get(i).getMes() != null ) {
-						cell = new PdfPCell(
-								new Phrase(pubOtros.get(i).getMes().toString() + "-"+pubOtros.get(i).getAnio().toString(), fuenteContenido));
+
+					if (pubOtros.get(i).getAnio() != null && pubOtros.get(i).getMes() != null) {
+						cell = new PdfPCell(new Phrase(
+								pubOtros.get(i).getMes().toString() + "-" + pubOtros.get(i).getAnio().toString(),
+								fuenteContenido));
 						tablapTES.addCell(cell);
 					}
 
@@ -6189,15 +6374,13 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 						cell = new PdfPCell(new Phrase("", fuenteContenido));
 						tablapTES.addCell(cell);
 					}
-					
-					
+
 					cell = new PdfPCell(new Phrase(pubOtros.get(i).getEvento(), fuenteContenido));
 					tablapTES.addCell(cell);
 
 				}
 				document.add(tablapTES);
 			}
-			
 
 			PdfPTable tablaFirma = new PdfPTable(4);
 
@@ -6244,8 +6427,23 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			document.add(tablaFirma);
 
 			document.add(datosContrato);
-			
-			String fechaComoCadena = sdf.format(new Date());
+
+			String fechaComoCadena = "";
+			String fechaComoCadena1 = "";
+
+			if (cierre.getFechacierredocente() == null) {
+				fechaComoCadena = "Sin envío JD.";
+
+			} else {
+				fechaComoCadena = sdf.format(cierre.getFechacierredocente());
+			}
+
+			if (cierre.getFechacierrejd() == null) {
+				fechaComoCadena1 = "Sin envío DI.";
+
+			} else {
+				fechaComoCadena1 = sdf.format(cierre.getFechacierrejd());
+			}
 
 			Paragraph ingreso = new Paragraph();
 			String ing = "\n Fecha envío Jefe Departamento: " + fechaComoCadena;
@@ -6255,6 +6453,15 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			ingreso.add(ing);
 
 			document.add(ingreso);
+
+			Paragraph ingreso2 = new Paragraph();
+			String ing2 = "\n Fecha envío a la DIrección de Investigación: " + fechaComoCadena1;
+			fuente = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.BOLD);
+			ingreso2.setFont(fuente);
+			ingreso2.setAlignment(Element.ALIGN_LEFT);
+			ingreso2.add(ing2);
+
+			document.add(ingreso2);
 
 			document.close();
 
@@ -6276,7 +6483,8 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 	public String generarPdfInvestifacionReportePlanicacion(List<Recursoavance> recursos, List<Lineasproy> lineas,
 			ProyectoP proyecto, List<Objetivoavance> objetivos, CierrePeriodo cierre,
 			List<Cronogramaavance> actividades, String pathDocs, RecursohPr director, Pensum periodo, String sigla,
-			Emp empleado, Dep dep, String pathfirmaJD, String pathfirmaDr) {
+			Emp empleado, Dep dep, String pathfirmaJD, String pathfirmaDr, List<Proyectocarrera> carreras,
+			List<Avanceestud> avanceEstud) {
 		String url = "";
 		try {
 
@@ -6324,7 +6532,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			cabecera.addCell(createImageCell(pathDocs + "/logo_epn.jpg"));
 			cabecera.addCell(createLabelCabecera(
 					"ESCUELA POLITECNICA NACIONAL\nVICERRECTORADO DE INVESTIGACIÓN, INNOVACIÓN Y VINCULACIÓN\nDIRECCIÓN DE INVESTIGACIÓN "));
-			
+
 			cabecera.addCell(createImageCell(pathDocs + "/150.png"));
 			document.add(cabecera);
 
@@ -6393,17 +6601,52 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			cell = new PdfPCell(new Phrase(linea, fuenteContenido));
 			cell.setColspan(3);
 			tablageneral.addCell(cell);
+
+			if (proyecto.getTipoProyecto().getIdTipoProy() == 4) {
+
+				cell = new PdfPCell(new Phrase("Carrera", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablageneral.addCell(cell);
+
+				String carrera = "";
+				for (Proyectocarrera car : carreras) {
+					carrera += car.getNombre() + "  ";
+				}
+				cell = new PdfPCell(new Phrase(carrera, fuenteContenido));
+				cell.setColspan(3);
+				tablageneral.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Organización Colaboradora", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablageneral.addCell(cell);
+
+				cell = new PdfPCell(new Phrase(proyecto.getBeneficiarioPr(), fuenteContenido));
+				cell.setColspan(3);
+				tablageneral.addCell(cell);
+
+			}
+
 			document.add(tablageneral);
 
 			////////////////////// tabla equipo del
 			////////////////////// proyecto////////////////////////
 
+			PdfPTable tablaLeyedanda = new PdfPTable(1);
+			tablaLeyedanda.setWidthPercentage(100);
+			float[] columnWidthLey = new float[] { 100f };
+			tablaLeyedanda.setWidths(columnWidthLey);
+			cell = new PdfPCell(new Phrase("A1. EQUIPO DE TRABAJO DEL PROYECTO", fuenteLeyenda));
+			cell.setBackgroundColor(new BaseColor(226, 107, 10));
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			tablaLeyedanda.addCell(cell);
+			document.add(tablaLeyedanda);
+			
 			PdfPTable tablaEquipoP = new PdfPTable(5);
 
 			tablaEquipoP.setWidthPercentage(100);
 			float[] columnWidthEqp = new float[] { 20f, 30f, 25f, 15f, 10f };
 			tablaEquipoP.setWidths(columnWidthEqp);
-			cell = new PdfPCell(new Phrase("Equipo de trabajo del proyecto", fuente));
+			cell = new PdfPCell(new Phrase("Rol", fuente));
 			cell.setBackgroundColor(new BaseColor(217, 217, 217));
 			cell.setRowspan(2);
 			tablaEquipoP.addCell(cell);
@@ -6454,15 +6697,106 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 
 			document.add(tablaEquipoP);
 
-			PdfPTable tablaLeyedanda = new PdfPTable(1);
-			tablaLeyedanda.setWidthPercentage(100);
-			float[] columnWidthLey = new float[] { 100f };
-			tablaLeyedanda.setWidths(columnWidthLey);
-			cell = new PdfPCell(new Phrase("A. OBJETIVOS DEL PROYECTO", fuenteLeyenda));
+			if (proyecto.getTipoProyecto().getIdTipoProy() == 4) {
+
+				PdfPTable tablaLeyedandaE = new PdfPTable(1);
+				tablaLeyedandaE.setWidthPercentage(100);
+				
+				tablaLeyedandaE.setWidths(columnWidthLey);
+				cell = new PdfPCell(new Phrase("A2. ESTUDIANTES", fuenteLeyenda));
+				cell.setBackgroundColor(new BaseColor(226, 107, 10));
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				tablaLeyedandaE.addCell(cell);
+				document.add(tablaLeyedandaE);
+				
+				////////////////////// tabla equipo del
+				////////////////////// proyecto////////////////////////
+
+				PdfPTable tablaEstud = new PdfPTable(6);
+
+				tablaEstud.setWidthPercentage(100);
+				float[] columnWidthest = new float[] { 20f, 20f, 25f, 15f, 10f, 10f };
+				tablaEstud.setWidths(columnWidthest);
+
+				cell = new PdfPCell(new Phrase("Apellidos y Nombres", fuente));
+				cell.setBackgroundColor(new BaseColor(217, 217, 217));
+
+				tablaEstud.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Cédula.", fuente));
+				cell.setBackgroundColor(new BaseColor(217, 217, 217));
+
+				tablaEstud.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Carrera", fuente));
+				cell.setBackgroundColor(new BaseColor(217, 217, 217));
+
+				tablaEstud.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("F. Vinculación", fuente));
+				cell.setBackgroundColor(new BaseColor(217, 217, 217));
+				tablaEstud.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("F. Desvinculación", fuente));
+				cell.setBackgroundColor(new BaseColor(217, 217, 217));
+				tablaEstud.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Horas Dedicación", fuente));
+				cell.setBackgroundColor(new BaseColor(197, 217, 241));
+				tablaEstud.addCell(cell);
+
+				for (Avanceestud avac : avanceEstud) {
+					cell = new PdfPCell(new Phrase(avac.getEstudiante().getNombre(), fuente));
+
+					tablaEstud.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(avac.getEstudiante().getCedula(), fuenteContenido));
+					tablaEstud.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(avac.getEstudiante().getCarrera(), fuenteContenido));
+					tablaEstud.addCell(cell);
+
+					if (avac.getEstudiante().getFechaVincula() == null) {
+						cell = new PdfPCell(new Phrase("", fuenteContenido));
+						tablaEstud.addCell(cell);
+					}
+
+					else {
+
+						cell = new PdfPCell(
+								new Phrase(avac.getEstudiante().getFechaVincula().toString(), fuenteContenido));
+						tablaEstud.addCell(cell);
+					}
+
+					if (avac.getEstudiante().getFechaDesvincula() == null) {
+						cell = new PdfPCell(new Phrase("", fuenteContenido));
+						tablaEstud.addCell(cell);
+					}
+
+					else {
+
+						cell = new PdfPCell(
+								new Phrase(avac.getEstudiante().getFechaDesvincula().toString(), fuenteContenido));
+						tablaEstud.addCell(cell);
+					}
+
+					cell = new PdfPCell(new Phrase(avac.getAvance().toString(), fuenteContenido));
+					tablaEstud.addCell(cell);
+
+				}
+
+				document.add(tablaEstud);
+			}
+
+			PdfPTable tablaLeyedandaO = new PdfPTable(1);
+			tablaLeyedandaO.setWidthPercentage(100);
+			
+			tablaLeyedandaO.setWidths(columnWidthLey);
+			cell = new PdfPCell(new Phrase("B. OBJETIVOS DEL PROYECTO", fuenteLeyenda));
 			cell.setBackgroundColor(new BaseColor(226, 107, 10));
 			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-			tablaLeyedanda.addCell(cell);
-			document.add(tablaLeyedanda);
+			tablaLeyedandaO.addCell(cell);
+			document.add(tablaLeyedandaO);
 
 			//////////////////// OBJETIVO GENERAL
 
@@ -6527,7 +6861,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			PdfPTable tablaObjGeneralPorcen = new PdfPTable(2);
 			tablaObjGeneralPorcen.setWidthPercentage(100);
 			tablaObjGeneral.setWidths(columnWidthObjG);
-			
+
 			cell = new PdfPCell(new Phrase("Porcentaje Total de Avance Acumulado del Proyecto", fuente));
 			cell.setBackgroundColor(new BaseColor(252, 213, 180));
 			tablaObjGeneralPorcen.addCell(cell);
@@ -6541,7 +6875,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			tablaLeyedandaCrono.setWidthPercentage(100);
 
 			tablaLeyedandaCrono.setWidths(columnWidthLey);
-			cell = new PdfPCell(new Phrase("B. CRONOGRAMA DE AVANCE DEL PROYECTO EN EL PERIODO " + cierre.getMeses(),
+			cell = new PdfPCell(new Phrase("C. CRONOGRAMA DE AVANCE DEL PROYECTO EN EL PERIODO " + cierre.getMeses(),
 					fuenteLeyenda));
 			cell.setBackgroundColor(new BaseColor(226, 107, 10));
 			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -6700,8 +7034,23 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 
 			document.add(tablaFirma);
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-			
-			String fechaComoCadena = sdf.format(new Date());
+
+			String fechaComoCadena = "";
+			String fechaComoCadena1 = "";
+
+			if (cierre.getFechacierredocente() == null) {
+				fechaComoCadena = "Sin envío JD.";
+
+			} else {
+				fechaComoCadena = sdf.format(cierre.getFechacierredocente());
+			}
+
+			if (cierre.getFechacierrejd() == null) {
+				fechaComoCadena1 = "Sin envío DI.";
+
+			} else {
+				fechaComoCadena1 = sdf.format(cierre.getFechacierrejd());
+			}
 
 			Paragraph ingreso = new Paragraph();
 			String ing = "\n Fecha envío Jefe Departamento: " + fechaComoCadena;
@@ -6711,6 +7060,15 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			ingreso.add(ing);
 
 			document.add(ingreso);
+
+			Paragraph ingreso2 = new Paragraph();
+			String ing2 = "\n Fecha envío a la DIrección de Investigación: " + fechaComoCadena1;
+			fuente = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.BOLD);
+			ingreso2.setFont(fuente);
+			ingreso2.setAlignment(Element.ALIGN_LEFT);
+			ingreso2.add(ing2);
+
+			document.add(ingreso2);
 
 			document.close();
 			writer.close();
@@ -6727,8 +7085,6 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 		}
 
 	}
-
-	
 
 	public String generarPdfInvestifacionReportePlanicacionupdate(List<Recursoavance> recursos, List<Lineasproy> lineas,
 			ProyectoP proyecto, List<Objetivoavance> objetivos, CierrePeriodo cierre,
@@ -7143,11 +7499,11 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 
 	}
 
-	
 	public String generarPdfInvestifacionReportePlanicacionPreview(List<Recursoavance> recursos,
 			List<Lineasproy> lineas, ProyectoP proyecto, List<Objetivoavance> objetivos,
 			List<Cronogramaavance> actividades, String pathDocs, Emp autoridad, Pensum periodo, String sigla,
-			String pathFirmaDir, String pathFirmaJefe, RecursohPr director, Dep dep, CierrePeriodo cierre) {
+			String pathFirmaDir, String pathFirmaJefe, RecursohPr director, Dep dep, CierrePeriodo cierre,
+			List<Proyectocarrera> carreras, List<Avanceestud> avanceEstud) {
 		String url = "";
 		try {
 
@@ -7267,17 +7623,52 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			cell = new PdfPCell(new Phrase(linea, fuenteContenido));
 			cell.setColspan(3);
 			tablageneral.addCell(cell);
+
+			if (proyecto.getTipoProyecto().getIdTipoProy() == 4) {
+
+				cell = new PdfPCell(new Phrase("Carrera", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablageneral.addCell(cell);
+
+				String carrera = "";
+				for (Proyectocarrera car : carreras) {
+					carrera += car.getNombre() + "  ";
+				}
+				cell = new PdfPCell(new Phrase(carrera, fuenteContenido));
+				cell.setColspan(3);
+				tablageneral.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Organización Colaboradora", fuente));
+				cell.setBackgroundColor(new BaseColor(252, 213, 180));
+				tablageneral.addCell(cell);
+
+				cell = new PdfPCell(new Phrase(proyecto.getBeneficiarioPr(), fuenteContenido));
+				cell.setColspan(3);
+				tablageneral.addCell(cell);
+
+			}
+
 			document.add(tablageneral);
 
 			////////////////////// tabla equipo del
 			////////////////////// proyecto////////////////////////
 
+			
+			PdfPTable tablaLeyedandaE = new PdfPTable(1);
+			tablaLeyedandaE.setWidthPercentage(100);
+			float[] columnWidthLey = new float[] { 100f };
+			tablaLeyedandaE.setWidths(columnWidthLey);
+			cell = new PdfPCell(new Phrase("A1. EQUIPO DE TRABAJO DEL PROYECTO", fuenteLeyenda));
+			cell.setBackgroundColor(new BaseColor(226, 107, 10));
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			tablaLeyedandaE.addCell(cell);
+			document.add(tablaLeyedandaE);
 			PdfPTable tablaEquipoP = new PdfPTable(5);
 
 			tablaEquipoP.setWidthPercentage(100);
 			float[] columnWidthEqp = new float[] { 20f, 30f, 25f, 15f, 10f };
 			tablaEquipoP.setWidths(columnWidthEqp);
-			cell = new PdfPCell(new Phrase("Equipo de trabajo del proyecto", fuente));
+			cell = new PdfPCell(new Phrase("Rol", fuente));
 			cell.setBackgroundColor(new BaseColor(217, 217, 217));
 			cell.setRowspan(2);
 			tablaEquipoP.addCell(cell);
@@ -7328,11 +7719,103 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 
 			document.add(tablaEquipoP);
 
+			if (proyecto.getTipoProyecto().getIdTipoProy() == 4) {
+
+				////////////////////// tabla equipo del
+				////////////////////// proyecto////////////////////////
+
+				PdfPTable tablaLeyedanda = new PdfPTable(1);
+				tablaLeyedanda.setWidthPercentage(100);
+				
+				tablaLeyedanda.setWidths(columnWidthLey);
+				cell = new PdfPCell(new Phrase("A2. ESTUDIANTES", fuenteLeyenda));
+				cell.setBackgroundColor(new BaseColor(226, 107, 10));
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				tablaLeyedanda.addCell(cell);
+				document.add(tablaLeyedanda);
+				
+				
+				PdfPTable tablaEstud = new PdfPTable(6);
+
+				tablaEstud.setWidthPercentage(100);
+				float[] columnWidthest = new float[] { 20f, 20f, 25f, 15f, 10f, 10f };
+				tablaEstud.setWidths(columnWidthest);
+
+				cell = new PdfPCell(new Phrase("Apellidos y Nombres", fuente));
+				cell.setBackgroundColor(new BaseColor(217, 217, 217));
+
+				tablaEstud.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Cédula.", fuente));
+				cell.setBackgroundColor(new BaseColor(217, 217, 217));
+
+				tablaEstud.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Carrera", fuente));
+				cell.setBackgroundColor(new BaseColor(217, 217, 217));
+
+				tablaEstud.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("F. Vinculación", fuente));
+				cell.setBackgroundColor(new BaseColor(217, 217, 217));
+				tablaEstud.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("F. Desvinculación", fuente));
+				cell.setBackgroundColor(new BaseColor(217, 217, 217));
+				tablaEstud.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("Horas Dedicación", fuente));
+				cell.setBackgroundColor(new BaseColor(197, 217, 241));
+				tablaEstud.addCell(cell);
+
+				for (Avanceestud avac : avanceEstud) {
+					cell = new PdfPCell(new Phrase(avac.getEstudiante().getNombre(), fuente));
+
+					tablaEstud.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(avac.getEstudiante().getCedula(), fuenteContenido));
+					tablaEstud.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(avac.getEstudiante().getCarrera(), fuenteContenido));
+					tablaEstud.addCell(cell);
+
+					if (avac.getEstudiante().getFechaVincula() == null) {
+						cell = new PdfPCell(new Phrase("", fuenteContenido));
+						tablaEstud.addCell(cell);
+					}
+
+					else {
+
+						cell = new PdfPCell(
+								new Phrase(avac.getEstudiante().getFechaVincula().toString(), fuenteContenido));
+						tablaEstud.addCell(cell);
+					}
+
+					if (avac.getEstudiante().getFechaDesvincula() == null) {
+						cell = new PdfPCell(new Phrase("", fuenteContenido));
+						tablaEstud.addCell(cell);
+					}
+
+					else {
+
+						cell = new PdfPCell(
+								new Phrase(avac.getEstudiante().getFechaDesvincula().toString(), fuenteContenido));
+						tablaEstud.addCell(cell);
+					}
+
+					cell = new PdfPCell(new Phrase(avac.getAvance().toString(), fuenteContenido));
+					tablaEstud.addCell(cell);
+
+				}
+
+				document.add(tablaEstud);
+			}
+
 			PdfPTable tablaLeyedanda = new PdfPTable(1);
 			tablaLeyedanda.setWidthPercentage(100);
-			float[] columnWidthLey = new float[] { 100f };
+			
 			tablaLeyedanda.setWidths(columnWidthLey);
-			cell = new PdfPCell(new Phrase("A. OBJETIVOS DEL PROYECTO", fuenteLeyenda));
+			cell = new PdfPCell(new Phrase("B. OBJETIVOS DEL PROYECTO", fuenteLeyenda));
 			cell.setBackgroundColor(new BaseColor(226, 107, 10));
 			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			tablaLeyedanda.addCell(cell);
@@ -7414,7 +7897,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			tablaLeyedandaCrono.setWidthPercentage(100);
 
 			tablaLeyedandaCrono.setWidths(columnWidthLey);
-			cell = new PdfPCell(new Phrase("B. CRONOGRAMA DE AVANCE DEL PROYECTO EN EL PERIODO " + periodo.getMeses(),
+			cell = new PdfPCell(new Phrase("C. CRONOGRAMA DE AVANCE DEL PROYECTO EN EL PERIODO " + periodo.getMeses(),
 					fuenteLeyenda));
 			cell.setBackgroundColor(new BaseColor(226, 107, 10));
 			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -7538,7 +8021,23 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			document.add(datosContrato);
 
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-			String fechaComoCadena = sdf.format(new Date());
+
+			String fechaComoCadena = "";
+			String fechaComoCadena1 = "";
+
+			if (cierre.getFechacierredocente() == null) {
+				fechaComoCadena = "Sin envío JD.";
+
+			} else {
+				fechaComoCadena = sdf.format(cierre.getFechacierredocente());
+			}
+
+			if (cierre.getFechacierrejd() == null) {
+				fechaComoCadena1 = "Sin envío DI.";
+
+			} else {
+				fechaComoCadena1 = sdf.format(cierre.getFechacierrejd());
+			}
 
 			Paragraph ingreso = new Paragraph();
 			String ing = "\n Fecha envío Jefe Departamento: " + fechaComoCadena;
@@ -7548,6 +8047,15 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			ingreso.add(ing);
 
 			document.add(ingreso);
+
+			Paragraph ingreso2 = new Paragraph();
+			String ing2 = "\n Fecha envío a la DIrección de Investigación: " + fechaComoCadena1;
+			fuente = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.BOLD);
+			ingreso2.setFont(fuente);
+			ingreso2.setAlignment(Element.ALIGN_LEFT);
+			ingreso2.add(ing2);
+
+			document.add(ingreso2);
 
 			document.close();
 
