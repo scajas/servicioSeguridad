@@ -113,7 +113,8 @@ public interface HistoriaLaboralDAO extends DaoGenerico<HistoriaLaboral> {
 	
 	public List<HistoriaLaboral> getAllLicenciasVencidasByEmp(String nced, int firstResult, int maxResult);
 	
-	public List<HistoriaLaboral> getAllLicenciasVencidasByEmpApel(String apel, int firstResult, int maxResult);
+	public Object getAllLicenciasVencidasByEmpApel(boolean isOnlyCount, 
+			String apel, int firstResult, int maxResult);
 	public long getCountLicenciasVencidas();
 	
 	public long getCountLicenciasVencidasByEmp (String nced);
@@ -138,7 +139,8 @@ public interface HistoriaLaboralDAO extends DaoGenerico<HistoriaLaboral> {
 
 	public List<HistoriaLaboral> findHistorias(Date inicio, Date ffinal);
 
-	public List<HistoriaLaboral> findHistoriasEjecucion();
+	public Object findHistoriasEjecucion(boolean isOnlyCount, String nroDocumento,
+			String nombreAccion,  int firstResult, int maxResult);
 
 	public HistoriaLaboral findHistoriaDesignacionByDependenciaYTipo(String dependencia, String facultad,
 			String tipoDeDesignacion, String dignidad, String estadoDesignacion);
