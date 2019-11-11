@@ -301,5 +301,33 @@ public class SilaboDAOImplement extends DaoGenericoImplement<Silabo> implements 
 			con.close();
 		}
 	}
+	
+	
+	@Override
+	public List<Silabo> consultarSilaboPensum(Integer idpensum) {
+
+		StringBuilder querys = new StringBuilder("SELECT e From Silabo e where e.idPensum = ?1 ");
+
+		Query query = getEntityManager().createQuery(querys.toString());
+		query.setParameter(1, idpensum);
+		
+
+		return query.getResultList();
+
+	}
+	
+	@Override
+	public List<Silabo> consultarSilaboPensumByEMp(Integer idpensum,String nced) {
+
+		StringBuilder querys = new StringBuilder("SELECT e From Silabo e where e.idPensum = ?1 and e.cedula = ?2 ");
+
+		Query query = getEntityManager().createQuery(querys.toString());
+		query.setParameter(1, idpensum);
+		query.setParameter(2, nced);
+		
+
+		return query.getResultList();
+
+	}
 
 }

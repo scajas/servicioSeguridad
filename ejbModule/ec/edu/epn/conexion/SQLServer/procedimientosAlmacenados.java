@@ -3935,6 +3935,7 @@ public class procedimientosAlmacenados {
 					tesis.setNroTesis(result.getString(1));	
 					tesis.setEstudiante(result.getString(2));	
 					tesis.setCarrera(result.getString(3));
+					tesis.setFacultad(result.getString(4));
 					listTesisDocente.add(tesis);
 				
 
