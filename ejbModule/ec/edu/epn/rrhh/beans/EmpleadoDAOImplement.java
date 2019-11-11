@@ -1,7 +1,3 @@
-
-/**
- * 
- */
 package ec.edu.epn.rrhh.beans;
 
 import java.sql.Connection;
@@ -26,6 +22,7 @@ import javax.persistence.Query;
 import javax.sql.DataSource;
 
 import ec.edu.epn.acreditacion.reportes.dto.ReporteChartDTO;
+import ec.edu.epn.acreditacion.reportes.dto.ReporteDistributivoAcademicoDTO;
 import ec.edu.epn.contratos.beans.PensumDAO;
 import ec.edu.epn.contratos.entities.Pensum;
 import ec.edu.epn.generic.DAO.DaoGenericoImplement;
@@ -72,12 +69,11 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 		query.setParameter(0, "%" + cedula + "%");
 
 		if (apellidos != null) {
-			query.setParameter(1, "%" + apellidos.toUpperCase() + "%");
+			query.setParameter(1, "%" + apellidos + "%");
 		}
 		if (nombre != null) {
-			query.setParameter(2, "%" + nombre.toUpperCase() + "%");
+			query.setParameter(2, "%" + nombre + "%");
 		}
-		query.setMaxResults(1000);
 
 		return query.getResultList();
 	}
@@ -136,6 +132,66 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 		query.setParameter(1, cedula);
 		return query.getResultList();
 	}
+	
+	@Override
+	public List<Emp> listaEmpleadonoContrato(int firstResult, int maxResults) {
+		StringBuilder queryString = new StringBuilder("SELECT e FROM Emp e where (e.estemp = '1') "
+				+ "and e.nced in (SELECT h.emp.nced FROM HistoriaLaboral h where h.accionP is null and h.fechaFin<now() and "
+				+ "h.fechaRige = (Select max(hl.fechaRige) from HistoriaLaboral hl where h.emp.nced = hl.emp.nced ) "
+				+ "and h.id.fechaI = (Select max(t.id.fechaI) "
+				+ "from HistoriaLaboral t where t.id.idHist=h.id.idHist and h.emp.nced = t.emp.nced ) "
+				+ "and h.id.idHist not in (Select g.id.idHist FROM HistoriaLaboral g where "
+				+ " (trim(g.id.estado) = 'Duplicado' or trim(g.id.estado) = 'Anulado' or "
+				+ " trim(g.id.estado) = 'Insubsistente' ) and h.emp.nced = g.emp.nced)) ");
+		Query query = getEntityManager().createQuery(queryString.toString());
+		if (firstResult > 0) {
+			query.setFirstResult(firstResult);
+		}
+
+		if (maxResults > 0) {
+			query.setMaxResults(maxResults);
+		}
+		return query.getResultList();
+	}
+	
+	@Override
+	public List<Emp> findEmpsByCedula(String nced, int firstResult, int maxResults){
+		StringBuilder queryString = new StringBuilder("SELECT e FROM Emp e where (e.estemp = '1') "
+				+ "and e.nced in (SELECT h.emp.nced FROM HistoriaLaboral h where h.accionP is null and h.fechaFin<now() and "
+				+ "h.fechaRige = (Select max(hl.fechaRige) from HistoriaLaboral hl where h.emp.nced = hl.emp.nced )"
+				+ "and h.id.fechaI = (Select max(t.id.fechaI) "
+				+ "from HistoriaLaboral t where t.id.idHist=h.id.idHist and h.emp.nced = t.emp.nced ) "
+				+ "and h.id.idHist not in (Select g.id.idHist FROM HistoriaLaboral g where "
+				+ " (trim(g.id.estado) = 'Duplicado' or trim(g.id.estado) = 'Anulado' or "
+				+ " trim(g.id.estado) = 'Insubsistente' ) and h.emp.nced = g.emp.nced)) and  e.nced like :cedula ");
+		Query query = getEntityManager().createQuery(queryString.toString());	
+		query.setParameter("cedula", nced);
+		
+		if (firstResult > 0) {
+			query.setFirstResult(firstResult);
+		}
+
+		if (maxResults > 0) {
+			query.setMaxResults(maxResults);
+		}
+		return query.getResultList();
+	}
+	
+	
+	@Override
+	public long getCountEmpContrato() {
+		StringBuilder queryString = new StringBuilder("SELECT count(e) FROM Emp e where (e.estemp = '1')"
+				+ "and e.nced in (SELECT h.emp.nced FROM HistoriaLaboral h where h.accionP is null and h.fechaFin<now() and "
+				+ "h.fechaRige = (Select max(hl.fechaRige) from HistoriaLaboral hl where h.emp.nced = hl.emp.nced ) "
+				+ "and h.id.fechaI = (Select max(t.id.fechaI) "
+				+ "from HistoriaLaboral t where t.id.idHist=h.id.idHist and h.emp.nced = t.emp.nced ) "
+				+ "and h.id.idHist not in (Select g.id.idHist FROM HistoriaLaboral g where "
+				+ " (trim(g.id.estado) = 'Duplicado' or trim(g.id.estado) = 'Anulado' or "
+				+ " trim(g.id.estado) = 'Insubsistente' ) and h.emp.nced = g.emp.nced)) ");
+		Query query = getEntityManager().createQuery(queryString.toString());
+		return (long) query.getSingleResult();
+	}
+	
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -801,6 +857,161 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 			super.cerrarConexion(con, ps);
 		}
 	}
+
+	@Override
+	public DocenteDTO buscarEmpHistoriaLab(String nced, Integer idPensum) throws Exception {
+
+		try {
+			Emp empleado = new Emp();
+			DocenteDTO doc = new DocenteDTO();
+			StringBuilder queryString = new StringBuilder("SELECT e from Emp e where e.nced = ?1 ");
+			Query query = getEntityManager().createQuery(queryString.toString());
+			query.setParameter(1, nced.trim());
+
+			empleado = (Emp) query.getSingleResult();
+
+			Pensum pensum = new Pensum();
+			pensum = pensumDAO.obtenerPensumById(idPensum);
+
+			doc.setApel(empleado.getApel());
+			doc.setNombre(empleado.getNom());
+			doc.setnCed(empleado.getNced());
+			doc.setAuxFechaIngresoEPN(empleado.getFecIngepn().toString());
+			doc.setPeriodo(pensum == null ? "" : pensum.getMeses());
+
+			DocenteDTO dto = new DocenteDTO();
+			try {
+				dto = this.cargoDedicacionRelLab(idPensum, 1, empleado.getNced());
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+			doc.setCargo(dto == null ? "" : dto.getCargo());
+
+			try {
+				dto = new DocenteDTO();
+				dto = this.cargoDedicacionRelLab(idPensum, 2, empleado.getNced());
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+
+			doc.setDedicacion(dto == null ? "" : dto.getDedicacion());
+
+			try {
+				dto = new DocenteDTO();
+				dto = this.cargoDedicacionRelLab(idPensum, 3, empleado.getNced());
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+
+			doc.setRelacionLab(dto == null ? "" : dto.getRelacionLab());
+
+			try {
+				dto = new DocenteDTO();
+				dto = this.cargoDedicacionRelLab(idPensum, 4, empleado.getNced());
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+
+			doc.setNomDepartamento(dto == null ? "" : dto.getNomDepartamento());
+
+			try {
+				dto = new DocenteDTO();
+				dto = this.cargoDedicacionRelLab(idPensum, 6, empleado.getNced());
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+
+			doc.setFechaContrat((dto == null ? "" : dto.getFechaContrat()));
+
+			return doc;
+
+		} catch (NoResultException n) {
+			return null;
+		}
+
+		catch (NonUniqueResultException n) {
+			return null;
+		}
+
+	}
+
+	@Override
+	public EmpleadoDTO buscarHistoriaEmpleado(String nced, Integer idPensum) throws Exception {
+
+		try {
+			Emp empleado = new Emp();
+			EmpleadoDTO emp = new EmpleadoDTO();
+			StringBuilder queryString = new StringBuilder("SELECT e from Emp e where e.nced = ?1 ");
+			Query query = getEntityManager().createQuery(queryString.toString());
+			query.setParameter(1, nced.trim());
+
+			empleado = (Emp) query.getSingleResult();
+
+			Pensum pensum = new Pensum();
+			pensum = pensumDAO.obtenerPensumById(idPensum);
+
+			emp.setNombreEmpleado(empleado.getApel() + " " + empleado.getNom());
+			emp.setNumCedula(empleado.getNced());
+			emp.setFechaIngresoEPN(empleado.getFecIngepn().toString());
+			// doc.setPeriodo(pensum==null?"":pensum.getMeses());
+
+			DocenteDTO dto = new DocenteDTO();
+			try {
+				dto = this.cargoDedicacionRelLab(idPensum, 1, empleado.getNced());
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+			emp.setCargo(dto == null ? "" : dto.getCargo());
+			try {
+				dto = new DocenteDTO();
+				dto = this.cargoDedicacionRelLab(idPensum, 2, empleado.getNced());
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+
+			emp.setDedicacion(dto == null ? "" : dto.getDedicacion());
+
+			try {
+				dto = new DocenteDTO();
+				dto = this.cargoDedicacionRelLab(idPensum, 3, empleado.getNced());
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+
+			emp.setTipoContrato(dto == null ? "" : dto.getRelacionLab());
+
+			try {
+				dto = new DocenteDTO();
+				dto = this.cargoDedicacionRelLab(idPensum, 4, empleado.getNced());
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+
+			emp.setNombreDepartamento(dto == null ? "" : dto.getNomDepartamento());
+
+			return emp;
+
+		} catch (NoResultException n) {
+			return null;
+		}
+
+		catch (NonUniqueResultException n) {
+			return null;
+		}
+
+	}
+
+
+
 
 	@Override
 	public ArrayList<DocenteDTO> BusqeudaDocenteRecategorizacion(String auxCIDoc, String auxNomDoc, String auxApelDoc,
@@ -2345,75 +2556,7 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 
 	}
 
-	@Override
-	public EmpleadoDTO buscarHistoriaEmpleado(String nced, Integer idPensum) throws Exception {
 
-		try {
-			Emp empleado = new Emp();
-			EmpleadoDTO emp = new EmpleadoDTO();
-			StringBuilder queryString = new StringBuilder("SELECT e from Emp e where e.nced = ?1 ");
-			Query query = getEntityManager().createQuery(queryString.toString());
-			query.setParameter(1, nced.trim());
-
-			empleado = (Emp) query.getSingleResult();
-
-			Pensum pensum = new Pensum();
-			pensum = pensumDAO.obtenerPensumById(idPensum);
-
-			emp.setNombreEmpleado(empleado.getApel() + " " + empleado.getNom());
-			emp.setNumCedula(empleado.getNced());
-			emp.setFechaIngresoEPN(empleado.getFecIngepn().toString());
-			// doc.setPeriodo(pensum==null?"":pensum.getMeses());
-
-			DocenteDTO dto = new DocenteDTO();
-			try {
-				dto = this.cargoDedicacionRelLab(idPensum, 1, empleado.getNced());
-			} catch (Exception e) {
-				e.printStackTrace();
-				return null;
-			}
-			emp.setCargo(dto == null ? "" : dto.getCargo());
-			try {
-				dto = new DocenteDTO();
-				dto = this.cargoDedicacionRelLab(idPensum, 2, empleado.getNced());
-			} catch (Exception e) {
-				e.printStackTrace();
-				return null;
-			}
-
-			emp.setDedicacion(dto == null ? "" : dto.getDedicacion());
-
-			try {
-				dto = new DocenteDTO();
-				dto = this.cargoDedicacionRelLab(idPensum, 3, empleado.getNced());
-			} catch (Exception e) {
-				e.printStackTrace();
-				return null;
-			}
-
-			emp.setTipoContrato(dto == null ? "" : dto.getRelacionLab());
-
-			try {
-				dto = new DocenteDTO();
-				dto = this.cargoDedicacionRelLab(idPensum, 4, empleado.getNced());
-			} catch (Exception e) {
-				e.printStackTrace();
-				return null;
-			}
-
-			emp.setNombreDepartamento(dto == null ? "" : dto.getNomDepartamento());
-
-			return emp;
-
-		} catch (NoResultException n) {
-			return null;
-		}
-
-		catch (NonUniqueResultException n) {
-			return null;
-		}
-
-	}
 
 	@Override
 	public List<DocenteDTO> presentarCargoDedicacionRelLab(Integer idPensum, String nced, String apel, String nom,
@@ -2522,87 +2665,7 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 
 	}
 
-	@Override
-	public DocenteDTO buscarEmpHistoriaLab(String nced, Integer idPensum) throws Exception {
-
-		try {
-			Emp empleado = new Emp();
-			DocenteDTO doc = new DocenteDTO();
-			StringBuilder queryString = new StringBuilder("SELECT e from Emp e where e.nced = ?1 ");
-			Query query = getEntityManager().createQuery(queryString.toString());
-			query.setParameter(1, nced.trim());
-
-			empleado = (Emp) query.getSingleResult();
-
-			Pensum pensum = new Pensum();
-			pensum = pensumDAO.obtenerPensumById(idPensum);
-
-			doc.setApel(empleado.getApel());
-			doc.setNombre(empleado.getNom());
-			doc.setnCed(empleado.getNced());
-			doc.setAuxFechaIngresoEPN(empleado.getFecIngepn().toString());
-			doc.setPeriodo(pensum == null ? "" : pensum.getMeses());
-
-			DocenteDTO dto = new DocenteDTO();
-			try {
-				dto = this.cargoDedicacionRelLab(idPensum, 1, empleado.getNced());
-			} catch (Exception e) {
-				e.printStackTrace();
-				return null;
-			}
-			doc.setCargo(dto == null ? "" : dto.getCargo());
-
-			try {
-				dto = new DocenteDTO();
-				dto = this.cargoDedicacionRelLab(idPensum, 2, empleado.getNced());
-			} catch (Exception e) {
-				e.printStackTrace();
-				return null;
-			}
-
-			doc.setDedicacion(dto == null ? "" : dto.getDedicacion());
-
-			try {
-				dto = new DocenteDTO();
-				dto = this.cargoDedicacionRelLab(idPensum, 3, empleado.getNced());
-			} catch (Exception e) {
-				e.printStackTrace();
-				return null;
-			}
-
-			doc.setRelacionLab(dto == null ? "" : dto.getRelacionLab());
-
-			try {
-				dto = new DocenteDTO();
-				dto = this.cargoDedicacionRelLab(idPensum, 4, empleado.getNced());
-			} catch (Exception e) {
-				e.printStackTrace();
-				return null;
-			}
-
-			doc.setNomDepartamento(dto == null ? "" : dto.getNomDepartamento());
-
-			try {
-				dto = new DocenteDTO();
-				dto = this.cargoDedicacionRelLab(idPensum, 6, empleado.getNced());
-			} catch (Exception e) {
-				e.printStackTrace();
-				return null;
-			}
-
-			doc.setFechaContrat((dto == null ? "" : dto.getFechaContrat()));
-
-			return doc;
-
-		} catch (NoResultException n) {
-			return null;
-		}
-
-		catch (NonUniqueResultException n) {
-			return null;
-		}
-
-	}
+	
 
 	@Override
 	public List<Emp> listaEmpleadonoContrato() {
@@ -2619,3 +2682,4 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 	}
 
 }
+

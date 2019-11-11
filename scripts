@@ -1,0 +1,11 @@
+ALTER TABLE "Contratos".pedido ADD COLUMN continuidad character varying(2);
+ALTER TABLE "Contratos".pedido ADD COLUMN fecha_continuidad timestamp without time zone;
+
+ALTER TABLE "GestionDocente".preplanificacion_docencia ADD COLUMN id_pedido integer;
+ALTER TABLE "GestionDocente".preplanificacion_docencia
+  ADD CONSTRAINT id_pedido FOREIGN KEY (id_pedido)
+      REFERENCES "Contratos".pedido (id_pedido) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION;
+      
+      
+EN ESTADO DE PEDIDOS AÑADIR ESTADO 15

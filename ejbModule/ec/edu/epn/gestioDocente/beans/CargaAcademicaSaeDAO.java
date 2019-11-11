@@ -26,6 +26,9 @@ public interface CargaAcademicaSaeDAO extends DaoGenerico<CargaAcademicaSae>{
 
 	void cargaAcademicaRemedialSae(List<CargaPlanificacionDTO> listCarga, Integer idPensum, String nced)
 			throws Exception;
+	
+	void actualizarNumEstudCargaAcademicaSae(List<CargaPlanificacionDTO> listCarga,
+			List<CargaAcademicaSae> listCargaAcademica) throws Exception;
 
 	
 	
