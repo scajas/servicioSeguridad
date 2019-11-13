@@ -141,7 +141,7 @@ public class PreplanificacionDocenciaDAOImplement extends DaoGenericoImplement<P
 
 			q.setParameter(1, idPensum);
 			q.setParameter(2, idFacultad);
-			q.setParameter(2, "PREPLANIF");
+			q.setParameter(3, "PREPLANIF");
 
 			return q.getResultList();
 		} catch (Exception e) {
