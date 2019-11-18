@@ -3132,7 +3132,7 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		
 		List<DocenteDTORrhh> val = new ArrayList<DocenteDTORrhh>();
 		Query query = null;
-		query = getEntityManager().createNativeQuery("SELECT  * FROM \"Rrhh\".bi_reportecargodeprrhh_th(?,?,?,?,?);");
+		query = getEntityManager().createNativeQuery("SELECT  * FROM \"Rrhh\".bi_reportecargodeprrhh_th_rep(?,?,?,?,?);");
 		
 		query.setParameter(1, idPensum);
 		query.setParameter(2, nced);
@@ -3196,6 +3196,34 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 					String dato= null;
 					dato=(col[7]==null ? "" : col[7].toString());
 					oval.setNomDepartamento(dato);
+					
+				}
+				
+				if (col[10] != null && col[10].toString().length() != 0){
+					String dato= null;
+					dato=(col[10]==null ? "" : col[10].toString());
+					oval.setNroDocumento(dato);
+					
+				}
+				
+				if (col[11] != null && col[10].toString().length() != 0){
+					Date fecha= null;
+					fecha =(Date) (col[11]==null ? null : col[11]);
+					oval.setFechaRige(fecha);
+					
+				}
+				
+				if (col[12] != null && col[12].toString().length() != 0){
+					Date fecha= null;
+					fecha =(Date) (col[12]==null ? null : col[12]);
+					oval.setFechaFin(fecha);
+					
+				}
+				
+				if (col[13] != null && col[13].toString().length() != 0){
+					Double rmu= null;
+					rmu =(Double) (col[13]==null ? null : col[13]);
+					oval.setRemreal(rmu);
 					
 				}
 				val.add(oval);
