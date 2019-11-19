@@ -15,7 +15,7 @@ import ec.edu.epn.laboratorioBJ.entities.Movimientosinventario;
 import ec.edu.epn.laboratorioBJ.entities.SaldoExistencia;
 
 /**
- * Session Bean implementation class MovimientosInventarioDAOImplement
+ * Session Bean implementation class MovimientosInventarioDAOImplements
  */
 @Stateless
 @LocalBean
