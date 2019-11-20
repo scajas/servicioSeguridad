@@ -15,7 +15,7 @@ import ec.edu.epn.laboratorioBJ.entities.Movimientosinventario;
 import ec.edu.epn.laboratorioBJ.entities.SaldoExistencia;
 
 /**
- * Session Bean implementation class MovimientosInventarioDAOImplement
+ * Session Bean implementation class MovimientosInventarioDAOImplements
  */
 @Stateless
 @LocalBean
@@ -33,7 +33,7 @@ public class MovimientosInventarioDAOImplement extends DaoGenericoImplement<Movi
 	public List<Existencia> listarExistenciaById(int id) {
 
 		System.out.println("idUnidad: " + id);
-		StringBuilder queryString = new StringBuilder("SELECT e FROM Existencia e where e.idUnidad = ?1 ");
+		StringBuilder queryString = new StringBuilder("SELECT e FROM Existencia e where e.idUnidad = ?1 ORDER BY e.producto.nombrePr ASC ");
 		Query query = getEntityManager().createQuery(queryString.toString());
 		query.setParameter(1, id);
 
