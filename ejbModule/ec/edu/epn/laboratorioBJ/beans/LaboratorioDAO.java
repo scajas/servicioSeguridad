@@ -10,7 +10,7 @@ import ec.edu.epn.laboratorioBJ.entities.LaboratorioLab;
 @Local
 public interface LaboratorioDAO extends DaoGenerico<LaboratorioLab>{
 
-	List<LaboratorioLab> listaLaboratorioUnidad(int id);
+	List<LaboratorioLab> listaLaboratorioUnidad(Integer id);
 
 }
 

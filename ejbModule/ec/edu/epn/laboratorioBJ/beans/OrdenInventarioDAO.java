@@ -36,4 +36,7 @@ public interface OrdenInventarioDAO extends DaoGenerico<Ordeninventario> {
 	String maxIdOrdenI(int id, String fecha);
 
 	UnidadLabo obtenerUnidad(int id);
+
+	List<Ordeninventario> getListOTById(String id);
+
 }

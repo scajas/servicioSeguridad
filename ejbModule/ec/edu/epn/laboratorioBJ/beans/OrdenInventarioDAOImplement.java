@@ -141,6 +141,18 @@ public class OrdenInventarioDAOImplement extends DaoGenericoImplement<Ordeninven
 		List<Ordeninventario> resultados = query.getResultList();
 		return resultados;
 	}
+	
+	@Override
+	public List<Ordeninventario> getListOTById(String id) {
+
+		System.out.println("idUnidad: " + id);
+		StringBuilder queryString = new StringBuilder(
+				"SELECT o FROM Ordeninventario o where o.detalleorden.ordenTrabajo.idOrden like '%" + id + "%' order by idOrdeninventario");
+		Query query = getEntityManager().createQuery(queryString.toString());
+
+		List<Ordeninventario> resultados = query.getResultList();
+		return resultados;
+	}
 
 	@Override
 	public String maxIdOrdenI(int id, String fecha) {

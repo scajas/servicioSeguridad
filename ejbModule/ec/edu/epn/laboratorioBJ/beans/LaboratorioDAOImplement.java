@@ -18,9 +18,9 @@ public class LaboratorioDAOImplement extends DaoGenericoImplement<LaboratorioLab
 	}
 
 	@Override
-	public List<LaboratorioLab> listaLaboratorioUnidad(int id) {
+	public List<LaboratorioLab> listaLaboratorioUnidad(Integer id) {
 		StringBuilder queryString = new StringBuilder(
-				"SELECT l FROM LaboratorioLab l where id_unidad=?1 ");
+				"SELECT l FROM LaboratorioLab l where l.unidad.idUnidad =? 1");
 		Query query = getEntityManager().createQuery(queryString.toString());
 		query.setParameter(1, id);
 
