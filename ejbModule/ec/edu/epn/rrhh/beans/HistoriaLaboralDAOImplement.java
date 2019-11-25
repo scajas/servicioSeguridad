@@ -13,6 +13,8 @@ import javax.persistence.NonUniqueResultException;
 import javax.persistence.Query;
 
 import ec.edu.epn.generic.DAO.DaoGenericoImplement;
+import ec.edu.epn.rrhh.DTO.DocenteDTO;
+import ec.edu.epn.rrhh.DTO.DocenteDTORrhh;
 import ec.edu.epn.rrhh.entities.Emp;
 import ec.edu.epn.rrhh.movimientos.Designacion;
 import ec.edu.epn.rrhh.movimientos.HistoriaLaboral;
@@ -3269,6 +3271,116 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		List<HistoriaLaboral> resultado = query.getResultList();
 
 		return resultado;
+	}
+	
+	@Override
+	public List<DocenteDTORrhh> historiaLaboralxPeriodo(Integer idPensum,  String nced, String nombre, String apellido, String dependenciaId)throws Exception {
+		
+		List<DocenteDTORrhh> val = new ArrayList<DocenteDTORrhh>();
+		Query query = null;
+		query = getEntityManager().createNativeQuery("SELECT  * FROM \"Rrhh\".bi_reportecargodeprrhh_th_rep(?,?,?,?,?);");
+		
+		query.setParameter(1, idPensum);
+		query.setParameter(2, nced);
+		query.setParameter(3, nombre);
+		query.setParameter(4, apellido);
+		query.setParameter(5, dependenciaId);
+		
+		List<?> lists = query.getResultList();
+		
+		if (!lists.isEmpty()) {
+			for (Object list : lists) {
+				DocenteDTORrhh oval = new DocenteDTORrhh();
+				Object[] col = (Object[]) list;
+				if (col[0] != null && col[0].toString().length() != 0)
+					oval.setnCed(col[0]==null? "" : col[0].toString());
+				
+				
+				if (col[1] != null && col[1].toString().length() != 0){
+					String dato= null;
+					dato=(col[1]==null ? "" : col[1].toString());
+					oval.setNombre(dato);
+					
+				}
+				
+				if (col[2] != null && col[2].toString().length() != 0){
+					String dato= null;
+					dato=(col[2]==null ? "" : col[2].toString());
+					oval.setApel(dato);
+					
+				}
+				
+				if (col[3] != null && col[3].toString().length() != 0){
+					String dato= null;
+					dato=(col[3]==null ? "" : col[3].toString());
+					//oval.setFechaIngresoEPN(dato);
+					
+				}
+				
+				if (col[4] != null && col[4].toString().length() != 0){
+					String dato= null;
+					dato=(col[4]==null ? "" : col[4].toString());
+					oval.setCargo(dato);
+					
+				}
+				
+				if (col[5] != null && col[5].toString().length() != 0){
+					String dato= null;
+					dato=(col[5]==null ? "" : col[5].toString());
+					oval.setDedicacion(dato);
+					
+				}
+				
+				if (col[6] != null && col[6].toString().length() != 0){
+					String dato= null;
+					dato=(col[6]==null ? "" : col[6].toString());
+					oval.setRelacionLab(dato);
+					
+				}
+				
+				if (col[7] != null && col[7].toString().length() != 0){
+					String dato= null;
+					dato=(col[7]==null ? "" : col[7].toString());
+					oval.setNomDepartamento(dato);
+					
+				}
+				
+				if (col[10] != null && col[10].toString().length() != 0){
+					String dato= null;
+					dato=(col[10]==null ? "" : col[10].toString());
+					oval.setNroDocumento(dato);
+					
+				}
+				
+				if (col[11] != null && col[10].toString().length() != 0){
+					Date fecha= null;
+					fecha =(Date) (col[11]==null ? null : col[11]);
+					oval.setFechaRige(fecha);
+					
+				}
+				
+				if (col[12] != null && col[12].toString().length() != 0){
+					Date fecha= null;
+					fecha =(Date) (col[12]==null ? null : col[12]);
+					oval.setFechaFin(fecha);
+					
+				}
+				
+				if (col[13] != null && col[13].toString().length() != 0){
+					Double rmu= null;
+					rmu =(Double) (col[13]==null ? null : col[13]);
+					oval.setRemreal(rmu);
+					
+				}
+				val.add(oval);
+			}
+		
+		}else{
+			val= null;
+		}
+		
+		return val;
+		
 	}
 
 }

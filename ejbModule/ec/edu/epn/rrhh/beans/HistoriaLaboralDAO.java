@@ -6,6 +6,8 @@ import java.util.List;
 import javax.ejb.Remote;
 
 import ec.edu.epn.generic.DAO.DaoGenerico;
+import ec.edu.epn.rrhh.DTO.DocenteDTO;
+import ec.edu.epn.rrhh.DTO.DocenteDTORrhh;
 import ec.edu.epn.rrhh.entities.Emp;
 import ec.edu.epn.rrhh.movimientos.HistoriaLaboral;
 
@@ -253,5 +255,8 @@ public interface HistoriaLaboralDAO extends DaoGenerico<HistoriaLaboral> {
 	public HistoriaLaboral findCurrentHistoriaLaboralByEstadoActivoEmp(Emp emp);
 
 	public Integer findHistoriaNumberByTipoAccion(String subtipoAccion);
+
+	public List<DocenteDTORrhh> historiaLaboralxPeriodo(Integer idPensum, String nced, String nombre, String apellido,
+			String departamento) throws Exception;
 
 }
