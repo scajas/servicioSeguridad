@@ -6,6 +6,8 @@ import java.util.List;
 import javax.ejb.Remote;
 
 import ec.edu.epn.generic.DAO.DaoGenerico;
+import ec.edu.epn.rrhh.DTO.DocenteDTO;
+import ec.edu.epn.rrhh.DTO.DocenteDTORrhh;
 import ec.edu.epn.rrhh.entities.Emp;
 import ec.edu.epn.rrhh.movimientos.HistoriaLaboral;
 
@@ -109,9 +111,15 @@ public interface HistoriaLaboralDAO extends DaoGenerico<HistoriaLaboral> {
 
 	public List<HistoriaLaboral> getLicenciasActivasByEmpleado(Emp emp);
 	
-	public List<HistoriaLaboral> getAllLicenciasVencidas();
+	public List<HistoriaLaboral> getAllLicenciasVencidas(int firstResult, int maxResult);
 	
+	public List<HistoriaLaboral> getAllLicenciasVencidasByEmp(String nced, int firstResult, int maxResult);
+	
+	public Object getAllLicenciasVencidasByEmpApel(boolean isOnlyCount, 
+			String apel, int firstResult, int maxResult);
 	public long getCountLicenciasVencidas();
+	
+	public long getCountLicenciasVencidasByEmp (String nced);
 
 	public HistoriaLaboral getAnioPeriodoSabaticoActivoByEmpleado(Emp emp);
 
@@ -133,7 +141,8 @@ public interface HistoriaLaboralDAO extends DaoGenerico<HistoriaLaboral> {
 
 	public List<HistoriaLaboral> findHistorias(Date inicio, Date ffinal);
 
-	public List<HistoriaLaboral> findHistoriasEjecucion();
+	public Object findHistoriasEjecucion(boolean isOnlyCount, String nroDocumento,
+			String nombreAccion,  int firstResult, int maxResult);
 
 	public HistoriaLaboral findHistoriaDesignacionByDependenciaYTipo(String dependencia, String facultad,
 			String tipoDeDesignacion, String dignidad, String estadoDesignacion);
@@ -246,5 +255,8 @@ public interface HistoriaLaboralDAO extends DaoGenerico<HistoriaLaboral> {
 	public HistoriaLaboral findCurrentHistoriaLaboralByEstadoActivoEmp(Emp emp);
 
 	public Integer findHistoriaNumberByTipoAccion(String subtipoAccion);
+
+	public List<DocenteDTORrhh> historiaLaboralxPeriodo(Integer idPensum, String nced, String nombre, String apellido,
+			String departamento) throws Exception;
 
 }
