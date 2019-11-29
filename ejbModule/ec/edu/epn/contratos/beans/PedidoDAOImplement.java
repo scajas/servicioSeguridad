@@ -439,7 +439,7 @@ public class PedidoDAOImplement extends DaoGenericoImplement<Pedido> implements 
 	@Override
 	public Long contPedidosXPensum(String nced, Integer idPensum) throws Exception {
 		Query q = getEntityManager().createQuery(
-				"SELECT COUNT(ped.idPedido) FROM Pedido ped WHERE ped.estado.idEstado != (13) AND trim(ped.nced) LIKE ?0 AND ped.pensum.idPensum=?1");
+				"SELECT COUNT(ped.idPedido) FROM Pedido ped WHERE ped.estado.idEstado not in (12,13) AND trim(ped.nced) LIKE ?0 AND ped.pensum.idPensum=?1");
 
 		q.setParameter(0, "%" + nced + "%");
 		q.setParameter(1, idPensum);
