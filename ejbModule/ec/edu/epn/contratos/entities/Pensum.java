@@ -64,21 +64,26 @@ public class Pensum implements Serializable {
 
 	private String meses;
 	private String visibledips;
-	
+
 	@Temporal(TemporalType.DATE)
 	private Date vipsplanifica;
 
 	@Temporal(TemporalType.DATE)
 	private Date vipsreporta;
-	
+
 	@Temporal(TemporalType.DATE)
 	@Column(name = "fecha_preplanif")
 	private Date fechaPreplanif;
-	
-	
-	
 
 	public Pensum() {
+	}
+	
+	public String getAñoPensum() {
+		return añoPensum;
+	}
+
+	public void setAñoPensum(String añoPensum) {
+		this.añoPensum = añoPensum;
 	}
 
 	public Integer getIdPensum() {
@@ -177,24 +182,21 @@ public class Pensum implements Serializable {
 	}
 
 	/**
-	 * @param fechaPlanif
-	 *            the fechaPlanif to set
+	 * @param fechaPlanif the fechaPlanif to set
 	 */
 	public void setFechaPlanif(Date fechaPlanif) {
 		this.fechaPlanif = fechaPlanif;
 	}
 
 	/**
-	 * @param fechaAuto
-	 *            the fechaAuto to set
+	 * @param fechaAuto the fechaAuto to set
 	 */
 	public void setFechaAuto(Date fechaAuto) {
 		this.fechaAuto = fechaAuto;
 	}
 
 	/**
-	 * @param fechaCoe
-	 *            the fechaCoe to set
+	 * @param fechaCoe the fechaCoe to set
 	 */
 	public void setFechaCoe(Date fechaCoe) {
 		this.fechaCoe = fechaCoe;
@@ -247,20 +249,5 @@ public class Pensum implements Serializable {
 	public void setFechaPreplanif(Date fechaPreplanif) {
 		this.fechaPreplanif = fechaPreplanif;
 	}
-
-	/**
-	 * @return the añoPensum
-	 */
-	public String getAñoPensum() {
-		return añoPensum;
-	}
-
-	/**
-	 * @param añoPensum the añoPensum to set
-	 */
-	public void setAñoPensum(String añoPensum) {
-		this.añoPensum = añoPensum;
-	}
-	
 
 }
