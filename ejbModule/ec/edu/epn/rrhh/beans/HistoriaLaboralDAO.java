@@ -143,6 +143,9 @@ public interface HistoriaLaboralDAO extends DaoGenerico<HistoriaLaboral> {
 
 	public Object findHistoriasEjecucion(boolean isOnlyCount, String nroDocumento,
 			String nombreAccion,  int firstResult, int maxResult);
+	
+	public Object findHistoriasSinDocsCargados(boolean isOnlyCount, String nroDocumento,
+			String nombreAccion,  int firstResult, int maxResult);
 
 	public HistoriaLaboral findHistoriaDesignacionByDependenciaYTipo(String dependencia, String facultad,
 			String tipoDeDesignacion, String dignidad, String estadoDesignacion);
