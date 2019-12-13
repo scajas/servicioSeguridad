@@ -9,3 +9,9 @@ ALTER TABLE "GestionDocente".preplanificacion_docencia
       
       
 EN ESTADO DE PEDIDOS AÑADIR ESTADO 15
+
+
+//PROYECTOS
+ALTER TABLE "Proyectos".proyecto ADD COLUMN convenio character varying(500);
+
+ALTER TABLE "Proyectos".proyecto ADD COLUMN tieneconv character varying(10);
