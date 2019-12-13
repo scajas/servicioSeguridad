@@ -7,6 +7,7 @@ import javax.ejb.Stateless;
 import javax.persistence.Query;
 
 import ec.edu.epn.generic.DAO.DaoGenericoImplement;
+import ec.edu.epn.laboratorioBJ.entities.Existencia;
 import ec.edu.epn.laboratorioBJ.entities.LaboratorioLab;
 import ec.edu.epn.laboratorioBJ.entities.ProductoLab;
 import ec.edu.epn.laboratorioBJ.entities.Servicio;
@@ -27,41 +28,48 @@ public class ServicioDAOImplement extends DaoGenericoImplement<Servicio> impleme
 	}
 
 	@Override
-	public List<Servicio> listaServicioUnidad(Integer id) {
+	public List<Servicio> listaServicioUnidad(int id) {
+
 		StringBuilder queryString = new StringBuilder(
-				"SELECT b FROM Servicio b where b.laboratorio.unidad.idUnidad = ?1 ");	
+				"SELECT s FROM Servicio s where s.laboratorio.unidad.idUnidad = " + id + " ORDER BY s.nombreS ASC");
 		Query query = getEntityManager().createQuery(queryString.toString());
-		query.setParameter(1, id);
 		List<Servicio> resultados = query.getResultList();
+
 		return resultados;
 	}
 
 	@Override
 	public String maxIdServ(int id) {
+
 		StringBuilder queryString = new StringBuilder(
 				"SELECT max(b.idServicio) FROM Servicio b where b.laboratorio.unidad.idUnidad = ?1 ");
 		Query query = getEntityManager().createQuery(queryString.toString());
 		query.setParameter(1, id);
 		String idServ = (String) query.getSingleResult();
+
 		return idServ;
 	}
 
 	@Override
 	public List<Servicio> listaServicioXTipo(int id) {
-		StringBuilder queryString = new StringBuilder("SELECT b FROM Servicio b where b.laboratorio.unidad.idUnidad = ?1 ");
+
+		StringBuilder queryString = new StringBuilder(
+				"SELECT s FROM Servicio s where s.laboratorio.unidad.idUnidad = ?1 ");
 		Query query = getEntityManager().createQuery(queryString.toString());
 		query.setParameter(1, id);
 		List<Servicio> resultados = query.getResultList();
+
 		return resultados;
 	}
-	
+
 	@Override
 	public List<LaboratorioLab> listaLaboratorioUnidad(int id) {
-		StringBuilder queryString = new StringBuilder("SELECT b FROM LaboratorioLab b where b.unidad.idUnidad = ?1 ");
+
+		StringBuilder queryString = new StringBuilder("SELECT l FROM LaboratorioLab l where l.unidad.idUnidad = ?1 ");
 		Query query = getEntityManager().createQuery(queryString.toString());
 		query.setParameter(1, id);
-
 		List<LaboratorioLab> resultados = query.getResultList();
+
 		return resultados;
 	}
 
@@ -73,7 +81,20 @@ public class ServicioDAOImplement extends DaoGenericoImplement<Servicio> impleme
 				"SELECT b FROM Servicio b where b.tiposervicio.nombreTs like '%" + tiposervicio + "%'");
 		Query query = getEntityManager().createQuery(queryString.toString());
 		List<Servicio> resultados = query.getResultList();
+
 		return resultados;
+	}
+
+	@Override
+	public List<Servicio> listaServicioById(int id) {
+
+		StringBuilder queryString = new StringBuilder("SELECT s FROM Servicio s where s.idServicio = ?1 ");
+		Query query = getEntityManager().createQuery(queryString.toString());
+		query.setParameter(1, id);
+		List<Servicio> resultados = query.getResultList();
+
+		return resultados;
+
 	}
 
 }

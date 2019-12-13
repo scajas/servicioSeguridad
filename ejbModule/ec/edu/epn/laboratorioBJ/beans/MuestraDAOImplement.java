@@ -12,6 +12,7 @@ import ec.edu.epn.facturacion.entities.EstadoFactura;
 import ec.edu.epn.facturacion.entities.Factura;
 import ec.edu.epn.facturacion.entities.TransferenciaInterna;
 import ec.edu.epn.generic.DAO.DaoGenericoImplement;
+import ec.edu.epn.laboratorioBJ.entities.LaboratorioLab;
 import ec.edu.epn.laboratorioBJ.entities.Muestra;
 
 @Stateless
@@ -58,7 +59,7 @@ public class MuestraDAOImplement extends DaoGenericoImplement<Muestra> implement
 
 		return q.getResultList();
 	}
-	
+
 	@Override
 	public EstadoFactura findMetodoById(String idEstadoFactura) {
 		StringBuilder querys = new StringBuilder("SELECT e FROM EstadoFactura e where e.idEstadoFactura = ?0");
@@ -76,4 +77,32 @@ public class MuestraDAOImplement extends DaoGenericoImplement<Muestra> implement
 		}
 
 	}
+
+	@Override
+	public List<Muestra> ListaMFById(String id) {
+
+		System.out.println("idUnidad: " + id);
+		StringBuilder queryString = new StringBuilder(
+				"SELECT m FROM Muestra m where m.idMuestra like '%" + id + "%' ORDER BY idMuestra");
+		Query query = getEntityManager().createQuery(queryString.toString());
+
+		List<Muestra> resultados = query.getResultList();
+		return resultados;
+	}
+
+	@Override
+	public List<Muestra> ListaMTById(String id) {
+
+		System.out.println("idUnidad: " + id);
+		StringBuilder queryString = new StringBuilder(
+				"SELECT DISTINCT (m) FROM Muestra m, TransferenciaInterna ti"
+				+ " WHERE m.idTi = ti.idTi AND m.idMuestra like '%" + id
+						+ "%' ORDER BY m.idMuestra");
+		Query query = getEntityManager().createQuery(queryString.toString());
+
+		List<Muestra> resultados = query.getResultList();
+		return resultados;
+		
+	}
+
 }

@@ -18,8 +18,6 @@ import ec.edu.epn.laboratorioBJ.entities.Existencia;
 import ec.edu.epn.laboratorioBJ.entities.Metodo;
 import ec.edu.epn.laboratorioBJ.entities.Movimientosinventario;
 import ec.edu.epn.laboratorioBJ.entities.Ordeninventario;
-import ec.edu.epn.laboratorioBJ.entities.Posgiro;
-import ec.edu.epn.laboratorioBJ.entities.SaldoExistencia;
 import ec.edu.epn.laboratorioBJ.entities.UnidadLabo;
 
 /**
