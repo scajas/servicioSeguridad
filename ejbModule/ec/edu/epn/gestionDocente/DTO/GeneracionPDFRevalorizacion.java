@@ -1457,7 +1457,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 
 			} else {
 				datosCurricular1.addCell(createLabelCell3(
-						"Actividades de Evaluación : " + silaboselect.getToatlHorSemPract().toString()));
+						"Actividades de Evaluación : " + silaboselect.getTotalhorasacti().toString()));
 			}
 
 			document.add(datosCurricular1);
@@ -2482,7 +2482,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			PdfPTable tablaObjGeneralPorcen = new PdfPTable(2);
 			tablaObjGeneralPorcen.setWidthPercentage(100);
 			tablaObjGeneral.setWidths(columnWidthObjG);
-			cell = new PdfPCell(new Phrase("Porcentaje Total de Avance Acumulado del Proyecto", fuente));
+			cell = new PdfPCell(new Phrase("Porcentaje de avance total reportado del proyecto", fuente));
 			cell.setBackgroundColor(new BaseColor(197, 217, 241));
 			tablaObjGeneralPorcen.addCell(cell);
 			cell = new PdfPCell(new Phrase(cierre.getAvance().toString(), fuenteContenido));
@@ -3892,7 +3892,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			PdfPTable tablaObjGeneralPorcen = new PdfPTable(2);
 			tablaObjGeneralPorcen.setWidthPercentage(100);
 			tablaObjGeneral.setWidths(columnWidthObjG);
-			cell = new PdfPCell(new Phrase("Porcentaje Total de Avance Acumulado del Proyecto", fuente));
+			cell = new PdfPCell(new Phrase("Porcentaje de avance total del reportado del proyecto", fuente));
 			cell.setBackgroundColor(new BaseColor(197, 217, 241));
 			tablaObjGeneralPorcen.addCell(cell);
 			cell = new PdfPCell(new Phrase(cierre.getAvance().toString(), fuenteContenido));
@@ -5370,7 +5370,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			PdfPTable tablaObjGeneralPorcen = new PdfPTable(2);
 			tablaObjGeneralPorcen.setWidthPercentage(100);
 			tablaObjGeneral.setWidths(columnWidthObjG);
-			cell = new PdfPCell(new Phrase("Porcentaje Total de Avance Acumulado del Proyecto", fuente));
+			cell = new PdfPCell(new Phrase("Porcentaje de avance total reportado del proyecto", fuente));
 			cell.setBackgroundColor(new BaseColor(197, 217, 241));
 			tablaObjGeneralPorcen.addCell(cell);
 
