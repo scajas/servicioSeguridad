@@ -16,5 +16,8 @@ public interface MuestraDAO extends DaoGenerico<Muestra>{
 	List<Factura> getListaFacturas(Integer idUsuario, Integer idUnidad);
 	EstadoFactura findMetodoById(String idEstadoFactura);
 	List<TransferenciaInterna> getListaTransferencia(Integer idUsuario, Integer idUnidad);
+	List<Muestra> ListaMFById(String id);
+	List<Muestra> ListaMTById(String id);
+	
 	
 }

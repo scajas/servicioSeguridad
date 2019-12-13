@@ -8,6 +8,7 @@ import javax.persistence.Query;
 
 import ec.edu.epn.generic.DAO.DaoGenericoImplement;
 import ec.edu.epn.laboratorioBJ.entities.LaboratorioLab;
+import ec.edu.epn.laboratorioBJ.entities.Ordeninventario;
 
 @Stateless
 @LocalBean
@@ -23,6 +24,19 @@ public class LaboratorioDAOImplement extends DaoGenericoImplement<LaboratorioLab
 				"SELECT l FROM LaboratorioLab l where l.unidad.idUnidad =? 1");
 		Query query = getEntityManager().createQuery(queryString.toString());
 		query.setParameter(1, id);
+
+		List<LaboratorioLab> resultados = query.getResultList();
+		return resultados;
+	}
+	
+	
+	@Override
+	public List<LaboratorioLab> getListLabById(String id) {
+
+		System.out.println("idUnidad: " + id);
+		StringBuilder queryString = new StringBuilder(
+				"SELECT l FROM LaboratorioLab l where l.unidad.codigoU like '%" + id + "%' ORDER BY nombreL");
+		Query query = getEntityManager().createQuery(queryString.toString());
 
 		List<LaboratorioLab> resultados = query.getResultList();
 		return resultados;

@@ -12,5 +12,7 @@ public interface LaboratorioDAO extends DaoGenerico<LaboratorioLab>{
 
 	List<LaboratorioLab> listaLaboratorioUnidad(Integer id);
 
+	List<LaboratorioLab> getListLabById(String id);
+
 }
 

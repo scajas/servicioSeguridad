@@ -17,6 +17,8 @@ import ec.edu.epn.laboratorioBJ.entities.Presentacion;
 import ec.edu.epn.laboratorioBJ.entities.ProductoLab;
 import ec.edu.epn.laboratorioBJ.entities.Pureza;
 import ec.edu.epn.laboratorioBJ.entities.SaldoExistencia;
+import ec.edu.epn.laboratorioBJ.entities.Tipoproducto;
+import ec.edu.epn.laboratorioBJ.entities.Unidadmedida;
 import ec.edu.epn.laboratorioBJ.entities.laboratory;
 
 @Local
@@ -60,5 +62,11 @@ public interface ExistenciasDAO extends DaoGenerico<Existencia> {
 	Pureza buscarPurezaById(String id);
 
 	Existencia buscarExistenciaById(String id);
+
+	List<Existencia> getListExByTP(String id);
+
+	Tipoproducto tempTipoPro();
+
+	Unidadmedida tempUnidadMedida();
 
 }
