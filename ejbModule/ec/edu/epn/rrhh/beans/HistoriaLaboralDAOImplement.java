@@ -26,11 +26,7 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 	@Override
 	public List<HistoriaLaboral> findHistoriaByEmp(Emp emp) {
 		StringBuilder queryString = new StringBuilder(
-				" SELECT " + "fam FROM HistoriaLaboral fam where " + "fam.emp.nced =?1  "
-						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%SIN IMPRESION' "
-						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like 'ACTUALIZACI_N%' "
-						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%INSUBSISTENCIA%' "
-						+ " and fam.id.fechaI = "
+				"SELECT " + "fam FROM HistoriaLaboral fam where " + "fam.emp.nced =?1 and fam.id.fechaI = "
 						+ "(Select max(t.id.fechaI) " + "from HistoriaLaboral t where t.id.idHist=fam.id.idHist)");
 
 		Query query = getEntityManager().createQuery(queryString.toString());
