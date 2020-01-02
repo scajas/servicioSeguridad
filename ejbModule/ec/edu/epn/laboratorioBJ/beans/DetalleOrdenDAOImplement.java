@@ -1,5 +1,7 @@
 package ec.edu.epn.laboratorioBJ.beans;
 
+import java.util.List;
+
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
@@ -9,6 +11,7 @@ import javax.persistence.Query;
 import ec.edu.epn.generic.DAO.DaoGenericoImplement;
 import ec.edu.epn.laboratorioBJ.entities.Detalleorden;
 import ec.edu.epn.laboratorioBJ.entities.Metodo;
+import ec.edu.epn.laboratorioBJ.entities.Muestra;
 import ec.edu.epn.laboratorioBJ.entities.Servicio;
 
 /**
@@ -59,6 +62,19 @@ public class DetalleOrdenDAOImplement extends DaoGenericoImplement<Detalleorden>
 			return null;
 		}
 
+	}
+
+	@Override
+	public List<Detalleorden> listTAbyId(String id) {
+
+		System.out.println("idUnidad: " + id);
+		StringBuilder queryString = new StringBuilder("SELECT d FROM Detalleorden d "
+				+ "WHERE d.ordenTrabajo.idOrden like '%" + id + "%' ORDER BY d.ordenTrabajo.idOrden ASC");
+		Query query = getEntityManager().createQuery(queryString.toString());
+
+		List<Detalleorden> resultados = query.getResultList();
+		System.out.println("Resultados Obtenidos" + resultados.size());
+		return resultados;
 	}
 
 }

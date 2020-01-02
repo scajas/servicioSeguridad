@@ -10,8 +10,6 @@ import ec.edu.epn.laboratorioBJ.entities.ProveedorLab;
 @Local
 public interface ProveedorLabDAO  extends DaoGenerico<ProveedorLab> {
 
-/*	List<ProveedorLab> listaProveedorTP(Integer id);*/
-
 	List<ProveedorLab> getListProveedor();
 
 }
