@@ -521,7 +521,8 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 	public boolean findVacacionActivaByEmpleado(Emp emp, Date fechaActual, Date fechaFin) {
 
 		StringBuilder queryString = new StringBuilder("Select count(hl) from HistoriaLaboral "
-				+ " hl where hl.emp.nced =?1 " + " and (hl.id.estado = 'Legalizado' or hl.id.estado = 'Finalizado') "
+				+ " hl where hl.emp.nced =?1 " + " and (hl.id.estado = 'Legalizado' or hl.id.estado = 'Finalizado'"
+						+ "or hl.id.estado = 'Elaborado' ) "
 				+ " and hl.accionP.subtipoAccion.nombreSubaccion = ?2 and "
 				+ " ((?3 between hl.fechaRige and hl.fechaFin) " + " or (?4 between hl.fechaRige and hl.fechaFin)) and "
 				+ " hl.id.idHist not in (select histo.id.idHist from HistoriaLaboral histo "
@@ -1089,12 +1090,12 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 	@Override
 	public HistoriaLaboral getMostRecentNombramientoProvisionalByEmp(Emp emp) {
 		StringBuilder queryString = new StringBuilder("Select hl from HistoriaLaboral hl where hl.emp.nced=?1"
-				+ " and hl.id.estado=?3 and hl.accionP.subtipoAccion.nombreSubaccion like ?2 and hl.id.fechaI ="
-				+ "(Select max(hist.id.fechaI) from HistoriaLaboral hist where "
+				+ " and hl.id.estado=?3 and hl.accionP.subtipoAccion.nombreSubaccion like ?2 and hl.fechaRige ="
+				+ "(Select max(hist.fechaRige) from HistoriaLaboral hist where "
 				+ "hist.emp.nced=?1 and hist.accionP.subtipoAccion.nombreSubaccion like ?2 " + "and hist.id.estado=?3 "
 				+ "and hist.id.idHist not in "
 				+ "(Select histo.id.idHist from HistoriaLaboral histo where (histo.id.estado = ?4 "
-				+ " or histo.id.estado = ?5)))");
+				+ " or histo.id.estado = ?5))) order by hl.fechaRige desc ");
 
 		Query query = getEntityManager().createQuery(queryString.toString());
 		query.setParameter(1, emp.getNced());
@@ -1102,15 +1103,10 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		query.setParameter(3, "Finalizado");
 		query.setParameter(4, "Anulado");
 		query.setParameter(5, "Insubsistente");
-
-		HistoriaLaboral resultado = null;
-		try {
-			resultado = (HistoriaLaboral) query.getSingleResult();
-		} catch (NoResultException e) {
-			System.out.println("No tiene nombramiento provisional el empleado");
-		}
-
-		return resultado;
+	
+		return (HistoriaLaboral) query.getResultList().get(0);
+		
+		
 	}
 
 	@Override
