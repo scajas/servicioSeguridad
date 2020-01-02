@@ -70,7 +70,7 @@ public class ExistenciasDAOImplement extends DaoGenericoImplement<Existencia> im
 		dato = dato.toUpperCase();
 
 		StringBuilder queryString = new StringBuilder(
-				"SELECT d FROM ProductoLab d where nombre_pr like '%" + dato + "%'");
+				"SELECT p FROM ProductoLab p where UPPER (nombrePr) like UPPER ('%" + dato + "%')");
 		Query query = getEntityManager().createQuery(queryString.toString());
 
 		List<ProductoLab> resultados = query.getResultList();
