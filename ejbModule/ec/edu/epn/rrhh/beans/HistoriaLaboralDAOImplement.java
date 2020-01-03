@@ -6,11 +6,15 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.Query;
+
+
 
 import ec.edu.epn.generic.DAO.DaoGenericoImplement;
 import ec.edu.epn.rrhh.DTO.DocenteDTO;
@@ -1406,11 +1410,13 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		// Calcula el numero de documento basandose en el último número de la
 		// última historia
 		// laboral que también sea una acción de personal (Excluye contratos)
-		StringBuilder queryString = new StringBuilder("SELECT fam FROM HistoriaLaboral " + " fam where fam.id.idHist="
+		StringBuilder queryString = new StringBuilder("SELECT fam FROM HistoriaLaboral " 
+				+ " fam where fam.id.idHist="
 				+ "(Select max(hist.id.idHist) from HistoriaLaboral hist " + " "
 				+ " where year(hist.id.fechaI) =?1 and hist.id.fechaI<  ?2 "
-				+ "and hist.accionP.id.idAccionp IS NOT NULL and hist.id.idHist not in (Select hl.id.idHist from HistoriaLaboral "
-				+ "hl " + "where hl.id.estado='Registrado'" + "))" + "" + "  ");
+				+ "and hist.accionP.id.idAccionp IS NOT NULL and hist.id.idHist not in "
+				+ "(Select hl.id.idHist from HistoriaLaboral "
+				+ "hl where hl.id.estado='Registrado'" + "))" + "" + "  ");
 
 		Query query = getEntityManager().createQuery(queryString.toString());
 		Date dt = new Date();
@@ -1420,7 +1426,8 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		dt = c.getTime();
 		query.setParameter(1, year);
 		query.setParameter(2, dt);
-
+	    Pattern pattern = Pattern.compile("[0-9]+-[0-9]{4}");
+	    Matcher matcher;
 		List<HistoriaLaboral> resultado = query.getResultList();
 		if (resultado.size() <= 0) {
 			return 1;
@@ -1428,10 +1435,14 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 
 			for (HistoriaLaboral hl : resultado) {
 				if (hl.getNroDocumento() != null) {
-					String[] tokensNroDocumento = hl.getNroDocumento().split("-");
-					int nroDocumento = Integer.parseInt(tokensNroDocumento[0]);
-					nroDocumento++;
-					return nroDocumento;
+					matcher = pattern.matcher(hl.getNroDocumento().trim());
+					matcher.find();					
+					if(matcher.matches()) {						
+						int nroDocumento = 
+								Integer.parseInt(hl.getNroDocumento().split("-")[0]);
+						nroDocumento++;
+						return nroDocumento;
+					}					
 				}
 			}
 			return 1;
