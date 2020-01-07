@@ -25,7 +25,7 @@ import ec.edu.epn.rrhh.movimientos.HistoriaLaboral;
 
 @Stateless
 public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLaboral> implements HistoriaLaboralDAO {
-	// HistoriaLaboralDAOImplement
+
 
 	@Override
 	public List<HistoriaLaboral> findHistoriaByEmp(Emp emp) {
@@ -35,6 +35,28 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 
 		Query query = getEntityManager().createQuery(queryString.toString());
 
+		query.setParameter(1, emp.getNced());
+		List<HistoriaLaboral> resultado = query.getResultList();
+
+		return resultado;
+
+	}
+	
+	@Override
+	public List<HistoriaLaboral> findHistoriasTotalFinalizadas(Emp emp) {
+		StringBuilder queryString = new StringBuilder(
+				" SELECT " + "fam FROM HistoriaLaboral fam where " + "fam.emp.nced =?1  "
+						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%SIN IMPRESION' "
+						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like 'ACTUALIZACI_N%' "
+						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%INSUBSISTENCIA%' "
+						+ " and (fam.id.estado = 'Finalizado' or fam.id.estado = 'Legalizado' or "
+						+ "  fam.id.estado = 'Legalizada' or fam.id.estado = 'Registrado') "
+						+ " and fam.id.idHist not in (select histo.id.idHist from HistoriaLaboral histo where "
+						+ " histo.id.estado = 'Insubsistente' or histo.id.estado = 'Anulado' ) "
+						+ " and fam.id.fechaI = "
+						+ "(Select max(t.id.fechaI) " + "from HistoriaLaboral t where t.id.idHist=fam.id.idHist)");
+
+		Query query = getEntityManager().createQuery(queryString.toString());
 		query.setParameter(1, emp.getNced());
 		List<HistoriaLaboral> resultado = query.getResultList();
 
@@ -239,6 +261,63 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 				+ "where (hl.id.estado='Ejecucion' or hl.id.estado='Elaborado')"
 				+ " and hl.accionP.id.idAccionp IS NOT NULL " + " and hl.id.fechaI = "
 				+ " (Select max(hist.id.fechaI) from HistoriaLaboral hist where hist.id.idHist = hl.id.idHist ";
+
+		if (nroDocumento != null) {
+			queryPredicate += "and hist.nroDocumento like '" + nroDocumento + "%' ";
+		}
+		if (nombreAccion != null) {
+			queryPredicate += "and hist.accionP.subtipoAccion.nombreSubaccion like '" + nombreAccion + "%'";
+		}
+
+		queryPredicate += ")";
+
+		if (!isOnlyCount) {
+			queryString.append(fullQuerySelect);
+			queryString.append(queryPredicate);
+			Query query = getEntityManager().createQuery(queryString.toString());
+
+			if (firstResult > 0) {
+				query.setFirstResult(firstResult);
+			}
+
+			if (maxResult > 0) {
+				query.setMaxResults(maxResult);
+			}
+			List<HistoriaLaboral> resultado = query.getResultList();
+
+			return resultado;
+		} else {
+			queryString.append(count);
+			queryString.append(queryPredicate);
+			Query query = getEntityManager().createQuery(queryString.toString());
+			int countOfHistorias = ((Long) query.getSingleResult()).intValue();
+			return countOfHistorias;
+		}
+	}
+	
+	@Override
+	public Object findHistoriasSinDocsCargados(boolean isOnlyCount, String nroDocumento, String nombreAccion, int firstResult,
+			int maxResult) {
+		StringBuilder queryString = new StringBuilder("");
+		String count = "Select count(hl) ";
+		String fullQuerySelect = "Select hl ";
+		String queryPredicate = " from HistoriaLaboral hl "
+				+ " where "
+				+ " hl.accionP.id.idAccionp IS NOT NULL "
+				+ " and (hl.dependencia IS NOT NULL or hl.cargosm IS NOT NULL) "
+				+ " and hl.fechaRige >= '01/06/2018' "
+				+ " and hl.accionP.subtipoAccion.nombreSubaccion not like '%SIN IMPRESION' "
+				+ " and hl.accionP.subtipoAccion.nombreSubaccion not like 'ACTUALIZACI_N%' "
+				+ " and hl.accionP.subtipoAccion.nombreSubaccion not like '%SIN REGISTRO' "
+				+ " and hl.accionP.subtipoAccion.nombreSubaccion not like 'RECTIFICACI_N%' "
+				+ " and hl.id.idHist in (select doc.historiaLaboral.id.idHist from Docadjunto doc where "
+				+ " doc.xpath is null and "
+				+ " (doc.historiaLaboral.id.estado = 'Finalizado' or doc.historiaLaboral.id.estado = 'Legalizado') ) "
+				+ " and hl.id.idHist not in (select histo.id.idHist from HistoriaLaboral histo where "
+				+ " histo.id.estado = 'Insubsistente' or histo.id.estado = 'Anulado' ) "
+				+ " and hl.id.fechaI = "
+				+ " (Select max(hist.id.fechaI) from HistoriaLaboral hist where hist.id.idHist = hl.id.idHist ";
+
 
 		if (nroDocumento != null) {
 			queryPredicate += "and hist.nroDocumento like '" + nroDocumento + "%' ";

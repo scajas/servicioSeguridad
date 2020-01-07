@@ -6,7 +6,6 @@ import java.util.List;
 import javax.ejb.Remote;
 
 import ec.edu.epn.generic.DAO.DaoGenerico;
-import ec.edu.epn.rrhh.DTO.DocenteDTO;
 import ec.edu.epn.rrhh.DTO.DocenteDTORrhh;
 import ec.edu.epn.rrhh.entities.Emp;
 import ec.edu.epn.rrhh.movimientos.HistoriaLaboral;
@@ -15,6 +14,9 @@ import ec.edu.epn.rrhh.movimientos.HistoriaLaboral;
 public interface HistoriaLaboralDAO extends DaoGenerico<HistoriaLaboral> {
 	// HistoriaLaboralDAO
 	public List<HistoriaLaboral> findHistoriaByEmp(Emp emp);
+	
+	public List<HistoriaLaboral> findHistoriasTotalFinalizadas(Emp emp);
+	
 	
 	public List<HistoriaLaboral> findHistoriasByEmpNoDuplicados(Emp emp);
 
@@ -142,6 +144,9 @@ public interface HistoriaLaboralDAO extends DaoGenerico<HistoriaLaboral> {
 	public List<HistoriaLaboral> findHistorias(Date inicio, Date ffinal);
 
 	public Object findHistoriasEjecucion(boolean isOnlyCount, String nroDocumento,
+			String nombreAccion,  int firstResult, int maxResult);
+	
+	public Object findHistoriasSinDocsCargados(boolean isOnlyCount, String nroDocumento,
 			String nombreAccion,  int firstResult, int maxResult);
 
 	public HistoriaLaboral findHistoriaDesignacionByDependenciaYTipo(String dependencia, String facultad,
