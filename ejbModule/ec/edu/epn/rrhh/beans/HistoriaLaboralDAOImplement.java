@@ -6,11 +6,15 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.Query;
+
+
 
 import ec.edu.epn.generic.DAO.DaoGenericoImplement;
 import ec.edu.epn.rrhh.DTO.DocenteDTO;
@@ -600,7 +604,8 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 	public boolean findVacacionActivaByEmpleado(Emp emp, Date fechaActual, Date fechaFin) {
 
 		StringBuilder queryString = new StringBuilder("Select count(hl) from HistoriaLaboral "
-				+ " hl where hl.emp.nced =?1 " + " and (hl.id.estado = 'Legalizado' or hl.id.estado = 'Finalizado') "
+				+ " hl where hl.emp.nced =?1 " + " and (hl.id.estado = 'Legalizado' or hl.id.estado = 'Finalizado'"
+						+ "or hl.id.estado = 'Elaborado' ) "
 				+ " and hl.accionP.subtipoAccion.nombreSubaccion = ?2 and "
 				+ " ((?3 between hl.fechaRige and hl.fechaFin) " + " or (?4 between hl.fechaRige and hl.fechaFin)) and "
 				+ " hl.id.idHist not in (select histo.id.idHist from HistoriaLaboral histo "
@@ -1168,12 +1173,12 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 	@Override
 	public HistoriaLaboral getMostRecentNombramientoProvisionalByEmp(Emp emp) {
 		StringBuilder queryString = new StringBuilder("Select hl from HistoriaLaboral hl where hl.emp.nced=?1"
-				+ " and hl.id.estado=?3 and hl.accionP.subtipoAccion.nombreSubaccion like ?2 and hl.id.fechaI ="
-				+ "(Select max(hist.id.fechaI) from HistoriaLaboral hist where "
+				+ " and hl.id.estado=?3 and hl.accionP.subtipoAccion.nombreSubaccion like ?2 and hl.fechaRige ="
+				+ "(Select max(hist.fechaRige) from HistoriaLaboral hist where "
 				+ "hist.emp.nced=?1 and hist.accionP.subtipoAccion.nombreSubaccion like ?2 " + "and hist.id.estado=?3 "
 				+ "and hist.id.idHist not in "
 				+ "(Select histo.id.idHist from HistoriaLaboral histo where (histo.id.estado = ?4 "
-				+ " or histo.id.estado = ?5)))");
+				+ " or histo.id.estado = ?5))) order by hl.fechaRige desc ");
 
 		Query query = getEntityManager().createQuery(queryString.toString());
 		query.setParameter(1, emp.getNced());
@@ -1181,15 +1186,10 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		query.setParameter(3, "Finalizado");
 		query.setParameter(4, "Anulado");
 		query.setParameter(5, "Insubsistente");
-
-		HistoriaLaboral resultado = null;
-		try {
-			resultado = (HistoriaLaboral) query.getSingleResult();
-		} catch (NoResultException e) {
-			System.out.println("No tiene nombramiento provisional el empleado");
-		}
-
-		return resultado;
+	
+		return (HistoriaLaboral) query.getResultList().get(0);
+		
+		
 	}
 
 	@Override
@@ -1489,11 +1489,13 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		// Calcula el numero de documento basandose en el último número de la
 		// última historia
 		// laboral que también sea una acción de personal (Excluye contratos)
-		StringBuilder queryString = new StringBuilder("SELECT fam FROM HistoriaLaboral " + " fam where fam.id.idHist="
+		StringBuilder queryString = new StringBuilder("SELECT fam FROM HistoriaLaboral " 
+				+ " fam where fam.id.idHist="
 				+ "(Select max(hist.id.idHist) from HistoriaLaboral hist " + " "
 				+ " where year(hist.id.fechaI) =?1 and hist.id.fechaI<  ?2 "
-				+ "and hist.accionP.id.idAccionp IS NOT NULL and hist.id.idHist not in (Select hl.id.idHist from HistoriaLaboral "
-				+ "hl " + "where hl.id.estado='Registrado'" + "))" + "" + "  ");
+				+ "and hist.accionP.id.idAccionp IS NOT NULL and hist.id.idHist not in "
+				+ "(Select hl.id.idHist from HistoriaLaboral "
+				+ "hl where hl.id.estado='Registrado'" + "))" + "" + "  ");
 
 		Query query = getEntityManager().createQuery(queryString.toString());
 		Date dt = new Date();
@@ -1503,7 +1505,8 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		dt = c.getTime();
 		query.setParameter(1, year);
 		query.setParameter(2, dt);
-
+	    Pattern pattern = Pattern.compile("[0-9]+-[0-9]{4}");
+	    Matcher matcher;
 		List<HistoriaLaboral> resultado = query.getResultList();
 		if (resultado.size() <= 0) {
 			return 1;
@@ -1511,10 +1514,14 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 
 			for (HistoriaLaboral hl : resultado) {
 				if (hl.getNroDocumento() != null) {
-					String[] tokensNroDocumento = hl.getNroDocumento().split("-");
-					int nroDocumento = Integer.parseInt(tokensNroDocumento[0]);
-					nroDocumento++;
-					return nroDocumento;
+					matcher = pattern.matcher(hl.getNroDocumento().trim());
+					matcher.find();					
+					if(matcher.matches()) {						
+						int nroDocumento = 
+								Integer.parseInt(hl.getNroDocumento().split("-")[0]);
+						nroDocumento++;
+						return nroDocumento;
+					}					
 				}
 			}
 			return 1;
