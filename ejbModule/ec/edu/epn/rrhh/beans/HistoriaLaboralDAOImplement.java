@@ -43,14 +43,15 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 	}
 	
 	@Override
-	public List<HistoriaLaboral> findHistoriasTotalFinalizadas(Emp emp) {
+	public List<HistoriaLaboral> findHistoriaLaboralLimpia(Emp emp) {
 		StringBuilder queryString = new StringBuilder(
 				" SELECT " + "fam FROM HistoriaLaboral fam where " + "fam.emp.nced =?1  "
 						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%SIN IMPRESION' "
 						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like 'ACTUALIZACI_N%' "
 						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%INSUBSISTENCIA%' "
-						+ " and (fam.id.estado = 'Finalizado' or fam.id.estado = 'Legalizado' or "
-						+ "  fam.id.estado = 'Legalizada' or fam.id.estado = 'Registrado') "
+						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%LICENCIA%'"
+						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%COMISI_N%'"
+						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%VACACI_N%'"
 						+ " and fam.id.idHist not in (select histo.id.idHist from HistoriaLaboral histo where "
 						+ " histo.id.estado = 'Insubsistente' or histo.id.estado = 'Anulado' ) "
 						+ " and fam.id.fechaI = "

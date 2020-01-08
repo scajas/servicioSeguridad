@@ -15,7 +15,7 @@ public interface HistoriaLaboralDAO extends DaoGenerico<HistoriaLaboral> {
 	// HistoriaLaboralDAO
 	public List<HistoriaLaboral> findHistoriaByEmp(Emp emp);
 	
-	public List<HistoriaLaboral> findHistoriasTotalFinalizadas(Emp emp);
+	public List<HistoriaLaboral> findHistoriaLaboralLimpia(Emp emp);
 	
 	
 	public List<HistoriaLaboral> findHistoriasByEmpNoDuplicados(Emp emp);
