@@ -15,8 +15,10 @@ public class DetalleProforma implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@SequenceGenerator(name="DETALLEPO_IDDETALLEPO_GENERATOR", sequenceName="secuencia_detalleproforma",allocationSize=1, catalog="bddcorpepn",schema="`Laboratorios`")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="DETALLEPO_IDDETALLEPO_GENERATOR")
 	@Column(name="id_detallepo")
-	private String idDetallepo;
+	private int idDetallepo;
 
 	@Column(name="cantidad_po")
 	private Integer cantidadPo;
@@ -48,11 +50,11 @@ public class DetalleProforma implements Serializable {
 	public DetalleProforma() {
 	}
 
-	public String getIdDetallepo() {
+	public int getIdDetallepo() {
 		return this.idDetallepo;
 	}
 
-	public void setIdDetallepo(String idDetallepo) {
+	public void setIdDetallepo(int idDetallepo) {
 		this.idDetallepo = idDetallepo;
 	}
 
