@@ -372,6 +372,7 @@ public class ExistenciasDAOImplement extends DaoGenericoImplement<Existencia> im
 
 		try {
 			Pureza pureza = (Pureza) query.getSingleResult();
+			System.out.println("Esta es la pureza que trae: " + pureza.getNombrePureza());
 			return pureza;
 		} catch (NoResultException nre) {
 			return null;
