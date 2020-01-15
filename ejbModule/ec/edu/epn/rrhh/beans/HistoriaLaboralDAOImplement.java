@@ -52,6 +52,8 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%LICENCIA%'"
 						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%COMISI_N%'"
 						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%VACACI_N%'"
+						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%REINTEGRO%'"
+						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%CUMPLIMIENTO DE SERVICIOS%'"
 						+ " and fam.id.idHist not in (select histo.id.idHist from HistoriaLaboral histo where "
 						+ " histo.id.estado = 'Insubsistente' or histo.id.estado = 'Anulado' ) "
 						+ " and fam.id.fechaI = "
@@ -60,7 +62,7 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		Query query = getEntityManager().createQuery(queryString.toString());
 		query.setParameter(1, emp.getNced());
 		List<HistoriaLaboral> resultado = query.getResultList();
-
+		resultado.addAll(this.findContByEmp(emp));
 		return resultado;
 
 	}
