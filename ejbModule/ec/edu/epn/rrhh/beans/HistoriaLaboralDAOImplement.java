@@ -1194,16 +1194,22 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		
 		
 	}
+	
+
 
 	@Override
 	public HistoriaLaboral getMostRecentNombramientoByEmp(Emp emp) {
-		StringBuilder queryString = new StringBuilder("Select hl from HistoriaLaboral " + "hl where hl.id.fechaI ="
+		StringBuilder queryString = new StringBuilder("Select hl from HistoriaLaboral "
+				+ "hl where hl.id.fechaI ="
 				+ "(Select max(hist.id.fechaI) from HistoriaLaboral hist where "
-				+ " hist.emp.nced=?1 and TRIM(hist.accionP.subtipoAccion.nombreSubaccion) like ?2"
+				+ " hist.emp.nced=?1 and (TRIM(hist.accionP.subtipoAccion.nombreSubaccion) like ?2 "
+				+  "or hist.accionP.subtipoAccion.idStpa in (334) ) "
 				+ " and hist.id.estado=?3 "
 				+ " and hist.accionP is not null and hist.id.idHist not in (Select histo.id.idHist from HistoriaLaboral histo "
 				+ " where histo.emp.nced=?1 and (histo.id.estado= ?4 or histo.id.estado=?5) order by hist.fechaRige desc))"
-				+ " and hl.emp.nced = ?1 and TRIM(hl.accionP.subtipoAccion.nombreSubaccion) like ?2 and "
+				+ " and hl.emp.nced = ?1"
+				+ " and (TRIM(hl.accionP.subtipoAccion.nombreSubaccion) like ?2 "
+				+ " or hl.accionP.subtipoAccion.idStpa in (334)) and "
 				+ " (hl.fechaFin = '4900/01/31' or hl.fechaFin is null) ");
 
 		Query query = getEntityManager().createQuery(queryString.toString());
