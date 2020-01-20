@@ -17,8 +17,8 @@ public class Estadoproducto implements Serializable {
 
 	@Id
 	
-	@SequenceGenerator(name="MUESTRA_IDMUESTRA_GENERATOR", sequenceName="secuencia_muestra",allocationSize=1, catalog="bddcorpepn",schema="`Laboratorios`")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="MUESTRA_IDMUESTRA_GENERATOR")
+	@SequenceGenerator(name="ESTADOPRODUCTO_IDESTADOPRODUCTO_GENERATOR", sequenceName="secuencia_estadoproducto",allocationSize=1, catalog="bddcorpepn",schema="`Laboratorios`")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="ESTADOPRODUCTO_IDESTADOPRODUCTO_GENERATOR")
 	
 	@Column(name="id_estadoprod")
 	private int idEstadoprod;

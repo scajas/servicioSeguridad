@@ -252,7 +252,7 @@ public class ProyectoPDAOImplement extends
 						"FROM \"Proyectos\".proyecto p, \"Proyectos\".recursoh_pr r, \"Proyectos\".rol_proyecto rp "+
 						"WHERE p.id_proy= r.id_proy "+				
 						"AND r.id_rol_proy=rp.id_rol_proy "+
-						"AND p.estado IN ('En ejecuciï¿½n', 'Prï¿½rroga Ordinaria', 'Prï¿½rroga Extraordinaria','Proceso de cierre','Suspendido') "+
+						"AND p.estado IN ('En ejecución', 'Prórroga Ordinaria', 'Prórroga Extraordinaria','Proceso de cierre','Suspendido') "+
 						"AND r.nced=? ") ;
 		
 				ps.setString(1, cedula);
@@ -301,7 +301,7 @@ public class ProyectoPDAOImplement extends
 //						"AND re.id_recurso= r.id_rh_pr "+
 //						"AND re.tipo = 'P' "+						
 //						"AND r.id_rol_proy=rp.id_rol_proy "+
-//						"AND p.estado IN ('En ejecuciï¿½n', 'Prï¿½rroga Ordinaria', 'Prï¿½rroga Extraordinaria','Proceso de cierre','Suspendido') "+
+//						"AND p.estado IN ('En ejecución', 'Prórroga Ordinaria', 'Prórroga Extraordinaria','Proceso de cierre','Suspendido') "+
 //						"AND r.nced=? "+
 //						"AND re.idpensum= ? ") ;
 //		
@@ -367,7 +367,7 @@ public class ProyectoPDAOImplement extends
 			queryString.append(" ,RecursohPr rp   ");
 		}
 		
-		queryString.append(" where pr.estado IN ('En ejecuciÃ³n', 'PrÃ³rroga Ordinaria', 'PrÃ³rroga Extraordinaria','Proceso de cierre','Suspendido') ");
+		queryString.append(" where pr.estado IN ('En ejecución', 'Prórroga Ordinaria', 'Prórroga Extraordinaria','Proceso de cierre','Suspendido') ");
 		
 		if (cedula != null) {
 			queryString.append(" and rp.proyecto.idProy = pr.idProy   ");

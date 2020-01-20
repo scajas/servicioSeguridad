@@ -119,10 +119,10 @@ public class PreplanificacionDocenciaDAOImplement extends DaoGenericoImplement<P
 
 					EstadoEvaluacion estadoEval = estadoEvaluacionDAO.estadoEvalXNombre(dto.getEstado());
 					docente.setEstado(estadoEval.getDescripcion());
-					
+
 					docente.setDedicacion(dto.getDedicacion());
 					docente.setCargo(dto.getRelacionLab());
-					
+
 					listaDocenteDTO.add(docente);
 				}
 			}
@@ -207,12 +207,13 @@ public class PreplanificacionDocenciaDAOImplement extends DaoGenericoImplement<P
 		try {
 
 			Query q = getEntityManager()
-					.createQuery("SELECT p FROM PreplanificacionDocencia p WHERE  p.pedido.idPedido = ?");
+					.createQuery("SELECT p FROM PreplanificacionDocencia p WHERE  p.pedido.idPedido = ?1 ");
 
 			q.setParameter(1, idPedido);
 
 			return (PreplanificacionDocencia) q.getSingleResult();
 		} catch (Exception e) {
+
 			return null;
 		}
 	}
