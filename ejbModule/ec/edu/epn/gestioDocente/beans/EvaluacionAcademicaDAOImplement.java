@@ -16,13 +16,20 @@ import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.sql.DataSource;
 
+import ec.edu.epn.contratos.beans.PedidoDAO;
+import ec.edu.epn.contratos.beans.PensumDAO;
+import ec.edu.epn.contratos.entities.Pedido;
+import ec.edu.epn.contratos.entities.Pensum;
 import ec.edu.epn.generic.DAO.DaoGenericoImplement;
 import ec.edu.epn.gestionDocente.entities.ActAcademica;
 import ec.edu.epn.gestionDocente.entities.ActividadEvaluacion;
+import ec.edu.epn.gestionDocente.entities.ActividadPreplanificacion;
 import ec.edu.epn.gestionDocente.entities.EstadoEvaluacion;
 import ec.edu.epn.gestionDocente.entities.EvaluacionAcademica;
 import ec.edu.epn.gestionDocente.entities.PlanfActAcademica;
+import ec.edu.epn.gestionDocente.entities.PreplanificacionDocencia;
 import ec.edu.epn.gestionDocente.entities.SubactividadEvaluacion;
+import ec.edu.epn.gestionDocente.entities.SubactividadPreplanificacion;
 import ec.edu.epn.rrhh.DTO.DocenteDTO;
 import ec.edu.epn.rrhh.DTO.DocentesEvaluacionDTO;
 
@@ -50,8 +57,26 @@ public class EvaluacionAcademicaDAOImplement extends DaoGenericoImplement<Evalua
 	@EJB(lookup = "java:global/ServiciosSeguridadEPN/EstadoEvaluacionDAOImplement!ec.edu.epn.gestioDocente.beans.EstadoEvaluacionDAO")
 	private EstadoEvaluacionDAO estadoEvaluacionDAO;
 	
+	@EJB(lookup = "java:global/ServiciosSeguridadEPN/PreplanificacionDocenciaDAOImplement!ec.edu.epn.gestioDocente.beans.PreplanificacionDocenciaDAO")
+	private PreplanificacionDocenciaDAO preplanificacionDocenciaDAO;	
+	
+	@EJB(lookup = "java:global/ServiciosSeguridadEPN/PedidoDAOImplement!ec.edu.epn.contratos.beans.PedidoDAO")
+	private PedidoDAO pedidoDAO;
+	
+	@EJB(lookup = "java:global/ServiciosSeguridadEPN/ActividadPreplanificacionDAOImplement!ec.edu.epn.gestioDocente.beans.ActividadPreplanificacionDAO")
+	private ActividadPreplanificacionDAO actividadPreplanificacionDAO;
+	
+	@EJB(lookup = "java:global/ServiciosSeguridadEPN/SubactividadPreplanificacionDAOImplement!ec.edu.epn.gestioDocente.beans.SubactividadPreplanificacionDAO")
+	private SubactividadPreplanificacionDAO subactividadPreplanificacionDAO;
+	
+	
+	@EJB(lookup = "java:global/ServiciosSeguridadEPN/PensumDAOImplement!ec.edu.epn.contratos.beans.PensumDAO")
+	private PensumDAO pensumDAO;
+	
 	@Resource(mappedName = "java:jboss/datasources/SeguridadEPNDS")
 	private DataSource dataSource;
+	
+	
 	
 	
 	@Override
@@ -129,10 +154,10 @@ public class EvaluacionAcademicaDAOImplement extends DaoGenericoImplement<Evalua
 		
 		Query q = getEntityManager()
 				.createQuery(
-						"SELECT count(e) FROM EvaluacionAcademica e WHERE e.nced=? AND e.idPensum= ? AND e.estado like ? ");
+						"SELECT count(e) FROM EvaluacionAcademica e WHERE e.nced like ? AND e.idPensum= ? AND e.estado like ? ");
 
 		
-		q.setParameter(1, nced);
+		q.setParameter(1, "%" + nced + "%");
 		q.setParameter(2, idPensum);
 		q.setParameter(3, estado);
 		
@@ -541,7 +566,7 @@ public class EvaluacionAcademicaDAOImplement extends DaoGenericoImplement<Evalua
 								"CASE cod_tiporelacionlab WHEN 1 THEN (SELECT p.cargo FROM \"Rrhh\".nomb_temp n, \"Rrhh\".partind p WHERE n.cod_pind= p.cod_pind AND n.frige_nomb = (SELECT MAX(frige_nomb) FROM \"Rrhh\".nomb_temp WHERE nced=e.nced) AND n.nced=e.nced) "+ 
 								"WHEN 2 THEN (SELECT MAX(cargoc) FROM \"Rrhh\".cont c WHERE c.frige_cont=  (SELECT MAX(frige_cont) FROM \"Rrhh\".cont WHERE nced = e.nced) AND c.nced = e.nced) END, "+
 								"d.nom_dep, id_periodo, eval.val_final_auto, eval.val_final_coe, eval.val_final_hetero, eval.estado, eval.id_eval_acad, est.descripcion  "+																							
-								"FROM \"Rrhh\".EMP E, \"Rrhh\".DEP D, \"GestionDocente\".evaluacion_academica eval, \"GestionDocente\".periodo p, \"GestionDocente\".estado_evaluacion EST "+								 
+								"FROM \"Rrhh\".EMP E, \"Rrhh\".dep d,  \"GestionDocente\".evaluacion_academica eval, \"GestionDocente\".periodo p, \"GestionDocente\".estado_evaluacion EST "+								 
 								"WHERE E.COD_DEP = D.COD_DEP "+ 								
 								"AND eval.nced= E.nced "+ 
 								"AND COD_EST IN ('1', '3', '4', '5', '6', '7', '2') "+ 
@@ -561,7 +586,7 @@ public class EvaluacionAcademicaDAOImplement extends DaoGenericoImplement<Evalua
 				ps.setString(1, auxCIDoc);
 				ps.setString(2, auxNomDoc + "%");
 				ps.setString(3, auxApelDoc + "%");
-				ps.setString(4, auxDep);
+				ps.setString(4, "%%");
 				ps.setInt(5, idPensum);
 				ps.setString(6, codTipoRelacionLab);
 				ps.setString(7, codTipoRelacionLab);
@@ -576,8 +601,10 @@ public class EvaluacionAcademicaDAOImplement extends DaoGenericoImplement<Evalua
 					dto.setCedula(rs.getString(1));
 					dto.setNombre(rs.getString(2));					
 					dto.setApellido(rs.getString(3));
-					dto.setCargo(rs.getString(4));	
-					dto.setNomDepartamento(rs.getString(5));
+					//dto.setCargo(rs.getString(4));	
+					//dto.setNomDepartamento(rs.getString(5));
+					dto.setCargo("");	
+					dto.setNomDepartamento("");
 					dto.setPeriodo(rs.getString(6));					
 					dto.setIdPeriodo(String.valueOf(idPensum));
 					dto.setTotalAutoEval(rs.getDouble(7));
@@ -718,6 +745,7 @@ public class EvaluacionAcademicaDAOImplement extends DaoGenericoImplement<Evalua
 	
 	
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<EvaluacionAcademica> evaluacionXPeriodo(Integer idPensum) throws Exception {
 		
@@ -990,10 +1018,10 @@ public class EvaluacionAcademicaDAOImplement extends DaoGenericoImplement<Evalua
 		try {	
 				Query q = getEntityManager()
 						.createQuery(
-								"SELECT e FROM EvaluacionAcademica e WHERE e.nced=? AND e.idPensum= ? ");
+								"SELECT e FROM EvaluacionAcademica e WHERE e.nced like ? AND e.idPensum= ? ");
 
 				
-				q.setParameter(1, auxCIDoc);
+				q.setParameter(1, "%" + auxCIDoc + "%");
 				q.setParameter(2, idPensum);
 				
 				
@@ -1041,10 +1069,10 @@ public class EvaluacionAcademicaDAOImplement extends DaoGenericoImplement<Evalua
 		try {	
 				Query q = getEntityManager()
 						.createQuery(
-								"SELECT e FROM EvaluacionAcademica e WHERE e.nced=? AND e.idPensum= ? ");
+								"SELECT e FROM EvaluacionAcademica e WHERE e.nced like ? AND e.idPensum= ? ");
 
 				
-				q.setParameter(1, auxCIDoc);
+				q.setParameter(1, "%" + auxCIDoc + "%");
 				q.setParameter(2, idPensum);
 				
 				
@@ -1059,7 +1087,7 @@ public class EvaluacionAcademicaDAOImplement extends DaoGenericoImplement<Evalua
 					EstadoEvaluacion estado= estadoEvaluacionDAO.estadoEvalXNombre(evaluacionAcademica.getEstado());					
 					dto.setEstado(estado.getDescripcion());
 					
-					if(estado.getNombre().equals("PLANIF")){
+					if(estado.getNombre().equals("PLANIF") || estado.getNombre().equals("RECAUTO")){
 						dto.setRenderVerPlanif(true);
 						dto.setRenderVerAuto(false);
 						dto.setRenderVerCoe(false);
@@ -1111,5 +1139,127 @@ public class EvaluacionAcademicaDAOImplement extends DaoGenericoImplement<Evalua
 			return dto;
 		} 
 	}
+	
+	@Override
+	public void generaPlanifXPreplanif(EvaluacionAcademica evaluacionAcademica, Integer idUsuarioLog){
+		try {
+			
+			PreplanificacionDocencia preplanificacion= new PreplanificacionDocencia();
+			List<Pedido> listPedidos= new ArrayList<Pedido>();
+			PreplanificacionDocencia preplanificacionAp= new PreplanificacionDocencia();
+			preplanificacion= preplanificacionDocenciaDAO.preplanifXPeriodo(evaluacionAcademica.getNced(), "", evaluacionAcademica.getIdPensum(), "PREPLANIF");
+			
+			
+			if(preplanificacion==null){
+				preplanificacion= new PreplanificacionDocencia();
+				listPedidos= pedidoDAO.buscarListaXCedula(evaluacionAcademica.getNced());
+				
+				if(!listPedidos.isEmpty()){
+					for(Pedido ped: listPedidos){
+						if(ped.getPensum().getIdPensum().equals(evaluacionAcademica.getIdPensum())){
+							preplanificacion= preplanificacionDocenciaDAO.findByPedido(ped.getIdPedido());
+							
+							if(preplanificacion!=null && preplanificacion.getEstado().equals("PREPLANIF")){
+								preplanificacionAp= preplanificacion;
+							}else{
+								preplanificacionAp= null;
+							}
+							
+						}
+					}
+				}
+				
+			}else{
+				preplanificacionAp= preplanificacion;
+			}
+			
+			if(preplanificacionAp!=null){
+			
+				List<ActividadPreplanificacion> listActvPrep= new ArrayList<ActividadPreplanificacion>();			
+				List<SubactividadPreplanificacion> listSUbAcPrep= new ArrayList<SubactividadPreplanificacion>();
+				
+				
+				listActvPrep= actividadPreplanificacionDAO.findActividadByIdPreplanifGeneral(preplanificacionAp.getIdPreplanif());
+				
+				if(!listActvPrep.isEmpty()){
+					for(ActividadPreplanificacion actvPrep: listActvPrep){
+						ActividadEvaluacion actividadEvaluacion= new ActividadEvaluacion();
+						if(actvPrep.getReglamentoEvaluacion().getIdReglamentoEvaluacion()!=41){							
+							
+							actividadEvaluacion.setIdTipoActvEval(actvPrep.getIdTipoActv());
+							actividadEvaluacion.setValor16Auto(actvPrep.getValorPreplanif());
+							actividadEvaluacion.setValor16Planif(actvPrep.getValorPreplanif());
+							actividadEvaluacion.setValor16Coe(actvPrep.getValorPreplanif());
+							actividadEvaluacion.setEvaluacionAcademica(evaluacionAcademica);
+							actividadEvaluacion.setReglamentoEvaluacion(actvPrep.getReglamentoEvaluacion());
+							actividadEvaluacion.setCalificacionPonderadaAuto(0.0);
+							actividadEvaluacion.setCalificacionPonderadaCoe(0.0);
+							actividadEvaluacion.setCumplimientoAuto(100.0);
+							actividadEvaluacion.setCumplimientoCoe(100.0);			
+							actividadEvaluacion.setValor8Planif(0.0);
+							actividadEvaluacion.setIdUsuarioPlanif(Integer.valueOf(String.valueOf(idUsuarioLog)));
+							actividadEvaluacion.setFechaPlanif(new Date());
+							actividadEvaluacion.setFechaAuto(new Date());
+							actividadEvaluacion.setFechaCoe(new Date());
+						
+						
+							actividadEvaluacionDAO.save(actividadEvaluacion);
+						
+							listSUbAcPrep= subactividadPreplanificacionDAO.listSubActvXIdActvPreplanif(actvPrep.getIdActividadPreplanif());
+							
+							if(!listSUbAcPrep.isEmpty()){
+								for(SubactividadPreplanificacion subPrep: listSUbAcPrep){
+									SubactividadEvaluacion subactividadEvaluacion= new SubactividadEvaluacion();
+									
+									subactividadEvaluacion.setHorasPlanif(subPrep.getHorasPreplanif());
+									subactividadEvaluacion.setHorasAuto(0.0);
+									subactividadEvaluacion.setHorasCoe(0.0);
+									subactividadEvaluacion.setActividadEvaluacion(actividadEvaluacion);
+									subactividadEvaluacion.setNombreSubactividad(subPrep.getNombreSubactividad());
+									
+									subactividadEvaluacionDAO.save(subactividadEvaluacion);
+								}
+							}
+						}	
+					}
+				}
+			
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	@Override
+	public EvaluacionAcademica evalXAnioPensum(String cedula, String anioPensum, String numeroPensum){
+		try {
+			EvaluacionAcademica evaluacion= new EvaluacionAcademica();
+			String meses= anioPensum + "-" +(numeroPensum.equals("2")?"B":(numeroPensum.equals("1")?"A":0));
+			Pensum pensum= new Pensum();
+			
+			Query q = getEntityManager().createQuery("SELECT pen FROM Pensum pen where pen.meses = ?1 ");
+
+			q.setParameter(1, meses);
+			
+			try {
+				pensum= (Pensum) q.getSingleResult();
+			} catch (Exception e) {
+				pensum= null;
+			}
+			
+			if(pensum!=null){
+				
+				evaluacion= this.evaluacionXCedulaPeriodo(cedula, pensum.getIdPensum(), "%%");
+			}
+			
+			
+			return evaluacion;
+		} catch (Exception e) {
+			return null;
+		}
+	}
 }
+
 

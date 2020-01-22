@@ -26,9 +26,9 @@ public class CargaAcademicaSaeDAOImplement extends DaoGenericoImplement<CargaAca
 		
 		Query q = getEntityManager()
 				.createQuery(
-						"SELECT count(c) FROM CargaAcademicaSae c WHERE c.nced=? AND c.idPensum= ? ");
+						"SELECT count(c) FROM CargaAcademicaSae c WHERE c.nced like ? AND c.idPensum= ? ");
 		
-		q.setParameter(1, nced);
+		q.setParameter(1, "%" + nced + "%");
 		q.setParameter(2, idPensum);
 		return (Long) q.getSingleResult();
 	}

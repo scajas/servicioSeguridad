@@ -58,6 +58,12 @@ public interface EvaluacionAcademicaDAO extends DaoGenerico<EvaluacionAcademica>
 	DocenteDTO consultaReporteEvaluacion(String auxCIDoc, Integer idPensum, DocenteDTO dto) throws Exception;
 
 	List<EvaluacionAcademica> listEvalXEstadosDocente(String nced, String estado);
+
+	void generaPlanifXPreplanif(EvaluacionAcademica evaluacionAcademica, Integer idUsuarioLog);
+
+	EvaluacionAcademica evalXAnioPensum(String cedula, String anioPensum, String numeroPensum);
+
+	
 	
 	
 	

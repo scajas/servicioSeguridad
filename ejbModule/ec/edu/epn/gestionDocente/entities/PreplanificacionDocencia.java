@@ -7,10 +7,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import ec.edu.epn.contratos.entities.Pedido;
 
 
 /**
@@ -71,8 +75,28 @@ public class PreplanificacionDocencia implements Serializable {
 	@Column(name="relacion_lab")
 	private String relacionLab;
 	
+	@Column(name="acta_consejo_dep")
+	private String actaConsejoDep;
+	
+	@Column(name="acta_consejo_fac")
+	private String actaConsejoFac;
+	
+	@OneToOne
+	@JoinColumn(name = "id_pedido")
+	private Pedido pedido;
 	
 	
+	
+
+	
+	public Pedido getPedido() {
+		return pedido;
+	}
+
+	public void setPedido(Pedido pedido) {
+		this.pedido = pedido;
+	}
+
 	private String dedicacion;
 	
 	
@@ -238,6 +262,34 @@ public class PreplanificacionDocencia implements Serializable {
 	 */
 	public void setIdTcont(Integer idTcont) {
 		this.idTcont = idTcont;
+	}
+
+	/**
+	 * @return the actaConsejoDep
+	 */
+	public String getActaConsejoDep() {
+		return actaConsejoDep;
+	}
+
+	/**
+	 * @return the actaConsejoFac
+	 */
+	public String getActaConsejoFac() {
+		return actaConsejoFac;
+	}
+
+	/**
+	 * @param actaConsejoDep the actaConsejoDep to set
+	 */
+	public void setActaConsejoDep(String actaConsejoDep) {
+		this.actaConsejoDep = actaConsejoDep;
+	}
+
+	/**
+	 * @param actaConsejoFac the actaConsejoFac to set
+	 */
+	public void setActaConsejoFac(String actaConsejoFac) {
+		this.actaConsejoFac = actaConsejoFac;
 	}
 
 }
