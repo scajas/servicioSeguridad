@@ -147,6 +147,15 @@ public class DocenteDTO implements Serializable {
 	
 	private Integer idEvalAcad;
 	
+	/**CAMPOS ADICIONALES LICENCIA Y CONTRATOS*/
+	private String licencia;
+	private String fechaIniLic;
+	private String fechaReintegro;
+	private String fechaIniContrato;
+	private String fechaFinContrato;
+	
+	
+	
 
 	public DocenteDTO() {
 		super();
@@ -1398,4 +1407,75 @@ public class DocenteDTO implements Serializable {
 		this.renderVerCoe = renderVerCoe;
 	}
 
+	/**
+	 * @return the licencia
+	 */
+	public String getLicencia() {
+		return licencia;
+	}
+
+	/**
+	 * @return the fechaIniLic
+	 */
+	public String getFechaIniLic() {
+		return fechaIniLic;
+	}
+
+	/**
+	 * @return the fechaReintegro
+	 */
+	public String getFechaReintegro() {
+		return fechaReintegro;
+	}
+
+	/**
+	 * @return the fechaIniContrato
+	 */
+	public String getFechaIniContrato() {
+		return fechaIniContrato;
+	}
+
+	/**
+	 * @return the fechaFinContrato
+	 */
+	public String getFechaFinContrato() {
+		return fechaFinContrato;
+	}
+
+	/**
+	 * @param licencia the licencia to set
+	 */
+	public void setLicencia(String licencia) {
+		this.licencia = licencia;
+	}
+
+	/**
+	 * @param fechaIniLic the fechaIniLic to set
+	 */
+	public void setFechaIniLic(String fechaIniLic) {
+		this.fechaIniLic = fechaIniLic;
+	}
+
+	/**
+	 * @param fechaReintegro the fechaReintegro to set
+	 */
+	public void setFechaReintegro(String fechaReintegro) {
+		this.fechaReintegro = fechaReintegro;
+	}
+
+	/**
+	 * @param fechaIniContrato the fechaIniContrato to set
+	 */
+	public void setFechaIniContrato(String fechaIniContrato) {
+		this.fechaIniContrato = fechaIniContrato;
+	}
+
+	/**
+	 * @param fechaFinContrato the fechaFinContrato to set
+	 */
+	public void setFechaFinContrato(String fechaFinContrato) {
+		this.fechaFinContrato = fechaFinContrato;
+	}
+
+	
 }
