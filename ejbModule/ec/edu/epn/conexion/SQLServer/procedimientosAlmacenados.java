@@ -3905,10 +3905,9 @@ public class procedimientosAlmacenados {
 		}
 
 	}
-	
-	
+
 	@SuppressWarnings("finally")
-	public List<TesisDocenteDTO> spEstudiantesMatriculados(String unico, String nombres,String anio) {
+	public List<TesisDocenteDTO> spEstudiantesMatriculados(String unico, String nombres, String anio) {
 		List<TesisDocenteDTO> listTesisDocente = new ArrayList<TesisDocenteDTO>();
 		conexionSQL sql = new conexionSQL();
 		try {
@@ -3926,19 +3925,17 @@ public class procedimientosAlmacenados {
 			cst.setString(4, unico);
 			cst.setString(5, nombres);
 			cst.setString(6, anio);
-			
 
 			result = cst.executeQuery();
 			while (result.next()) {
 
 				TesisDocenteDTO tesis = new TesisDocenteDTO();
-				
-					tesis.setNroTesis(result.getString(1));	
-					tesis.setEstudiante(result.getString(2));	
-					tesis.setCarrera(result.getString(3));
-					tesis.setFacultad(result.getString(4));
-					listTesisDocente.add(tesis);
-				
+
+				tesis.setNroTesis(result.getString(1));
+				tesis.setEstudiante(result.getString(2));
+				tesis.setCarrera(result.getString(3));
+				tesis.setFacultad(result.getString(4));
+				listTesisDocente.add(tesis);
 
 			}
 
@@ -3958,8 +3955,8 @@ public class procedimientosAlmacenados {
 		}
 
 	}
-	
-	///////////////////////////////////////////////////////////////RG-rq-113-2019/////////
+
+	/////////////////////////////////////////////////////////////// RG-rq-113-2019/////////
 	public List<FacultadCatalogos> obtenerFacultadesRG(String opcion) {
 		java.sql.ResultSet result = null;
 		conexionSQL sql = new conexionSQL();
@@ -3975,9 +3972,17 @@ public class procedimientosAlmacenados {
 			List<FacultadCatalogos> listaFacu = new ArrayList<>();
 			while (result.next()) {
 				FacultadCatalogos facultad = new FacultadCatalogos();
+				
+				if(result.getString(1).contains("SOCIALES"))
+				{
+					
+				}
+				else
+				{
 				facultad.setNomFacultad(result.getString(1));
 				facultad.setNomDecano(result.getString(2));
 				listaFacu.add(facultad);
+				}
 			}
 
 			result.close();
@@ -3991,8 +3996,8 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 		}
 	}
-	
-	public List<Carrera> obtenerCarrerasRG(String facultad,String opcion) {
+
+	public List<Carrera> obtenerCarrerasRG(String facultad, String opcion) {
 		java.sql.ResultSet result = null;
 		conexionSQL sql = new conexionSQL();
 		try {
@@ -4024,7 +4029,5 @@ public class procedimientosAlmacenados {
 			sql.closeConnection();
 		}
 	}
-	
-	
 
 }

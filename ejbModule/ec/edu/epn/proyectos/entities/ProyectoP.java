@@ -103,7 +103,7 @@ public class ProyectoP implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date fnotificafin;
 
-	private String numresolaprprord, numresolprogextra,convenio,tieneconv;
+	private String numresolaprprord, numresolprogextra,convenio,tieneconv,tipoorg;
 
 	private String nced;
 
@@ -1237,6 +1237,14 @@ public class ProyectoP implements Serializable {
 
 	public void setTieneconv(String tieneconv) {
 		this.tieneconv = tieneconv;
+	}
+
+	public String getTipoorg() {
+		return tipoorg;
+	}
+
+	public void setTipoorg(String tipoorg) {
+		this.tipoorg = tipoorg;
 	}
 	
 	

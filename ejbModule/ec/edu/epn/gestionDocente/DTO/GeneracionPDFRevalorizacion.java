@@ -1456,8 +1456,8 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				datosCurricular1.addCell(createLabelCell3("Actividades de Evaluación: " + "0"));
 
 			} else {
-				datosCurricular1.addCell(createLabelCell3(
-						"Actividades de Evaluación : " + silaboselect.getTotalhorasacti().toString()));
+				datosCurricular1.addCell(
+						createLabelCell3("Actividades de Evaluación : " + silaboselect.getTotalhorasacti().toString()));
 			}
 
 			document.add(datosCurricular1);
@@ -2057,11 +2057,11 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 	public static PdfPCell createImageCell(String path) throws DocumentException, IOException {
 		Image img = Image.getInstance(path);
 		img.setAlignment(Image.ALIGN_CENTER | Image.TEXTWRAP);
-		if (path.contains("150")) {
+		if (path.contains("COLOR1")) {
 			img.scaleToFit(70, 70);
 		} else {
 
-			img.scaleToFit(40, 40);
+			img.scaleToFit(70, 70);
 		}
 
 		PdfPCell cell = new PdfPCell(img, false);
@@ -2135,7 +2135,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			cabecera.addCell(createImageCell(pathDocs + "/logo_epn.jpg"));
 			cabecera.addCell(createLabelCabecera(
 					"ESCUELA POLITECNICA NACIONAL\nVICERRECTORADO DE INVESTIGACIÓN, INNOVACIÓN Y VINCULACIÓN\nDIRECCIÓN DE INVESTIGACIÓN "));
-			cabecera.addCell(createImageCell(pathDocs + "/150.png"));
+			cabecera.addCell(createImageCell(pathDocs + "/COLOR1.png"));
 			document.add(cabecera);
 
 			com.itextpdf.text.Font fuente = FontFactory.getFont("Arial", 8, Font.BOLD);
@@ -2243,7 +2243,12 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			tablaLeyedanda.setWidthPercentage(100);
 			float[] columnWidthLey = new float[] { 100f };
 			tablaLeyedanda.setWidths(columnWidthLey);
-			cell = new PdfPCell(new Phrase("A1. EQUIPO DE TRABAJO DEL PROYECTO", fuenteLeyenda));
+			if (proyecto.getTipoProyecto().getIdTipoProy() == 4) {
+				cell = new PdfPCell(new Phrase("A1. EQUIPO DE TRABAJO DEL PROYECTO", fuenteLeyenda));
+			} else {
+				cell = new PdfPCell(new Phrase("A. EQUIPO DE TRABAJO DEL PROYECTO", fuenteLeyenda));
+
+			}
 			cell.setBackgroundColor(new BaseColor(83, 141, 213));
 			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			tablaLeyedanda.addCell(cell);
@@ -2331,7 +2336,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				PdfPTable tablaEstud = new PdfPTable(7);
 
 				tablaEstud.setWidthPercentage(100);
-				float[] columnWidthest1 = new float[] { 20f, 20f, 20f, 10f, 10f, 10f, 10f };
+				float[] columnWidthest1 = new float[] { 20f, 10f, 20f, 10f, 20f, 10f, 10f };
 				tablaEstud.setWidths(columnWidthest1);
 
 				cell = new PdfPCell(new Phrase("Apellidos y Nombres", fuente));
@@ -2581,7 +2586,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			tablaLeyedandaProducto.setWidths(columnWidthLey);
 			cell = new PdfPCell(new Phrase(
 					"D. PRODUCTOS GENERADOS DURANTE EL PERIODO ACADÉMICO " + periodo.getMeses() + "\n", fuenteLeyenda));
-			cell.setBackgroundColor(new BaseColor(250, 191, 143));
+			cell.setBackgroundColor(new BaseColor(83, 141, 213));
 			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			tablaLeyedandaProducto.addCell(cell);
 			document.add(tablaLeyedandaProducto);
@@ -2592,7 +2597,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				tablaLeyedandaProductoPUBLICACIONES.setWidthPercentage(100);
 				tablaLeyedandaProductoPUBLICACIONES.setWidths(columnWidthLey);
 				cell = new PdfPCell(
-						new Phrase("A. PRESENTACIONES EN EVENTOS (NACIONALES O INTERNACIONALES)", fuenteLeyenda));
+						new Phrase("a. PRESENTACIONES EN EVENTOS (NACIONALES O INTERNACIONALES)", fuenteLeyenda));
 				cell.setBackgroundColor(new BaseColor(250, 191, 143));
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				tablaLeyedandaProductoPUBLICACIONES.addCell(cell);
@@ -2676,7 +2681,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
 				tablaLeyedandaProductopON.setWidthPercentage(100);
 				tablaLeyedandaProductopON.setWidths(columnWidthLey);
-				cell = new PdfPCell(new Phrase("B.1 PUBLICACIONES EN SCOPUS", fuenteLeyenda));
+				cell = new PdfPCell(new Phrase("b.1 PUBLICACIONES EN SCOPUS", fuenteLeyenda));
 				cell.setBackgroundColor(new BaseColor(250, 191, 143));
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				tablaLeyedandaProductopON.addCell(cell);
@@ -2755,7 +2760,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
 				tablaLeyedandaProductopON.setWidthPercentage(100);
 				tablaLeyedandaProductopON.setWidths(columnWidthLey);
-				cell = new PdfPCell(new Phrase("B.2 PUBLICACIONES REGIONALES", fuenteLeyenda));
+				cell = new PdfPCell(new Phrase("b.2 PUBLICACIONES REGIONALES", fuenteLeyenda));
 				cell.setBackgroundColor(new BaseColor(250, 191, 143));
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				tablaLeyedandaProductopON.addCell(cell);
@@ -2841,7 +2846,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
 				tablaLeyedandaProductopON.setWidthPercentage(100);
 				tablaLeyedandaProductopON.setWidths(columnWidthLey);
-				cell = new PdfPCell(new Phrase("B.3 MEMORIAS DE EVENTOS ACADÉMICOS REGIONALES", fuenteLeyenda));
+				cell = new PdfPCell(new Phrase("b.3 MEMORIAS DE EVENTOS ACADÉMICOS REGIONALES", fuenteLeyenda));
 				cell.setBackgroundColor(new BaseColor(250, 191, 143));
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				tablaLeyedandaProductopON.addCell(cell);
@@ -2935,7 +2940,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
 				tablaLeyedandaProductopON.setWidthPercentage(100);
 				tablaLeyedandaProductopON.setWidths(columnWidthLey);
-				cell = new PdfPCell(new Phrase("C REPORTES TÉCNICOS", fuenteLeyenda));
+				cell = new PdfPCell(new Phrase("c. REPORTES TÉCNICOS", fuenteLeyenda));
 				cell.setBackgroundColor(new BaseColor(250, 191, 143));
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				tablaLeyedandaProductopON.addCell(cell);
@@ -2993,7 +2998,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
 				tablaLeyedandaProductopON.setWidthPercentage(100);
 				tablaLeyedandaProductopON.setWidths(columnWidthLey);
-				cell = new PdfPCell(new Phrase("D. DIFUSIÓN A LA COMUNIDAD POLITÉCNICA", fuenteLeyenda));
+				cell = new PdfPCell(new Phrase("d. DIFUSIÓN A LA COMUNIDAD POLITÉCNICA", fuenteLeyenda));
 				cell.setBackgroundColor(new BaseColor(250, 191, 143));
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				tablaLeyedandaProductopON.addCell(cell);
@@ -3069,7 +3074,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				tablaLeyedandaProductoTESIS.setWidthPercentage(100);
 				tablaLeyedandaProductoTESIS.setWidths(columnWidthLey);
 				cell = new PdfPCell(
-						new Phrase("E. PROYECTO DE TITULACIÓN DE PREGRADO / TESIS DE POSGRADO", fuenteLeyenda));
+						new Phrase("e. PROYECTO DE TITULACIÓN DE PREGRADO / TESIS DE POSGRADO", fuenteLeyenda));
 				cell.setBackgroundColor(new BaseColor(250, 191, 143));
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				tablaLeyedandaProductoTESIS.addCell(cell);
@@ -3127,7 +3132,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				PdfPTable tablaLeyedandaProductoTESIS = new PdfPTable(1);
 				tablaLeyedandaProductoTESIS.setWidthPercentage(100);
 				tablaLeyedandaProductoTESIS.setWidths(columnWidthLey);
-				cell = new PdfPCell(new Phrase("F. PLANTEAMIENTO DE UN PROYECTO DE MAYOR ALCANCE", fuenteLeyenda));
+				cell = new PdfPCell(new Phrase("f. PLANTEAMIENTO DE UN PROYECTO DE MAYOR ALCANCE", fuenteLeyenda));
 				cell.setBackgroundColor(new BaseColor(250, 191, 143));
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				tablaLeyedandaProductoTESIS.addCell(cell);
@@ -3178,7 +3183,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				PdfPTable tablaLeyedandaProductoTESIS = new PdfPTable(1);
 				tablaLeyedandaProductoTESIS.setWidthPercentage(100);
 				tablaLeyedandaProductoTESIS.setWidths(columnWidthLey);
-				cell = new PdfPCell(new Phrase("G. PATENTE", fuenteLeyenda));
+				cell = new PdfPCell(new Phrase("g. PROPIEDAD INTELECTUAL", fuenteLeyenda));
 				cell.setBackgroundColor(new BaseColor(250, 191, 143));
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				tablaLeyedandaProductoTESIS.addCell(cell);
@@ -3256,7 +3261,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
 				tablaLeyedandaProductopON.setWidthPercentage(100);
 				tablaLeyedandaProductopON.setWidths(columnWidthLey);
-				cell = new PdfPCell(new Phrase("H.1 LIBROS", fuenteLeyenda));
+				cell = new PdfPCell(new Phrase("h.1 LIBROS", fuenteLeyenda));
 				cell.setBackgroundColor(new BaseColor(250, 191, 143));
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				tablaLeyedandaProductopON.addCell(cell);
@@ -3343,7 +3348,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
 				tablaLeyedandaProductopON.setWidthPercentage(100);
 				tablaLeyedandaProductopON.setWidths(columnWidthLey);
-				cell = new PdfPCell(new Phrase("H.2 CAPÍTULO DE LIBRO", fuenteLeyenda));
+				cell = new PdfPCell(new Phrase("h.2 CAPÍTULO DE LIBRO", fuenteLeyenda));
 				cell.setBackgroundColor(new BaseColor(250, 191, 143));
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				tablaLeyedandaProductopON.addCell(cell);
@@ -3439,11 +3444,11 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				tablaLeyedandaProductoTESIS.setWidths(columnWidthLey);
 
 				if (proyecto.getTipoProyecto().getIdTipoProy() == 4) {
-					cell = new PdfPCell(new Phrase("A. PRODUCTOS", fuenteLeyenda));
+					cell = new PdfPCell(new Phrase("a. PRODUCTOS", fuenteLeyenda));
 				}
 
 				else {
-					cell = new PdfPCell(new Phrase("I. OTROS", fuenteLeyenda));
+					cell = new PdfPCell(new Phrase("i. OTROS", fuenteLeyenda));
 				}
 
 				cell.setBackgroundColor(new BaseColor(250, 191, 143));
@@ -3570,7 +3575,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			}
 
 			Paragraph ingreso = new Paragraph();
-			String ing = "\n Fecha envío Jefe Departamento: " + fechaComoCadena;
+			String ing = "\n Fecha envío al Jefe de Departamento: " + fechaComoCadena;
 			fuente = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.BOLD);
 			ingreso.setFont(fuente);
 			ingreso.setAlignment(Element.ALIGN_LEFT);
@@ -3660,7 +3665,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			cabecera.addCell(createImageCell(pathDocs + "/logo_epn.jpg"));
 			cabecera.addCell(createLabelCabecera(
 					"ESCUELA POLITECNICA NACIONAL\nVICERRECTORADO DE INVESTIGACIÓN, INNOVACIÓN Y VINCULACIÓN\nDIRECCIÓN DE INVESTIGACIÓN "));
-			cabecera.addCell(createImageCell(pathDocs + "/150.png"));
+			cabecera.addCell(createImageCell(pathDocs + "/COLOR1.png"));
 			document.add(cabecera);
 
 			com.itextpdf.text.Font fuente = FontFactory.getFont("Arial", 8, Font.BOLD);
@@ -3995,7 +4000,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			tablaLeyedandaProducto.setWidths(columnWidthLey);
 			cell = new PdfPCell(new Phrase(
 					"D. PRODUCTOS GENERADOS DURANTE EL PERIODO ACADÉMICO " + periodo.getMeses() + "\n", fuenteLeyenda));
-			cell.setBackgroundColor(new BaseColor(250, 191, 143));
+			cell.setBackgroundColor(new BaseColor(83, 141, 213));
 			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			tablaLeyedandaProducto.addCell(cell);
 			document.add(tablaLeyedandaProducto);
@@ -4006,7 +4011,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				tablaLeyedandaProductoPUBLICACIONES.setWidthPercentage(100);
 				tablaLeyedandaProductoPUBLICACIONES.setWidths(columnWidthLey);
 				cell = new PdfPCell(
-						new Phrase("A. PRESENTACIONES EN EVENTOS (NACIONALES O INTERNACIONALES)", fuenteLeyenda));
+						new Phrase("a. PRESENTACIONES EN EVENTOS (NACIONALES O INTERNACIONALES)", fuenteLeyenda));
 				cell.setBackgroundColor(new BaseColor(250, 191, 143));
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				tablaLeyedandaProductoPUBLICACIONES.addCell(cell);
@@ -4090,7 +4095,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
 				tablaLeyedandaProductopON.setWidthPercentage(100);
 				tablaLeyedandaProductopON.setWidths(columnWidthLey);
-				cell = new PdfPCell(new Phrase("B.1 PUBLICACIONES EN SCOPUS", fuenteLeyenda));
+				cell = new PdfPCell(new Phrase("b.1 PUBLICACIONES EN SCOPUS", fuenteLeyenda));
 				cell.setBackgroundColor(new BaseColor(250, 191, 143));
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				tablaLeyedandaProductopON.addCell(cell);
@@ -4169,7 +4174,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
 				tablaLeyedandaProductopON.setWidthPercentage(100);
 				tablaLeyedandaProductopON.setWidths(columnWidthLey);
-				cell = new PdfPCell(new Phrase("B.2 PUBLICACIONES REGIONALES", fuenteLeyenda));
+				cell = new PdfPCell(new Phrase("b.2 PUBLICACIONES REGIONALES", fuenteLeyenda));
 				cell.setBackgroundColor(new BaseColor(250, 191, 143));
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				tablaLeyedandaProductopON.addCell(cell);
@@ -4255,7 +4260,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
 				tablaLeyedandaProductopON.setWidthPercentage(100);
 				tablaLeyedandaProductopON.setWidths(columnWidthLey);
-				cell = new PdfPCell(new Phrase("B.3 MEMORIAS DE EVENTOS ACADÉMICOS REGIONALES", fuenteLeyenda));
+				cell = new PdfPCell(new Phrase("b.3 MEMORIAS DE EVENTOS ACADÉMICOS REGIONALES", fuenteLeyenda));
 				cell.setBackgroundColor(new BaseColor(250, 191, 143));
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				tablaLeyedandaProductopON.addCell(cell);
@@ -4349,7 +4354,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
 				tablaLeyedandaProductopON.setWidthPercentage(100);
 				tablaLeyedandaProductopON.setWidths(columnWidthLey);
-				cell = new PdfPCell(new Phrase("C REPORTES TÉCNICOS", fuenteLeyenda));
+				cell = new PdfPCell(new Phrase("c. REPORTES TÉCNICOS", fuenteLeyenda));
 				cell.setBackgroundColor(new BaseColor(250, 191, 143));
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				tablaLeyedandaProductopON.addCell(cell);
@@ -4407,7 +4412,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
 				tablaLeyedandaProductopON.setWidthPercentage(100);
 				tablaLeyedandaProductopON.setWidths(columnWidthLey);
-				cell = new PdfPCell(new Phrase("D. DIFUSIÓN A LA COMUNIDAD POLITÉCNICA", fuenteLeyenda));
+				cell = new PdfPCell(new Phrase("d. DIFUSIÓN A LA COMUNIDAD POLITÉCNICA", fuenteLeyenda));
 				cell.setBackgroundColor(new BaseColor(250, 191, 143));
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				tablaLeyedandaProductopON.addCell(cell);
@@ -4483,7 +4488,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				tablaLeyedandaProductoTESIS.setWidthPercentage(100);
 				tablaLeyedandaProductoTESIS.setWidths(columnWidthLey);
 				cell = new PdfPCell(
-						new Phrase("E. PROYECTO DE TITULACIÓN DE PREGRADO / TESIS DE POSGRADO", fuenteLeyenda));
+						new Phrase("e. PROYECTO DE TITULACIÓN DE PREGRADO / TESIS DE POSGRADO", fuenteLeyenda));
 				cell.setBackgroundColor(new BaseColor(250, 191, 143));
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				tablaLeyedandaProductoTESIS.addCell(cell);
@@ -4541,7 +4546,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				PdfPTable tablaLeyedandaProductoTESIS = new PdfPTable(1);
 				tablaLeyedandaProductoTESIS.setWidthPercentage(100);
 				tablaLeyedandaProductoTESIS.setWidths(columnWidthLey);
-				cell = new PdfPCell(new Phrase("F. PLANTEAMIENTO DE UN PROYECTO DE MAYOR ALCANCE", fuenteLeyenda));
+				cell = new PdfPCell(new Phrase("f. PLANTEAMIENTO DE UN PROYECTO DE MAYOR ALCANCE", fuenteLeyenda));
 				cell.setBackgroundColor(new BaseColor(250, 191, 143));
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				tablaLeyedandaProductoTESIS.addCell(cell);
@@ -4592,7 +4597,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				PdfPTable tablaLeyedandaProductoTESIS = new PdfPTable(1);
 				tablaLeyedandaProductoTESIS.setWidthPercentage(100);
 				tablaLeyedandaProductoTESIS.setWidths(columnWidthLey);
-				cell = new PdfPCell(new Phrase("G. PATENTE", fuenteLeyenda));
+				cell = new PdfPCell(new Phrase("g. PROPIEDAD INTELECTUAL", fuenteLeyenda));
 				cell.setBackgroundColor(new BaseColor(250, 191, 143));
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				tablaLeyedandaProductoTESIS.addCell(cell);
@@ -4670,7 +4675,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
 				tablaLeyedandaProductopON.setWidthPercentage(100);
 				tablaLeyedandaProductopON.setWidths(columnWidthLey);
-				cell = new PdfPCell(new Phrase("H.1 LIBROS", fuenteLeyenda));
+				cell = new PdfPCell(new Phrase("h.1 LIBROS", fuenteLeyenda));
 				cell.setBackgroundColor(new BaseColor(250, 191, 143));
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				tablaLeyedandaProductopON.addCell(cell);
@@ -4757,7 +4762,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
 				tablaLeyedandaProductopON.setWidthPercentage(100);
 				tablaLeyedandaProductopON.setWidths(columnWidthLey);
-				cell = new PdfPCell(new Phrase("H.2 CAPÍTULO DE LIBRO", fuenteLeyenda));
+				cell = new PdfPCell(new Phrase("h.2 CAPÍTULO DE LIBRO", fuenteLeyenda));
 				cell.setBackgroundColor(new BaseColor(250, 191, 143));
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				tablaLeyedandaProductopON.addCell(cell);
@@ -4851,7 +4856,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				PdfPTable tablaLeyedandaProductoTESIS = new PdfPTable(1);
 				tablaLeyedandaProductoTESIS.setWidthPercentage(100);
 				tablaLeyedandaProductoTESIS.setWidths(columnWidthLey);
-				cell = new PdfPCell(new Phrase("I. OTROS", fuenteLeyenda));
+				cell = new PdfPCell(new Phrase("i. OTROS", fuenteLeyenda));
 				cell.setBackgroundColor(new BaseColor(250, 191, 143));
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				tablaLeyedandaProductoTESIS.addCell(cell);
@@ -5020,7 +5025,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			cabecera.addCell(createLabelCabecera(
 					"ESCUELA POLITECNICA NACIONAL\nVICERRECTORADO DE INVESTIGACIÓN, INNOVACIÓN Y VINCULACIÓN\nDIRECCIÓN DE INVESTIGACIÓN "));
 
-			cabecera.addCell(createImageCell(pathDocs + "/150.png"));
+			cabecera.addCell(createImageCell(pathDocs + "/COLOR1.png"));
 			document.add(cabecera);
 
 			com.itextpdf.text.Font fuente = FontFactory.getFont("Arial", 8, Font.BOLD);
@@ -5131,7 +5136,12 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			tablaLeyedanda.setWidthPercentage(100);
 			float[] columnWidthLey = new float[] { 100f };
 			tablaLeyedanda.setWidths(columnWidthLey);
-			cell = new PdfPCell(new Phrase("A1. EQUIPO DE TRABAJO DEL PROEYCTO", fuenteLeyenda));
+			if (proyecto.getTipoProyecto().getIdTipoProy() == 4) {
+				cell = new PdfPCell(new Phrase("A1. EQUIPO DE TRABAJO DEL PROYECTO", fuenteLeyenda));
+			} else {
+				cell = new PdfPCell(new Phrase("A. EQUIPO DE TRABAJO DEL PROYECTO", fuenteLeyenda));
+
+			}
 			cell.setBackgroundColor(new BaseColor(83, 141, 213));
 			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			tablaLeyedanda.addCell(cell);
@@ -5219,7 +5229,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				PdfPTable tablaEstud = new PdfPTable(7);
 
 				tablaEstud.setWidthPercentage(100);
-				float[] columnWidthest1 = new float[] { 20f, 20f, 20f, 10f, 10f, 10f, 10f };
+				float[] columnWidthest1 = new float[] { 20f, 10f, 20f, 10f, 20f, 10f, 10f };
 				tablaEstud.setWidths(columnWidthest1);
 
 				cell = new PdfPCell(new Phrase("Apellidos y Nombres", fuente));
@@ -5474,7 +5484,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			tablaLeyedandaProducto.setWidths(columnWidthLey);
 			cell = new PdfPCell(new Phrase(
 					"D. PRODUCTOS GENERADOS DURANTE EL PERIODO ACADÉMICO " + periodo.getMeses() + "\n", fuenteLeyenda));
-			cell.setBackgroundColor(new BaseColor(250, 191, 143));
+			cell.setBackgroundColor(new BaseColor(83, 141, 213));
 			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			tablaLeyedandaProducto.addCell(cell);
 			document.add(tablaLeyedandaProducto);
@@ -5485,7 +5495,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				tablaLeyedandaProductoPUBLICACIONES.setWidthPercentage(100);
 				tablaLeyedandaProductoPUBLICACIONES.setWidths(columnWidthLey);
 				cell = new PdfPCell(
-						new Phrase("A. PRESENTACIONES EN EVENTOS (NACIONALES O INTERNACIONALES)", fuenteLeyenda));
+						new Phrase("a. PRESENTACIONES EN EVENTOS (NACIONALES O INTERNACIONALES)", fuenteLeyenda));
 				cell.setBackgroundColor(new BaseColor(250, 191, 143));
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				tablaLeyedandaProductoPUBLICACIONES.addCell(cell);
@@ -5569,7 +5579,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
 				tablaLeyedandaProductopON.setWidthPercentage(100);
 				tablaLeyedandaProductopON.setWidths(columnWidthLey);
-				cell = new PdfPCell(new Phrase("B.1 PUBLICACIONES EN SCOPUS", fuenteLeyenda));
+				cell = new PdfPCell(new Phrase("b.1 PUBLICACIONES EN SCOPUS", fuenteLeyenda));
 				cell.setBackgroundColor(new BaseColor(250, 191, 143));
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				tablaLeyedandaProductopON.addCell(cell);
@@ -5648,7 +5658,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
 				tablaLeyedandaProductopON.setWidthPercentage(100);
 				tablaLeyedandaProductopON.setWidths(columnWidthLey);
-				cell = new PdfPCell(new Phrase("B.2 PUBLICACIONES REGIONALES", fuenteLeyenda));
+				cell = new PdfPCell(new Phrase("b.2 PUBLICACIONES REGIONALES", fuenteLeyenda));
 				cell.setBackgroundColor(new BaseColor(250, 191, 143));
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				tablaLeyedandaProductopON.addCell(cell);
@@ -5734,7 +5744,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
 				tablaLeyedandaProductopON.setWidthPercentage(100);
 				tablaLeyedandaProductopON.setWidths(columnWidthLey);
-				cell = new PdfPCell(new Phrase("B.3 MEMORIAS DE EVENTOS ACADÉMICOS REGIONALES", fuenteLeyenda));
+				cell = new PdfPCell(new Phrase("b.3 MEMORIAS DE EVENTOS ACADÉMICOS REGIONALES", fuenteLeyenda));
 				cell.setBackgroundColor(new BaseColor(250, 191, 143));
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				tablaLeyedandaProductopON.addCell(cell);
@@ -5828,7 +5838,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
 				tablaLeyedandaProductopON.setWidthPercentage(100);
 				tablaLeyedandaProductopON.setWidths(columnWidthLey);
-				cell = new PdfPCell(new Phrase("C REPORTES TÉCNICOS", fuenteLeyenda));
+				cell = new PdfPCell(new Phrase("c. REPORTES TÉCNICOS", fuenteLeyenda));
 				cell.setBackgroundColor(new BaseColor(250, 191, 143));
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				tablaLeyedandaProductopON.addCell(cell);
@@ -5886,7 +5896,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
 				tablaLeyedandaProductopON.setWidthPercentage(100);
 				tablaLeyedandaProductopON.setWidths(columnWidthLey);
-				cell = new PdfPCell(new Phrase("D. DIFUSIÓN A LA COMUNIDAD POLITÉCNICA", fuenteLeyenda));
+				cell = new PdfPCell(new Phrase("d. DIFUSIÓN A LA COMUNIDAD POLITÉCNICA", fuenteLeyenda));
 				cell.setBackgroundColor(new BaseColor(250, 191, 143));
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				tablaLeyedandaProductopON.addCell(cell);
@@ -5962,7 +5972,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				tablaLeyedandaProductoTESIS.setWidthPercentage(100);
 				tablaLeyedandaProductoTESIS.setWidths(columnWidthLey);
 				cell = new PdfPCell(
-						new Phrase("E. PROYECTO DE TITULACIÓN DE PREGRADO / TESIS DE POSGRADO", fuenteLeyenda));
+						new Phrase("e. PROYECTO DE TITULACIÓN DE PREGRADO / TESIS DE POSGRADO", fuenteLeyenda));
 				cell.setBackgroundColor(new BaseColor(250, 191, 143));
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				tablaLeyedandaProductoTESIS.addCell(cell);
@@ -6020,7 +6030,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				PdfPTable tablaLeyedandaProductoTESIS = new PdfPTable(1);
 				tablaLeyedandaProductoTESIS.setWidthPercentage(100);
 				tablaLeyedandaProductoTESIS.setWidths(columnWidthLey);
-				cell = new PdfPCell(new Phrase("F. PLANTEAMIENTO DE UN PROYECTO DE MAYOR ALCANCE", fuenteLeyenda));
+				cell = new PdfPCell(new Phrase("f. PLANTEAMIENTO DE UN PROYECTO DE MAYOR ALCANCE", fuenteLeyenda));
 				cell.setBackgroundColor(new BaseColor(250, 191, 143));
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				tablaLeyedandaProductoTESIS.addCell(cell);
@@ -6071,7 +6081,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				PdfPTable tablaLeyedandaProductoTESIS = new PdfPTable(1);
 				tablaLeyedandaProductoTESIS.setWidthPercentage(100);
 				tablaLeyedandaProductoTESIS.setWidths(columnWidthLey);
-				cell = new PdfPCell(new Phrase("G. PATENTE", fuenteLeyenda));
+				cell = new PdfPCell(new Phrase("g. PROPIEDAD INTELECTUAL", fuenteLeyenda));
 				cell.setBackgroundColor(new BaseColor(250, 191, 143));
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				tablaLeyedandaProductoTESIS.addCell(cell);
@@ -6149,7 +6159,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
 				tablaLeyedandaProductopON.setWidthPercentage(100);
 				tablaLeyedandaProductopON.setWidths(columnWidthLey);
-				cell = new PdfPCell(new Phrase("H.1 LIBROS", fuenteLeyenda));
+				cell = new PdfPCell(new Phrase("h.1 LIBROS", fuenteLeyenda));
 				cell.setBackgroundColor(new BaseColor(250, 191, 143));
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				tablaLeyedandaProductopON.addCell(cell);
@@ -6236,7 +6246,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				PdfPTable tablaLeyedandaProductopON = new PdfPTable(1);
 				tablaLeyedandaProductopON.setWidthPercentage(100);
 				tablaLeyedandaProductopON.setWidths(columnWidthLey);
-				cell = new PdfPCell(new Phrase("H.2 CAPÍTULO DE LIBRO", fuenteLeyenda));
+				cell = new PdfPCell(new Phrase("h.2 CAPÍTULO DE LIBRO", fuenteLeyenda));
 				cell.setBackgroundColor(new BaseColor(250, 191, 143));
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				tablaLeyedandaProductopON.addCell(cell);
@@ -6332,9 +6342,9 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				tablaLeyedandaProductoTESIS.setWidths(columnWidthLey);
 
 				if (proyecto.getTipoProyecto().getIdTipoProy() == 4) {
-					cell = new PdfPCell(new Phrase("A. PRODUCTOS", fuenteLeyenda));
+					cell = new PdfPCell(new Phrase("a. PRODUCTOS", fuenteLeyenda));
 				} else {
-					cell = new PdfPCell(new Phrase("I. OTROS", fuenteLeyenda));
+					cell = new PdfPCell(new Phrase("i. OTROS", fuenteLeyenda));
 
 				}
 
@@ -6463,7 +6473,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			}
 
 			Paragraph ingreso = new Paragraph();
-			String ing = "\n Fecha envío Jefe Departamento: " + fechaComoCadena;
+			String ing = "\n Fecha envío al Jefe de Departamento: " + fechaComoCadena;
 			fuente = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.BOLD);
 			ingreso.setFont(fuente);
 			ingreso.setAlignment(Element.ALIGN_LEFT);
@@ -6550,7 +6560,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			cabecera.addCell(createLabelCabecera(
 					"ESCUELA POLITECNICA NACIONAL\nVICERRECTORADO DE INVESTIGACIÓN, INNOVACIÓN Y VINCULACIÓN\nDIRECCIÓN DE INVESTIGACIÓN "));
 
-			cabecera.addCell(createImageCell(pathDocs + "/150.png"));
+			cabecera.addCell(createImageCell(pathDocs + "/COLOR1.png"));
 			document.add(cabecera);
 
 			com.itextpdf.text.Font fuente = FontFactory.getFont("Arial", 8, Font.BOLD);
@@ -6658,7 +6668,12 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			tablaLeyedanda.setWidthPercentage(100);
 			float[] columnWidthLey = new float[] { 100f };
 			tablaLeyedanda.setWidths(columnWidthLey);
-			cell = new PdfPCell(new Phrase("A1. EQUIPO DE TRABAJO DEL PROYECTO", fuenteLeyenda));
+			if (proyecto.getTipoProyecto().getIdTipoProy() == 4) {
+				cell = new PdfPCell(new Phrase("A1. EQUIPO DE TRABAJO DEL PROYECTO", fuenteLeyenda));
+			} else {
+				cell = new PdfPCell(new Phrase("A. EQUIPO DE TRABAJO DEL PROYECTO", fuenteLeyenda));
+
+			}
 			cell.setBackgroundColor(new BaseColor(226, 107, 10));
 			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			tablaLeyedanda.addCell(cell);
@@ -6738,7 +6753,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				PdfPTable tablaEstud = new PdfPTable(6);
 
 				tablaEstud.setWidthPercentage(100);
-				float[] columnWidthest = new float[] { 20f, 20f, 25f, 15f, 10f, 10f };
+				float[] columnWidthest = new float[] { 20f, 10f, 25f, 15f, 20f, 10f };
 				tablaEstud.setWidths(columnWidthest);
 
 				cell = new PdfPCell(new Phrase("Apellidos y Nombres", fuente));
@@ -7076,7 +7091,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			}
 
 			Paragraph ingreso = new Paragraph();
-			String ing = "\n Fecha envío Jefe Departamento: " + fechaComoCadena;
+			String ing = "\n Fecha envío al Jefe de Departamento: " + fechaComoCadena;
 			fuente = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.BOLD);
 			ingreso.setFont(fuente);
 			ingreso.setAlignment(Element.ALIGN_LEFT);
@@ -7161,7 +7176,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			cabecera.addCell(createImageCell(pathDocs + "/logo_epn.jpg"));
 			cabecera.addCell(createLabelCabecera(
 					"ESCUELA POLITECNICA NACIONAL\nVICERRECTORADO DE INVESTIGACIÓN, INNOVACIÓN Y VINCULACIÓN\nDIRECCIÓN DE INVESTIGACIÓN "));
-			cabecera.addCell(createImageCell(pathDocs + "//150.png"));
+			cabecera.addCell(createImageCell(pathDocs + "//COLOR1.png"));
 			document.add(cabecera);
 
 			com.itextpdf.text.Font fuente = FontFactory.getFont("Arial", 8, Font.BOLD);
@@ -7582,7 +7597,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			cabecera.addCell(createImageCell(pathDocs + "/logo_epn.jpg"));
 			cabecera.addCell(createLabelCabecera(
 					"ESCUELA POLITECNICA NACIONAL\nVICERRECTORADO DE INVESTIGACIÓN, INNOVACIÓN Y VINCULACIÓN\nDIRECCIÓN DE INVESTIGACIÓN "));
-			cabecera.addCell(createImageCell(pathDocs + "//150.png"));
+			cabecera.addCell(createImageCell(pathDocs + "//COLOR1.png"));
 			document.add(cabecera);
 
 			com.itextpdf.text.Font fuente = FontFactory.getFont("Arial", 8, Font.BOLD);
@@ -7692,7 +7707,12 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			tablaLeyedandaE.setWidthPercentage(100);
 			float[] columnWidthLey = new float[] { 100f };
 			tablaLeyedandaE.setWidths(columnWidthLey);
-			cell = new PdfPCell(new Phrase("A1. EQUIPO DE TRABAJO DEL PROYECTO", fuenteLeyenda));
+			if (proyecto.getTipoProyecto().getIdTipoProy() == 4) {
+				cell = new PdfPCell(new Phrase("A1. EQUIPO DE TRABAJO DEL PROYECTO", fuenteLeyenda));
+			} else {
+				cell = new PdfPCell(new Phrase("A. EQUIPO DE TRABAJO DEL PROYECTO", fuenteLeyenda));
+
+			}
 			cell.setBackgroundColor(new BaseColor(226, 107, 10));
 			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			tablaLeyedandaE.addCell(cell);
@@ -7771,7 +7791,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				PdfPTable tablaEstud = new PdfPTable(6);
 
 				tablaEstud.setWidthPercentage(100);
-				float[] columnWidthest = new float[] { 20f, 20f, 25f, 15f, 10f, 10f };
+				float[] columnWidthest = new float[] { 20f, 10f, 25f, 15f, 20f, 10f };
 				tablaEstud.setWidths(columnWidthest);
 
 				cell = new PdfPCell(new Phrase("Apellidos y Nombres", fuente));
@@ -8073,7 +8093,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			}
 
 			Paragraph ingreso = new Paragraph();
-			String ing = "\n Fecha envío Jefe Departamento: " + fechaComoCadena;
+			String ing = "\n Fecha envío al Jefe de Departamento: " + fechaComoCadena;
 			fuente = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.BOLD);
 			ingreso.setFont(fuente);
 			ingreso.setAlignment(Element.ALIGN_LEFT);
