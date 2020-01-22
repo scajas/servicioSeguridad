@@ -43,14 +43,17 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 	}
 	
 	@Override
-	public List<HistoriaLaboral> findHistoriasTotalFinalizadas(Emp emp) {
+	public List<HistoriaLaboral> findHistoriaLaboralLimpia(Emp emp) {
 		StringBuilder queryString = new StringBuilder(
 				" SELECT " + "fam FROM HistoriaLaboral fam where " + "fam.emp.nced =?1  "
 						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%SIN IMPRESION' "
 						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like 'ACTUALIZACI_N%' "
 						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%INSUBSISTENCIA%' "
-						+ " and (fam.id.estado = 'Finalizado' or fam.id.estado = 'Legalizado' or "
-						+ "  fam.id.estado = 'Legalizada' or fam.id.estado = 'Registrado') "
+						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%LICENCIA%'"
+						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%COMISI_N%'"
+						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%VACACI_N%'"
+						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%REINTEGRO%'"
+						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%CUMPLIMIENTO DE SERVICIOS%'"
 						+ " and fam.id.idHist not in (select histo.id.idHist from HistoriaLaboral histo where "
 						+ " histo.id.estado = 'Insubsistente' or histo.id.estado = 'Anulado' ) "
 						+ " and fam.id.fechaI = "
@@ -59,7 +62,7 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		Query query = getEntityManager().createQuery(queryString.toString());
 		query.setParameter(1, emp.getNced());
 		List<HistoriaLaboral> resultado = query.getResultList();
-
+		resultado.addAll(this.findContByEmp(emp));
 		return resultado;
 
 	}
@@ -1191,16 +1194,22 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		
 		
 	}
+	
+
 
 	@Override
 	public HistoriaLaboral getMostRecentNombramientoByEmp(Emp emp) {
-		StringBuilder queryString = new StringBuilder("Select hl from HistoriaLaboral " + "hl where hl.id.fechaI ="
+		StringBuilder queryString = new StringBuilder("Select hl from HistoriaLaboral "
+				+ "hl where hl.id.fechaI ="
 				+ "(Select max(hist.id.fechaI) from HistoriaLaboral hist where "
-				+ " hist.emp.nced=?1 and TRIM(hist.accionP.subtipoAccion.nombreSubaccion) like ?2"
+				+ " hist.emp.nced=?1 and (TRIM(hist.accionP.subtipoAccion.nombreSubaccion) like ?2 "
+				+  "or hist.accionP.subtipoAccion.idStpa in (334) ) "
 				+ " and hist.id.estado=?3 "
 				+ " and hist.accionP is not null and hist.id.idHist not in (Select histo.id.idHist from HistoriaLaboral histo "
 				+ " where histo.emp.nced=?1 and (histo.id.estado= ?4 or histo.id.estado=?5) order by hist.fechaRige desc))"
-				+ " and hl.emp.nced = ?1 and TRIM(hl.accionP.subtipoAccion.nombreSubaccion) like ?2 and "
+				+ " and hl.emp.nced = ?1"
+				+ " and (TRIM(hl.accionP.subtipoAccion.nombreSubaccion) like ?2 "
+				+ " or hl.accionP.subtipoAccion.idStpa in (334)) and "
 				+ " (hl.fechaFin = '4900/01/31' or hl.fechaFin is null) ");
 
 		Query query = getEntityManager().createQuery(queryString.toString());
