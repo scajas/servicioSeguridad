@@ -6,6 +6,7 @@ import javax.ejb.Local;
 
 import ec.edu.epn.generic.DAO.DaoGenerico;
 import ec.edu.epn.laboratorioBJ.entities.LaboratorioLab;
+import ec.edu.epn.laboratorioBJ.entities.Metodo;
 import ec.edu.epn.laboratorioBJ.entities.Servicio;
 import ec.edu.epn.laboratorioBJ.entities.Tiposervicio;
 
