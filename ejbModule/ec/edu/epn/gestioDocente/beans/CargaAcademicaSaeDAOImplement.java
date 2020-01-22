@@ -143,8 +143,8 @@ public class CargaAcademicaSaeDAOImplement extends DaoGenericoImplement<CargaAca
 		if(!listCarga.isEmpty() && !listCargaAcademica.isEmpty()){			
 			for(CargaPlanificacionDTO dto: listCarga){
 				for(CargaAcademicaSae carga: listCargaAcademica){
-					if(dto.getNomMateriaSAE().trim().trim().toUpperCase().replace("Ñ", "N").replace("Á", "A").replace("É", "E").replace("Í", "I").replace("Ó", "O").replace("Ú", "U").toLowerCase()
-								.equals(carga.getNomMateriaSae().trim().toUpperCase().replace("Ñ", "N").replace("Á", "A").replace("É", "E").replace("Í", "I").replace("Ó", "O").replace("Ú", "U").toLowerCase()) 
+					if(dto.getNomMateriaSAE().trim().trim().toUpperCase().replace("Ã‘", "N").replace("Ã", "A").replace("Ã‰", "E").replace("Ã", "I").replace("Ã“", "O").replace("Ãš", "U").toLowerCase()
+								.equals(carga.getNomMateriaSae().trim().toUpperCase().replace("Ã‘", "N").replace("Ã", "A").replace("Ã‰", "E").replace("Ã", "I").replace("Ã“", "O").replace("Ãš", "U").toLowerCase()) 
 							&& dto.getNomParaleloSAE().trim().toLowerCase().equals(carga.getNomParaleloSae().trim().toLowerCase())
 							&& dto.getCodMateriaSAE().trim().toLowerCase().equals(carga.getCodMateriaSae().trim().toLowerCase())
 							&& dto.getAula().trim().replace("/", "").toUpperCase().equals(carga.getAula().trim().toUpperCase().replace("/", ""))){

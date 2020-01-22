@@ -59,4 +59,14 @@ public class TipoAccionDAOImplement extends DaoGenericoImplement<TipoAccion> imp
 		return idSubTipoAccion;
 	}
 
+	@Override
+	public List<TipoAccion> getAccionesFiltrables() {
+		
+		StringBuilder queryString = new StringBuilder(
+				"Select sta from TipoAccion " + "sta where sta.esFiltrable is true)");
+		Query query = getEntityManager().createQuery(queryString.toString());
+		List<TipoAccion> resultado =  query.getResultList();
+		return resultado;
+	}
+
 }

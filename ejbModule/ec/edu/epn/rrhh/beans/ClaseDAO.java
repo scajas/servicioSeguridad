@@ -15,4 +15,6 @@ public interface ClaseDAO extends DaoGenerico<Clase> {
 
 	public Clase findClaseByNombre(String nombreClase);
 
+	public List<Clase> findClaseByEstadoActivo();
+
 }

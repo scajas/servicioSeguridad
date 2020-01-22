@@ -29,10 +29,14 @@ public class CronogramaDesarrollo implements Serializable {
 	@Temporal(TemporalType.DATE)
 	@Column(name="fecha_crono")
 	private Date fechaCrono;
+	
+	@Temporal(TemporalType.DATE)
+	@Column(name="fecha_old")
+	private Date fechaOld;
 
 	private String hora1;
 
-	private String hora2;
+	private String hora2,reemplazado;
 
 	private Integer horas;
 
@@ -41,7 +45,7 @@ public class CronogramaDesarrollo implements Serializable {
 
 	private String tema;
 	
-	private Integer idsubcapitulo;
+	private Integer idsubcapitulo, indice;
 
 	//bi-directional many-to-one association to Silabo
 	@ManyToOne
@@ -153,6 +157,32 @@ public class CronogramaDesarrollo implements Serializable {
 	public void setCronoSubcapitulo(List<Cronosubcapitulo> cronoSubcapitulo) {
 		this.cronoSubcapitulo = cronoSubcapitulo;
 	}
+
+	public Date getFechaOld() {
+		return fechaOld;
+	}
+
+	public void setFechaOld(Date fechaOld) {
+		this.fechaOld = fechaOld;
+	}
+
+	public String getReemplazado() {
+		return reemplazado;
+	}
+
+	public void setReemplazado(String reemplazado) {
+		this.reemplazado = reemplazado;
+	}
+
+	public Integer getIndice() {
+		return indice;
+	}
+
+	public void setIndice(Integer indice) {
+		this.indice = indice;
+	}
+	
+	
 	
 	
 

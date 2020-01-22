@@ -9,12 +9,14 @@ import ec.edu.epn.rrhh.movimientos.SubtipoAccion;
 
 @Remote
 public interface SubTipoAccionDAO extends DaoGenerico<SubtipoAccion> {
-	//Nuevo m�todo
+	
 	public SubtipoAccion findSubTipoAccionPorNombre(String nombreSubTipoAccion);
 	
 	public int findIdSubTipoAccionPorNombre(String nombreSubTipoAccion);
 
 	public List<SubtipoAccion> findSubTipoAccionPorAccion(String nombreAccion);
+	
+	public List<SubtipoAccion> getAllAccionesSinRegistro();
 	
 	public SubtipoAccion findSubtipoByID(Integer stpId);
 
@@ -23,4 +25,6 @@ public interface SubTipoAccionDAO extends DaoGenerico<SubtipoAccion> {
 	public SubtipoAccion findSubTipoAccionPorNombreYTipo(String nombreSubTipoAccion, String tipoAccion);
 	
 	public List<SubtipoAccion> findAccionesAdministrablesPlantilla();
+	
+	
 }

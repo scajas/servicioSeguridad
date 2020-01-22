@@ -43,9 +43,7 @@ public class AutorizacionretrasoDAOImplement extends DaoGenericoImplement<Autori
 		} catch (NonUniqueResultException nure) {
 			return null;
 		}
-		finally {
-			getEntityManager().close();
-		}
+		
 		
 		
 		

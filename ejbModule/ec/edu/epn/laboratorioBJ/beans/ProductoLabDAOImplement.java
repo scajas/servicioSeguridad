@@ -7,6 +7,7 @@ import javax.ejb.Stateless;
 import javax.persistence.Query;
 
 import ec.edu.epn.generic.DAO.DaoGenericoImplement;
+import ec.edu.epn.laboratorioBJ.entities.LaboratorioLab;
 import ec.edu.epn.laboratorioBJ.entities.ProductoLab;
 
 /**
@@ -25,14 +26,25 @@ public class ProductoLabDAOImplement extends DaoGenericoImplement<ProductoLab> i
 
 	@Override
 	public List<ProductoLab> filtrarLista(String dato) {
-		// Busqueda por nombre
+
 		StringBuilder queryString = new StringBuilder(
-				"SELECT d FROM ProductoLab d where nombre_pr like '%" + dato + "%'");
+				"SELECT p FROM ProductoLab p where UPPER (nombrePr) like UPPER ('%" + dato + "%') ORDER BY idProducto");
+		Query query = getEntityManager().createQuery(queryString.toString());
+
+		List<ProductoLab> resultados = query.getResultList();
+
+		return resultados;
+
+	}
+
+	@Override
+	public List<ProductoLab> getListPro() {
+
+		StringBuilder queryString = new StringBuilder("SELECT p FROM ProductoLab p ORDER BY idProducto");
 		Query query = getEntityManager().createQuery(queryString.toString());
 
 		List<ProductoLab> resultados = query.getResultList();
 		return resultados;
-
 	}
 
 }

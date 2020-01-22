@@ -27,6 +27,8 @@ public interface RecursoProyectoDAO extends DaoGenerico<RecursohPr> {
 	List<RecursohPr> findAllDirectores();
 
 	List<RecursohPr> findrecProyFaltante(Integer idproy, Integer idpensum, String tipo);
+
+	List<RecursohPr> findrecProyEPN(Integer idproy);
 	
 	
 

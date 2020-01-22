@@ -3906,4 +3906,128 @@ public class procedimientosAlmacenados {
 
 	}
 
+	@SuppressWarnings("finally")
+	public List<TesisDocenteDTO> spEstudiantesMatriculados(String unico, String nombres, String anio) {
+		List<TesisDocenteDTO> listTesisDocente = new ArrayList<TesisDocenteDTO>();
+		conexionSQL sql = new conexionSQL();
+		try {
+			java.sql.ResultSet result = null;
+
+			sql.getConnection();
+			// LLAMADA AL SP
+
+			CallableStatement cst = sql.getConection().prepareCall("{call pa_saematri  (?,?,?,?,?,?)}");
+
+			// PARAMETROS
+			cst.setString(1, "CP");
+			cst.setString(2, "");
+			cst.setString(3, "");
+			cst.setString(4, unico);
+			cst.setString(5, nombres);
+			cst.setString(6, anio);
+
+			result = cst.executeQuery();
+			while (result.next()) {
+
+				TesisDocenteDTO tesis = new TesisDocenteDTO();
+
+				tesis.setNroTesis(result.getString(1));
+				tesis.setEstudiante(result.getString(2));
+				tesis.setCarrera(result.getString(3));
+				tesis.setFacultad(result.getString(4));
+				listTesisDocente.add(tesis);
+
+			}
+
+			sql.closeConnection();
+		} catch (Exception e) {
+
+			sql.closeConnection();
+
+			listTesisDocente = new ArrayList<TesisDocenteDTO>();
+
+		}
+
+		finally {
+			sql.closeConnection();
+			return listTesisDocente;
+
+		}
+
+	}
+
+	/////////////////////////////////////////////////////////////// RG-rq-113-2019/////////
+	public List<FacultadCatalogos> obtenerFacultadesRG(String opcion) {
+		java.sql.ResultSet result = null;
+		conexionSQL sql = new conexionSQL();
+		try {
+
+			sql.getConnection();
+
+			CallableStatement cst = sql.getConection().prepareCall("{call pa_saefacultad (?)}");
+
+			// pa_saefacultad L
+			cst.setString(1, opcion);
+			result = cst.executeQuery();
+			List<FacultadCatalogos> listaFacu = new ArrayList<>();
+			while (result.next()) {
+				FacultadCatalogos facultad = new FacultadCatalogos();
+				
+				if(result.getString(1).contains("SOCIALES"))
+				{
+					
+				}
+				else
+				{
+				facultad.setNomFacultad(result.getString(1));
+				facultad.setNomDecano(result.getString(2));
+				listaFacu.add(facultad);
+				}
+			}
+
+			result.close();
+
+			sql.closeConnection();
+			return listaFacu;
+		} catch (Exception e) {
+
+			return null;
+		} finally {
+			sql.closeConnection();
+		}
+	}
+
+	public List<Carrera> obtenerCarrerasRG(String facultad, String opcion) {
+		java.sql.ResultSet result = null;
+		conexionSQL sql = new conexionSQL();
+		try {
+
+			sql.getConnection();
+
+			CallableStatement cst = sql.getConection().prepareCall("{call pa_saecarrera (?,?)}");
+
+			// pa_saecarrera L,'INGENIERIA DE SISTEMAS'
+			cst.setString(1, opcion);
+			cst.setString(2, facultad);
+			result = cst.executeQuery();
+			List<Carrera> listaCarrear = new ArrayList<Carrera>();
+			while (result.next()) {
+				Carrera carrera = new Carrera();
+				carrera.setIdCarrera(result.getString(1));
+				carrera.setNomCarrera(result.getString(2));
+				listaCarrear.add(carrera);
+			}
+
+			result.close();
+
+			sql.closeConnection();
+			return listaCarrear;
+		} catch (Exception e) {
+
+			return null;
+		} finally {
+			sql.closeConnection();
+		}
+	}
+
 }

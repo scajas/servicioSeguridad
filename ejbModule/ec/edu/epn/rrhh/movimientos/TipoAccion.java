@@ -26,8 +26,11 @@ public class TipoAccion implements Serializable {
 
 	@Column(name="nombre_accion")
 	private String nombreAccion;
-
-	//bi-directional many-to-one association to SubtipoAccion
+	
+	@Column(name="es_filtrable")
+	private Boolean esFiltrable;
+	
+	// bi-directional many-to-one association to SubtipoAccion
 	@OneToMany(mappedBy="tipoAccion", fetch=FetchType.EAGER)
 	private List<SubtipoAccion> subtipoAccions;
 
@@ -76,8 +79,17 @@ public class TipoAccion implements Serializable {
 	public SubtipoAccion removeSubtipoAccion(SubtipoAccion subtipoAccion) {
 		getSubtipoAccions().remove(subtipoAccion);
 		subtipoAccion.setTipoAccion(null);
-
 		return subtipoAccion;
 	}
+
+	public Boolean isEsFiltrable() {
+		return esFiltrable;
+	}
+
+	public void setEsFiltrable(Boolean esFiltrable) {
+		this.esFiltrable = esFiltrable;
+	}
+	
+	
 
 }
