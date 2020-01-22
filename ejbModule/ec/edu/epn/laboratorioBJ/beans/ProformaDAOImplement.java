@@ -13,9 +13,11 @@ import javax.persistence.Query;
 import ec.edu.epn.generic.DAO.DaoGenericoImplement;
 import ec.edu.epn.laboratorioBJ.entities.Cliente;
 import ec.edu.epn.laboratorioBJ.entities.DetalleProforma;
+import ec.edu.epn.laboratorioBJ.entities.LaboratorioLab;
 import ec.edu.epn.laboratorioBJ.entities.Metodo;
 import ec.edu.epn.laboratorioBJ.entities.Ordeninventario;
 import ec.edu.epn.laboratorioBJ.entities.Proforma;
+import ec.edu.epn.laboratorioBJ.entities.Pureza;
 import ec.edu.epn.laboratorioBJ.entities.Servicio;
 
 /**
@@ -67,7 +69,7 @@ public class ProformaDAOImplement extends DaoGenericoImplement<Proforma> impleme
 		return resultados;
 
 	}
-	
+
 	@Override
 	public List<Proforma> listaProformaByUnidadLab(String id, int idUser, Proforma proforma, Date fechaInicio,
 			Date fechaFin) {
@@ -103,7 +105,7 @@ public class ProformaDAOImplement extends DaoGenericoImplement<Proforma> impleme
 		System.out.println("Estos son los resultados: " + resultados.size());
 		return resultados;
 	}
-	
+
 	@Override
 	public List<Cliente> listarClienteBY(Cliente cliente) {
 
@@ -121,12 +123,11 @@ public class ProformaDAOImplement extends DaoGenericoImplement<Proforma> impleme
 		System.out.println("Estos son los resultados: " + resultados.size());
 		return resultados;
 	}
-	
+
 	@Override
 	public List<DetalleProforma> listarDetalleProByIdPro(String id) {
 
-		setConsulta("SELECT d FROM DetalleProforma d where d.proforma.idProforma = '"+id+"'");
-
+		setConsulta("SELECT d FROM DetalleProforma d where d.proforma.idProforma = '" + id + "'");
 
 		StringBuilder queryString = new StringBuilder(getConsulta());
 		Query query = getEntityManager().createQuery(queryString.toString());
@@ -135,7 +136,7 @@ public class ProformaDAOImplement extends DaoGenericoImplement<Proforma> impleme
 		System.out.println("Estos son los resultados: " + resultados.size());
 		return resultados;
 	}
-	
+
 	@Override
 	public List<Servicio> listarServiciosByLab(String id) {
 
@@ -148,7 +149,7 @@ public class ProformaDAOImplement extends DaoGenericoImplement<Proforma> impleme
 		System.out.println("Estos son los resultados de servicios: " + resultados.size());
 		return resultados;
 	}
-	
+
 	@Override
 	public List<Metodo> listarMetodosByIdServicio(String id) {
 
@@ -161,7 +162,7 @@ public class ProformaDAOImplement extends DaoGenericoImplement<Proforma> impleme
 		System.out.println("Estos son los resultados de metodos: " + resultados.size());
 		return resultados;
 	}
-	
+
 	@Override
 	public String maxIdProforma(String id, String fecha) {
 		String[] parts = fecha.split("-");
@@ -184,7 +185,61 @@ public class ProformaDAOImplement extends DaoGenericoImplement<Proforma> impleme
 			return null;
 		}
 	}
-	
+
+	@Override
+	public Proforma buscarProformaById(String id) {
+		StringBuilder querys = new StringBuilder("SELECT p FROM Proforma p where p.idProforma = '" + id + "'");
+		Query query = getEntityManager().createQuery(querys.toString());
+		query.setMaxResults(1);
+
+		try {
+			Proforma proforma = (Proforma) query.getSingleResult();
+			return proforma;
+		} catch (NoResultException nre) {
+			return null;
+		} catch (NonUniqueResultException nure) {
+			return null;
+		}
+
+	}
+
+	@Override
+	public LaboratorioLab obtenerLaboratorioByUsr(int id, int uni) {
+		StringBuilder querys = new StringBuilder(
+				"SELECT l FROM LaboratorioLab l, LaboratorioUsuario u where u.id.idUsuario = " + id
+						+ " AND u.id.idLaboratorio = l.idLaboratorio AND l.unidad.idUnidad = " + uni);
+		Query query = getEntityManager().createQuery(querys.toString());
+		query.setMaxResults(1);
+
+		try {
+			LaboratorioLab laboratorio = (LaboratorioLab) query.getSingleResult();
+			System.out.println("Este es lab que tras: " + laboratorio.getNombreL() + laboratorio.getUnidad());
+			return laboratorio;
+		} catch (NoResultException nre) {
+			return null;
+		} catch (NonUniqueResultException nure) {
+			return null;
+		}
+
+	}
+
+	@Override
+	public Metodo findMetodoById(String id) {
+		StringBuilder querys = new StringBuilder("SELECT m FROM Metodo m where m.idMetodo = '" + id + "'");
+		Query query = getEntityManager().createQuery(querys.toString());
+		query.setMaxResults(1);
+
+		try {
+			Metodo metodo = (Metodo) query.getSingleResult();
+			return metodo;
+		} catch (NoResultException nre) {
+			return null;
+		} catch (NonUniqueResultException nure) {
+			return null;
+		}
+
+	}
+
 	/* Manejo de fechas */
 	public String cambioFecha(Date fecha) {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -193,7 +248,6 @@ public class ProformaDAOImplement extends DaoGenericoImplement<Proforma> impleme
 
 		return fechaFinal;
 	}
-
 
 	public String getConsulta() {
 		return consulta;
