@@ -1,20 +1,40 @@
 package ec.edu.epn.conexion.SQLServer;
 
+import java.io.Serializable;
 import java.sql.CallableStatement;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.ejb.EJB;
+
 import ec.edu.epn.contratos.entities.Pensum;
+import ec.edu.epn.gestioDocente.beans.EvaluacionAcademicaDAO;
 import ec.edu.epn.gestionDocente.DTO.CargaAcademicaPreplanifDTO;
 import ec.edu.epn.gestionDocente.DTO.CargaPlanificacionDTO;
 import ec.edu.epn.gestionDocente.DTO.TesisDocenteDTO;
+import ec.edu.epn.gestionDocente.entities.EvaluacionAcademica;
 
-public class procedimientosAlmacenadosEval {
+public class procedimientosAlmacenadosEval implements Serializable{
+	
+	
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3542820063452302243L;
+
+	@EJB(lookup = "java:global/ServiciosSeguridadEPN/EvaluacionAcademicaDAOImplement!ec.edu.epn.gestioDocente.beans.EvaluacionAcademicaDAO")
+	private EvaluacionAcademicaDAO evaluacionAcademicaDAO;
 
 	private Pensum pensumVigente;
 
 	public procedimientosAlmacenadosEval() {
+	}
+	
+	
+	public procedimientosAlmacenadosEval(EvaluacionAcademicaDAO academicaDAO) {
+		evaluacionAcademicaDAO= academicaDAO;
 	}
 
 	public procedimientosAlmacenadosEval(Pensum pensumVigente) {
@@ -26,10 +46,17 @@ public class procedimientosAlmacenadosEval {
 		}
 	}
 
-	public List<CargaPlanificacionDTO> obtenerCargaAcademicaPlanificacion(String cedula, String añoPensum,
+	public List<CargaPlanificacionDTO> obtenerCargaAcademicaPlanificacion(String cedula, String aï¿½oPensum,
 			String numeroPensum) {
 		java.sql.ResultSet result = null;
 		try {
+			/**SE PRESENTA LA EVALUACIï¿½N DEL DOCENTE POR PERIODO PARA MATERIAS SIMULTANEAS. 12-11-2019*/
+			
+			EvaluacionAcademica academico= new EvaluacionAcademica();
+			academico= evaluacionAcademicaDAO.evalXAnioPensum(cedula, aï¿½oPensum, numeroPensum);
+			/**FIN DEL CALCULO */
+			
+			
 			conexionSQL sql = new conexionSQL();
 			sql.getConnection();
 
@@ -40,7 +67,7 @@ public class procedimientosAlmacenadosEval {
 			cst.setString(3, "");
 			cst.setString(4, "");
 
-			cst.setString(5, añoPensum);
+			cst.setString(5, aï¿½oPensum);
 			cst.setString(6, numeroPensum);
 
 			result = cst.executeQuery();
@@ -64,6 +91,30 @@ public class procedimientosAlmacenadosEval {
 				}
 				
 				carga.setValHetero(0.0);
+				
+				
+				
+				/**REVISAR SI ES MATERIA SIMULTANEA*/
+				if(result.getString(22)!=null && result.getString(22).equals("X")){
+					
+					Double valSmenasSimultaneas= Double.valueOf(result.getString(23)==null?"0.0":result.getString(23));
+					if(valSmenasSimultaneas>0.0 && academico!=null){
+						Double valMateria=0.0;
+						//valMateria=(double) Math.round(((valSmenasSimultaneas * carga.getHorasTotalSemanaSAE()) / (academico.getSemanasDocDentro()==0.0?1.00:academico.getSemanasDocDentro())) * 100);
+						valMateria=(double) Math.round((valSmenasSimultaneas * carga.getHorasTotalSemanaSAE()) * 100);
+						valMateria = valMateria/100;
+						
+						Integer val=(int)Math.round(valMateria);
+						
+						//carga.setHorasTotalSemanaSAE(val);
+						carga.setHorasTotalSemanaSAE(0);
+						carga.setHorasModuloSAE(val);
+						
+						
+					}
+					
+					
+				}
 				
 				/*SE AGREGA NUEVOS CAMPOS PARA EL CALCULO DE LAS HORAS SEMANA EN CARGA ACADÃ‰MICA PARA PLANIFICACIÃ“N DOCENTE 12-11-2018*/
 				

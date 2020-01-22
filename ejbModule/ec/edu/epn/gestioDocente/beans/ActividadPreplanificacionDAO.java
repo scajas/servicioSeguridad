@@ -17,5 +17,9 @@ public interface ActividadPreplanificacionDAO extends DaoGenerico<ActividadPrepl
 
 	ActividadPreplanificacion actividadXTipoCatalogo(Integer idPreplanificacion, Integer idTipoActv,
 			Integer idCatalogo);
+
+	List<ActividadPreplanificacion> findActividadByIdPreplanifGeneral(Integer idPreplanificacion);
+
+	
 	
 }

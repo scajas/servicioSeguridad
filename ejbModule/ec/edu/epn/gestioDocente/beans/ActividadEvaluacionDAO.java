@@ -23,5 +23,9 @@ public interface ActividadEvaluacionDAO extends DaoGenerico<ActividadEvaluacion>
 	Long actvEvalNotIdTipoActv(Integer idEvalAcademica, Integer tipoActvEval);
 
 	Double sumValorActEval(Integer idEvalAcademica);
+
+	Long countActvEvalXCat(Integer idEvalAcademica, Integer idCatalogo) throws Exception;
+
+	List<ActividadEvaluacion> listActvEvalXCat(Integer idEvalAcademica, Integer idCatalogo) throws Exception;
 	
 }

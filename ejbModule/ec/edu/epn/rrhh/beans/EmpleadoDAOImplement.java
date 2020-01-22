@@ -686,7 +686,7 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 		Connection con = null;
 		PreparedStatement ps = null;
 
-		// Cedula del Docente en Sesión
+		// Cedula del Docente en Sesiï¿½n
 		String CI = cedula;
 		ArrayList<NombramientoDTO> listanom = new ArrayList<NombramientoDTO>();
 
@@ -1614,8 +1614,8 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 						+ "CASE cod_tiporelacionlab WHEN 1 THEN (SELECT p.cargo FROM \"Rrhh\".nomb_temp n, \"Rrhh\".partind p WHERE n.cod_pind= p.cod_pind AND n.frige_nomb = (SELECT MAX(frige_nomb) FROM \"Rrhh\".nomb_temp WHERE nced=e.nced) AND n.nced=e.nced) "
 						+ "WHEN 2 THEN (SELECT MAX(cargoc) FROM \"Rrhh\".cont c WHERE c.frige_cont=  (SELECT MAX(frige_cont) FROM \"Rrhh\".cont WHERE nced = e.nced) AND c.nced = e.nced) END as cargook, "
 						+ "d.nom_dep, id_periodo, "
-						+ "(SELECT CASE max(r.tipo_eval) WHEN 'EVAL' THEN 'AutoEvaluación' ELSE '' END  FROM \"GestionDocente\".resultado_eval  r WHERE  r.nced=  MAX(e.NCED)) AS auto, "
-						+ "(SELECT CASE min(r.tipo_eval) WHEN 'COEV' THEN 'CoEvaluación' ELSE '' END  FROM \"GestionDocente\".resultado_eval  r WHERE  r.nced=  MAX(e.NCED)) AS coe "
+						+ "(SELECT CASE max(r.tipo_eval) WHEN 'EVAL' THEN 'AutoEvaluaciï¿½n' ELSE '' END  FROM \"GestionDocente\".resultado_eval  r WHERE  r.nced=  MAX(e.NCED)) AS auto, "
+						+ "(SELECT CASE min(r.tipo_eval) WHEN 'COEV' THEN 'CoEvaluaciï¿½n' ELSE '' END  FROM \"GestionDocente\".resultado_eval  r WHERE  r.nced=  MAX(e.NCED)) AS coe "
 						+ "FROM \"Rrhh\".EMP E, \"Rrhh\".DEP D, \"GestionDocente\".resultado_eval reval, \"GestionDocente\".periodo p "
 						+ "WHERE E.COD_DEP = D.COD_DEP " + "AND reval.nced= E.nced "
 						+ "AND COD_EST IN ('1', '3', '4', '5', '6', '7') " + "AND e.cod_clase = '1' "
@@ -1686,7 +1686,7 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 						+ "CASE cod_tiporelacionlab WHEN 1 THEN (SELECT p.cargo FROM \"Rrhh\".nomb_temp n, \"Rrhh\".partind p WHERE n.cod_pind= p.cod_pind AND n.frige_nomb = (SELECT MAX(frige_nomb) FROM \"Rrhh\".nomb_temp WHERE nced=e.nced) AND n.nced=e.nced) "
 						+ "WHEN 2 THEN (SELECT MAX(cargoc) FROM \"Rrhh\".cont c WHERE c.frige_cont=  (SELECT MAX(frige_cont) FROM \"Rrhh\".cont WHERE nced = e.nced) AND c.nced = e.nced) END as cargook, "
 						+ "d.nom_dep, to_date(e.fec_ingepn,'yyyy-MM-dd'), "
-						+ "CASE tipo_eval WHEN 'EVAL' THEN 'AutoEvaluación' WHEN 'COEV' THEN 'CoEvaluación' END "
+						+ "CASE tipo_eval WHEN 'EVAL' THEN 'AutoEvaluaciï¿½n' WHEN 'COEV' THEN 'CoEvaluaciï¿½n' END "
 						+ "FROM \"Rrhh\".EMP E, \"Rrhh\".DEP D, \"GestionDocente\".resultado_eval reval "
 						+ "WHERE E.COD_DEP = D.COD_DEP " + "AND reval.nced= E.nced "
 						+ "AND COD_EST IN ('1', '3', '4', '5', '6', '7') " + "AND e.cod_clase = '1' "
@@ -1783,7 +1783,7 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 						+ "AND pre.id_resultado_eval= re.id_resultado_eval " + "AND pe.tipo= 'COEV' "
 						+ "AND pe.asignacion ='HORAS' AND re.nced LIKE  e.nced "
 						+ "AND re.id_pensum = ce.id_pensum AND upper(pe.detalle) like  'GEST%') as gestion, "
-						+ "CONCAT(\"año_pensum\", '-',  numero_pensum), '' "
+						+ "CONCAT(\"aï¿½o_pensum\", '-',  numero_pensum), '' "
 						+ "FROM \"GestionDocente\".calculo_eval ce, \"Rrhh\".emp e, \"Rrhh\".dep d, \"Contratos\".pensum p "
 						+ "WHERE ce.nced= e.nced " + "AND e.cod_dep= d.cod_dep " + "AND ce.id_pensum= p.id_pensum "
 						+ "AND e.nced LIKE ? " + "AND e.nom LIKE ? " + "AND e.apel LIKE ? " + "AND d.COD_DEP LIKE ? "
@@ -1854,7 +1854,7 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 		} else {
 			try {
 				try {
-					// Busca empleado por cédula
+					// Busca empleado por cï¿½dula
 					if (Integer.parseInt(criterio) > 0 || Integer.parseInt(criterio) == 0) {
 						q = "SELECT e FROM Emp e WHERE e.nced LIKE ?0 " + " order by e.apel, e.nom ";
 						queryString = new StringBuilder(q);
@@ -1877,7 +1877,7 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 	}
 
 	/*
-	 * Busca empleado por cédula
+	 * Busca empleado por cï¿½dula
 	 * 
 	 * @see ec.edu.epn.rrhh.beans.EmpleadoDAO#obtenerEmpleado(java.lang.String)
 	 */
@@ -1905,9 +1905,9 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 	}
 
 	/**
-	 * Lista los empleados por una lista de cédulas
+	 * Lista los empleados por una lista de cï¿½dulas
 	 * 
-	 * @param docentes- lista de string con las cédulas de los docentes a buscar
+	 * @param docentes- lista de string con las cï¿½dulas de los docentes a buscar
 	 * @param nombre    - String con el nombre que se desa buscar.
 	 * @return lista de empleados con los parameotrs buscados
 	 * @throws NoResultException - Excepcion lanzada cuando no se encuentra la
@@ -1934,7 +1934,7 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 			}
 			retorno = q.getResultList();
 		} catch (NoResultException e) {
-			throw new NoResultException("No se encontró Empleados por las cédulas enviadas");
+			throw new NoResultException("No se encontrï¿½ Empleados por las cï¿½dulas enviadas");
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception("Error al buscar los empleados");
@@ -2007,7 +2007,7 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 			}
 			retorno = q.getResultList();
 		} catch (NoResultException e) {
-			throw new NoResultException("No se encontró Empleados por el departamento seleccionado");
+			throw new NoResultException("No se encontrï¿½ Empleados por el departamento seleccionado");
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception("Error al buscar los empleados");

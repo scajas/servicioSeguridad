@@ -89,7 +89,7 @@ public class PreplanificacionDocenciaDAOImplement extends DaoGenericoImplement<P
 			for (DocenteDTO doc : listaDocente) {
 				if (doc.getnCed() != null) {
 					PreplanificacionDocencia preplanif = preplanifXPeriodo(doc.getnCed() == null ? "" : doc.getnCed(),
-							doc.getNombre(), idPensum, "%%");
+							"", idPensum, "%%");
 
 					if (preplanif != null) {
 						EstadoEvaluacion estadoEval = estadoEvaluacionDAO.estadoEvalXNombre(preplanif.getEstado());
@@ -120,9 +120,6 @@ public class PreplanificacionDocenciaDAOImplement extends DaoGenericoImplement<P
 					EstadoEvaluacion estadoEval = estadoEvaluacionDAO.estadoEvalXNombre(dto.getEstado());
 					docente.setEstado(estadoEval.getDescripcion());
 
-					docente.setDedicacion(dto.getDedicacion());
-					docente.setCargo(dto.getRelacionLab());
-
 					listaDocenteDTO.add(docente);
 				}
 			}
@@ -137,11 +134,10 @@ public class PreplanificacionDocenciaDAOImplement extends DaoGenericoImplement<P
 	public List<PreplanificacionDocencia> listaDocentePreplanifc(Integer idPensum, Integer idFacultad) {
 		try {
 			Query q = getEntityManager().createQuery(
-					"SELECT p FROM PreplanificacionDocencia p WHERE  p.idPensum = ? AND p.codDep in (select d.codDep from Dependencia d where d.idFacultad = ?) and p.nced is null and p.estado = ?");
+					"SELECT p FROM PreplanificacionDocencia p WHERE  p.idPensum = ? AND p.codDep in (select d.codDep from Dependencia d where d.idFacultad = ?) and p.nced is null");
 
 			q.setParameter(1, idPensum);
 			q.setParameter(2, idFacultad);
-			q.setParameter(3, "PREPLANIF");
 
 			return q.getResultList();
 		} catch (Exception e) {
@@ -207,13 +203,12 @@ public class PreplanificacionDocenciaDAOImplement extends DaoGenericoImplement<P
 		try {
 
 			Query q = getEntityManager()
-					.createQuery("SELECT p FROM PreplanificacionDocencia p WHERE  p.pedido.idPedido = ?1 ");
+					.createQuery("SELECT p FROM PreplanificacionDocencia p WHERE  p.pedido.idPedido = ?");
 
 			q.setParameter(1, idPedido);
 
 			return (PreplanificacionDocencia) q.getSingleResult();
 		} catch (Exception e) {
-
 			return null;
 		}
 	}

@@ -1,5 +1,6 @@
 package ec.edu.epn.gestioDocente.beans;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.LocalBean;
@@ -134,6 +135,43 @@ public class ActividadEvaluacionDAOImplement extends DaoGenericoImplement<Activi
 			return 0.0;
 		}
 		
+	}
+	
+	
+	
+	@Override
+	public Long countActvEvalXCat(Integer idEvalAcademica, Integer idCatalogo) throws Exception {
+		Query q = getEntityManager()
+				.createQuery(
+						"SELECT count(a) FROM ActividadEvaluacion a WHERE a.evaluacionAcademica.idEvalAcad=? AND a.reglamentoEvaluacion.idReglamentoEvaluacion!= ? ");
+
+		
+		q.setParameter(1, idEvalAcademica);
+		q.setParameter(2, idCatalogo);
+		
+		return (Long) q.getSingleResult();
+	}
+	
+	
+	
+	@Override
+	public List<ActividadEvaluacion> listActvEvalXCat(Integer idEvalAcademica, Integer idCatalogo) throws Exception {
+		
+		try {
+		
+			Query q = getEntityManager()
+					.createQuery(
+							"SELECT a FROM ActividadEvaluacion a WHERE a.evaluacionAcademica.idEvalAcad=? AND a.reglamentoEvaluacion.idReglamentoEvaluacion!= ? ");
+	
+			
+			q.setParameter(1, idEvalAcademica);
+			q.setParameter(2, idCatalogo);
+			
+			return q.getResultList();
+		
+		} catch (Exception e) {
+			return new ArrayList<ActividadEvaluacion>();
+		}
 	}
 	
 	

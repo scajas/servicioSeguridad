@@ -30,4 +30,28 @@ public class PsicologiaDAOImplement extends DaoGenericoImplement<Psicologia> imp
 			}
 		
 	}
+	
+	
+	@Override
+	public Long countPsicologXIdPaciente(Integer idPaciente) {
+		
+		Long val= 0L;
+		
+		try {
+			Query q = getEntityManager()
+					.createQuery(
+							"SELECT count(p) FROM Psicologia p WHERE p.idPaciente=? ");
+
+			
+			q.setParameter(1, idPaciente);
+			
+			return (Long) q.getSingleResult();
+		} catch (NoResultException e) {
+			return 0L;
+		} catch (Exception e) {
+			return 0L;
+		}
+		
+		
+	}
 }

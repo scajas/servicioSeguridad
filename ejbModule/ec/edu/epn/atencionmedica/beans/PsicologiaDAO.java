@@ -8,7 +8,9 @@ import ec.edu.epn.generic.DAO.DaoGenerico;
 @Local
 public interface PsicologiaDAO extends DaoGenerico<Psicologia>{
 
-	Psicologia psicologiaXidPaciente(Integer idPaciente); 
+	Psicologia psicologiaXidPaciente(Integer idPaciente);
+
+	Long countPsicologXIdPaciente(Integer idPaciente); 
 	
 	
 	

@@ -81,6 +81,27 @@ public class ActividadPreplanificacionDAOImplement extends
 		}
 		
 	}
+	
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ActividadPreplanificacion> findActividadByIdPreplanifGeneral(Integer idPreplanificacion) {
+
+		try {
+
+			StringBuilder queryString = new StringBuilder(
+					"SELECT a FROM ActividadPreplanificacion a WHERE a.preplanificacionDocencia.idPreplanif=?0 ");
+
+			
+			Query query = getEntityManager().createQuery(queryString.toString());
+			query.setParameter(0, idPreplanificacion);
+
+			return query.getResultList();
+
+		} catch (Exception e) {
+			return new ArrayList<ActividadPreplanificacion>();
+		}
+	}
 
 		
 }

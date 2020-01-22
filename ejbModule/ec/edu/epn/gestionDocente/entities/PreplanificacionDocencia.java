@@ -75,18 +75,11 @@ public class PreplanificacionDocencia implements Serializable {
 	@Column(name="relacion_lab")
 	private String relacionLab;
 	
-	@OneToOne
-	@JoinColumn(name = "id_pedido")
-	private Pedido pedido;
+	@Column(name="acta_consejo_dep")
+	private String actaConsejoDep;
 	
-	public Pedido getPedido() {
-		return pedido;
-	}
-
-	public void setPedido(Pedido pedido) {
-		this.pedido = pedido;
-	}
-
+	@Column(name="acta_consejo_fac")
+	private String actaConsejoFac;
 	private String dedicacion;
 	
 	
@@ -252,6 +245,34 @@ public class PreplanificacionDocencia implements Serializable {
 	 */
 	public void setIdTcont(Integer idTcont) {
 		this.idTcont = idTcont;
+	}
+
+	/**
+	 * @return the actaConsejoDep
+	 */
+	public String getActaConsejoDep() {
+		return actaConsejoDep;
+	}
+
+	/**
+	 * @return the actaConsejoFac
+	 */
+	public String getActaConsejoFac() {
+		return actaConsejoFac;
+	}
+
+	/**
+	 * @param actaConsejoDep the actaConsejoDep to set
+	 */
+	public void setActaConsejoDep(String actaConsejoDep) {
+		this.actaConsejoDep = actaConsejoDep;
+	}
+
+	/**
+	 * @param actaConsejoFac the actaConsejoFac to set
+	 */
+	public void setActaConsejoFac(String actaConsejoFac) {
+		this.actaConsejoFac = actaConsejoFac;
 	}
 
 }
