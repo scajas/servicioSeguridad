@@ -46,14 +46,14 @@ public class procedimientosAlmacenadosEval implements Serializable{
 		}
 	}
 
-	public List<CargaPlanificacionDTO> obtenerCargaAcademicaPlanificacion(String cedula, String añoPensum,
+	public List<CargaPlanificacionDTO> obtenerCargaAcademicaPlanificacion(String cedula, String aï¿½oPensum,
 			String numeroPensum) {
 		java.sql.ResultSet result = null;
 		try {
-			/**SE PRESENTA LA EVALUACIÓN DEL DOCENTE POR PERIODO PARA MATERIAS SIMULTANEAS. 12-11-2019*/
+			/**SE PRESENTA LA EVALUACIï¿½N DEL DOCENTE POR PERIODO PARA MATERIAS SIMULTANEAS. 12-11-2019*/
 			
 			EvaluacionAcademica academico= new EvaluacionAcademica();
-			academico= evaluacionAcademicaDAO.evalXAnioPensum(cedula, añoPensum, numeroPensum);
+			academico= evaluacionAcademicaDAO.evalXAnioPensum(cedula, aï¿½oPensum, numeroPensum);
 			/**FIN DEL CALCULO */
 			
 			
@@ -67,7 +67,7 @@ public class procedimientosAlmacenadosEval implements Serializable{
 			cst.setString(3, "");
 			cst.setString(4, "");
 
-			cst.setString(5, añoPensum);
+			cst.setString(5, aï¿½oPensum);
 			cst.setString(6, numeroPensum);
 
 			result = cst.executeQuery();

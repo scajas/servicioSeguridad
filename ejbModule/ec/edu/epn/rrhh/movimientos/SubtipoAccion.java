@@ -29,6 +29,7 @@ public class SubtipoAccion implements Serializable {
 	
 	@Column(name="plantillamotivo")
 	private String plantillaMotivo;
+	
 
 	//bi-directional many-to-one association to AccionP
 	@OneToMany(mappedBy="subtipoAccion")

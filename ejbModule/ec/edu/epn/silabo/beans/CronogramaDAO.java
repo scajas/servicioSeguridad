@@ -21,6 +21,14 @@ public interface CronogramaDAO extends DaoGenerico<CronogramaDesarrollo> {
 	int maxNumCrono(Silabo silabo);
 
 	List<CronogramaDesarrollo> consultarCronogramaExiste(Integer idsilado, Date fecha);
+
+	CronogramaDesarrollo consultarCronogramaById(Integer idcrono);
+
+	int maxNumCronoIndice(Silabo silabo);
+
+	List<CronogramaDesarrollo> consultarCronogramaUpdate(Integer idsilado);
+
+	int maxNumCronoIndiceID(Integer idsilado);
 	
 	
 	

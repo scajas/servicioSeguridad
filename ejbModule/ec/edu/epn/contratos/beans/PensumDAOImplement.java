@@ -66,14 +66,7 @@ public class PensumDAOImplement extends DaoGenericoImplement<Pensum> implements 
 		return q.getResultList();
 	}
 
-	/**
-	 * Lista las entidades pensum ordenado descendente o ascendentemete
-	 * 
-	 * @param orden
-	 *            - string para escribir el orden que quiere desplegar la lista
-	 *            : asc ó desc
-	 * @return lista de entidades por el orden enviado
-	 */
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Pensum> listaPensum(String orden) {

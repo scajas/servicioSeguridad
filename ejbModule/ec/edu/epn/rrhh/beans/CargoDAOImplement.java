@@ -103,6 +103,21 @@ public class CargoDAOImplement extends DaoGenericoImplement<Cargosm> implements 
 		
 		return resultado;
 	}
+	
+	@Override
+	public List<Cargosm> findCargosByNombreRmuAndGrupo(String nombreCargo, String grupo, Double rmu) {
+	
+		StringBuilder queryString = new StringBuilder(
+				"SELECT fam FROM Cargosm fam where fam.estado ='activo'"
+				+ "and fam.grupo = ?1 and fam.nombreCargo like ?2 and fam.remun = ?3");
+		Query query = getEntityManager().createQuery(queryString.toString());
+		query.setParameter(1, grupo);
+		query.setParameter(2, "%"+nombreCargo);
+		query.setParameter(3, rmu);
+		List<Cargosm> resultado = query.getResultList();
+		
+		return resultado;
+	}
 
 	@Override
 	public List<Cargosm> findCargosByDedicacion(String dedicacion) {

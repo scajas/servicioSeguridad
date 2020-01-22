@@ -43,6 +43,24 @@ public class ClaseDAOImplement extends DaoGenericoImplement<Clase>
 		
 	}
 	
+	@Override
+	public List<Clase> findClaseByEstadoActivo() {
+		Query q = getEntityManager().createQuery(
+				"Select cls from Clase cls where cls.estado = 'ACTIVO'  ");
+
+		
+		List<Clase> resultado = null;
+		
+		try{
+			resultado = q.getResultList();
+		}catch(NoResultException e){
+			return resultado;
+		}catch (NonUniqueResultException e){
+			 e.printStackTrace();
+		}
+		return resultado;
+		
+	}
 	
 	
 	

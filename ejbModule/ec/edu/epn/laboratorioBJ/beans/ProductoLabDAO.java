@@ -12,4 +12,6 @@ public interface ProductoLabDAO  extends DaoGenerico<ProductoLab> {
 
 	List<ProductoLab> filtrarLista(String dato);
 
+	List<ProductoLab> getListPro();
+
 }

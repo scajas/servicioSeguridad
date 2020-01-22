@@ -2,6 +2,7 @@ package ec.edu.epn.proyectos.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -27,11 +28,10 @@ public class Producto implements Serializable {
 
 	private String estuadiante;
 
-	private Integer idpensum;
+	private Integer idpensum,anio;
+	  
 
-
-
-	private String meses;
+	private String meses,mes;
 
 	private String titulo,id_pub,tipopresentacion,expositor,evento,lugar
 	,hv ,
@@ -44,8 +44,11 @@ public class Producto implements Serializable {
 	  url;
 	
 	
-	private Date  fechapresenta ;
+	private Date  fechapresenta,fechaingreso ;
 	
+	
+	@OneToMany(mappedBy = "producto")
+	private List<AutoresProducto> autores;
 	
 	
 	@ManyToOne
@@ -253,5 +256,41 @@ public class Producto implements Serializable {
 	public void setUrl(String url) {
 		this.url = url;
 	}
+
+	public Date getFechaingreso() {
+		return fechaingreso;
+	}
+
+	public void setFechaingreso(Date fechaingreso) {
+		this.fechaingreso = fechaingreso;
+	}
+
+	public List<AutoresProducto> getAutores() {
+		return autores;
+	}
+
+	public void setAutores(List<AutoresProducto> autores) {
+		this.autores = autores;
+	}
+
+	public Integer getAnio() {
+		return anio;
+	}
+
+	public void setAnio(Integer anio) {
+		this.anio = anio;
+	}
+
+	public String getMes() {
+		return mes;
+	}
+
+	public void setMes(String mes) {
+		this.mes = mes;
+	}
+
+	
+	
+	
 	
 }

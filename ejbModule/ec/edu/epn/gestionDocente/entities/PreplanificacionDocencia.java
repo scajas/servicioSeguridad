@@ -80,23 +80,6 @@ public class PreplanificacionDocencia implements Serializable {
 	
 	@Column(name="acta_consejo_fac")
 	private String actaConsejoFac;
-	
-	@OneToOne
-	@JoinColumn(name = "id_pedido")
-	private Pedido pedido;
-	
-	
-	
-
-	
-	public Pedido getPedido() {
-		return pedido;
-	}
-
-	public void setPedido(Pedido pedido) {
-		this.pedido = pedido;
-	}
-
 	private String dedicacion;
 	
 	

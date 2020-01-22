@@ -8,7 +8,6 @@ import ec.edu.epn.generic.DAO.DaoGenerico;
 import ec.edu.epn.gestionDocente.entities.PreplanificacionDocencia;
 import ec.edu.epn.rrhh.DTO.DocenteDTO;
 
-
 @Local
 public interface PreplanificacionDocenciaDAO extends DaoGenerico<PreplanificacionDocencia> {
 
@@ -16,6 +15,8 @@ public interface PreplanificacionDocenciaDAO extends DaoGenerico<Preplanificacio
 
 	PreplanificacionDocencia preplanifXPeriodo(String nced, String nombre, Integer idPensum, String estado)
 			throws Exception;
+	
+	PreplanificacionDocencia findByPedido(Integer idPedido);
 
 	Long countPreplanifExiste(String nombre, Integer idPensum) throws Exception;
 
@@ -28,5 +29,4 @@ public interface PreplanificacionDocenciaDAO extends DaoGenerico<Preplanificacio
 
 	
 
-	
 }

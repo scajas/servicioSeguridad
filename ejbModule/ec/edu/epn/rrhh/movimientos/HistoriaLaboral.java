@@ -1,12 +1,24 @@
 package ec.edu.epn.rrhh.movimientos;
 
 import java.io.Serializable;
-import javax.persistence.*;
-
-import ec.edu.epn.rrhh.entities.Emp;
-
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import ec.edu.epn.rrhh.entities.Emp;
 
 
 /**
@@ -84,7 +96,8 @@ public class HistoriaLaboral implements Serializable {
 	private List<Docadjunto> docadjuntos;
 
 	//bi-directional many-to-one association to AccionP
-	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@ManyToOne(fetch=FetchType.EAGER, cascade={CascadeType.PERSIST, CascadeType.MERGE, 
+			CascadeType.REFRESH, CascadeType.DETACH})
 	@JoinColumns({
 		@JoinColumn(name="fecha_ini", referencedColumnName="fecha_ini"),
 		@JoinColumn(name="id_accionp", referencedColumnName="id_accionp")

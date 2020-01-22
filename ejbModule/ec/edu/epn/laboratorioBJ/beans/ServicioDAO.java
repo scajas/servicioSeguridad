@@ -11,11 +11,17 @@ import ec.edu.epn.laboratorioBJ.entities.Tiposervicio;
 
 @Local
 public interface ServicioDAO extends DaoGenerico<Servicio> {
-	
-	List<Servicio> listaServicioUnidad(Integer id);
+
+	List<Servicio> listaServicioUnidad(int id);
+
 	String maxIdServ(int id);
+
 	List<Servicio> listaServicioXTipo(int idTipo);
+
 	List<Servicio> getparametrosTipoServicio(String tiposervicio);
+
 	List<LaboratorioLab> listaLaboratorioUnidad(int id);
+
+	List<Servicio> listaServicioById(int id);
 
 }
