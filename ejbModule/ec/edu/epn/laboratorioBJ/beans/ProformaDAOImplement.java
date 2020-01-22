@@ -167,7 +167,7 @@ public class ProformaDAOImplement extends DaoGenericoImplement<Proforma> impleme
 		String[] parts = fecha.split("-");
 
 		String anio = parts[0];
-		System.out.println("Este es el año: " + anio);
+		System.out.println("Este es el ano: " + anio);
 
 		StringBuilder queryString = new StringBuilder(
 				"SELECT max(p.idProforma) FROM Proforma p where p.idProforma like '" + id

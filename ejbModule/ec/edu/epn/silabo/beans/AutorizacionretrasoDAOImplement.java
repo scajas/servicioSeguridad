@@ -22,7 +22,7 @@ public class AutorizacionretrasoDAOImplement extends DaoGenericoImplement<Autori
 
 
 	@Override
-	public Autorizacionretraso consultarAutorizacion(String nced, String codMat, Integer idPensum, String paralelo,  String codcarrera, String año ) {
+	public Autorizacionretraso consultarAutorizacion(String nced, String codMat, Integer idPensum, String paralelo,  String codcarrera, String anio ) {
 
 		StringBuilder querys = new StringBuilder("SELECT e From Autorizacionretraso e where e.cedula = ?1 and e.codigo = ?2 and e.idPensum=?3 and e.paralelo = ?4 and e.codcarrera = ?5 and e.anio = ?6 ");
 
@@ -32,7 +32,7 @@ public class AutorizacionretrasoDAOImplement extends DaoGenericoImplement<Autori
 		query.setParameter(3, idPensum);
 		query.setParameter(4, paralelo);
 		query.setParameter(5, codcarrera);
-		query.setParameter(6, año);
+		query.setParameter(6, anio);
 		query.setMaxResults(1);
 
 		try {

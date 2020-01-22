@@ -27,7 +27,7 @@ public class SaldoExistenciaDAOImplement extends DaoGenericoImplement<SaldoExist
 		// TODO Auto-generated constructor stub
 	}
 
-	public List<SaldoExistencia> listaSaldoExistenciaAñoActual() {
+	public List<SaldoExistencia> listaSaldoExistenciaAnioActual() {
 		String fecha = obtenerFecha();
 
 		String[] parts = fecha.split("-");

@@ -69,7 +69,7 @@ public class MovimientosInventarioDAOImplement extends DaoGenericoImplement<Movi
 		String anio = parts[0];
 		String mes = parts[1];
 		
-		System.out.println("Este es el año: " + anio + " y este es el mes: " + mes);
+		System.out.println("Este es el anio: " + anio + " y este es el mes: " + mes);
 		
 		StringBuilder querys = new StringBuilder("SELECT s FROM SaldoExistencia s where s.Id.mes like '%" + mes + "%'");
 		Query query = getEntityManager().createQuery(querys.toString());

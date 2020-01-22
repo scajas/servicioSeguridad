@@ -72,7 +72,7 @@ public class CompraDAOImplement extends DaoGenericoImplement<Compra> implements 
 		String[] parts = fecha.split("-");
 
 		String anio = parts[0];
-		System.out.println("Este es el año: " + anio);
+		System.out.println("Este es el anio: " + anio);
 
 		StringBuilder queryString = new StringBuilder("SELECT max(c.idCompra) FROM Compra c where c.unidad.idUnidad = ?"
 				+ "AND c.idCompra like '%" + anio + "%'");

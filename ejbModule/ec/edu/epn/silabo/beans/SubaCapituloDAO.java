@@ -18,7 +18,7 @@ public interface SubaCapituloDAO extends DaoGenerico<Subcapitulo>{
 
 	List<Subcapitulo> consultarSubCapitulosExiste(Integer idsilado, String num, Integer idcapitulo);
 
-	List<Subcapitulo> consultarSubcapitlosdeCapítulo(Integer idcapitulo);
+	List<Subcapitulo> consultarSubcapitlosdeCapitulo(Integer idcapitulo);
 
 	void eliminar(Integer idsubcapitulo);
 
