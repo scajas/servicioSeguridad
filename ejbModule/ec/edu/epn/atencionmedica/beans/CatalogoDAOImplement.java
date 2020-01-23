@@ -1,6 +1,5 @@
 package ec.edu.epn.atencionmedica.beans;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -42,7 +41,7 @@ public class CatalogoDAOImplement extends DaoGenericoImplement<Catalogo> impleme
 	}
 
 	/**
-	 * Método que devuelve la lista de Tipos de movimiento de inventario, sin
+	 * Metodo que devuelve la lista de Tipos de movimiento de inventario, sin
 	 * los tipos de despacho.
 	 * 
 	 * @return Lista<Catalogo>
@@ -56,7 +55,7 @@ public class CatalogoDAOImplement extends DaoGenericoImplement<Catalogo> impleme
 	}
 
 	/**
-	 * Método que devuelve la lista de Tipos de insumo médico.
+	 * Metodo que devuelve la lista de Tipos de insumo medico.
 	 * 
 	 * @return Lista<Catalogo>
 	 */
@@ -69,7 +68,7 @@ public class CatalogoDAOImplement extends DaoGenericoImplement<Catalogo> impleme
 	}
 
 	/**
-	 * Método que devuelve la lista de Tipos de paciente.
+	 * Metodo que devuelve la lista de Tipos de paciente.
 	 * 
 	 * @return Lista<Catalogo>
 	 */
@@ -82,7 +81,7 @@ public class CatalogoDAOImplement extends DaoGenericoImplement<Catalogo> impleme
 	}
 
 	/**
-	 * Método que devuelve la lista de Tipos de atención médica.
+	 * Metodo que devuelve la lista de Tipos de atencion medica.
 	 * 
 	 * @return Lista<Catalogo>
 	 */
@@ -95,7 +94,7 @@ public class CatalogoDAOImplement extends DaoGenericoImplement<Catalogo> impleme
 	}
 
 	/**
-	 * Método que devuelve la lista de Tipos de especialidad.
+	 * Metodo que devuelve la lista de Tipos de especialidad.
 	 * 
 	 * @return Lista<Catalogo>
 	 */
@@ -108,7 +107,7 @@ public class CatalogoDAOImplement extends DaoGenericoImplement<Catalogo> impleme
 	}
 
 	/**
-	 * Método que devuelve la lista de Tipos de movimiento inventario de tipo
+	 * Metodo que devuelve la lista de Tipos de movimiento inventario de tipo
 	 * despacho.
 	 * 
 	 * @return Lista<Catalogo>
@@ -122,7 +121,7 @@ public class CatalogoDAOImplement extends DaoGenericoImplement<Catalogo> impleme
 	}
 
 	/**
-	 * Método que devuelve la lista de Tipos de estado de movimientos de
+	 * Metodo que devuelve la lista de Tipos de estado de movimientos de
 	 * inventario.
 	 * 
 	 * @return Lista<Catalogo>
@@ -136,7 +135,7 @@ public class CatalogoDAOImplement extends DaoGenericoImplement<Catalogo> impleme
 	}
 
 	/**
-	 * Método que devuelve la lista de Tipos de disponibilidad del personal.
+	 * Metodo que devuelve la lista de Tipos de disponibilidad del personal.
 	 * 
 	 * @return Lista<Catalogo>
 	 */
@@ -149,8 +148,8 @@ public class CatalogoDAOImplement extends DaoGenericoImplement<Catalogo> impleme
 	}
 
 	/**
-	 * Método que devuelve la lista de Tipos de estado de tipo de personal
-	 * médico.
+	 * Metodo que devuelve la lista de Tipos de estado de tipo de personal
+	 * medico.
 	 * 
 	 * @return Lista<Catalogo>
 	 */
@@ -163,7 +162,7 @@ public class CatalogoDAOImplement extends DaoGenericoImplement<Catalogo> impleme
 	}
 
 	/**
-	 * Método para realizar los inserts
+	 * Metodo para realizar los inserts
 	 * 
 	 * @return void
 	 */
@@ -181,7 +180,7 @@ public class CatalogoDAOImplement extends DaoGenericoImplement<Catalogo> impleme
 	}
 
 	/**
-	 * Método que devuelve un Catalogo tipo buscado por idCatalogoTipo.
+	 * Metodo que devuelve un Catalogo tipo buscado por idCatalogoTipo.
 	 * 
 	 * @return Lista<Catalogo>
 	 */
@@ -224,7 +223,7 @@ public class CatalogoDAOImplement extends DaoGenericoImplement<Catalogo> impleme
 	}
 
 	/**
-	 * Método que devuelve la lista de Tipos de insumo médico. 
+	 * Metodo que devuelve la lista de Tipos de insumo medico. 
 	 * @return Lista<Catalogo>
 	 */
 	@Override
@@ -269,11 +268,11 @@ public class CatalogoDAOImplement extends DaoGenericoImplement<Catalogo> impleme
 	
 	/*
 	 * 
-	 * Médtodos para el Tipo de presentación de insumo médico
+	 * Medtodos para el Tipo de presentacion de insumo medico
 	 * */
 
 	/**
-	 * Método que devuelve la lista de Tipos de presentación de insumo médico. 
+	 * Metodo que devuelve la lista de Tipos de presentacion de insumo medico. 
 	 * @return Lista<Catalogo>
 	 */
 
@@ -341,7 +340,7 @@ public class CatalogoDAOImplement extends DaoGenericoImplement<Catalogo> impleme
 	}
 
 	/**
-	 * Método que devuelve la lista de Tipos de presentación de insumo medico. 
+	 * Metodo que devuelve la lista de Tipos de presentacion de insumo medico. 
 	 * @return Lista<Catalogo>
 	 */
 	@Override

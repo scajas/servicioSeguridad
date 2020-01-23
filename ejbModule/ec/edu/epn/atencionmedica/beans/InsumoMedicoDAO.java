@@ -10,38 +10,38 @@ import ec.edu.epn.atencionmedica.entities.Insumomedico;
 public interface InsumoMedicoDAO {
 	
 	/**
-	 * Método que devuelve la lista de Objetos según el criterio. 
+	 * Metodo que devuelve la lista de Objetos segun el criterio. 
 	 * @return Lista<Catalogo>
 	 */
 	public List<Insumomedico> obtenerListaInsumos(String criterio);
 	
 	/**
-	 * Método que devuelve el Objeto según el criterio. 
+	 * Metodo que devuelve el Objeto segun el criterio. 
 	 * @return Lista<Objeto>
 	 */
 	public Insumomedico obtenerInsumomedico(String criterio);
 	
 
 	/**
-	 * Método para realizar los inserts
+	 * Metodo para realizar los inserts
 	 * @return void
 	 */
 	public boolean guardarInsumomedico(Insumomedico obj, String operacion);
 	
 	/**
-	 * Método para eliminar un registro
+	 * Metodo para eliminar un registro
 	 * @return void
 	 */
 	public boolean eliminarInsumomedico(Insumomedico obj, String operacion);
 	
 	/**
-	 * Método que devuelve la lista de Objetos según el criterio (AsistenteMEdico). 
+	 * Metodo que devuelve la lista de Objetos segun el criterio (AsistenteMEdico). 
 	 * @return Lista<Catalogo>
 	 */
 	public List<Insumomedico> obtenerListaInsumosAsistenteM(String criterio);
 	
 	/**
-	 * Método que devuelve el Objeto según el criterio. 
+	 * Metodo que devuelve el Objeto segun el criterio. 
 	 * @return Lista<Objeto>
 	 */
 	public Insumomedico obtenerInsumomedicoAsistente(String criterio);

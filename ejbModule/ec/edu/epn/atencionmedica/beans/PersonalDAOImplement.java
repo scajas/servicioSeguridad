@@ -135,7 +135,7 @@ public class PersonalDAOImplement extends DaoGenericoImplement<PersonalAtencion>
 		} catch (NonUniqueResultException e) {
 			System.out.println("==================MAS DE UN OBJETO ENCONTRADO: =====" + criterio);			
 		} catch (Exception e) {
-			System.out.println("==================ERROR EN LA BÚSQUEDA: =====" + criterio);
+			System.out.println("==================ERROR EN LA BUSQUEDA: =====" + criterio);
 			aux = null;
 		}
 		return aux;

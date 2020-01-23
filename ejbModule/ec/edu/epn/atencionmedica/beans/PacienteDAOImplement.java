@@ -85,11 +85,11 @@ public class PacienteDAOImplement extends DaoGenericoImplement<Paciente> impleme
 			obj=aux;			
 			
 		} catch (NoResultException e) {
-			System.out.println("==================IDENTIFICACIÓN NO ENCONTRADA: =====" + criterio);
+			System.out.println("==================IDENTIFICACION NO ENCONTRADA: =====" + criterio);
 			//e.printStackTrace();
 			obj = null;
 		} catch (NonUniqueResultException e) {
-			System.out.println("==================MAS DE UNA IDENTIFICACIÓN ENCONTRADA: =====" + criterio);
+			System.out.println("==================MAS DE UNA IDENTIFICACION ENCONTRADA: =====" + criterio);
 			//e.printStackTrace();
 			obj = aux;
 		} catch (Exception e) {
