@@ -8,6 +8,7 @@ import javax.ejb.Local;
 import ec.edu.epn.generic.DAO.DaoGenerico;
 import ec.edu.epn.laboratorioBJ.entities.Cliente;
 import ec.edu.epn.laboratorioBJ.entities.DetalleProforma;
+import ec.edu.epn.laboratorioBJ.entities.LaboratorioLab;
 import ec.edu.epn.laboratorioBJ.entities.Metodo;
 import ec.edu.epn.laboratorioBJ.entities.Proforma;
 import ec.edu.epn.laboratorioBJ.entities.Servicio;
@@ -22,5 +23,8 @@ public interface ProformaDAO extends DaoGenerico<Proforma> {
 	List<Metodo> listarMetodosByIdServicio(String id);
 	String maxIdProforma(String id, String fecha);
 	List<DetalleProforma> listarDetalleProByIdPro(String id);
+	Proforma buscarProformaById(String id);
+	LaboratorioLab obtenerLaboratorioByUsr(int id,int uni);
+	Metodo findMetodoById(String id);
 
 }
