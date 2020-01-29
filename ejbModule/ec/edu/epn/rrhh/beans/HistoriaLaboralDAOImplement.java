@@ -46,18 +46,35 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 	public List<HistoriaLaboral> findHistoriaLaboralLimpia(Emp emp) {
 		StringBuilder queryString = new StringBuilder(
 				" SELECT " + "fam FROM HistoriaLaboral fam where " + "fam.emp.nced =?1  "
+						+ " and fam.accionP is not null "
 						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%SIN IMPRESION' "
 						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like 'ACTUALIZACI_N%' "
 						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%INSUBSISTENCIA%' "
 						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%LICENCIA%'"
 						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%COMISI_N%'"
+						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%FINALIZACI_%'"
+						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%DESIGNACI_N%'"
+						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%ENCARGO%'"
+						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%POSESI_%'"
 						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%VACACI_N%'"
 						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%REINTEGRO%'"
 						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%CUMPLIMIENTO DE SERVICIOS%'"
 						+ " and fam.id.idHist not in (select histo.id.idHist from HistoriaLaboral histo where "
-						+ " histo.id.estado = 'Insubsistente' or histo.id.estado = 'Anulado' ) "
+						+ " trim(histo.id.estado) = 'Insubsistente' or trim(histo.id.estado) = 'Anulado' "
+						+ " or trim(histo.id.estado) = 'Duplicado') "
+						+ " and (fam.id.estado = 'Finalizado' or fam.id.estado = 'Legalizado' or "
+						+ " fam.id.estado = 'Legalizada' or fam.id.estado = 'Rectificada' or fam.id.estado = 'Rectificado' )"
 						+ " and fam.id.fechaI = "
-						+ "(Select max(t.id.fechaI) " + "from HistoriaLaboral t where t.id.idHist=fam.id.idHist)");
+						+ "(Select max(t.id.fechaI) from HistoriaLaboral t where t.id.idHist=fam.id.idHist "
+								+ " and t.accionP is not null	"								
+								+ " and (t.id.estado = 'Finalizado' or t.id.estado = 'Legalizado' or "
+								+ " t.id.estado = 'Legalizada' or t.id.estado = 'Rectificada' "
+								+ " or t.id.estado = 'Rectificado' )"
+								+ "and t.id.idHist not in "
+								+ " (select histo.id.idHist from HistoriaLaboral histo where " 
+								+ " trim(histo.id.estado) = 'Insubsistente' or trim(histo.id.estado) = 'Anulado' "  
+								+ " or trim(histo.id.estado) = 'Duplicado')"
+								+ " )");
 
 		Query query = getEntityManager().createQuery(queryString.toString());
 		query.setParameter(1, emp.getNced());
@@ -2387,8 +2404,10 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 	public List<HistoriaLaboral> findContByEmp(Emp emp) {
 		StringBuilder queryString = new StringBuilder(
 				"SELECT " + "fam FROM HistoriaLaboral fam where " + "fam.emp.nced =?1 and fam.id.fechaI = "
-						+ "(Select max(t.id.fechaI) " + "from HistoriaLaboral t where t.id.idHist=fam.id.idHist)"
-						+ "and fam.accionP is null order by fam.fechaRige desc");
+						+ " (Select max(t.id.fechaI) " + "from HistoriaLaboral t where t.id.idHist=fam.id.idHist) "
+						+ " and fam.accionP is null "
+						+ " and fam.id.estado = 'Elaborado' "					
+						+ " order by fam.fechaRige desc");
 
 		Query query = getEntityManager().createQuery(queryString.toString());
 
