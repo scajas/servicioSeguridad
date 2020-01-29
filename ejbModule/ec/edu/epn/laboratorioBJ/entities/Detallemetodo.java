@@ -3,47 +3,49 @@ package ec.edu.epn.laboratorioBJ.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 
-
 /**
  * The persistent class for the detallemetodo database table.
  * 
  */
 @Entity
-@Table(name = "detallemetodo", catalog = "bddcorpepn", schema = "Laboratorios")
-@NamedQuery(name="Detallemetodo.findAll", query="SELECT d FROM Detallemetodo d")
+@Table(name = "detallemetodo", catalog = "bddcorpepn", schema = "`Laboratorios`")
+@NamedQuery(name = "Detallemetodo.findAll", query = "SELECT d FROM Detallemetodo d")
 public class Detallemetodo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="id_detallemetodo")
-	private String idDetallemetodo;
+	@SequenceGenerator(name = "DETALLEMETODO_IDDETALLEMETODO_GENERATOR", sequenceName = "secuencia_detallemetodo", allocationSize = 1, catalog = "bddcorpepn", schema = "`Laboratorios`")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DETALLEMETODO_IDDETALLEMETODO_GENERATOR")
+
+	@Column(name = "id_detallemetodo")
+	private int idDetallemetodo;
 
 	private String aux;
 
 	private String aux2;
 
-	@Column(name="cantidad_dmt")
+	@Column(name = "cantidad_dmt")
 	private float cantidadDmt;
 
-	@Column(name="id_existencia")
+	@Column(name = "id_existencia")
 	private String idExistencia;
 
-	@Column(name="id_umedida")
+	@Column(name = "id_umedida")
 	private String idUmedida;
 
-	//bi-directional many-to-one association to Metodo
+	// bi-directional many-to-one association to Metodo
 	@ManyToOne
-	@JoinColumn(name="id_metodo")
+	@JoinColumn(name = "id_metodo")
 	private Metodo metodo;
 
 	public Detallemetodo() {
 	}
 
-	public String getIdDetallemetodo() {
+	public int getIdDetallemetodo() {
 		return this.idDetallemetodo;
 	}
 
-	public void setIdDetallemetodo(String idDetallemetodo) {
+	public void setIdDetallemetodo(int idDetallemetodo) {
 		this.idDetallemetodo = idDetallemetodo;
 	}
 

@@ -9,6 +9,7 @@ import javax.persistence.Query;
 import ec.edu.epn.generic.DAO.DaoGenericoImplement;
 import ec.edu.epn.laboratorioBJ.entities.Existencia;
 import ec.edu.epn.laboratorioBJ.entities.LaboratorioLab;
+import ec.edu.epn.laboratorioBJ.entities.Metodo;
 import ec.edu.epn.laboratorioBJ.entities.ProductoLab;
 import ec.edu.epn.laboratorioBJ.entities.Servicio;
 import ec.edu.epn.laboratorioBJ.entities.Tiposervicio;
@@ -96,5 +97,4 @@ public class ServicioDAOImplement extends DaoGenericoImplement<Servicio> impleme
 		return resultados;
 
 	}
-
 }
