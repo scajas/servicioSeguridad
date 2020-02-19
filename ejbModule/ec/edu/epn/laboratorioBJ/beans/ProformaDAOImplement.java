@@ -107,6 +107,38 @@ public class ProformaDAOImplement extends DaoGenericoImplement<Proforma> impleme
 	}
 
 	@Override
+	public List<Proforma> listaAllProformas(String id, int idUser, Proforma proforma, Date fechaInicio, Date fechaFin) {
+
+		if (fechaInicio == null) {
+			setConsulta("SELECT p FROM Proforma p WHERE p.idProforma like '%" + proforma.getIdProforma() + "%' "
+					+ "AND p.estadoPo like '%" + proforma.getEstadoPo() + "%' " + "AND p.cliente.rucCl like '%"
+					+ proforma.getCliente().getRucCl() + "%' " + "AND p.cliente.nombreCl like '%"
+					+ proforma.getCliente().getNombreCl() + "%' " + " ORDER BY p.idProforma");
+		} else if (fechaFin == null) {
+			setConsulta("SELECT p FROM Proforma p WHERE p.idProforma like '%" + proforma.getIdProforma() + "%' " + "AND p.estadoPo like '%"
+					+ proforma.getEstadoPo() + "%' " + "AND p.cliente.rucCl like '%" + proforma.getCliente().getRucCl()
+					+ "%' " + "AND p.cliente.nombreCl like '%" + proforma.getCliente().getNombreCl() + "%' "
+					+ "AND p.fecha = '" + cambioFecha(fechaInicio) + "'" + " ORDER BY p.idProforma");
+		} else {
+			setConsulta("SELECT p FROM Proforma p WHERE p.idProforma like '%" + proforma.getIdProforma() + "%' "
+					+ "AND p.estadoPo like '%" + proforma.getEstadoPo() + "%' " + "AND p.cliente.rucCl like '%"
+					+ proforma.getCliente().getRucCl() + "%' " + "AND p.cliente.nombreCl like '%"
+					+ proforma.getCliente().getNombreCl() + "%' " + "AND p.fecha BETWEEN '" + cambioFecha(fechaInicio)
+					+ "' AND '" + cambioFecha(fechaFin) + "' ORDER BY p.idProforma");
+		}
+
+		// System.out.println("idUnidad: " + id);
+		// System.out.println("idUsuario: " + idUser);
+
+		StringBuilder queryString = new StringBuilder(getConsulta());
+		Query query = getEntityManager().createQuery(queryString.toString());
+
+		List<Proforma> resultados = query.getResultList();
+		System.out.println("Estos son los resultados de todas las proformas: " + resultados.size() + "adc: " + getConsulta());
+		return resultados;
+	}
+
+	@Override
 	public List<Cliente> listarClienteBY(Cliente cliente) {
 
 		setConsulta("SELECT c FROM Cliente c WHERE UPPER (c.nombreCl) like  UPPER('" + cliente.getNombreCl()

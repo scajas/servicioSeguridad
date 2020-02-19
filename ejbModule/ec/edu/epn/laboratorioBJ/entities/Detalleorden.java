@@ -17,8 +17,10 @@ public class Detalleorden implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@SequenceGenerator(name="DETALLEOT_IDDETALLEOT_GENERATOR", sequenceName="secuencia_detalle_ordent",allocationSize=1, catalog="bddcorpepn",schema="`Laboratorios`")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="DETALLEOT_IDDETALLEOT_GENERATOR")
 	@Column(name="id_detalleorden")
-	private String idDetalleorden;
+	private int idDetalleorden;
 
 	@Column(name="estado_dot")
 	private String estadoDot;
@@ -65,11 +67,11 @@ public class Detalleorden implements Serializable {
 	public Detalleorden() {
 	}
 
-	public String getIdDetalleorden() {
+	public int getIdDetalleorden() {
 		return this.idDetalleorden;
 	}
 
-	public void setIdDetalleorden(String idDetalleorden) {
+	public void setIdDetalleorden(int idDetalleorden) {
 		this.idDetalleorden = idDetalleorden;
 	}
 
