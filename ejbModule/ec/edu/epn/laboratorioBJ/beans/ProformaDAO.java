@@ -26,5 +26,6 @@ public interface ProformaDAO extends DaoGenerico<Proforma> {
 	Proforma buscarProformaById(String id);
 	LaboratorioLab obtenerLaboratorioByUsr(int id,int uni);
 	Metodo findMetodoById(String id);
+	List<Proforma> listaAllProformas(String id, int idUser, Proforma proforma, Date fechaInicio, Date fechaFin);
 
 }
