@@ -26,6 +26,10 @@ public interface PreplanificacionDocenciaDAO extends DaoGenerico<Preplanificacio
 			String codDep);
 
 	PreplanificacionDocencia findByPedido(Integer idPedido);
+	
+	List<DocenteDTO> listaDocentePreplanifc(String nombre, Integer idPensum, List<DocenteDTO> listaDocente,
+			String codDep);
+
 
 	
 
