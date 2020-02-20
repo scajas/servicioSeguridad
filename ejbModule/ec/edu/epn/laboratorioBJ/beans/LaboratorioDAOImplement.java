@@ -33,7 +33,6 @@ public class LaboratorioDAOImplement extends DaoGenericoImplement<LaboratorioLab
 	@Override
 	public List<LaboratorioLab> getListLabById(String id) {
 
-		System.out.println("idUnidad: " + id);
 		StringBuilder queryString = new StringBuilder(
 				"SELECT l FROM LaboratorioLab l where l.unidad.codigoU like '%" + id + "%' ORDER BY nombreL");
 		Query query = getEntityManager().createQuery(queryString.toString());
