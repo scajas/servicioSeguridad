@@ -2,9 +2,13 @@ package ec.edu.epn.laboratorioBJ.beans;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.Local;
 
+import org.primefaces.model.SortOrder;
+
+import ec.edu.epn.facturacion.entities.Factura;
 import ec.edu.epn.generic.DAO.DaoGenerico;
 import ec.edu.epn.laboratorioBJ.entities.Cliente;
 import ec.edu.epn.laboratorioBJ.entities.Detalleorden;
@@ -46,6 +50,23 @@ public interface OrdenTrabajoDAO extends DaoGenerico<OrdenTrabajo> {
 	Muestra muestraDefault();
 
 	List<Servicio> listarServiciosByLabType(int idUni, int idTipo);
+
+	List<OrdenTrabajo> listarOTFacturaByUnidadLab(String id, int idUser, OrdenTrabajo ordenTrabajo, Date fechaInicio,
+			Date fechaFin);
+
+	List<Factura> listarFacturasPagadas(int idUni, int idUsuario);
+
+	Cliente buscarClienteById(String id);
+
+	Long getTotalRegistros();
+
+	List<Factura> listarFacturasPagadas(int first, int pageSize, String sortField, boolean asc, int idUnidad,
+			int idUsuario);
+
+	List<Factura> listarFacturasPagadasFiltro(int first, int pageSize, String sortField,
+			Map<String, Object> filters, boolean asc, int idUnidad, int idUsuario);
+
+	int countFacturas(Map<String, Object> filters);
 	
 	
 }
