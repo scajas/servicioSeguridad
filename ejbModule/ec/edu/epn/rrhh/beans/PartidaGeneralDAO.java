@@ -15,4 +15,6 @@ public interface PartidaGeneralDAO extends DaoGenerico<PartidaGeneral>{
 	public List<PartidaGeneral> getPartidasGeneralesActivas();
 	
 	public int getMaxIDPartidasGenerales();
+	
+	public boolean isPartidaAntigua(String numeroPartida);
 }

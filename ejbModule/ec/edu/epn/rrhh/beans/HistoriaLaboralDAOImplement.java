@@ -59,6 +59,9 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%POSESI_%'"
 						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%VACACI_N%'"
 						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%REINTEGRO%'"
+						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%MULTA%'"
+						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%PERMISO%'"
+						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%SAB_TICO%'"
 						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%CUMPLIMIENTO DE SERVICIOS%'"
 						+ " and fam.id.idHist not in (select histo.id.idHist from HistoriaLaboral histo where "
 						+ " trim(histo.id.estado) = 'Insubsistente' or trim(histo.id.estado) = 'Anulado' "
@@ -408,19 +411,11 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 				" Select hl from HistoriaLaboral hl where  hl.emp.nced =?1 and hl.fechaRige = "
 						+ "(Select max(hist.fechaRige) from HistoriaLaboral hist where hist.emp.nced=?1 "
 						+ " and hist.fechaRige<=?2 " + " and (trim(hist.id.estado) = 'Finalizado' or "
-						+ " trim(hist.id.estado) = '\"Finalizado\"') and "
+						+ " trim(hist.id.estado) = '\"Finalizado\"' or trim(hist.id.estado)='Legalizado') and "
 						+ " hist.id.idHist not in (Select histo.id.idHist from HistoriaLaboral histo "
-						+ " where histo.emp.nced=?1 and"
-						+ " (trim(histo.id.estado)= ?3 or trim(histo.id.estado)=?4 or trim(histo.id.estado) = 'Duplicado')"
-						+ " or (histo.accionP.subtipoAccion.nombreSubaccion like ?5 or "
-						+ " histo.accionP.subtipoAccion.nombreSubaccion like ?6 or "
-						+ " histo.accionP.subtipoAccion.nombreSubaccion like ?7 or  "
-						+ " histo.accionP.subtipoAccion.nombreSubaccion like ?8 or "
-						+ " histo.accionP.subtipoAccion.nombreSubaccion like ?9 "
-						+ " or histo.accionP.subtipoAccion.tipoAccion.idTpa = 13))) " + " and hl.id.idHist not in "
-						+ " (Select histo.id.idHist from HistoriaLaboral histo "
-						+ " where histo.emp.nced=?1 and (trim(histo.id.estado)= ?3 or" + " trim(histo.id.estado)=?4"
-						+ " or trim(histo.id.estado) = 'Duplicado'))" + " order by hl.fechaRige desc ");
+						+ " where histo.emp.nced=?1 and "
+						+ " (trim(histo.id.estado)= ?3 or trim(histo.id.estado)=?4 or trim(histo.id.estado) = 'Duplicado'))) "
+						+ " order by hl.fechaRige desc ");
 
 		Query query = getEntityManager().createQuery(queryString.toString());
 
@@ -429,11 +424,12 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		query.setParameter(3, "Insubsistente");
 		query.setParameter(4, "Anulado");
 
+		/*
 		query.setParameter(5, "VACACI%");
 		query.setParameter(6, "LICENCIA POR MATERINDAD%");
 		query.setParameter(7, "LICENCIA POR PATERNIDAD%");
 		query.setParameter(8, "LICENCIA POR ENFERMEDAD%");
-		query.setParameter(9, "LICENCIA POR CUIDADO DEL RECIEN NACIDO%");
+		query.setParameter(9, "LICENCIA POR CUIDADO DEL RECIEN NACIDO%");*/
 
 		HistoriaLaboral resultado = null;
 		HistoriaLaboral ultimoContrato = null;
@@ -1712,9 +1708,11 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 					+ "hist.id.fechaI in (Select max(histo.id.fechaI) from HistoriaLaboral histo "
 					+ " where histo.emp.nced=?1 and trim(histo.nroDocumento)=?2"
 					+ " and hist.id.idHist=histo.id.idHist and"
-					+ " (trim(histo.id.estado)=?3 or trim(histo.id.estado)='Registrado' or trim(histo.id.estado)='Legalizado' or trim(histo.id.estado)='Legalizada' "
+					+ " (trim(histo.id.estado)=?3 or trim(histo.id.estado)='Registrado' "
+					+ "or trim(histo.id.estado)='Legalizado' or trim(histo.id.estado)='Legalizada' "
 					+ "or trim(histo.id.estado) = 'Elaborado')) "
-					+ "and hist.id.idHist not in (Select i.id.idHist from HistoriaLaboral i where (i.id.estado = 'Anulado' or i.id.estado='Duplicado') and i.emp.nced=?1)"
+					+ "and hist.id.idHist not in (Select i.id.idHist from HistoriaLaboral i where "
+					+ "(i.id.estado = 'Anulado' or i.id.estado='Duplicado') and i.emp.nced=?1)"
 					+ "order by hist.id.fechaI desc ");
 			isFinalizado = true;
 		} else {
