@@ -8,6 +8,7 @@ import javax.ejb.Local;
 
 import org.primefaces.model.SortOrder;
 
+import ec.edu.epn.facturacion.entities.EstadoFactura;
 import ec.edu.epn.facturacion.entities.Factura;
 import ec.edu.epn.generic.DAO.DaoGenerico;
 import ec.edu.epn.laboratorioBJ.entities.Cliente;
@@ -67,6 +68,16 @@ public interface OrdenTrabajoDAO extends DaoGenerico<OrdenTrabajo> {
 			Map<String, Object> filters, boolean asc, int idUnidad, int idUsuario);
 
 	int countFacturas(Map<String, Object> filters);
+
+	List<Muestra> listarMuestraByFactura(String idFactura);
+
+	EstadoFactura buscarEstadoFById(String id);
+
+	List<Servicio> listarServiciosByPro(String idProforma);
+
+	String maxIdOT(String id, String fecha);
+
+	Factura buscarFacturaById(String id);
 	
 	
 }
