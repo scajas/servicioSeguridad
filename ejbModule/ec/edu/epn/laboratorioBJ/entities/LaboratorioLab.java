@@ -50,6 +50,15 @@ public class LaboratorioLab implements Serializable {
 	@Column(name = "path")
 	private String path;
 
+	@Column(name = "nota1")
+	private String nota1;
+
+	@Column(name = "nota2")
+	private String nota2;
+
+	@Column(name = "nota3")
+	private String nota3;
+
 	// bi-directional many-to-one association to Unidad
 	@ManyToOne
 	@JoinColumn(name = "id_unidad")
@@ -178,5 +187,29 @@ public class LaboratorioLab implements Serializable {
 
 	public void setPath(String path) {
 		this.path = path;
+	}
+
+	public String getNota1() {
+		return nota1;
+	}
+
+	public void setNota1(String nota1) {
+		this.nota1 = nota1;
+	}
+
+	public String getNota2() {
+		return nota2;
+	}
+
+	public void setNota2(String nota2) {
+		this.nota2 = nota2;
+	}
+
+	public String getNota3() {
+		return nota3;
+	}
+
+	public void setNota3(String nota3) {
+		this.nota3 = nota3;
 	}
 }

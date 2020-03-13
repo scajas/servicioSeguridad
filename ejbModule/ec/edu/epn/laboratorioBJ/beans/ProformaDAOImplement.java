@@ -115,10 +115,11 @@ public class ProformaDAOImplement extends DaoGenericoImplement<Proforma> impleme
 					+ proforma.getCliente().getRucCl() + "%' " + "AND p.cliente.nombreCl like '%"
 					+ proforma.getCliente().getNombreCl() + "%' " + " ORDER BY p.idProforma");
 		} else if (fechaFin == null) {
-			setConsulta("SELECT p FROM Proforma p WHERE p.idProforma like '%" + proforma.getIdProforma() + "%' " + "AND p.estadoPo like '%"
-					+ proforma.getEstadoPo() + "%' " + "AND p.cliente.rucCl like '%" + proforma.getCliente().getRucCl()
-					+ "%' " + "AND p.cliente.nombreCl like '%" + proforma.getCliente().getNombreCl() + "%' "
-					+ "AND p.fecha = '" + cambioFecha(fechaInicio) + "'" + " ORDER BY p.idProforma");
+			setConsulta("SELECT p FROM Proforma p WHERE p.idProforma like '%" + proforma.getIdProforma() + "%' "
+					+ "AND p.estadoPo like '%" + proforma.getEstadoPo() + "%' " + "AND p.cliente.rucCl like '%"
+					+ proforma.getCliente().getRucCl() + "%' " + "AND p.cliente.nombreCl like '%"
+					+ proforma.getCliente().getNombreCl() + "%' " + "AND p.fecha = '" + cambioFecha(fechaInicio) + "'"
+					+ " ORDER BY p.idProforma");
 		} else {
 			setConsulta("SELECT p FROM Proforma p WHERE p.idProforma like '%" + proforma.getIdProforma() + "%' "
 					+ "AND p.estadoPo like '%" + proforma.getEstadoPo() + "%' " + "AND p.cliente.rucCl like '%"
@@ -134,7 +135,8 @@ public class ProformaDAOImplement extends DaoGenericoImplement<Proforma> impleme
 		Query query = getEntityManager().createQuery(queryString.toString());
 
 		List<Proforma> resultados = query.getResultList();
-		System.out.println("Estos son los resultados de todas las proformas: " + resultados.size() + "adc: " + getConsulta());
+		System.out.println(
+				"Estos son los resultados de todas las proformas: " + resultados.size() + "adc: " + getConsulta());
 		return resultados;
 	}
 
@@ -159,7 +161,8 @@ public class ProformaDAOImplement extends DaoGenericoImplement<Proforma> impleme
 	@Override
 	public List<DetalleProforma> listarDetalleProByIdPro(String id) {
 
-		setConsulta("SELECT d FROM DetalleProforma d where d.proforma.idProforma = '" + id + "'");
+		setConsulta("SELECT d FROM DetalleProforma d where d.proforma.idProforma = '" + id
+				+ "' ORDER BY d.servicio.nombreS DESC");
 
 		StringBuilder queryString = new StringBuilder(getConsulta());
 		Query query = getEntityManager().createQuery(queryString.toString());
@@ -172,7 +175,7 @@ public class ProformaDAOImplement extends DaoGenericoImplement<Proforma> impleme
 	@Override
 	public List<Servicio> listarServiciosByLab(String id) {
 
-		setConsulta("SELECT s FROM Servicio s WHERE s.laboratorio.unidad.idUnidad = 1  ORDER BY s.idServicio");
+		setConsulta("SELECT s FROM Servicio s WHERE s.laboratorio.unidad.idUnidad = " + id + " ORDER BY s.idServicio");
 
 		StringBuilder queryString = new StringBuilder(getConsulta());
 		Query query = getEntityManager().createQuery(queryString.toString());
@@ -245,7 +248,7 @@ public class ProformaDAOImplement extends DaoGenericoImplement<Proforma> impleme
 
 		try {
 			LaboratorioLab laboratorio = (LaboratorioLab) query.getSingleResult();
-			System.out.println("Este es lab que tras: " + laboratorio.getNombreL() + laboratorio.getUnidad());
+
 			return laboratorio;
 		} catch (NoResultException nre) {
 			return null;
@@ -279,6 +282,24 @@ public class ProformaDAOImplement extends DaoGenericoImplement<Proforma> impleme
 		String fechaFinal = format.format(fecha);
 
 		return fechaFinal;
+	}
+
+	@Override
+	public DetalleProforma getServicio(String id) {
+		StringBuilder querys = new StringBuilder("SELECT d FROM DetalleProforma d where d.proforma.idProforma = '" + id
+				+ "' ORDER BY d.servicio.nombreS DESC");
+		Query query = getEntityManager().createQuery(querys.toString());
+		query.setMaxResults(1);
+
+		try {
+			DetalleProforma detallePro = (DetalleProforma) query.getSingleResult();
+			return detallePro;
+		} catch (NoResultException nre) {
+			return null;
+		} catch (NonUniqueResultException nure) {
+			return null;
+		}
+
 	}
 
 	public String getConsulta() {
