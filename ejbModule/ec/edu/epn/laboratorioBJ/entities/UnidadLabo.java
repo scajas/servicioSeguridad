@@ -64,6 +64,9 @@ public class UnidadLabo implements Serializable {
 	@Column(name = "telefono_u")
 	private String telefonoU;
 	
+	@Column(name = "url")
+	private String url;
+
 	@Column(name = "nota1")
 	private String nota1;
 
@@ -208,6 +211,14 @@ public class UnidadLabo implements Serializable {
 		this.telefonoU = telefonoU;
 	}
 
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+	
 	public String getNota1() {
 		return nota1;
 	}
