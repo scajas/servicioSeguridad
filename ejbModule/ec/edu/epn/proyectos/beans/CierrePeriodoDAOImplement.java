@@ -39,7 +39,7 @@ public class CierrePeriodoDAOImplement extends DaoGenericoImplement<CierrePeriod
 
 		}
 
-		querys.append(" order by e.meses DESC");
+		querys.append(" and  e.idPensum > 17  order by e.meses DESC");
 
 		Query query = getEntityManager().createQuery(querys.toString());
 		query.setParameter(1, idproy);
@@ -277,5 +277,8 @@ public class CierrePeriodoDAOImplement extends DaoGenericoImplement<CierrePeriod
 		
 		return numero;
 	}
+	
+	
+	
 
 }
