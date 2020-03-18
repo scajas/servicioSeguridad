@@ -14,8 +14,6 @@ import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.Query;
 
-
-
 import ec.edu.epn.generic.DAO.DaoGenericoImplement;
 import ec.edu.epn.rrhh.DTO.DocenteDTO;
 import ec.edu.epn.rrhh.DTO.DocenteDTORrhh;
@@ -25,7 +23,6 @@ import ec.edu.epn.rrhh.movimientos.HistoriaLaboral;
 
 @Stateless
 public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLaboral> implements HistoriaLaboralDAO {
-
 
 	@Override
 	public List<HistoriaLaboral> findHistoriaByEmp(Emp emp) {
@@ -41,44 +38,39 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		return resultado;
 
 	}
-	
+
 	@Override
 	public List<HistoriaLaboral> findHistoriaLaboralLimpia(Emp emp) {
-		StringBuilder queryString = new StringBuilder(
-				" SELECT " + "fam FROM HistoriaLaboral fam where " + "fam.emp.nced =?1  "
-						+ " and fam.accionP is not null "
-						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%SIN IMPRESION' "
-						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like 'ACTUALIZACI_N%' "
-						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%INSUBSISTENCIA%' "
-						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%LICENCIA%'"
-						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%COMISI_N%'"
-						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%FINALIZACI_%'"
-						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%DESIGNACI_N%'"
-						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%SUBROGACI_N%'"
-						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%ENCARGO%'"
-						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%POSESI_%'"
-						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%VACACI_N%'"
-						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%REINTEGRO%'"
-						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%MULTA%'"
-						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%PERMISO%'"
-						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%SAB_TICO%'"
-						+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%CUMPLIMIENTO DE SERVICIOS%'"
-						+ " and fam.id.idHist not in (select histo.id.idHist from HistoriaLaboral histo where "
-						+ " trim(histo.id.estado) = 'Insubsistente' or trim(histo.id.estado) = 'Anulado' "
-						+ " or trim(histo.id.estado) = 'Duplicado') "
-						+ " and (fam.id.estado = 'Finalizado' or fam.id.estado = 'Legalizado' or "
-						+ " fam.id.estado = 'Legalizada' or fam.id.estado = 'Rectificada' or fam.id.estado = 'Rectificado' )"
-						+ " and fam.id.fechaI = "
-						+ "(Select max(t.id.fechaI) from HistoriaLaboral t where t.id.idHist=fam.id.idHist "
-								+ " and t.accionP is not null	"								
-								+ " and (t.id.estado = 'Finalizado' or t.id.estado = 'Legalizado' or "
-								+ " t.id.estado = 'Legalizada' or t.id.estado = 'Rectificada' "
-								+ " or t.id.estado = 'Rectificado' )"
-								+ "and t.id.idHist not in "
-								+ " (select histo.id.idHist from HistoriaLaboral histo where " 
-								+ " trim(histo.id.estado) = 'Insubsistente' or trim(histo.id.estado) = 'Anulado' "  
-								+ " or trim(histo.id.estado) = 'Duplicado')"
-								+ " )");
+		StringBuilder queryString = new StringBuilder(" SELECT " + "fam FROM HistoriaLaboral fam where "
+				+ "fam.emp.nced =?1  " + " and fam.accionP is not null "
+				+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%SIN IMPRESION' "
+				+ " and fam.accionP.subtipoAccion.nombreSubaccion not like 'ACTUALIZACI_N%' "
+				+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%INSUBSISTENCIA%' "
+				+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%LICENCIA%'"
+				+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%COMISI_N%'"
+				+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%FINALIZACI_%'"
+				+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%DESIGNACI_N%'"
+				+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%SUBROGACI_N%'"
+				+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%ENCARGO%'"
+				+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%POSESI_%'"
+				+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%VACACI_N%'"
+				+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%REINTEGRO%'"
+				+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%MULTA%'"
+				+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%PERMISO%'"
+				+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%SAB_TICO%'"
+				+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%CUMPLIMIENTO DE SERVICIOS%'"
+				+ " and fam.id.idHist not in (select histo.id.idHist from HistoriaLaboral histo where "
+				+ " trim(histo.id.estado) = 'Insubsistente' or trim(histo.id.estado) = 'Anulado' "
+				+ " or trim(histo.id.estado) = 'Duplicado') "
+				+ " and (fam.id.estado = 'Finalizado' or fam.id.estado = 'Legalizado' or "
+				+ " fam.id.estado = 'Legalizada' or fam.id.estado = 'Rectificada' or fam.id.estado = 'Rectificado' )"
+				+ " and fam.id.fechaI = "
+				+ "(Select max(t.id.fechaI) from HistoriaLaboral t where t.id.idHist=fam.id.idHist "
+				+ " and t.accionP is not null	" + " and (t.id.estado = 'Finalizado' or t.id.estado = 'Legalizado' or "
+				+ " t.id.estado = 'Legalizada' or t.id.estado = 'Rectificada' " + " or t.id.estado = 'Rectificado' )"
+				+ "and t.id.idHist not in " + " (select histo.id.idHist from HistoriaLaboral histo where "
+				+ " trim(histo.id.estado) = 'Insubsistente' or trim(histo.id.estado) = 'Anulado' "
+				+ " or trim(histo.id.estado) = 'Duplicado')" + " )");
 
 		Query query = getEntityManager().createQuery(queryString.toString());
 		query.setParameter(1, emp.getNced());
@@ -318,18 +310,15 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 			return countOfHistorias;
 		}
 	}
-	
+
 	@Override
-	public Object findHistoriasSinDocsCargados(boolean isOnlyCount, String nroDocumento, String nombreAccion, int firstResult,
-			int maxResult) {
+	public Object findHistoriasSinDocsCargados(boolean isOnlyCount, String nroDocumento, String nombreAccion,
+			int firstResult, int maxResult) {
 		StringBuilder queryString = new StringBuilder("");
 		String count = "Select count(hl) ";
 		String fullQuerySelect = "Select hl ";
-		String queryPredicate = " from HistoriaLaboral hl "
-				+ " where "
-				+ " hl.accionP.id.idAccionp IS NOT NULL "
-				+ " and (hl.dependencia IS NOT NULL or hl.cargosm IS NOT NULL) "
-				+ " and hl.fechaRige >= '01/06/2018' "
+		String queryPredicate = " from HistoriaLaboral hl " + " where " + " hl.accionP.id.idAccionp IS NOT NULL "
+				+ " and (hl.dependencia IS NOT NULL or hl.cargosm IS NOT NULL) " + " and hl.fechaRige >= '01/06/2018' "
 				+ " and hl.accionP.subtipoAccion.nombreSubaccion not like '%SIN IMPRESION' "
 				+ " and hl.accionP.subtipoAccion.nombreSubaccion not like 'ACTUALIZACI_N%' "
 				+ " and hl.accionP.subtipoAccion.nombreSubaccion not like '%SIN REGISTRO' "
@@ -338,10 +327,8 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 				+ " doc.xpath is null and "
 				+ " (doc.historiaLaboral.id.estado = 'Finalizado' or doc.historiaLaboral.id.estado = 'Legalizado') ) "
 				+ " and hl.id.idHist not in (select histo.id.idHist from HistoriaLaboral histo where "
-				+ " histo.id.estado = 'Insubsistente' or histo.id.estado = 'Anulado' ) "
-				+ " and hl.id.fechaI = "
+				+ " histo.id.estado = 'Insubsistente' or histo.id.estado = 'Anulado' ) " + " and hl.id.fechaI = "
 				+ " (Select max(hist.id.fechaI) from HistoriaLaboral hist where hist.id.idHist = hl.id.idHist ";
-
 
 		if (nroDocumento != null) {
 			queryPredicate += "and hist.nroDocumento like '" + nroDocumento + "%' ";
@@ -425,11 +412,12 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		query.setParameter(4, "Anulado");
 
 		/*
-		query.setParameter(5, "VACACI%");
-		query.setParameter(6, "LICENCIA POR MATERINDAD%");
-		query.setParameter(7, "LICENCIA POR PATERNIDAD%");
-		query.setParameter(8, "LICENCIA POR ENFERMEDAD%");
-		query.setParameter(9, "LICENCIA POR CUIDADO DEL RECIEN NACIDO%");*/
+		 * query.setParameter(5, "VACACI%"); query.setParameter(6,
+		 * "LICENCIA POR MATERINDAD%"); query.setParameter(7,
+		 * "LICENCIA POR PATERNIDAD%"); query.setParameter(8,
+		 * "LICENCIA POR ENFERMEDAD%"); query.setParameter(9,
+		 * "LICENCIA POR CUIDADO DEL RECIEN NACIDO%");
+		 */
 
 		HistoriaLaboral resultado = null;
 		HistoriaLaboral ultimoContrato = null;
@@ -622,8 +610,7 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 
 		StringBuilder queryString = new StringBuilder("Select count(hl) from HistoriaLaboral "
 				+ " hl where hl.emp.nced =?1 " + " and (hl.id.estado = 'Legalizado' or hl.id.estado = 'Finalizado'"
-						+ "or hl.id.estado = 'Elaborado' ) "
-				+ " and hl.accionP.subtipoAccion.nombreSubaccion = ?2 and "
+				+ "or hl.id.estado = 'Elaborado' ) " + " and hl.accionP.subtipoAccion.nombreSubaccion = ?2 and "
 				+ " ((?3 between hl.fechaRige and hl.fechaFin) " + " or (?4 between hl.fechaRige and hl.fechaFin)) and "
 				+ " hl.id.idHist not in (select histo.id.idHist from HistoriaLaboral histo "
 				+ " where (histo.id.estado = 'Anulado' or histo.id.estado = 'Insubsistente') and"
@@ -1203,26 +1190,23 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		query.setParameter(3, "Finalizado");
 		query.setParameter(4, "Anulado");
 		query.setParameter(5, "Insubsistente");
-	
-		return (HistoriaLaboral) query.getResultList().get(0);
-		
-		
-	}
-	
+		if (query.getResultList().isEmpty()) {
+			return null;
+		} else {
+			return (HistoriaLaboral) query.getResultList().get(0);
+		}
 
+	}
 
 	@Override
 	public HistoriaLaboral getMostRecentNombramientoByEmp(Emp emp) {
-		StringBuilder queryString = new StringBuilder("Select hl from HistoriaLaboral "
-				+ "hl where hl.id.fechaI ="
+		StringBuilder queryString = new StringBuilder("Select hl from HistoriaLaboral " + "hl where hl.id.fechaI ="
 				+ "(Select max(hist.id.fechaI) from HistoriaLaboral hist where "
 				+ " hist.emp.nced=?1 and (TRIM(hist.accionP.subtipoAccion.nombreSubaccion) like ?2 "
-				+  "or hist.accionP.subtipoAccion.idStpa in (334) ) "
-				+ " and hist.id.estado=?3 "
+				+ "or hist.accionP.subtipoAccion.idStpa in (334) ) " + " and hist.id.estado=?3 "
 				+ " and hist.accionP is not null and hist.id.idHist not in (Select histo.id.idHist from HistoriaLaboral histo "
 				+ " where histo.emp.nced=?1 and (histo.id.estado= ?4 or histo.id.estado=?5) order by hist.fechaRige desc))"
-				+ " and hl.emp.nced = ?1"
-				+ " and (TRIM(hl.accionP.subtipoAccion.nombreSubaccion) like ?2 "
+				+ " and hl.emp.nced = ?1" + " and (TRIM(hl.accionP.subtipoAccion.nombreSubaccion) like ?2 "
 				+ " or hl.accionP.subtipoAccion.idStpa in (334)) and "
 				+ " (hl.fechaFin = '4900/01/31' or hl.fechaFin is null) ");
 
@@ -1512,13 +1496,12 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		// Calcula el numero de documento basandose en el último número de la
 		// última historia
 		// laboral que también sea una acción de personal (Excluye contratos)
-		StringBuilder queryString = new StringBuilder("SELECT fam FROM HistoriaLaboral " 
-				+ " fam where fam.id.idHist="
+		StringBuilder queryString = new StringBuilder("SELECT fam FROM HistoriaLaboral " + " fam where fam.id.idHist="
 				+ "(Select max(hist.id.idHist) from HistoriaLaboral hist " + " "
 				+ " where year(hist.id.fechaI) =?1 and hist.id.fechaI<  ?2 "
 				+ "and hist.accionP.id.idAccionp IS NOT NULL and hist.id.idHist not in "
-				+ "(Select hl.id.idHist from HistoriaLaboral "
-				+ "hl where hl.id.estado='Registrado'" + "))" + "" + "  ");
+				+ "(Select hl.id.idHist from HistoriaLaboral " + "hl where hl.id.estado='Registrado'" + "))" + ""
+				+ "  ");
 
 		Query query = getEntityManager().createQuery(queryString.toString());
 		Date dt = new Date();
@@ -1528,8 +1511,8 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		dt = c.getTime();
 		query.setParameter(1, year);
 		query.setParameter(2, dt);
-	    Pattern pattern = Pattern.compile("[0-9]+-[0-9]{4}");
-	    Matcher matcher;
+		Pattern pattern = Pattern.compile("[0-9]+-[0-9]{4}");
+		Matcher matcher;
 		List<HistoriaLaboral> resultado = query.getResultList();
 		if (resultado.size() <= 0) {
 			return 1;
@@ -1538,13 +1521,12 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 			for (HistoriaLaboral hl : resultado) {
 				if (hl.getNroDocumento() != null) {
 					matcher = pattern.matcher(hl.getNroDocumento().trim());
-					matcher.find();					
-					if(matcher.matches()) {						
-						int nroDocumento = 
-								Integer.parseInt(hl.getNroDocumento().split("-")[0]);
+					matcher.find();
+					if (matcher.matches()) {
+						int nroDocumento = Integer.parseInt(hl.getNroDocumento().split("-")[0]);
 						nroDocumento++;
 						return nroDocumento;
-					}					
+					}
 				}
 			}
 			return 1;
@@ -1985,15 +1967,15 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		if (maxResult > 0) {
 			query.setMaxResults(maxResult);
 		}
-		if(isOnlyCount) {
+		if (isOnlyCount) {
 			int count = ((Long) query.getSingleResult()).intValue();
 			return count;
-			
-		}else {
+
+		} else {
 			List<HistoriaLaboral> licenciasVencidas = query.getResultList();
 			return licenciasVencidas;
 		}
-		
+
 	}
 
 	// Get Licencias Activas
@@ -2401,12 +2383,10 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 
 	@Override
 	public List<HistoriaLaboral> findContByEmp(Emp emp) {
-		StringBuilder queryString = new StringBuilder(
-				"SELECT " + "fam FROM HistoriaLaboral fam where " + "fam.emp.nced =?1 and fam.id.fechaI = "
-						+ " (Select max(t.id.fechaI) " + "from HistoriaLaboral t where t.id.idHist=fam.id.idHist) "
-						+ " and fam.accionP is null "
-						+ " and fam.id.estado = 'Elaborado' "					
-						+ " order by fam.fechaRige desc");
+		StringBuilder queryString = new StringBuilder("SELECT " + "fam FROM HistoriaLaboral fam where "
+				+ "fam.emp.nced =?1 and fam.id.fechaI = " + " (Select max(t.id.fechaI) "
+				+ "from HistoriaLaboral t where t.id.idHist=fam.id.idHist) " + " and fam.accionP is null "
+				+ " and fam.id.estado = 'Elaborado' " + " order by fam.fechaRige desc");
 
 		Query query = getEntityManager().createQuery(queryString.toString());
 
@@ -3385,115 +3365,116 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 
 		return resultado;
 	}
-	
+
 	@Override
-	public List<DocenteDTORrhh> historiaLaboralxPeriodo(Integer idPensum,  String nced, String nombre, String apellido, String dependenciaId)throws Exception {
-		
+	public List<DocenteDTORrhh> historiaLaboralxPeriodo(Integer idPensum, String nced, String nombre, String apellido,
+			String dependenciaId) throws Exception {
+
 		List<DocenteDTORrhh> val = new ArrayList<DocenteDTORrhh>();
 		Query query = null;
-		query = getEntityManager().createNativeQuery("SELECT  * FROM \"Rrhh\".bi_reportecargodeprrhh_th_rep(?,?,?,?,?);");
-		
+		query = getEntityManager()
+				.createNativeQuery("SELECT  * FROM \"Rrhh\".bi_reportecargodeprrhh_th_rep(?,?,?,?,?);");
+
 		query.setParameter(1, idPensum);
 		query.setParameter(2, nced);
 		query.setParameter(3, nombre);
 		query.setParameter(4, apellido);
 		query.setParameter(5, dependenciaId);
-		
+
 		List<?> lists = query.getResultList();
-		
+
 		if (!lists.isEmpty()) {
 			for (Object list : lists) {
 				DocenteDTORrhh oval = new DocenteDTORrhh();
 				Object[] col = (Object[]) list;
 				if (col[0] != null && col[0].toString().length() != 0)
-					oval.setnCed(col[0]==null? "" : col[0].toString());
-				
-				
-				if (col[1] != null && col[1].toString().length() != 0){
-					String dato= null;
-					dato=(col[1]==null ? "" : col[1].toString());
+					oval.setnCed(col[0] == null ? "" : col[0].toString());
+
+				if (col[1] != null && col[1].toString().length() != 0) {
+					String dato = null;
+					dato = (col[1] == null ? "" : col[1].toString());
 					oval.setNombre(dato);
-					
+
 				}
-				
-				if (col[2] != null && col[2].toString().length() != 0){
-					String dato= null;
-					dato=(col[2]==null ? "" : col[2].toString());
+
+				if (col[2] != null && col[2].toString().length() != 0) {
+					String dato = null;
+					dato = (col[2] == null ? "" : col[2].toString());
 					oval.setApel(dato);
-					
+
 				}
-				
-				if (col[3] != null && col[3].toString().length() != 0){
-					String dato= null;
-					dato=(col[3]==null ? "" : col[3].toString());
-					//oval.setFechaIngresoEPN(dato);
-					
+
+				if (col[3] != null && col[3].toString().length() != 0) {
+					String dato = null;
+					dato = (col[3] == null ? "" : col[3].toString());
+					// oval.setFechaIngresoEPN(dato);
+
 				}
-				
-				if (col[4] != null && col[4].toString().length() != 0){
-					String dato= null;
-					dato=(col[4]==null ? "" : col[4].toString());
+
+				if (col[4] != null && col[4].toString().length() != 0) {
+					String dato = null;
+					dato = (col[4] == null ? "" : col[4].toString());
 					oval.setCargo(dato);
-					
+
 				}
-				
-				if (col[5] != null && col[5].toString().length() != 0){
-					String dato= null;
-					dato=(col[5]==null ? "" : col[5].toString());
+
+				if (col[5] != null && col[5].toString().length() != 0) {
+					String dato = null;
+					dato = (col[5] == null ? "" : col[5].toString());
 					oval.setDedicacion(dato);
-					
+
 				}
-				
-				if (col[6] != null && col[6].toString().length() != 0){
-					String dato= null;
-					dato=(col[6]==null ? "" : col[6].toString());
+
+				if (col[6] != null && col[6].toString().length() != 0) {
+					String dato = null;
+					dato = (col[6] == null ? "" : col[6].toString());
 					oval.setRelacionLab(dato);
-					
+
 				}
-				
-				if (col[7] != null && col[7].toString().length() != 0){
-					String dato= null;
-					dato=(col[7]==null ? "" : col[7].toString());
+
+				if (col[7] != null && col[7].toString().length() != 0) {
+					String dato = null;
+					dato = (col[7] == null ? "" : col[7].toString());
 					oval.setNomDepartamento(dato);
-					
+
 				}
-				
-				if (col[10] != null && col[10].toString().length() != 0){
-					String dato= null;
-					dato=(col[10]==null ? "" : col[10].toString());
+
+				if (col[10] != null && col[10].toString().length() != 0) {
+					String dato = null;
+					dato = (col[10] == null ? "" : col[10].toString());
 					oval.setNroDocumento(dato);
-					
+
 				}
-				
-				if (col[11] != null && col[10].toString().length() != 0){
-					Date fecha= null;
-					fecha =(Date) (col[11]==null ? null : col[11]);
+
+				if (col[11] != null && col[10].toString().length() != 0) {
+					Date fecha = null;
+					fecha = (Date) (col[11] == null ? null : col[11]);
 					oval.setFechaRige(fecha);
-					
+
 				}
-				
-				if (col[12] != null && col[12].toString().length() != 0){
-					Date fecha= null;
-					fecha =(Date) (col[12]==null ? null : col[12]);
+
+				if (col[12] != null && col[12].toString().length() != 0) {
+					Date fecha = null;
+					fecha = (Date) (col[12] == null ? null : col[12]);
 					oval.setFechaFin(fecha);
-					
+
 				}
-				
-				if (col[13] != null && col[13].toString().length() != 0){
-					Double rmu= null;
-					rmu =(Double) (col[13]==null ? null : col[13]);
+
+				if (col[13] != null && col[13].toString().length() != 0) {
+					Double rmu = null;
+					rmu = (Double) (col[13] == null ? null : col[13]);
 					oval.setRemreal(rmu);
-					
+
 				}
 				val.add(oval);
 			}
-		
-		}else{
-			val= null;
+
+		} else {
+			val = null;
 		}
-		
+
 		return val;
-		
+
 	}
 
 }
