@@ -10,6 +10,7 @@ import org.primefaces.model.SortOrder;
 
 import ec.edu.epn.facturacion.entities.EstadoFactura;
 import ec.edu.epn.facturacion.entities.Factura;
+import ec.edu.epn.facturacion.entities.TransferenciaInterna;
 import ec.edu.epn.generic.DAO.DaoGenerico;
 import ec.edu.epn.laboratorioBJ.entities.Cliente;
 import ec.edu.epn.laboratorioBJ.entities.Detalleorden;
@@ -18,6 +19,7 @@ import ec.edu.epn.laboratorioBJ.entities.Metodo;
 import ec.edu.epn.laboratorioBJ.entities.Muestra;
 import ec.edu.epn.laboratorioBJ.entities.OrdenTrabajo;
 import ec.edu.epn.laboratorioBJ.entities.PersonalLab;
+import ec.edu.epn.laboratorioBJ.entities.Proforma;
 import ec.edu.epn.laboratorioBJ.entities.Servicio;
 
 @Local
@@ -78,6 +80,19 @@ public interface OrdenTrabajoDAO extends DaoGenerico<OrdenTrabajo> {
 	String maxIdOT(String id, String fecha);
 
 	Factura buscarFacturaById(String id);
+
+	List<OrdenTrabajo> listarOTTransByUnidadLab(String id, int idUser, OrdenTrabajo ordenTrabajo, Date fechaInicio,
+			Date fechaFin);
+
+	List<TransferenciaInterna> listarTransferenciasInternas();
+
+	List<Muestra> listarMuestraByTI(String idTI);
+
+	Proforma buscarProformaById(String id);
+
+	String maxIdOTT(String id, String fecha);
+
+	TransferenciaInterna buscarTransferenciaById(String id);
 	
 	
 }
