@@ -37,30 +37,40 @@ public class ProformaDAOImplement extends DaoGenericoImplement<Proforma> impleme
 	}
 
 	@Override
-	public List<Proforma> getparametrosCliente(String fechaInicio, String fechaFin, Integer tipoCliente,
+	public List<Proforma> getparametrosCliente(String fechaInicio, String fechaFin, String tipoCliente,
 			String estadoPro) {
-		if (tipoCliente == 0) {
+
+		if (tipoCliente.equals("") && estadoPro.equals("")) {
+
 			setConsulta("SELECT p FROM Proforma p, Cliente c, Tipocliente tc, Usuario u, UnidadLabo uni "
-					+ "WHERE p.cliente.idCliente = c.idCliente " + "AND c.tipocliente.idTipocliente=tc.idTipocliente "
-					+ "AND p.idUsuario = u.id " + "AND u.id_unidad = uni.idUnidad " + "AND p.estadoPo like '%"
-					+ estadoPro + "%' AND p.fecha BETWEEN '" + fechaInicio + "' " + "AND '" + fechaFin + "'");
-		} else if (estadoPro.equals(null)) {
+					+ "WHERE p.cliente.idCliente = c.idCliente " + "AND c.tipocliente.idTipocliente = tc.idTipocliente "
+					+ "AND p.idUsuario = u.id " + "AND u.id_unidad = uni.idUnidad " + " AND p.fecha BETWEEN '"
+					+ fechaInicio + "' " + "AND '" + fechaFin + "' " + " ORDER BY p.idProforma");
+		}
+
+		else if (tipoCliente.equals("")) {
+
+			setConsulta("SELECT p FROM Proforma p, Cliente c, Tipocliente tc, Usuario u, UnidadLabo uni "
+					+ "WHERE p.cliente.idCliente = c.idCliente " + "AND c.tipocliente.idTipocliente = tc.idTipocliente "
+					+ "AND p.idUsuario = u.id " + "AND u.id_unidad = uni.idUnidad " + "AND p.estadoPo like '"
+					+ estadoPro + "' AND p.fecha BETWEEN '" + fechaInicio + "' " + "AND '" + fechaFin + "' "
+					+ " ORDER BY p.idProforma");
+		} else if (estadoPro.equals("")) {
+
 			setConsulta("SELECT p FROM Proforma p, Cliente c, Tipocliente tc, Usuario u, UnidadLabo uni  "
-					+ "WHERE p.cliente.idCliente = c.idCliente " + "AND c.tipocliente.idTipocliente= tc.idTipocliente "
+					+ "WHERE p.cliente.idCliente = c.idCliente " + "AND c.tipocliente.idTipocliente = tc.idTipocliente "
 					+ "AND p.idUsuario = u.id " + "AND u.id_unidad = uni.idUnidad "
-					+ "AND p.cliente.tipocliente.idTipocliente like '%" + tipoCliente + "%' " + "AND p.fecha BETWEEN '"
-					+ fechaInicio + "' AND '" + fechaFin + "'");
+					+ "AND p.cliente.tipocliente.tipoTcl like '" + tipoCliente + "' " + "AND p.fecha BETWEEN '"
+					+ fechaInicio + "' AND '" + fechaFin + "' " + " ORDER BY p.idProforma");
 		} else {
 
 			setConsulta("SELECT p FROM Proforma p, Cliente c, Tipocliente tc, Usuario u, UnidadLabo uni  "
-					+ "WHERE p.cliente.idCliente = c.idCliente " + "AND c.tipocliente.idTipocliente= tc.idTipocliente "
+					+ "WHERE p.cliente.idCliente = c.idCliente " + "AND c.tipocliente.idTipocliente = tc.idTipocliente "
 					+ "AND p.idUsuario = u.id " + "AND u.id_unidad = uni.idUnidad "
-					+ "AND p.cliente.tipocliente.idTipocliente like '%" + tipoCliente + "%' " + "AND p.estadoPo like '%"
-					+ estadoPro + "%' " + "AND p.fecha BETWEEN '" + fechaInicio + "' AND '" + fechaFin + "'");
+					+ "AND p.cliente.tipocliente.tipoTcl like '" + tipoCliente + "' " + "AND p.estadoPo like '"
+					+ estadoPro + "' " + "AND p.fecha BETWEEN '" + fechaInicio + "' AND '" + fechaFin + "' "
+					+ " ORDER BY p.idProforma");
 		}
-
-		System.out.println("FECHA DESDE: " + fechaInicio + " HASTA: " + fechaFin);
-		System.out.println("Consulta: " + getConsulta());
 
 		StringBuilder queryString = new StringBuilder(getConsulta());
 		Query query = getEntityManager().createQuery(queryString.toString());

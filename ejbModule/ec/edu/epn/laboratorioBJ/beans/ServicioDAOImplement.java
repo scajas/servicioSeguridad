@@ -76,13 +76,17 @@ public class ServicioDAOImplement extends DaoGenericoImplement<Servicio> impleme
 
 	/////
 	@Override
-	public List<Servicio> getparametrosTipoServicio(String tiposervicio) {
+	public List<Servicio> getparametrosTipoServicio(String tiposervicio, int idUnidad) {
 
 		StringBuilder queryString = new StringBuilder(
-				"SELECT b FROM Servicio b where b.tiposervicio.nombreTs like '%" + tiposervicio + "%'");
+				"SELECT DISTINCT (s) FROM Servicio s, LaboratorioLab l, Tiposervicio ts, UnidadLabo u "
+						+ "WHERE s.laboratorio.idLaboratorio = l.idLaboratorio AND "
+						+ "s.tiposervicio.idTiposerv = ts.idTiposerv AND "
+						+ "s.laboratorio.unidad.idUnidad = u.idUnidad AND " 
+						+ "u.idUnidad = " + idUnidad 
+						+ " AND s.tiposervicio.nombreTs like '" + tiposervicio + "' ORDER BY s.nombreS");
 		Query query = getEntityManager().createQuery(queryString.toString());
 		List<Servicio> resultados = query.getResultList();
-
 		return resultados;
 	}
 
