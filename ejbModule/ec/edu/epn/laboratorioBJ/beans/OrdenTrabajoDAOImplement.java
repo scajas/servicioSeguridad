@@ -25,6 +25,7 @@ import org.primefaces.model.SortOrder;
 
 import ec.edu.epn.facturacion.entities.EstadoFactura;
 import ec.edu.epn.facturacion.entities.Factura;
+import ec.edu.epn.facturacion.entities.TransferenciaInterna;
 import ec.edu.epn.generic.DAO.DaoGenericoImplement;
 import ec.edu.epn.laboratorioBJ.entities.Bodega;
 import ec.edu.epn.laboratorioBJ.entities.Cliente;
@@ -171,6 +172,57 @@ public class OrdenTrabajoDAOImplement extends DaoGenericoImplement<OrdenTrabajo>
 
 		return resultados;
 	}
+	
+	@Override
+	public List<OrdenTrabajo> listarOTTransByUnidadLab(String id, int idUser, OrdenTrabajo ordenTrabajo,
+			Date fechaInicio, Date fechaFin) {
+
+		if (fechaInicio == null) {
+			setConsulta("SELECT o FROM OrdenTrabajo o WHERE "
+					+ "o.idOrden like '%" + ordenTrabajo.getIdOrden() + "%' " 
+					+ "AND o.cliente.rucCl like '%" + ordenTrabajo.getCliente().getRucCl() + "%' " 
+					+ "AND o.cliente.nombreCl like '%" + ordenTrabajo.getCliente().getNombreCl() + "%' " 
+					+ "AND o.cliente.cedula like '%" + ordenTrabajo.getCliente().getCedula() + "%' " 
+					+ "AND o.idTi like '%" + ordenTrabajo.getIdTi() + "%' " 
+					+ "AND o.idOrden like '" + id + "%' "
+					+ "AND o.tipoOt = 'Externa Transf.' "
+					+ " ORDER BY o.idOrden");
+		} else if (fechaFin == null) {
+			setConsulta("SELECT o FROM OrdenTrabajo o WHERE "
+					+ "o.idOrden like '%" + ordenTrabajo.getIdOrden() + "%' " 
+					+ "AND o.cliente.rucCl like '%" + ordenTrabajo.getCliente().getRucCl() + "%' " 
+					+ "AND o.cliente.nombreCl like '%" + ordenTrabajo.getCliente().getNombreCl() + "%' " 
+					+ "AND o.cliente.cedula like '%" + ordenTrabajo.getCliente().getCedula() + "%' " 
+					+ "AND o.idTi like '%" + ordenTrabajo.getIdTi() + "%' " 
+					+ "AND o.idOrden like '" + id + "%' "
+					+ "AND o.tipoOt = 'Externa Transf.' "
+					+ "AND o.fechaordenOt = '" + cambioFecha(fechaInicio) + "'" + " ORDER BY o.idOrden");
+		} else {
+			setConsulta("SELECT o FROM OrdenTrabajo o WHERE  "
+					+ "o.idOrden like '%" + ordenTrabajo.getIdOrden() + "%' " 
+					+ "AND o.cliente.rucCl like '%" + ordenTrabajo.getCliente().getRucCl() + "%' " 
+					+ "AND o.cliente.cedula like '%" + ordenTrabajo.getCliente().getCedula() + "%' " 
+					+ "AND o.cliente.nombreCl like '%" + ordenTrabajo.getCliente().getNombreCl() + "%' " 
+					+ "AND o.idTi like '%" + ordenTrabajo.getIdTi() + "%' " 
+					+ "AND o.idOrden like '" + id + "%' "
+					+ "AND o.tipoOt = 'Externa Transf.' "
+					+ "AND o.fechaordenOt BETWEEN '" + cambioFecha(fechaInicio) + "' AND '" + cambioFecha(fechaFin)
+					+ "' ORDER BY o.idOrden");
+		}
+
+		// System.out.println("idUnidad: " + id);
+		// System.out.println("idUsuario: " + idUser);
+		
+		//System.out.println(getConsulta());
+
+		StringBuilder queryString = new StringBuilder(getConsulta());
+		Query query = getEntityManager().createQuery(queryString.toString());
+
+		List<OrdenTrabajo> resultados = query.getResultList();
+		System.out.println("Estos son los resultadoaaaas: " + resultados.size());
+
+		return resultados;
+	}
 
 	@Override
 	public List<Servicio> listarServiciosByLabType(int idUni, int idTipo) {
@@ -230,6 +282,34 @@ public class OrdenTrabajoDAOImplement extends DaoGenericoImplement<OrdenTrabajo>
 		Query query = getEntityManager().createQuery(queryString.toString());
 
 		List<Muestra> resultados = query.getResultList();
+		System.out.println("Estos son los resultados muestra: " + resultados.size());
+		return resultados;
+
+	}
+	
+	@Override
+	public List<Muestra> listarMuestraByTI(String idTI) {
+
+		setConsulta("SELECT m FROM Muestra m WHERE m.idTi = '" + idTI + "'");
+
+		StringBuilder queryString = new StringBuilder(getConsulta());
+		Query query = getEntityManager().createQuery(queryString.toString());
+
+		List<Muestra> resultados = query.getResultList();
+		System.out.println("Estos son los resultados muestra: " + resultados.size());
+		return resultados;
+
+	}
+	
+	@Override
+	public List<TransferenciaInterna> listarTransferenciasInternas() {
+
+		setConsulta("SELECT t FROM TransferenciaInterna t");
+
+		StringBuilder queryString = new StringBuilder(getConsulta());
+		Query query = getEntityManager().createQuery(queryString.toString());
+
+		List<TransferenciaInterna> resultados = query.getResultList();
 		System.out.println("Estos son los resultados muestra: " + resultados.size());
 		return resultados;
 
@@ -409,8 +489,33 @@ public class OrdenTrabajoDAOImplement extends DaoGenericoImplement<OrdenTrabajo>
 		System.out.println("Este es el año: " + anio);
 
 		StringBuilder queryString = new StringBuilder(
-				"SELECT max(o.idOrden) FROM OrdenTrabajo o, Factura f WHERE o.idFactura = f.idFactura "
-						+ "AND o.idOrden like '%" + id + "%' AND o.idOrden like '%" + anio + "%'");
+				"SELECT max(o.idOrden) FROM OrdenTrabajo o WHERE "
+				+ "(o.tipoOt = 'Externa Transf.' OR o.tipoOt = 'Externa Factura') "
+				+ "AND o.idOrden like '%" + id + "%' AND o.idOrden like '%" + anio + "%'");
+		// new StringBuilder("SELECT b FROM Servicio b where id_Unidad = ?1 ");
+		Query query = getEntityManager().createQuery(queryString.toString());
+
+		try {
+			String idOrdeninventario = (String) query.getSingleResult();
+			return idOrdeninventario;
+		} catch (NoResultException nre) {
+			return null;
+		} catch (NonUniqueResultException nure) {
+			return null;
+		}
+	}
+	
+	@Override
+	public String maxIdOTT(String id, String fecha) {
+		String[] parts = fecha.split("-");
+
+		String anio = parts[0];
+		System.out.println("Este es el año: " + anio);
+
+		StringBuilder queryString = new StringBuilder(
+				"SELECT max(o.idOrden) FROM OrdenTrabajo o WHERE "
+				+ "(o.tipoOt = 'Externa Transf.' OR o.tipoOt = 'Externa Factura') "
+				+ "AND o.idOrden like '%" + id + "%' AND o.idOrden like '%" + anio + "%'");
 		// new StringBuilder("SELECT b FROM Servicio b where id_Unidad = ?1 ");
 		Query query = getEntityManager().createQuery(queryString.toString());
 
@@ -485,6 +590,40 @@ public class OrdenTrabajoDAOImplement extends DaoGenericoImplement<OrdenTrabajo>
 		try {
 			Cliente cliente = (Cliente) query.getSingleResult();
 			return cliente;
+		} catch (NoResultException nre) {
+			return null;
+		} catch (NonUniqueResultException nure) {
+			return null;
+		}
+
+	}
+	
+	@Override
+	public TransferenciaInterna buscarTransferenciaById(String id) {
+		StringBuilder querys = new StringBuilder("SELECT t FROM TransferenciaInterna t where t.idTi = '" + id +"'");
+		Query query = getEntityManager().createQuery(querys.toString());
+		query.setMaxResults(1);
+
+		try {
+			TransferenciaInterna transferenciaInterna = (TransferenciaInterna) query.getSingleResult();
+			return transferenciaInterna;
+		} catch (NoResultException nre) {
+			return null;
+		} catch (NonUniqueResultException nure) {
+			return null;
+		}
+
+	}
+	
+	@Override
+	public Proforma buscarProformaById(String id) {
+		StringBuilder querys = new StringBuilder("SELECT p FROM Proforma p where p.idProforma = '" + id +"'");
+		Query query = getEntityManager().createQuery(querys.toString());
+		query.setMaxResults(1);
+
+		try {
+			Proforma proforma = (Proforma) query.getSingleResult();
+			return proforma;
 		} catch (NoResultException nre) {
 			return null;
 		} catch (NonUniqueResultException nure) {
