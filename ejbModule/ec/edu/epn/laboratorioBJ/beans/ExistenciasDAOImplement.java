@@ -1,5 +1,6 @@
 package ec.edu.epn.laboratorioBJ.beans;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.LocalBean;
@@ -23,6 +24,7 @@ import ec.edu.epn.laboratorioBJ.entities.Ordeninventario;
 import ec.edu.epn.laboratorioBJ.entities.Posgiro;
 import ec.edu.epn.laboratorioBJ.entities.Presentacion;
 import ec.edu.epn.laboratorioBJ.entities.ProductoLab;
+import ec.edu.epn.laboratorioBJ.entities.Proforma;
 import ec.edu.epn.laboratorioBJ.entities.Pureza;
 import ec.edu.epn.laboratorioBJ.entities.SaldoExistencia;
 import ec.edu.epn.laboratorioBJ.entities.Tipoproducto;
@@ -408,6 +410,27 @@ public class ExistenciasDAOImplement extends DaoGenericoImplement<Existencia> im
 		List<Existencia> resultados = query.getResultList();
 
 		System.out.println("Resultado: " + resultados.size());
+		return resultados;
+	}
+
+	@Override
+	public List<Existencia> existenciasByParametros(String nombreTP, String caracteristica) {
+
+		if (nombreTP == "") {
+			setConsulta("SELECT e FROM Existencia e WHERE e.caracteristica.nombreCr = '" + caracteristica + "' "
+					+ " ORDER BY e.producto.nombrePr");
+		} else if (caracteristica == "") {
+			setConsulta("SELECT e FROM Existencia e WHERE e.tipoproducto.nombreTprod = '" + nombreTP + "' "
+					+ " ORDER BY e.producto.nombrePr");
+		} else {
+			setConsulta("SELECT e FROM Existencia e WHERE e.tipoproducto.nombreTprod = '" + nombreTP + "' "
+					+ " AND e.caracteristica.nombreCr = '" + caracteristica + "' " + "ORDER BY e.producto.nombrePr");
+		}
+
+		StringBuilder queryString = new StringBuilder(getConsulta());
+		Query query = getEntityManager().createQuery(queryString.toString());
+
+		List<Existencia> resultados = query.getResultList();
 		return resultados;
 	}
 

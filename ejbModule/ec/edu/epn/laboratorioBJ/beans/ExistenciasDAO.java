@@ -69,4 +69,6 @@ public interface ExistenciasDAO extends DaoGenerico<Existencia> {
 
 	Unidadmedida tempUnidadMedida();
 
+	List<Existencia> existenciasByParametros(String nombreTP, String caracteristica);
+
 }

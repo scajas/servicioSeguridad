@@ -19,7 +19,7 @@ public interface ServicioDAO extends DaoGenerico<Servicio> {
 
 	List<Servicio> listaServicioXTipo(int idTipo);
 
-	List<Servicio> getparametrosTipoServicio(String tiposervicio);
+	List<Servicio> getparametrosTipoServicio(String tiposervicio, int idUnidad);
 
 	List<LaboratorioLab> listaLaboratorioUnidad(int id);
 

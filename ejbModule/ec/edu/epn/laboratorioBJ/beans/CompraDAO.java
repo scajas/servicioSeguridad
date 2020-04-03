@@ -12,7 +12,7 @@ import ec.edu.epn.laboratorioBJ.entities.Ordeninventario;
 @Local
 public interface CompraDAO extends DaoGenerico<Compra> {
 
-	List<Compra> getParametrosCompra(String fechaInicio, String fechaFin);
+	List<Compra> getParametrosCompra(String fechaInicio, String fechaFin, int idUnidad);
 
 	List<Compra> getListCompras(String id);
 
