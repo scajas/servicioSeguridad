@@ -3429,7 +3429,7 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 
 				}
 
-				if (col[11] != null && col[10].toString().length() != 0) {
+				if (col[11] != null && col[11].toString().length() != 0) {
 					Date fecha = null;
 					fecha = (Date) (col[11] == null ? null : col[11]);
 					oval.setFechaRige(fecha);
