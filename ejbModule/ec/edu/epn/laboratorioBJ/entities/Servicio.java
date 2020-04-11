@@ -29,9 +29,20 @@ public class Servicio implements Serializable {
 
 	@Column(name="nombre_s")
 	private String nombreS;
+	
+	@Column(name="estado_servicio")
+	private String estadoServicio;
 
 	@Column(name="precio_s")
 	private float precioS;
+
+	public String getEstadoServicio() {
+		return estadoServicio;
+	}
+
+	public void setEstadoServicio(String estadoServicio) {
+		this.estadoServicio = estadoServicio;
+	}
 
 	//bi-directional many-to-one association to DetalleProforma
 	@OneToMany(mappedBy="servicio")

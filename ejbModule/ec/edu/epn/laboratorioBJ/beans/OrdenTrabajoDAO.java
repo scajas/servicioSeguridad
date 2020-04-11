@@ -6,8 +6,6 @@ import java.util.Map;
 
 import javax.ejb.Local;
 
-import org.primefaces.model.SortOrder;
-
 import ec.edu.epn.facturacion.entities.EstadoFactura;
 import ec.edu.epn.facturacion.entities.Factura;
 import ec.edu.epn.facturacion.entities.TransferenciaInterna;
@@ -25,7 +23,8 @@ import ec.edu.epn.laboratorioBJ.entities.Servicio;
 @Local
 public interface OrdenTrabajoDAO extends DaoGenerico<OrdenTrabajo> {
 
-	List<Detalleorden> filtrarLista(String fechaInicio, String fechaFin, String tipo, String estado, String laboratorio,String personal);
+	List<Detalleorden> filtrarLista(String fechaInicio, String fechaFin, String tipoOrden, String analista,
+			String estado);
 
 	List<PersonalLab> listaPersonalAnalista();
 
@@ -66,8 +65,8 @@ public interface OrdenTrabajoDAO extends DaoGenerico<OrdenTrabajo> {
 	List<Factura> listarFacturasPagadas(int first, int pageSize, String sortField, boolean asc, int idUnidad,
 			int idUsuario);
 
-	List<Factura> listarFacturasPagadasFiltro(int first, int pageSize, String sortField,
-			Map<String, Object> filters, boolean asc, int idUnidad, int idUsuario);
+	List<Factura> listarFacturasPagadasFiltro(int first, int pageSize, String sortField, Map<String, Object> filters,
+			boolean asc, int idUnidad, int idUsuario);
 
 	int countFacturas(Map<String, Object> filters);
 
@@ -93,6 +92,5 @@ public interface OrdenTrabajoDAO extends DaoGenerico<OrdenTrabajo> {
 	String maxIdOTT(String id, String fecha);
 
 	TransferenciaInterna buscarTransferenciaById(String id);
-	
-	
+
 }

@@ -416,16 +416,8 @@ public class ExistenciasDAOImplement extends DaoGenericoImplement<Existencia> im
 	@Override
 	public List<Existencia> existenciasByParametros(String nombreTP, String caracteristica) {
 
-		if (nombreTP == "") {
-			setConsulta("SELECT e FROM Existencia e WHERE e.caracteristica.nombreCr = '" + caracteristica + "' "
-					+ " ORDER BY e.producto.nombrePr");
-		} else if (caracteristica == "") {
-			setConsulta("SELECT e FROM Existencia e WHERE e.tipoproducto.nombreTprod = '" + nombreTP + "' "
-					+ " ORDER BY e.producto.nombrePr");
-		} else {
-			setConsulta("SELECT e FROM Existencia e WHERE e.tipoproducto.nombreTprod = '" + nombreTP + "' "
-					+ " AND e.caracteristica.nombreCr = '" + caracteristica + "' " + "ORDER BY e.producto.nombrePr");
-		}
+		setConsulta("SELECT e FROM Existencia e WHERE e.tipoproducto.nombreTprod like '" + nombreTP + "' "
+				+ " AND e.caracteristica.nombreCr like '" + caracteristica + "' " + "ORDER BY e.producto.nombrePr");
 
 		StringBuilder queryString = new StringBuilder(getConsulta());
 		Query query = getEntityManager().createQuery(queryString.toString());
