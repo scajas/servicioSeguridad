@@ -28,11 +28,13 @@ public class ServicioDAOImplement extends DaoGenericoImplement<Servicio> impleme
 		// TODO Auto-generated constructor stub
 	}
 
+	private String consulta;
+
 	@Override
 	public List<Servicio> listaServicioUnidad(int id) {
 
 		StringBuilder queryString = new StringBuilder(
-				"SELECT s FROM Servicio s where s.laboratorio.unidad.idUnidad = " + id + " ORDER BY s.nombreS ASC");
+				"SELECT s FROM Servicio s where s.laboratorio.unidad.idUnidad = " + id + " AND s.estadoServicio like 'ACTIVO' ORDER BY s.nombreS ASC");
 		Query query = getEntityManager().createQuery(queryString.toString());
 		List<Servicio> resultados = query.getResultList();
 
@@ -78,13 +80,13 @@ public class ServicioDAOImplement extends DaoGenericoImplement<Servicio> impleme
 	@Override
 	public List<Servicio> getparametrosTipoServicio(String tiposervicio, int idUnidad) {
 
-		StringBuilder queryString = new StringBuilder(
-				"SELECT DISTINCT (s) FROM Servicio s, LaboratorioLab l, Tiposervicio ts, UnidadLabo u "
-						+ "WHERE s.laboratorio.idLaboratorio = l.idLaboratorio AND "
-						+ "s.tiposervicio.idTiposerv = ts.idTiposerv AND "
-						+ "s.laboratorio.unidad.idUnidad = u.idUnidad AND " 
-						+ "u.idUnidad = " + idUnidad 
-						+ " AND s.tiposervicio.nombreTs like '" + tiposervicio + "' ORDER BY s.nombreS");
+			setConsulta("SELECT DISTINCT (s) FROM Servicio s, LaboratorioLab l, Tiposervicio ts, UnidadLabo u "
+					+ "WHERE s.laboratorio.idLaboratorio = l.idLaboratorio AND "
+					+ "s.tiposervicio.idTiposerv = ts.idTiposerv AND "
+					+ "s.laboratorio.unidad.idUnidad = u.idUnidad AND " + "u.idUnidad = " + idUnidad
+					+ " AND s.tiposervicio.nombreTs like '" + tiposervicio + "' ORDER BY s.nombreS");
+
+		StringBuilder queryString = new StringBuilder(getConsulta());
 		Query query = getEntityManager().createQuery(queryString.toString());
 		List<Servicio> resultados = query.getResultList();
 		return resultados;
@@ -100,5 +102,13 @@ public class ServicioDAOImplement extends DaoGenericoImplement<Servicio> impleme
 
 		return resultados;
 
+	}
+
+	public String getConsulta() {
+		return consulta;
+	}
+
+	public void setConsulta(String consulta) {
+		this.consulta = consulta;
 	}
 }

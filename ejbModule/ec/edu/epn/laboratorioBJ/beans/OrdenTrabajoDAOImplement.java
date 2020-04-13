@@ -2,7 +2,7 @@ package ec.edu.epn.laboratorioBJ.beans;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Iterator;
+
 import java.util.List;
 import java.util.Map;
 
@@ -17,19 +17,16 @@ import javax.persistence.TypedQuery;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projection;
+
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
-import org.primefaces.model.SortMeta;
-import org.primefaces.model.SortOrder;
 
 import ec.edu.epn.facturacion.entities.EstadoFactura;
 import ec.edu.epn.facturacion.entities.Factura;
 import ec.edu.epn.facturacion.entities.TransferenciaInterna;
 import ec.edu.epn.generic.DAO.DaoGenericoImplement;
-import ec.edu.epn.laboratorioBJ.entities.Bodega;
+
 import ec.edu.epn.laboratorioBJ.entities.Cliente;
-import ec.edu.epn.laboratorioBJ.entities.DetalleProforma;
 import ec.edu.epn.laboratorioBJ.entities.Detalleorden;
 import ec.edu.epn.laboratorioBJ.entities.LaboratorioLab;
 import ec.edu.epn.laboratorioBJ.entities.Metodo;
@@ -38,7 +35,6 @@ import ec.edu.epn.laboratorioBJ.entities.OrdenTrabajo;
 import ec.edu.epn.laboratorioBJ.entities.PersonalLab;
 import ec.edu.epn.laboratorioBJ.entities.Proforma;
 import ec.edu.epn.laboratorioBJ.entities.Servicio;
-import ec.edu.epn.laboratorioBJ.entities.laboratory;
 
 /**
  * Session Bean implementation class OrdenTrabajoDAOImplement
@@ -51,27 +47,16 @@ public class OrdenTrabajoDAOImplement extends DaoGenericoImplement<OrdenTrabajo>
 	private EntityManager em;
 
 	@Override
-	public List<Detalleorden> filtrarLista(String fechaInicio, String fechaFin, String tipo, String estado,
-			String laboratorio, String personal) {
+	public List<Detalleorden> filtrarLista(String fechaInicio, String fechaFin, String tipoOrden, String analista,
+			String estado) {
 
-		if (personal.equals("")) {
-			setConsulta("SELECT o FROM Detalleorden o WHERE o.ordenTrabajo.estadoOt like '%" + estado
-					+ "%' AND o.ordenTrabajo.fechaordenOt BETWEEN '" + fechaInicio + "' AND '" + fechaFin + "'");
-
-		} else if (estado.equals("")) {
-			setConsulta("SELECT o FROM Detalleorden o WHERE o.personal.nombresPe like '%" + personal
-					+ "%' AND o.ordenTrabajo.fechaordenOt BETWEEN '" + fechaInicio + "' AND '" + fechaFin + "'");
-
-		} else {
-			setConsulta("SELECT o FROM Detalleorden o WHERE o.personal.nombresPe like '%" + personal
-					+ "%' AND o.ordenTrabajo.estadoOt like '%" + estado + "%' AND o.ordenTrabajo.fechaordenOt BETWEEN '"
-					+ fechaInicio + "' AND '" + fechaFin + "'");
-		}
-
-		System.out.println("FECHA DESDE: " + fechaInicio + "HASTA: " + fechaFin);
-		System.out.println("Consulta: " + getConsulta());
-
-		System.out.println(personal);
+		setConsulta(
+				"SELECT DISTINCT (do) FROM Detalleorden do, OrdenTrabajo ot, Servicio s, UnidadLabo u, LaboratorioLab l "
+						+ "WHERE do.ordenTrabajo.idOrden = ot.idOrden AND " + "do.idServicio = s.idServicio AND "
+						+ "s.laboratorio.idLaboratorio = l.idLaboratorio AND " + "l.unidad.idUnidad = u.idUnidad AND "
+						+ " do.ordenTrabajo.fechaCierre BETWEEN '" + fechaInicio + "' AND '" + fechaFin + "' AND "
+						+ "do.ordenTrabajo.tipoOt like '" + tipoOrden + "' AND do.estadoDot like '" + estado
+						+ "' AND do.personal.nombresPe like '" + analista + "' ORDER BY do.idDetalleorden");
 
 		StringBuilder queryString = new StringBuilder(getConsulta());
 		Query query = getEntityManager().createQuery(queryString.toString());
@@ -79,13 +64,6 @@ public class OrdenTrabajoDAOImplement extends DaoGenericoImplement<OrdenTrabajo>
 		List<Detalleorden> resultados = query.getResultList();
 
 		return resultados;
-		/*
-		 * Query q = super.getEntityManager().
-		 * createQuery("Select orden_trabajo from OrdenTrabajo orden_trabajo Where orden_trabajo.idOrden like ?1"
-		 * ); q.setParameter(1, idOrden + "%");
-		 * 
-		 * return q.getResultList();
-		 */
 
 	}
 
@@ -172,48 +150,40 @@ public class OrdenTrabajoDAOImplement extends DaoGenericoImplement<OrdenTrabajo>
 
 		return resultados;
 	}
-	
+
 	@Override
 	public List<OrdenTrabajo> listarOTTransByUnidadLab(String id, int idUser, OrdenTrabajo ordenTrabajo,
 			Date fechaInicio, Date fechaFin) {
 
 		if (fechaInicio == null) {
-			setConsulta("SELECT o FROM OrdenTrabajo o WHERE "
-					+ "o.idOrden like '%" + ordenTrabajo.getIdOrden() + "%' " 
-					+ "AND o.cliente.rucCl like '%" + ordenTrabajo.getCliente().getRucCl() + "%' " 
-					+ "AND o.cliente.nombreCl like '%" + ordenTrabajo.getCliente().getNombreCl() + "%' " 
-					+ "AND o.cliente.cedula like '%" + ordenTrabajo.getCliente().getCedula() + "%' " 
-					+ "AND o.idTi like '%" + ordenTrabajo.getIdTi() + "%' " 
-					+ "AND o.idOrden like '" + id + "%' "
-					+ "AND o.tipoOt = 'Externa Transf.' "
-					+ " ORDER BY o.idOrden");
+			setConsulta("SELECT o FROM OrdenTrabajo o WHERE " + "o.idOrden like '%" + ordenTrabajo.getIdOrden() + "%' "
+					+ "AND o.cliente.rucCl like '%" + ordenTrabajo.getCliente().getRucCl() + "%' "
+					+ "AND o.cliente.nombreCl like '%" + ordenTrabajo.getCliente().getNombreCl() + "%' "
+					+ "AND o.cliente.cedula like '%" + ordenTrabajo.getCliente().getCedula() + "%' "
+					+ "AND o.idTi like '%" + ordenTrabajo.getIdTi() + "%' " + "AND o.idOrden like '" + id + "%' "
+					+ "AND o.tipoOt = 'Externa Transf.' " + " ORDER BY o.idOrden");
 		} else if (fechaFin == null) {
-			setConsulta("SELECT o FROM OrdenTrabajo o WHERE "
-					+ "o.idOrden like '%" + ordenTrabajo.getIdOrden() + "%' " 
-					+ "AND o.cliente.rucCl like '%" + ordenTrabajo.getCliente().getRucCl() + "%' " 
-					+ "AND o.cliente.nombreCl like '%" + ordenTrabajo.getCliente().getNombreCl() + "%' " 
-					+ "AND o.cliente.cedula like '%" + ordenTrabajo.getCliente().getCedula() + "%' " 
-					+ "AND o.idTi like '%" + ordenTrabajo.getIdTi() + "%' " 
-					+ "AND o.idOrden like '" + id + "%' "
-					+ "AND o.tipoOt = 'Externa Transf.' "
-					+ "AND o.fechaordenOt = '" + cambioFecha(fechaInicio) + "'" + " ORDER BY o.idOrden");
+			setConsulta("SELECT o FROM OrdenTrabajo o WHERE " + "o.idOrden like '%" + ordenTrabajo.getIdOrden() + "%' "
+					+ "AND o.cliente.rucCl like '%" + ordenTrabajo.getCliente().getRucCl() + "%' "
+					+ "AND o.cliente.nombreCl like '%" + ordenTrabajo.getCliente().getNombreCl() + "%' "
+					+ "AND o.cliente.cedula like '%" + ordenTrabajo.getCliente().getCedula() + "%' "
+					+ "AND o.idTi like '%" + ordenTrabajo.getIdTi() + "%' " + "AND o.idOrden like '" + id + "%' "
+					+ "AND o.tipoOt = 'Externa Transf.' " + "AND o.fechaordenOt = '" + cambioFecha(fechaInicio) + "'"
+					+ " ORDER BY o.idOrden");
 		} else {
-			setConsulta("SELECT o FROM OrdenTrabajo o WHERE  "
-					+ "o.idOrden like '%" + ordenTrabajo.getIdOrden() + "%' " 
-					+ "AND o.cliente.rucCl like '%" + ordenTrabajo.getCliente().getRucCl() + "%' " 
-					+ "AND o.cliente.cedula like '%" + ordenTrabajo.getCliente().getCedula() + "%' " 
-					+ "AND o.cliente.nombreCl like '%" + ordenTrabajo.getCliente().getNombreCl() + "%' " 
-					+ "AND o.idTi like '%" + ordenTrabajo.getIdTi() + "%' " 
-					+ "AND o.idOrden like '" + id + "%' "
-					+ "AND o.tipoOt = 'Externa Transf.' "
-					+ "AND o.fechaordenOt BETWEEN '" + cambioFecha(fechaInicio) + "' AND '" + cambioFecha(fechaFin)
-					+ "' ORDER BY o.idOrden");
+			setConsulta("SELECT o FROM OrdenTrabajo o WHERE  " + "o.idOrden like '%" + ordenTrabajo.getIdOrden() + "%' "
+					+ "AND o.cliente.rucCl like '%" + ordenTrabajo.getCliente().getRucCl() + "%' "
+					+ "AND o.cliente.cedula like '%" + ordenTrabajo.getCliente().getCedula() + "%' "
+					+ "AND o.cliente.nombreCl like '%" + ordenTrabajo.getCliente().getNombreCl() + "%' "
+					+ "AND o.idTi like '%" + ordenTrabajo.getIdTi() + "%' " + "AND o.idOrden like '" + id + "%' "
+					+ "AND o.tipoOt = 'Externa Transf.' " + "AND o.fechaordenOt BETWEEN '" + cambioFecha(fechaInicio)
+					+ "' AND '" + cambioFecha(fechaFin) + "' ORDER BY o.idOrden");
 		}
 
 		// System.out.println("idUnidad: " + id);
 		// System.out.println("idUsuario: " + idUser);
-		
-		//System.out.println(getConsulta());
+
+		// System.out.println(getConsulta());
 
 		StringBuilder queryString = new StringBuilder(getConsulta());
 		Query query = getEntityManager().createQuery(queryString.toString());
@@ -266,8 +236,8 @@ public class OrdenTrabajoDAOImplement extends DaoGenericoImplement<OrdenTrabajo>
 						+ "ORDER BY f.idFactura DESC");
 
 		Query q = super.getEntityManager().createQuery(consulta.toString());
-		//q.setParameter(0, idUsuario); // 1692
-		//q.setParameter(1, idUnidad);
+		// q.setParameter(0, idUsuario); // 1692
+		// q.setParameter(1, idUnidad);
 
 		return q.getResultList();
 
@@ -286,7 +256,7 @@ public class OrdenTrabajoDAOImplement extends DaoGenericoImplement<OrdenTrabajo>
 		return resultados;
 
 	}
-	
+
 	@Override
 	public List<Muestra> listarMuestraByTI(String idTI) {
 
@@ -300,7 +270,7 @@ public class OrdenTrabajoDAOImplement extends DaoGenericoImplement<OrdenTrabajo>
 		return resultados;
 
 	}
-	
+
 	@Override
 	public List<TransferenciaInterna> listarTransferenciasInternas() {
 
@@ -423,7 +393,8 @@ public class OrdenTrabajoDAOImplement extends DaoGenericoImplement<OrdenTrabajo>
 	@Override
 	public List<Detalleorden> listarDetalleOrdenById(String id) {
 
-		setConsulta("SELECT d FROM Detalleorden d where d.ordenTrabajo.idOrden = '" + id + "' ORDER BY d.muestra.idMuestra");
+		setConsulta("SELECT d FROM Detalleorden d where d.ordenTrabajo.idOrden = '" + id
+				+ "' ORDER BY d.muestra.idMuestra");
 
 		StringBuilder queryString = new StringBuilder(getConsulta());
 		Query query = getEntityManager().createQuery(queryString.toString());
@@ -488,10 +459,9 @@ public class OrdenTrabajoDAOImplement extends DaoGenericoImplement<OrdenTrabajo>
 		String anio = parts[0];
 		System.out.println("Este es el año: " + anio);
 
-		StringBuilder queryString = new StringBuilder(
-				"SELECT max(o.idOrden) FROM OrdenTrabajo o WHERE "
-				+ "(o.tipoOt = 'Externa Transf.' OR o.tipoOt = 'Externa Factura') "
-				+ "AND o.idOrden like '%" + id + "%' AND o.idOrden like '%" + anio + "%'");
+		StringBuilder queryString = new StringBuilder("SELECT max(o.idOrden) FROM OrdenTrabajo o WHERE "
+				+ "(o.tipoOt = 'Externa Transf.' OR o.tipoOt = 'Externa Factura') " + "AND o.idOrden like '%" + id
+				+ "%' AND o.idOrden like '%" + anio + "%'");
 		// new StringBuilder("SELECT b FROM Servicio b where id_Unidad = ?1 ");
 		Query query = getEntityManager().createQuery(queryString.toString());
 
@@ -504,7 +474,7 @@ public class OrdenTrabajoDAOImplement extends DaoGenericoImplement<OrdenTrabajo>
 			return null;
 		}
 	}
-	
+
 	@Override
 	public String maxIdOTT(String id, String fecha) {
 		String[] parts = fecha.split("-");
@@ -512,10 +482,9 @@ public class OrdenTrabajoDAOImplement extends DaoGenericoImplement<OrdenTrabajo>
 		String anio = parts[0];
 		System.out.println("Este es el año: " + anio);
 
-		StringBuilder queryString = new StringBuilder(
-				"SELECT max(o.idOrden) FROM OrdenTrabajo o WHERE "
-				+ "(o.tipoOt = 'Externa Transf.' OR o.tipoOt = 'Externa Factura') "
-				+ "AND o.idOrden like '%" + id + "%' AND o.idOrden like '%" + anio + "%'");
+		StringBuilder queryString = new StringBuilder("SELECT max(o.idOrden) FROM OrdenTrabajo o WHERE "
+				+ "(o.tipoOt = 'Externa Transf.' OR o.tipoOt = 'Externa Factura') " + "AND o.idOrden like '%" + id
+				+ "%' AND o.idOrden like '%" + anio + "%'");
 		// new StringBuilder("SELECT b FROM Servicio b where id_Unidad = ?1 ");
 		Query query = getEntityManager().createQuery(queryString.toString());
 
@@ -545,7 +514,7 @@ public class OrdenTrabajoDAOImplement extends DaoGenericoImplement<OrdenTrabajo>
 		}
 
 	}
-	
+
 	@Override
 	public Factura buscarFacturaById(String id) {
 		StringBuilder querys = new StringBuilder("SELECT f FROM Factura f where f.idFactura = '" + id + "'");
@@ -597,10 +566,10 @@ public class OrdenTrabajoDAOImplement extends DaoGenericoImplement<OrdenTrabajo>
 		}
 
 	}
-	
+
 	@Override
 	public TransferenciaInterna buscarTransferenciaById(String id) {
-		StringBuilder querys = new StringBuilder("SELECT t FROM TransferenciaInterna t where t.idTi = '" + id +"'");
+		StringBuilder querys = new StringBuilder("SELECT t FROM TransferenciaInterna t where t.idTi = '" + id + "'");
 		Query query = getEntityManager().createQuery(querys.toString());
 		query.setMaxResults(1);
 
@@ -614,10 +583,10 @@ public class OrdenTrabajoDAOImplement extends DaoGenericoImplement<OrdenTrabajo>
 		}
 
 	}
-	
+
 	@Override
 	public Proforma buscarProformaById(String id) {
-		StringBuilder querys = new StringBuilder("SELECT p FROM Proforma p where p.idProforma = '" + id +"'");
+		StringBuilder querys = new StringBuilder("SELECT p FROM Proforma p where p.idProforma = '" + id + "'");
 		Query query = getEntityManager().createQuery(querys.toString());
 		query.setMaxResults(1);
 
