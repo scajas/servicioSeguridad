@@ -4,6 +4,7 @@
 package ec.edu.epn.gestioDocente.beans;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;

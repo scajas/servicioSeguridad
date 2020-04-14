@@ -30,7 +30,10 @@ public interface PreplanificacionDocenciaDAO extends DaoGenerico<Preplanificacio
 	List<PreplanificacionDocencia> listaDocentePreplanifc(Integer idPensum, Integer idFacultad);
 
 
+
 	Dependencia dependenciaByNombre(String nombreDependencia);
+
+
 
 	Long countPreplanifXPeriodo(String nced, String nombre, Integer idPensum, String estado, String dep)
 			throws Exception;

@@ -16,7 +16,6 @@ import javax.persistence.TemporalType;
 
 import ec.edu.epn.contratos.entities.Pedido;
 
-
 /**
  * The persistent class for the preplanificacion_docencia database table.
  * 
