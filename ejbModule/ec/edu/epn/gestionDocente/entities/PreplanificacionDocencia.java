@@ -8,8 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -80,6 +80,23 @@ public class PreplanificacionDocencia implements Serializable {
 	
 	@Column(name="acta_consejo_fac")
 	private String actaConsejoFac;
+	
+	@Temporal(TemporalType.DATE)
+	@Column(name="fecha_inicio")
+	private Date fechaInicio;
+	
+	
+	@Temporal(TemporalType.DATE)
+	@Column(name="fecha_fin")
+	private Date fechaFin;
+	
+	@Column(name="hrs_semana_tp")
+	private Integer hrsSemanaTp;
+	
+	@ManyToOne
+	@JoinColumn(name="id_pedido")
+	private Pedido pedido;
+	
 	private String dedicacion;
 	
 	
@@ -273,6 +290,62 @@ public class PreplanificacionDocencia implements Serializable {
 	 */
 	public void setActaConsejoFac(String actaConsejoFac) {
 		this.actaConsejoFac = actaConsejoFac;
+	}
+
+	/**
+	 * @return the fechaInicio
+	 */
+	public Date getFechaInicio() {
+		return fechaInicio;
+	}
+
+	/**
+	 * @return the fechaFin
+	 */
+	public Date getFechaFin() {
+		return fechaFin;
+	}
+
+	/**
+	 * @param fechaInicio the fechaInicio to set
+	 */
+	public void setFechaInicio(Date fechaInicio) {
+		this.fechaInicio = fechaInicio;
+	}
+
+	/**
+	 * @param fechaFin the fechaFin to set
+	 */
+	public void setFechaFin(Date fechaFin) {
+		this.fechaFin = fechaFin;
+	}
+
+	/**
+	 * @return the hrsSemanaTp
+	 */
+	public Integer getHrsSemanaTp() {
+		return hrsSemanaTp;
+	}
+
+	/**
+	 * @param hrsSemanaTp the hrsSemanaTp to set
+	 */
+	public void setHrsSemanaTp(Integer hrsSemanaTp) {
+		this.hrsSemanaTp = hrsSemanaTp;
+	}
+
+	/**
+	 * @return the pedido
+	 */
+	public Pedido getPedido() {
+		return pedido;
+	}
+
+	/**
+	 * @param pedido the pedido to set
+	 */
+	public void setPedido(Pedido pedido) {
+		this.pedido = pedido;
 	}
 
 }
