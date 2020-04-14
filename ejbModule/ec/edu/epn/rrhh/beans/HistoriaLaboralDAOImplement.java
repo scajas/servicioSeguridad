@@ -64,13 +64,14 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 				+ " and fam.id.idHist not in (select histo.id.idHist from HistoriaLaboral histo where "
 				+ " trim(histo.id.estado) = 'Insubsistente' or trim(histo.id.estado) = 'Anulado' "
 				+ " or trim(histo.id.estado) = 'Duplicado') "
-				+ " and (fam.id.estado = 'Finalizado' or fam.id.estado = 'Legalizado' or "
-				+ " fam.id.estado = 'Legalizada' or fam.id.estado = 'Rectificada' or fam.id.estado = 'Rectificado' )"
+				+ " and (fam.id.estado = 'Finalizado' or fam.id.estado = 'Legalizado' or fam.id.estado = 'Registrado' "
+				+ " or fam.id.estado = 'Legalizada' or fam.id.estado = 'Rectificada' or fam.id.estado = 'Rectificado' )"
 				+ " and fam.id.fechaI = "
 				+ "(Select max(t.id.fechaI) from HistoriaLaboral t where t.id.idHist=fam.id.idHist "
 				+ " and t.accionP is not null	" + " and (t.id.estado = 'Finalizado' or t.id.estado = 'Legalizado' or "
-				+ " t.id.estado = 'Legalizada' or t.id.estado = 'Rectificada' " + " or t.id.estado = 'Rectificado' )"
-				+ "and t.id.idHist not in " + " (select histo.id.idHist from HistoriaLaboral histo where "
+				+ " t.id.estado = 'Legalizada' or fam.id.estado = 'Registrado' "
+				+ " or t.id.estado = 'Rectificada' " + " or t.id.estado = 'Rectificado' )"
+				+ " and t.id.idHist not in " + " (select histo.id.idHist from HistoriaLaboral histo where "
 				+ " trim(histo.id.estado) = 'Insubsistente' or trim(histo.id.estado) = 'Anulado' "
 				+ " or trim(histo.id.estado) = 'Duplicado')" + " )");
 
@@ -3429,7 +3430,7 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 
 				}
 
-				if (col[11] != null && col[10].toString().length() != 0) {
+				if (col[11] != null && col[11].toString().length() != 0) {
 					Date fecha = null;
 					fecha = (Date) (col[11] == null ? null : col[11]);
 					oval.setFechaRige(fecha);
