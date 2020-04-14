@@ -18,8 +18,6 @@ import java.util.List;
 public class ProyectoP implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	
-
 	private double presaprob;
 	private double presupaprobiva;
 	private double presupeject;
@@ -58,7 +56,7 @@ public class ProyectoP implements Serializable {
 
 	private String descripcion;
 	private String metodologia;
-	private String justificacionequipo;
+	private String justificacionequipo, responsable;
 
 	@Temporal(TemporalType.DATE)
 	private Date fechaaprobcomiex;
@@ -78,7 +76,6 @@ public class ProyectoP implements Serializable {
 	@Temporal(TemporalType.DATE)
 	@Column(name = "\"fechaPresentacion\"")
 	private Date fechaPresentacion;
-
 
 	private double porejectfin;
 	@Column(name = "peticion_prorroga")
@@ -103,7 +100,7 @@ public class ProyectoP implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date fnotificafin;
 
-	private String numresolaprprord, numresolprogextra,convenio,tieneconv,tipoorg;
+	private String numresolaprprord, numresolprogextra, convenio, tieneconv, tipoorg;
 
 	private String nced;
 
@@ -175,8 +172,9 @@ public class ProyectoP implements Serializable {
 	private String peticionprorrogaextra;
 	private String aprobprorrgoaextra;
 	private String observaproextra;
-	
-	
+
+	private String memosolprogtec, resolcipsprogtec, progtecaprob, obsvprogtec;
+	private Date ffinprogtec;
 
 	public Date getFactafin() {
 		return factafin;
@@ -294,28 +292,15 @@ public class ProyectoP implements Serializable {
 	private List<Comision> comisiones;
 	@OneToMany(mappedBy = "proyecto")
 	private List<Cronograma> cornogramas;
-	
-	
-	private String memsolsusp, 
-	  resolcipssusp ,
-	  suspaprob ,
-	  observsusp ,memonotificainicio,camplio  ,
-	  cespecifico ,
-	  cdetallado,territorial,imsocial ,
-	  imcien ,
-	  imeco ,
-	  impol ,
-	  imotro,resolcipsaprob;
-	
-	
-	private Date fentregainffin; 
-	 private String  nromeminfobserv; 
-	 private Date fentregainfcorre; 
-	private String  codinfpropintel; 
-	private String  obserpropintel;
 
-	
-	
+	private String memsolsusp, resolcipssusp, suspaprob, observsusp, memonotificainicio, camplio, cespecifico,
+			cdetallado, territorial, imsocial, imcien, imeco, impol, imotro, resolcipsaprob;
+
+	private Date fentregainffin;
+	private String nromeminfobserv;
+	private Date fentregainfcorre;
+	private String codinfpropintel;
+	private String obserpropintel;
 
 	// @ManyToOne
 	// @JoinColumn(name="id_linin")
@@ -784,8 +769,7 @@ public class ProyectoP implements Serializable {
 	}
 
 	/**
-	 * @param lineasproys
-	 *            the lineasproys to set
+	 * @param lineasproys the lineasproys to set
 	 */
 	public void setLineasproys(List<Lineasproy> lineasproys) {
 		this.lineasproys = lineasproys;
@@ -799,8 +783,7 @@ public class ProyectoP implements Serializable {
 	}
 
 	/**
-	 * @param publicaciones
-	 *            the publicaciones to set
+	 * @param publicaciones the publicaciones to set
 	 */
 	public void setPublicaciones(String publicaciones) {
 		this.publicaciones = publicaciones;
@@ -814,8 +797,7 @@ public class ProyectoP implements Serializable {
 	}
 
 	/**
-	 * @param disertacion
-	 *            the disertacion to set
+	 * @param disertacion the disertacion to set
 	 */
 	public void setDisertacion(String disertacion) {
 		this.disertacion = disertacion;
@@ -829,8 +811,7 @@ public class ProyectoP implements Serializable {
 	}
 
 	/**
-	 * @param titulacion
-	 *            the titulacion to set
+	 * @param titulacion the titulacion to set
 	 */
 	public void setTitulacion(String titulacion) {
 		this.titulacion = titulacion;
@@ -844,8 +825,7 @@ public class ProyectoP implements Serializable {
 	}
 
 	/**
-	 * @param tesis
-	 *            the tesis to set
+	 * @param tesis the tesis to set
 	 */
 	public void setTesis(String tesis) {
 		this.tesis = tesis;
@@ -859,8 +839,7 @@ public class ProyectoP implements Serializable {
 	}
 
 	/**
-	 * @param aplicacion
-	 *            the aplicacion to set
+	 * @param aplicacion the aplicacion to set
 	 */
 	public void setAplicacion(String aplicacion) {
 		this.aplicacion = aplicacion;
@@ -874,8 +853,7 @@ public class ProyectoP implements Serializable {
 	}
 
 	/**
-	 * @param patente
-	 *            the patente to set
+	 * @param patente the patente to set
 	 */
 	public void setPatente(String patente) {
 		this.patente = patente;
@@ -889,8 +867,7 @@ public class ProyectoP implements Serializable {
 	}
 
 	/**
-	 * @param perfil
-	 *            the perfil to set
+	 * @param perfil the perfil to set
 	 */
 	public void setPerfil(String perfil) {
 		this.perfil = perfil;
@@ -904,8 +881,7 @@ public class ProyectoP implements Serializable {
 	}
 
 	/**
-	 * @param coddep
-	 *            the coddep to set
+	 * @param coddep the coddep to set
 	 */
 	public void setCoddep(String coddep) {
 		this.coddep = coddep;
@@ -1246,7 +1222,53 @@ public class ProyectoP implements Serializable {
 	public void setTipoorg(String tipoorg) {
 		this.tipoorg = tipoorg;
 	}
-	
-	
+
+	public String getResponsable() {
+		return responsable;
+	}
+
+	public void setResponsable(String responsable) {
+		this.responsable = responsable;
+	}
+
+	public String getMemosolprogtec() {
+		return memosolprogtec;
+	}
+
+	public void setMemosolprogtec(String memosolprogtec) {
+		this.memosolprogtec = memosolprogtec;
+	}
+
+	public String getResolcipsprogtec() {
+		return resolcipsprogtec;
+	}
+
+	public void setResolcipsprogtec(String resolcipsprogtec) {
+		this.resolcipsprogtec = resolcipsprogtec;
+	}
+
+	public String getObsvprogtec() {
+		return obsvprogtec;
+	}
+
+	public void setObsvprogtec(String obsvprogtec) {
+		this.obsvprogtec = obsvprogtec;
+	}
+
+	public String getProgtecaprob() {
+		return progtecaprob;
+	}
+
+	public void setProgtecaprob(String progtecaprob) {
+		this.progtecaprob = progtecaprob;
+	}
+
+	public Date getFfinprogtec() {
+		return ffinprogtec;
+	}
+
+	public void setFfinprogtec(Date ffinprogtec) {
+		this.ffinprogtec = ffinprogtec;
+	}
 
 }
