@@ -15,8 +15,7 @@ import ec.edu.epn.gestionDocente.DTO.CargaPlanificacionDTO;
 import ec.edu.epn.gestionDocente.DTO.TesisDocenteDTO;
 import ec.edu.epn.gestionDocente.entities.EvaluacionAcademica;
 
-public class procedimientosAlmacenadosEval implements Serializable{
-	
+public class procedimientosAlmacenadosEval implements Serializable{	
 	
 	
 	/**
@@ -46,14 +45,14 @@ public class procedimientosAlmacenadosEval implements Serializable{
 		}
 	}
 
-	public List<CargaPlanificacionDTO> obtenerCargaAcademicaPlanificacion(String cedula, String a�oPensum,
+	public List<CargaPlanificacionDTO> obtenerCargaAcademicaPlanificacion(String cedula, String anioPensum,
 			String numeroPensum) {
 		java.sql.ResultSet result = null;
 		try {
 			/**SE PRESENTA LA EVALUACI�N DEL DOCENTE POR PERIODO PARA MATERIAS SIMULTANEAS. 12-11-2019*/
 			
 			EvaluacionAcademica academico= new EvaluacionAcademica();
-			academico= evaluacionAcademicaDAO.evalXAnioPensum(cedula, a�oPensum, numeroPensum);
+			academico= evaluacionAcademicaDAO.evalXAnioPensum(cedula, anioPensum, numeroPensum);
 			/**FIN DEL CALCULO */
 			
 			
@@ -67,7 +66,7 @@ public class procedimientosAlmacenadosEval implements Serializable{
 			cst.setString(3, "");
 			cst.setString(4, "");
 
-			cst.setString(5, a�oPensum);
+			cst.setString(5, anioPensum);
 			cst.setString(6, numeroPensum);
 
 			result = cst.executeQuery();
