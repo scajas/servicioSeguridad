@@ -8,7 +8,9 @@ import javax.persistence.NonUniqueResultException;
 import javax.persistence.Query;
 
 import ec.edu.epn.generic.DAO.DaoGenericoImplement;
+import ec.edu.epn.rrhh.entities.Dep;
 import ec.edu.epn.rrhh.movimientos.Dependencia;
+
 
 @Stateless
 public class DependenciaDAOImplement extends DaoGenericoImplement<Dependencia> implements DependenciaDAO {
@@ -302,6 +304,15 @@ public class DependenciaDAOImplement extends DaoGenericoImplement<Dependencia> i
 			return (Dependencia) query.getResultList().get(0); 
 		}
 		
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Dependencia> listaDepXFacultad() {
+		StringBuilder queryString = new StringBuilder(
+				"SELECT e from Dependencia e where (e.nomDep LIKE 'DEPARTAMENTO%' OR e.nomDep LIKE '%INSTITUTO%') and e.estado = 'ACTIVO' and e.tipo = 'DEP' ");
+		Query query = getEntityManager().createQuery(queryString.toString());
+		return query.getResultList();
 	}
 
 	

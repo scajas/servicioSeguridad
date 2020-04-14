@@ -91,23 +91,23 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 
 			empleado = (Emp) query.getSingleResult();
 
-			con = dataSource.getConnection();
-			if (empleado != null && con != null) {
-				String qry = "SELECT "
-						+ "CASE cod_tiporelacionlab WHEN 1 THEN (SELECT MAX(p.cargo) FROM \"Rrhh\".nomb_temp n, \"Rrhh\".partind p WHERE n.cod_pind= p.cod_pind AND n.frige_nomb = (SELECT MAX(frige_nomb) FROM \"Rrhh\".nomb_temp WHERE nced=e.nced) AND n.nced=e.nced) "
-						+ "WHEN 2 THEN (SELECT MAX(cargoc) FROM \"Rrhh\".cont c WHERE c.frige_cont=  (SELECT MAX(frige_cont) FROM \"Rrhh\".cont WHERE nced = e.nced) AND c.nced = e.nced) END "
-						+ "FROM \"Rrhh\".EMP E " + "WHERE e.nced like ?  ";
-
-				ps = con.prepareStatement(qry);
-				ps.setString(1, empleado.getNced());
-
-				ResultSet rs = ps.executeQuery();
-
-				while (rs.next()) {
-
-					empleado.setCargook(rs.getString(1));
-				}
-			}
+//			con = dataSource.getConnection();
+//			if (empleado != null && con != null) {
+//				String qry = "SELECT "
+//						+ "CASE cod_tiporelacionlab WHEN 1 THEN (SELECT MAX(p.cargo) FROM \"Rrhh\".nomb_temp n, \"Rrhh\".partind p WHERE n.cod_pind= p.cod_pind AND n.frige_nomb = (SELECT MAX(frige_nomb) FROM \"Rrhh\".nomb_temp WHERE nced=e.nced) AND n.nced=e.nced) "
+//						+ "WHEN 2 THEN (SELECT MAX(cargoc) FROM \"Rrhh\".cont c WHERE c.frige_cont=  (SELECT MAX(frige_cont) FROM \"Rrhh\".cont WHERE nced = e.nced) AND c.nced = e.nced) END "
+//						+ "FROM \"Rrhh\".EMP E " + "WHERE e.nced like ?  ";
+//
+//				ps = con.prepareStatement(qry);
+//				ps.setString(1, empleado.getNced());
+//
+//				ResultSet rs = ps.executeQuery();
+//
+//				while (rs.next()) {
+//
+//					empleado.setCargook(rs.getString(1));
+//				}
+//			}
 
 			return empleado;
 
