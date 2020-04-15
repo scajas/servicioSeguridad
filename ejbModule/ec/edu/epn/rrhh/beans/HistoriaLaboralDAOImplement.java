@@ -46,6 +46,8 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 				+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%SIN IMPRESION' "
 				+ " and fam.accionP.subtipoAccion.nombreSubaccion not like 'ACTUALIZACI_N%' "
 				+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%INSUBSISTENCIA%' "
+				+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%ESTAD_A EN %' "
+				+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%REGISTRO SIN ACCI_N%' "
 				+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%LICENCIA%'"
 				+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%COMISI_N%'"
 				+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%FINALIZACI_%'"
