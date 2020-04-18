@@ -322,6 +322,7 @@
 		<class>ec.edu.epn.facturacion.entities.TransferenciaInterna</class>
 		<class>ec.edu.epn.facturacion.entities.Caja</class>
 		<class>ec.edu.epn.facturacion.entities.PuntoFacturacion</class>
+		<class>ec.edu.epn.laboratorioBJ.entities.EliminacionServicio</class>
 		
 
 
