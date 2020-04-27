@@ -62,6 +62,7 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 				+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%MULTA%'"
 				+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%PERMISO%'"
 				+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%SAB_TICO%'"
+				+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%AJUSTE DE REM%'"
 				+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%CUMPLIMIENTO DE SERVICIOS%'"
 				+ " and fam.id.idHist not in (select histo.id.idHist from HistoriaLaboral histo where "
 				+ " trim(histo.id.estado) = 'Insubsistente' or trim(histo.id.estado) = 'Anulado' "
