@@ -417,14 +417,6 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		query.setParameter(3, "Insubsistente");
 		query.setParameter(4, "Anulado");
 
-		/*
-		 * query.setParameter(5, "VACACI%"); query.setParameter(6,
-		 * "LICENCIA POR MATERINDAD%"); query.setParameter(7,
-		 * "LICENCIA POR PATERNIDAD%"); query.setParameter(8,
-		 * "LICENCIA POR ENFERMEDAD%"); query.setParameter(9,
-		 * "LICENCIA POR CUIDADO DEL RECIEN NACIDO%");
-		 */
-
 		HistoriaLaboral resultado = null;
 		HistoriaLaboral ultimoContrato = null;
 		HistoriaLaboral mostRecentNombramiento = this.getMostRecentCualquierNombramientoByEmp(emp);
@@ -1910,7 +1902,10 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 				+ " and fam.id.idHist not in (Select histo.id.idHist from HistoriaLaboral histo "
 				+ " where (histo.id.estado= ?2 or histo.id.estado=?3)  and histo.emp.nced = :cedula "
 				+ " and  histo.accionP.subtipoAccion.tipoAccion.idTpa in (4,19,24, 26,29,30) ) "
-				+ "  and fam.fechaPrevistaFin <= ?4 ");
+				+ " and fam.id.fechaI = (Select max(hist.id.fechaI) from HistoriaLaboral hist where "
+				+ " hist.emp.nced = :cedula  and hist.accionP.subtipoAccion.tipoAccion.idTpa in (4,19,24, 26,29,30) "
+				+ " and hist.id.idHist=fam.id.idHist)" 
+				+ " and fam.fechaPrevistaFin <= ?4 ");
 
 		Query query = getEntityManager().createQuery(queryString.toString());
 		query.setParameter(1, "Legalizado");
@@ -1939,13 +1934,17 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		String countSelect = "SELECT count(fam) from HistoriaLaboral fam  ";
 		String normalSelect = "SELECT fam from HistoriaLaboral fam ";
 		String queryPredicate = "where " + " fam.emp.apel like  '" + apel.toUpperCase() + "' "
-				+ " and  fam.accionP.subtipoAccion.tipoAccion.idTpa in (4,19,24 26,29,30)  "
+				+ " and  fam.accionP.subtipoAccion.tipoAccion.idTpa in (4,19,24, 26,29,30)  "
 				+ " and fam.fechaFin is NULL and (fam.id.estado is ?1 or fam.id.estado is 'Legalizada' or "
 				+ " fam.id.estado is 'Finalizado' ) " + "and fam.fechaRige >= '01/01/2014' "
 				+ " and fam.id.idHist not in (Select histo.id.idHist from HistoriaLaboral histo "
-				+ " where (histo.id.estado= ?2 or histo.id.estado=?3 ) " + " and histo.emp.apel like '"
-				+ apel.toUpperCase() + "' and" + " histo.accionP.subtipoAccion.tipoAccion.idTpa in (4,19,24 26,29,30)  "
-				+ " ) and fam.fechaPrevistaFin <= ?4";
+				+ " where (histo.id.estado= ?2 or histo.id.estado=?3 ) " 				
+				+ " and histo.emp.apel like '"
+				+   apel.toUpperCase() + "' and" + " histo.accionP.subtipoAccion.tipoAccion.idTpa in (4,19,24, 26,29,30) ) "
+				+ " and fam.id.fechaI = (Select max(hist.id.fechaI) from HistoriaLaboral hist where "
+				+ " hist.emp.apel like '" + apel.toUpperCase() + "' and hist.accionP.subtipoAccion.tipoAccion.idTpa in (4,19,24, 26,29,30) "
+				+ " and hist.id.idHist=fam.id.idHist ) " 
+				+ " and fam.fechaPrevistaFin <= ?4";
 		if (isOnlyCount) {
 			queryString.append(countSelect);
 
@@ -2030,6 +2029,9 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 				+ " and fam.id.idHist not in (Select histo.id.idHist from HistoriaLaboral histo "
 				+ " where (histo.id.estado= ?2 or histo.id.estado=?3) "
 				+ " and  histo.accionP.subtipoAccion.tipoAccion.idTpa in (4,19,24, 26,29,30) ) "
+				+ " and fam.id.fechaI = (Select max(hist.id.fechaI) from HistoriaLaboral hist where "
+				+ " hist.accionP.subtipoAccion.tipoAccion.idTpa in (4,19,24, 26,29,30) and"
+				+ " hist.id.idHist=fam.id.idHist )"
 				+ " and fam.fechaPrevistaFin <= ?4 ");
 
 		Query query = getEntityManager().createQuery(queryString.toString());
@@ -2051,8 +2053,11 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 				+ " fam.id.estado is 'Finalizado' ) " + "and fam.fechaRige >= '01/01/2014' "
 				+ " and fam.id.idHist not in (Select histo.id.idHist from HistoriaLaboral histo "
 				+ " where (histo.id.estado= ?2 or histo.id.estado=?3) and histo.emp.nced = :cedula "
-				+ " and   histo.accionP.subtipoAccion.tipoAccion.idTpa in (4,19,24, 26,29,30)  "
-				+ " ) and fam.fechaPrevistaFin <= ?4 ");
+				+ " and   histo.accionP.subtipoAccion.tipoAccion.idTpa in (4,19,24, 26,29,30)  ) "
+				+ " and fam.id.fechaI = (Select max(hist.id.fechaI) from HistoriaLaboral hist where "
+				+ " hist.accionP.subtipoAccion.tipoAccion.idTpa in (4,19,24, 26,29,30) and"
+				+ " hist.id.idHist=fam.id.idHist )"
+				+ "and fam.fechaPrevistaFin <= ?4 ");
 
 		Query query = getEntityManager().createQuery(queryString.toString());
 		query.setParameter(1, "Legalizado");
@@ -2076,6 +2081,9 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 				+ " and fam.id.idHist not in (Select histo.id.idHist from HistoriaLaboral histo "
 				+ " where (histo.id.estado= ?2 or histo.id.estado=?3) "
 				+ " and histo.accionP.subtipoAccion.tipoAccion.idTpa in (4,19,24, 26,29,30) ) "
+				+ " and fam.id.fechaI = (Select max(hist.id.fechaI) from HistoriaLaboral hist where "
+				+ " hist.accionP.subtipoAccion.tipoAccion.idTpa in (4,19,24, 26,29,30) and"
+				+ " hist.id.idHist=fam.id.idHist )" 
 				+ " and fam.fechaPrevistaFin <= ?4) ");
 
 		Query query = getEntityManager().createQuery(queryString.toString());
