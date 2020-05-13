@@ -15,3 +15,5 @@ EN ESTADO DE PEDIDOS AÑADIR ESTADO 15
 ALTER TABLE "Proyectos".proyecto ADD COLUMN convenio character varying(500);
 
 ALTER TABLE "Proyectos".proyecto ADD COLUMN tieneconv character varying(10);
+
+//ALTER TABLE "Proyectos".proyecto ADD COLUMN ffinreiniciosuspension date;
