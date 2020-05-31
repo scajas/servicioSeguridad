@@ -59,7 +59,13 @@ public class AutorizacionEmergencia implements Serializable {
 	private String nombres;
 	
 	private String cargo;
+	
+	private String email;
+	
+	private String telefono;
 
+	@Column(name="tipo_persona")
+	private String tipoPersona;
 
 	//bi-directional many-to-one association to Asistencia
 	@OneToMany(mappedBy="autorizacion")
@@ -69,6 +75,9 @@ public class AutorizacionEmergencia implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="id_estado")
 	private EstadoEmergencia estado;
+	
+	@Column(name="estado_persona")
+	private String estadoPersona;
 
 	public AutorizacionEmergencia() {
 	}
@@ -221,6 +230,39 @@ public class AutorizacionEmergencia implements Serializable {
 
 	public void setCargo(String cargo) {
 		this.cargo = cargo;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getTelefono() {
+		return telefono;
+	}
+
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
+	
+
+	public String getTipoPersona() {
+		return tipoPersona;
+	}
+
+	public void setTipoPersona(String tipoPersona) {
+		this.tipoPersona = tipoPersona;
+	}
+
+	public String getEstadoPersona() {
+		return estadoPersona;
+	}
+
+	public void setEstadoPersona(String estadoPersona) {
+		this.estadoPersona = estadoPersona;
 	}
 
 }

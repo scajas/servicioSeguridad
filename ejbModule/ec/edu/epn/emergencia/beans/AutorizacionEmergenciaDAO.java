@@ -1,5 +1,6 @@
 package ec.edu.epn.emergencia.beans;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -18,5 +19,8 @@ public interface AutorizacionEmergenciaDAO extends DaoGenerico<AutorizacionEmerg
 	public Integer getMaxId();
 
 	public List<AutorizacionEmergencia> findAutorizacionesXCedula(String cedula);
+
+	public List<AutorizacionEmergencia> findAutorizacionesXCedulaXFechaDesdexFechaHasta(String cedula, Date fechaDesde,
+			Date fechaHasta);
 
 }

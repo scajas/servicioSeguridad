@@ -23,9 +23,6 @@ public class Guardia implements Serializable {
 	@Column(name="fecha_registro")
 	private Timestamp fechaRegistro;
 
-	@Column(name="id_estado")
-	private Integer idEstado;
-
 	private String nced;
 
 	private String nombres;
@@ -41,7 +38,7 @@ public class Guardia implements Serializable {
 
 	//bi-directional many-to-one association to Estado
 	@ManyToOne
-	@JoinColumn(name="id_estado", insertable = false, updatable = false)
+	@JoinColumn(name="id_estado")
 	private EstadoEmergencia estado;
 
 	public Guardia() {
@@ -61,14 +58,6 @@ public class Guardia implements Serializable {
 
 	public void setFechaRegistro(Timestamp fechaRegistro) {
 		this.fechaRegistro = fechaRegistro;
-	}
-
-	public Integer getIdEstado() {
-		return this.idEstado;
-	}
-
-	public void setIdEstado(Integer idEstado) {
-		this.idEstado = idEstado;
 	}
 
 	public String getNced() {
