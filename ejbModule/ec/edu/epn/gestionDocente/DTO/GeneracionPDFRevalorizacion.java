@@ -77,10 +77,12 @@ import ec.edu.epn.silabo.entities.Bibliografia;
 import ec.edu.epn.silabo.entities.Capitulo;
 import ec.edu.epn.silabo.entities.CronogramaDesarrollo;
 import ec.edu.epn.silabo.entities.Evaluacion;
+import ec.edu.epn.silabo.entities.HorariosTutoria;
 import ec.edu.epn.silabo.entities.MetodologiaDeEnsenanza;
 import ec.edu.epn.silabo.entities.PiliticasDesarrollo;
 import ec.edu.epn.silabo.entities.PracticasLaboratorio;
 import ec.edu.epn.silabo.entities.Resultado;
+import ec.edu.epn.silabo.entities.SesionVirtual;
 import ec.edu.epn.silabo.entities.Silabo;
 import ec.edu.epn.silabo.entities.Subcapitulo;
 import ec.edu.epn.silabo.entities.UbicacionHorario;
@@ -1264,7 +1266,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			List<Bibliografia> bibliografiaComplementaria, List<MetodologiaDeEnsenanza> metodologias,
 			List<Evaluacion> evaluaciones, List<ActividadesVinculacion> actividades,
 			List<CronogramaDesarrollo> cronograma, List<UbicacionHorario> ubicaciones,
-			List<PiliticasDesarrollo> politicas, Pensum pensumSelect, Silabo silaboselect) {
+			List<PiliticasDesarrollo> politicas, Pensum pensumSelect, Silabo silaboselect,List<HorariosTutoria> tutoria,List<SesionVirtual> sesionV) {
 		String url = "";
 		try {
 
@@ -1311,7 +1313,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			String cabeceraTabla = "ESCUELA POLITÉCNICA NACIONAL";
 			fuente = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.BOLD);
 
-			String cabeceraTabla1 = "\nSILABO \n\n ";
+			String cabeceraTabla1 = "\n GUIA DE ESTUDIO \n\n ";
 
 			tituloTablaAcad.setFont(fuente);
 			tituloTablaAcad.setAlignment(Element.ALIGN_CENTER);
@@ -1832,6 +1834,67 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			document.add(ubicacion);
 
 			document.add(datosContrato);
+			
+			Paragraph horario = new Paragraph();
+			String hor = "\n HORARIO PARA LAS TUTORIAS ";
+			fuente = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.BOLD);
+			horario.setFont(fuente);
+			horario.setAlignment(Element.ALIGN_JUSTIFIED);
+			horario.add(hor);
+			document.add(horario);
+
+			document.add(datosContrato);
+
+			PdfPTable horarioT = new PdfPTable(3);
+			horarioT.setWidthPercentage(100);
+
+			horarioT.addCell(createLabelCell("Horario (s) de tutorías"));
+			horarioT.addCell(createLabelCell("Mecanismo / herramienta de contacto"));
+			horarioT.addCell(createLabelCell("Contacto (correo, teléfono, usuario, etc.)"));
+			
+
+			for (HorariosTutoria ho : tutoria) {
+
+				horarioT.addCell(createLabelCell4(ho.getHorario()));
+				horarioT.addCell(createLabelCell4(ho.getMecanismo()));
+				horarioT.addCell(createLabelCell4(ho.getContacto()));
+
+			}
+			document.add(horarioT);
+
+			document.add(datosContrato);
+			
+			
+			Paragraph horarioS = new Paragraph();
+			String se = "\n INFORMACIÓN DE SESIÓN VIRTUAL";
+			fuente = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.BOLD);
+			horarioS.setFont(fuente);
+			horarioS.setAlignment(Element.ALIGN_JUSTIFIED);
+			horarioS.add(se);
+			document.add(horarioS);
+
+			document.add(datosContrato);
+
+			PdfPTable horarioSe = new PdfPTable(3);
+			horarioSe.setWidthPercentage(100);
+
+			horarioSe.addCell(createLabelCell("Horario de Clase"));
+			horarioSe.addCell(createLabelCell("Herramienta"));
+			horarioSe.addCell(createLabelCell("Información de sesión"));
+			
+
+			for (SesionVirtual ses : sesionV) {
+
+				horarioSe.addCell(createLabelCell4(ses.getHorario()));
+				horarioSe.addCell(createLabelCell4(ses.getHerramienta()));
+				horarioSe.addCell(createLabelCell4(ses.getInformacion()));
+
+			}
+			document.add(horarioSe);
+
+			document.add(datosContrato);
+			
+			
 
 			Paragraph poli = new Paragraph();
 			String pol = "\n POLÍTICAS DE DESARROLLO DEL CURSO";

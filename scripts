@@ -17,3 +17,43 @@ ALTER TABLE "Proyectos".proyecto ADD COLUMN convenio character varying(500);
 ALTER TABLE "Proyectos".proyecto ADD COLUMN tieneconv character varying(10);
 
 //ALTER TABLE "Proyectos".proyecto ADD COLUMN ffinreiniciosuspension date;
+
+//////////////////////////////////////////////////////////////////////
+CREATE TABLE "Silabo".sesion_virtual
+(
+  id_sesion integer NOT NULL,
+  id_silabo integer,
+  horario character varying(200),
+  herramienta character varying(200),
+  informacion character varying(200),
+  CONSTRAINT pk_sesion_vir PRIMARY KEY (id_sesion),
+  CONSTRAINT fk_silabo_virtual FOREIGN KEY (id_silabo)
+      REFERENCES "Silabo".silabo (id_silabo) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE "Silabo".sesion_virtual
+  OWNER TO seguridad;
+  
+  
+  CREATE TABLE "Silabo".horarios_tutorias
+(
+  id_horario integer NOT NULL,
+  id_silabo integer,
+  horario character varying(100),
+  mecanismo character varying(200),
+  contacto character varying(100),
+  CONSTRAINT pk_hor PRIMARY KEY (id_horario),
+  CONSTRAINT fk_sil_hor FOREIGN KEY (id_silabo)
+      REFERENCES "Silabo".silabo (id_silabo) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE "Silabo".horarios_tutorias
+  OWNER TO seguridad;
+  
+  
