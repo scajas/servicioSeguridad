@@ -2,6 +2,7 @@ package ec.edu.epn.emergencia.entidades;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
@@ -63,6 +64,8 @@ public class AutorizacionEmergencia implements Serializable {
 	private String email;
 	
 	private String telefono;
+	
+	private Boolean excepcion;
 
 	@Column(name="tipo_persona")
 	private String tipoPersona;
@@ -78,6 +81,10 @@ public class AutorizacionEmergencia implements Serializable {
 	
 	@Column(name="estado_persona")
 	private String estadoPersona;
+	
+	@ManyToOne
+	@JoinColumn(name="horario")
+	private HorarioEmergencia horario;
 
 	public AutorizacionEmergencia() {
 	}
@@ -265,4 +272,21 @@ public class AutorizacionEmergencia implements Serializable {
 		this.estadoPersona = estadoPersona;
 	}
 
+	public HorarioEmergencia getHorario() {
+		return horario;
+	}
+
+	public void setHorario(HorarioEmergencia horario) {
+		this.horario = horario;
+	}
+
+	public Boolean getExcepcion() {
+		return excepcion;
+	}
+
+	public void setExcepcion(Boolean excepcion) {
+		this.excepcion = excepcion;
+	}
+	
+	
 }

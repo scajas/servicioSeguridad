@@ -46,7 +46,8 @@ public class AutorizacionEmergenciaDAOImplement extends DaoGenericoImplement<Aut
 		StringBuilder query = new StringBuilder("Select dep from AutorizacionEmergencia dep ");
 		
 		if(cedula!=null && !cedula.equals("")) {
-			query.append("where dep.nced = :cedula ");
+			cedula = cedula+"%";
+			query.append("where dep.nced like :cedula ");
 		}
 		if(fechaDesde!=null ) {
 			if(cedula!=null && !cedula.equals("")) {
@@ -54,14 +55,14 @@ public class AutorizacionEmergenciaDAOImplement extends DaoGenericoImplement<Aut
 			}
 			else query.append("where ");
 				
-			query.append("dep.fechaHasta <= :fechaHasta ");
+			query.append("dep.fechaHasta >= :fechaDesde ");
 		}
 		if(fechaHasta!=null) {
 			if((cedula!=null && !cedula.equals("")) || fechaDesde!=null) {
 				query.append("and ");
 			}
 			else query.append("where ");
-			query.append("dep.fechaHasta >= :fechaDesde ");
+			query.append("dep.fechaDesde <= :fechaHasta ");
 		}
 		
 		Query q = getEntityManager().createQuery(query.toString());
@@ -69,11 +70,40 @@ public class AutorizacionEmergenciaDAOImplement extends DaoGenericoImplement<Aut
 			q.setParameter("cedula", cedula);
 		}
 		if(fechaHasta!=null) {
-			q.setParameter("fechaDesde", fechaHasta);
+			q.setParameter("fechaHasta", fechaHasta);
 		}
 		if(fechaDesde!=null) {
-			q.setParameter("fechaHasta", fechaDesde);
+			q.setParameter("fechaDesde", fechaDesde);
 		}
+		
+		
+		return q.getResultList();
+	}
+	
+	
+	@Override
+	public List<AutorizacionEmergencia> findAutorizacionesXExpiradoAutorizado( Date fechaActual){
+		StringBuilder query = new StringBuilder("Select dep from AutorizacionEmergencia dep where "
+				+ "dep.fechaHasta < :fechaActual and dep.estado.idEstado = 1");
+		
+		
+		
+		Query q = getEntityManager().createQuery(query.toString());
+		q.setParameter("fechaActual",fechaActual );
+		
+		
+		return q.getResultList();
+	}
+	
+	@Override
+	public List<AutorizacionEmergencia> findAutorizacionesXEstadoCalendarizado( Date fechaActual){
+		StringBuilder query = new StringBuilder("Select dep from AutorizacionEmergencia dep where "
+				+ "dep.fechaDesde < :fechaActual and dep.estado.idEstado = 6");
+		
+		
+		
+		Query q = getEntityManager().createQuery(query.toString());
+		q.setParameter("fechaActual",fechaActual );
 		
 		
 		return q.getResultList();

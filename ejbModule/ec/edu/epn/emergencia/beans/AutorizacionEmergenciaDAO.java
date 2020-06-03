@@ -23,4 +23,8 @@ public interface AutorizacionEmergenciaDAO extends DaoGenerico<AutorizacionEmerg
 	public List<AutorizacionEmergencia> findAutorizacionesXCedulaXFechaDesdexFechaHasta(String cedula, Date fechaDesde,
 			Date fechaHasta);
 
+	public List<AutorizacionEmergencia> findAutorizacionesXExpiradoAutorizado(Date fechaActual);
+
+	public List<AutorizacionEmergencia> findAutorizacionesXEstadoCalendarizado(Date fechaActual);
+
 }
