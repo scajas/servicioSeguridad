@@ -354,7 +354,7 @@ public class ProyectoPDAOImplement extends DaoGenericoImplement<ProyectoP> imple
 		}
 
 		queryString.append(
-				" where pr.estado IN ('En ejecución', 'Prórroga Ordinaria', 'Prórroga Extraordinaria','Proceso de cierre','Suspendido','Prórroga Técnica') ");
+				" where pr.estado IN ('En ejecución', 'Prórroga Ordinaria', 'Prórroga Extraordinaria','Proceso de cierre','Suspendido','Prórroga Técnica') and pr.tipoProyecto.idTipoProy != 12 ");
 
 		if (cedula != null) {
 			queryString.append(" and rp.proyecto.idProy = pr.idProy   ");
