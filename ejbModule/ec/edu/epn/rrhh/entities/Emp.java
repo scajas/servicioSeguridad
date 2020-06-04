@@ -83,6 +83,7 @@ public class Emp implements Serializable {
 
 	private String ext,acreditasenescyt;
 	
+	private String semaforocovid;
 	
 	@Column(name="cod_dep_jefe")
 	private String codDepJefe;
@@ -1734,6 +1735,14 @@ public class Emp implements Serializable {
 		riesgosLaborale.setEmp(null);
 
 		return riesgosLaborale;
+	}
+
+	public String getSemaforocovid() {
+		return semaforocovid;
+	}
+
+	public void setSemaforocovid(String semaforocovid) {
+		this.semaforocovid = semaforocovid;
 	}
 
 }
