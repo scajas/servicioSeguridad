@@ -1276,9 +1276,9 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 
 			// Creacion del archivo
 			FileOutputStream outputStream = new FileOutputStream(new File(
-					pathDocs + "/" + "Silabo" + docSelect.getnCed().trim() + silaboselect.getCodigo().trim() + ".pdf"));
+					pathDocs + "/" + "GUIA_ESTUDIO" + docSelect.getnCed().trim() + silaboselect.getCodigo().trim() + ".pdf"));
 
-			url = pathDocs + "/" + "Silabo" + docSelect.getnCed().trim() + silaboselect.getCodigo().trim() + ".pdf";
+			url = pathDocs + "/" + "GUIA_ESTUDIO" + docSelect.getnCed().trim() + silaboselect.getCodigo().trim() + ".pdf";
 
 			System.out.println("URL" + url);
 
