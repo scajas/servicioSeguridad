@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.Query;
 
 import ec.edu.epn.generic.DAO.DaoGenericoImplement;
@@ -23,24 +25,19 @@ import ec.edu.epn.proyectos.entities.ProyectoP;
  * 
  */
 @Stateless
-public class ProyectoPDAOImplement extends
-		DaoGenericoImplement<ProyectoP> implements ProyectoPDAO {
+public class ProyectoPDAOImplement extends DaoGenericoImplement<ProyectoP> implements ProyectoPDAO {
 
-	
 	@Override
 	public Long countProyectosXNced(String nced) {
-		Query q = getEntityManager()
-				.createQuery(
-						"SELECT count(p) FROM ProyectoP p, RecursohPr r WHERE r.proyecto.idProy= p.idProy AND UPPER(p.estado) not like '%CERRADO%' AND r.nced=? ");
-		q.setParameter(1, nced);		
+		Query q = getEntityManager().createQuery(
+				"SELECT count(p) FROM ProyectoP p, RecursohPr r WHERE r.proyecto.idProy= p.idProy AND UPPER(p.estado) not like '%CERRADO%' AND r.nced=? ");
+		q.setParameter(1, nced);
 		return (Long) q.getSingleResult();
 	}
-	
-	
+
 	@Override
-	public List<ProyectoP> findproyectosReporte(Integer idtipo, String area,
-			String codigo, Integer idlinea, String coddep, String cedula,
-			String estado, Integer anio) {
+	public List<ProyectoP> findproyectosReporte(Integer idtipo, String area, String codigo, Integer idlinea,
+			String coddep, String cedula, String estado, Integer anio) {
 
 		StringBuilder queryString = new StringBuilder(
 				"select DISTINCT(pr) from ProyectoP pr, RecursohPr rp, Lineasproy lp, LineasInvestigacion li where   pr.idProy = rp.proyecto.idProy and pr.idProy = lp.proyecto.idProy and lp.lineas.idLinin = li.idLinin and   pr.nombrePr like ?1 ");
@@ -71,7 +68,7 @@ public class ProyectoPDAOImplement extends
 		if (estado != null) {
 			queryString.append(" and pr.estado = ?8 ");
 		}
-		
+
 		if (anio != 0) {
 			queryString.append(" and pr.anio  = ?9 ");
 		}
@@ -107,7 +104,7 @@ public class ProyectoPDAOImplement extends
 		if (estado != null) {
 			qUsuario.setParameter(8, estado);
 		}
-		
+
 		if (anio != 0) {
 			qUsuario.setParameter(9, anio);
 		}
@@ -115,57 +112,52 @@ public class ProyectoPDAOImplement extends
 		return qUsuario.getResultList();
 
 	}
-	
-	
+
 	@Override
 	public List<ProyectoP> findproyectos(String coddep, String nombre, String cedula) {
 
-		StringBuilder queryString = new StringBuilder(
-				"select pr from ProyectoP pr ");
+		StringBuilder queryString = new StringBuilder("select pr from ProyectoP pr ");
 
 		if (cedula != null) {
 			queryString.append(" ,RecursohPr rp   ");
 		}
-		
+
 		queryString.append(" where pr.estado like ?0 ");
-		
+
 		if (cedula != null) {
 			queryString.append(" and rp.proyecto.idProy = pr.idProy   ");
 		}
-		
-		
+
 		if (coddep != null) {
 			queryString.append(" and pr.codigoPr  = ?1 ");
 		}
-		
+
 		if (nombre != null) {
 			queryString.append(" and pr.nombrePr  like ?2 ");
 		}
-		
+
 		if (cedula != null) {
 			queryString.append(" and rp.nced = ?3   ");
 		}
-		
-		
+
 		if (cedula != null) {
 			queryString.append(" and rp.rolProyecto.idRolProy = 1   ");
 		}
-		
-		
+
 		queryString.append(" order by pr.codigoPr ");
 
 		Query qUsuario = getEntityManager().createQuery(queryString.toString());
 
 		qUsuario.setParameter(0, "%");
-		
+
 		if (coddep != null) {
 			qUsuario.setParameter(1, coddep);
 		}
-		
+
 		if (nombre != null) {
-			qUsuario.setParameter(2,"%"+ nombre+"%");
+			qUsuario.setParameter(2, "%" + nombre + "%");
 		}
-		
+
 		if (cedula != null) {
 			qUsuario.setParameter(3, cedula);
 		}
@@ -173,33 +165,28 @@ public class ProyectoPDAOImplement extends
 		return qUsuario.getResultList();
 
 	}
-	
 
 	@Override
 	public List<ProyectoP> buscarProyectoExiste(String codigo) throws Exception {
-		Query qUsuario = getEntityManager().createQuery(
-				"select tp from ProyectoP tp WHERE tp.codigoPr = ?1");
+		Query qUsuario = getEntityManager().createQuery("select tp from ProyectoP tp WHERE tp.codigoPr = ?1");
 		qUsuario.setParameter(1, codigo);
 		return qUsuario.getResultList();
 
 	}
-	
+
 	@Override
 	public Convocatoria finconv(String idconv) throws Exception {
-		Query qUsuario = getEntityManager().createQuery(
-				"select conv from Convocatoria conv where conv.idConv = ?1");
+		Query qUsuario = getEntityManager().createQuery("select conv from Convocatoria conv where conv.idConv = ?1");
 		qUsuario.setParameter(1, idconv);
 		return (Convocatoria) qUsuario.getSingleResult();
 
 	}
-	
+
 	@Override
 	public int consultarNumeroSerial(int anio, int idtipo) {
 		System.out.println("Entraaaaaaa ConsultarID");
 		Query q = getEntityManager().createQuery(
-				"SELECT MAX(pr.serial)FROM ProyectoP pr"
-						+ " where anio =?1 and pr.tipoProyecto.idTipoProy =?2 "
-						+ "");
+				"SELECT MAX(pr.serial)FROM ProyectoP pr" + " where anio =?1 and pr.tipoProyecto.idTipoProy =?2 " + "");
 
 		Integer idReq = null;
 		q.setParameter(1, anio);
@@ -226,35 +213,42 @@ public class ProyectoPDAOImplement extends
 		return idReq;
 
 	}
-	
+
 	@Override
 	public ProyectoP buscarProyecto(Integer idProy) throws Exception {
-		Query qUsuario = getEntityManager().createQuery(
-				"select tp from ProyectoP tp WHERE tp.idProy = ?1");
-		qUsuario.setParameter(1, idProy);
-		return (ProyectoP) qUsuario.getSingleResult();
+
+		try {
+
+			Query qUsuario = getEntityManager().createQuery("select tp from ProyectoP tp WHERE tp.idProy = ?1");
+			qUsuario.setParameter(1, idProy);
+			return (ProyectoP) qUsuario.getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		}
+
+		catch (NonUniqueResultException e) {
+			return null;
+		} catch (Exception e) {
+			return null;
+		}
 
 	}
-	
-	
+
 	@Override
 	public List<ProyectoDTO> listProyectoPlanificacion(String cedula, Integer idPensum) throws SQLException {
 		Connection con = null;
 		PreparedStatement ps = null;
-		
-				
 
 		try {
 			con = getDataSource().getConnection();
 			if (con != null) {
 				ps = con.prepareStatement(
-						"SELECT p.id_proy, p.codigo_pr, p.nombre_pr, rp.rol_proy, p.fechaini, (p.fechaf -p.fechaini) AS estimado "+
-						"FROM \"Proyectos\".proyecto p, \"Proyectos\".recursoh_pr r, \"Proyectos\".rol_proyecto rp "+
-						"WHERE p.id_proy= r.id_proy "+				
-						"AND r.id_rol_proy=rp.id_rol_proy "+
-						"AND p.estado IN ('En ejecución', 'Prórroga Ordinaria', 'Prórroga Extraordinaria','Proceso de cierre','Suspendido') "+
-						"AND r.nced=? ") ;
-		
+						"SELECT p.id_proy, p.codigo_pr, p.nombre_pr, rp.rol_proy, p.fechaini, (p.fechaf -p.fechaini) AS estimado "
+								+ "FROM \"Proyectos\".proyecto p, \"Proyectos\".recursoh_pr r, \"Proyectos\".rol_proyecto rp "
+								+ "WHERE p.id_proy= r.id_proy " + "AND r.id_rol_proy=rp.id_rol_proy "
+								+ "AND p.estado IN ('En ejecución', 'Prórroga Ordinaria', 'Prórroga Extraordinaria','Proceso de cierre','Suspendido','Prórroga Técnica') "
+								+ "AND r.nced=? ");
+
 				ps.setString(1, cedula);
 				ResultSet rs = ps.executeQuery();
 				List<ProyectoDTO> listProyectoDtos = new ArrayList<ProyectoDTO>();
@@ -262,12 +256,12 @@ public class ProyectoPDAOImplement extends
 				while (rs.next()) {
 					ProyectoDTO dto = new ProyectoDTO();
 					dto.setIdProyecto(rs.getInt(1));
-					dto.setCodidoProy(rs.getString(2)==null?"":rs.getString(2));
-					dto.setNombreProyecto(rs.getString(3)==null?"":rs.getString(3));
-					dto.setRol(rs.getString(4)==null?"":rs.getString(4));
+					dto.setCodidoProy(rs.getString(2) == null ? "" : rs.getString(2));
+					dto.setNombreProyecto(rs.getString(3) == null ? "" : rs.getString(3));
+					dto.setRol(rs.getString(4) == null ? "" : rs.getString(4));
 					dto.setHoras("0");
-					dto.setFechaInicio(rs.getString(5)==null?"":rs.getString(5));
-					dto.setTiempoEstimado(rs.getString(6)==null?"":rs.getString(6));
+					dto.setFechaInicio(rs.getString(5) == null ? "" : rs.getString(5));
+					dto.setTiempoEstimado(rs.getString(6) == null ? "" : rs.getString(6));
 					listProyectoDtos.add(dto);
 				}
 				return listProyectoDtos;
@@ -283,7 +277,7 @@ public class ProyectoPDAOImplement extends
 		}
 
 	}
-	
+
 //	@Override
 //	public List<ProyectoDTO> listProyectoPlanificacion(String cedula, Integer idPensum) throws SQLException {
 //		Connection con = null;
@@ -339,73 +333,61 @@ public class ProyectoPDAOImplement extends
 //
 //	}
 
-	
-	
 	@Override
 	public String findDirectorXProyecto(Integer idProyecto) {
-		
+
 		StringBuilder queryString = new StringBuilder(
 				"SELECT MAX(rp.nced) FROM ProyectoP pr ,RecursohPr rp WHERE rp.proyecto.idProy = pr.idProy AND rp.rolProyecto.idRolProy = 1 AND pr.idProy=?0 ");
 
-		
 		Query qUsuario = getEntityManager().createQuery(queryString.toString());
 		qUsuario.setParameter(0, idProyecto);
 		return (String) qUsuario.getSingleResult();
 	}
 
-	
 	@Override
 	public List<ProyectoP> findproyectosActivos(String coddep, String nombre, String cedula) {
 
-
-
-
-		StringBuilder queryString = new StringBuilder(
-				"select pr from ProyectoP pr ");
+		StringBuilder queryString = new StringBuilder("select pr from ProyectoP pr ");
 
 		if (cedula != null) {
 			queryString.append(" ,RecursohPr rp   ");
 		}
-		
-		queryString.append(" where pr.estado IN ('En ejecución', 'Prórroga Ordinaria', 'Prórroga Extraordinaria','Proceso de cierre','Suspendido') ");
-		
+
+		queryString.append(
+				" where pr.estado IN ('En ejecución', 'Prórroga Ordinaria', 'Prórroga Extraordinaria','Proceso de cierre','Suspendido','Prórroga Técnica') and pr.tipoProyecto.idTipoProy != 12 ");
+
 		if (cedula != null) {
 			queryString.append(" and rp.proyecto.idProy = pr.idProy   ");
 		}
-		
-		
+
 		if (coddep != null) {
 			queryString.append(" and pr.codigoPr  = ?1 ");
 		}
-		
+
 		if (nombre != null) {
 			queryString.append(" and pr.nombrePr  like ?2 ");
 		}
-		
+
 		if (cedula != null) {
 			queryString.append(" and rp.nced = ?3   ");
 		}
-		
-		
+
 		if (cedula != null) {
 			queryString.append(" and rp.rolProyecto.idRolProy = 1   ");
 		}
-		
-		
+
 		queryString.append(" order by pr.codigoPr ");
 
 		Query qUsuario = getEntityManager().createQuery(queryString.toString());
 
-		
-		
 		if (coddep != null) {
 			qUsuario.setParameter(1, coddep);
 		}
-		
+
 		if (nombre != null) {
-			qUsuario.setParameter(2,"%"+ nombre+"%");
+			qUsuario.setParameter(2, "%" + nombre + "%");
 		}
-		
+
 		if (cedula != null) {
 			qUsuario.setParameter(3, cedula);
 		}
@@ -414,7 +396,4 @@ public class ProyectoPDAOImplement extends
 
 	}
 
-	
-
-	
 }

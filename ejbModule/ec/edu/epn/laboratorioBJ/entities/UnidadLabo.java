@@ -63,6 +63,18 @@ public class UnidadLabo implements Serializable {
 
 	@Column(name = "telefono_u")
 	private String telefonoU;
+	
+	@Column(name = "url")
+	private String url;
+
+	@Column(name = "nota1")
+	private String nota1;
+
+	@Column(name = "nota2")
+	private String nota2;
+	
+	@Column(name = "nota3")
+	private String nota3;
 
 	// bi-directional many-to-one association to Compra
 	@OneToMany(mappedBy="unidad")
@@ -197,6 +209,38 @@ public class UnidadLabo implements Serializable {
 
 	public void setTelefonoU(String telefonoU) {
 		this.telefonoU = telefonoU;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+	
+	public String getNota1() {
+		return nota1;
+	}
+
+	public void setNota1(String nota1) {
+		this.nota1 = nota1;
+	}
+
+	public String getNota2() {
+		return nota2;
+	}
+
+	public void setNota2(String nota2) {
+		this.nota2 = nota2;
+	}
+
+	public String getNota3() {
+		return nota3;
+	}
+
+	public void setNota3(String nota3) {
+		this.nota3 = nota3;
 	}
 
 	public List<Compra> getCompras() {

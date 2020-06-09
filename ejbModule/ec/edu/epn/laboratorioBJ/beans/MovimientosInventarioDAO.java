@@ -18,4 +18,7 @@ public interface MovimientosInventarioDAO extends DaoGenerico<Movimientosinventa
 
 	SaldoExistencia validarSaldoExistencia(String fecha);
 
+	List<Movimientosinventario> parametrosMovInv(String idExistencia, String cambioFecha, String cambioFecha2);
+
+	
 }

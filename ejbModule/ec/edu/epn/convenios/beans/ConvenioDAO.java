@@ -20,4 +20,6 @@ public interface ConvenioDAO extends DaoGenerico<Convenio>{
 
 	List<Convenio> consultaconvenioFechas1(Date fechaDesde, Date fechaHasta);
 
+	List<Convenio> consultaconvenioAntesde(Date fecha);
+
 }

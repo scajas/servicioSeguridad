@@ -1147,7 +1147,7 @@ public class EvaluacionAcademicaDAOImplement extends DaoGenericoImplement<Evalua
 			PreplanificacionDocencia preplanificacion= new PreplanificacionDocencia();
 			List<Pedido> listPedidos= new ArrayList<Pedido>();
 			PreplanificacionDocencia preplanificacionAp= new PreplanificacionDocencia();
-			preplanificacion= preplanificacionDocenciaDAO.preplanifXPeriodo(evaluacionAcademica.getNced(), "", evaluacionAcademica.getIdPensum(), "PREPLANIF");
+			preplanificacion= preplanificacionDocenciaDAO.preplanifXPeriodo(evaluacionAcademica.getNced(), "", evaluacionAcademica.getIdPensum(), "PREPLANIF", "");
 			
 			
 			if(preplanificacion==null){

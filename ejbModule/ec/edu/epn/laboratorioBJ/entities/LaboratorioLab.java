@@ -4,57 +4,68 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.List;
 
-
 /**
  * The persistent class for the laboratorio database table.
  * 
  */
 @Entity
 @Table(name = "laboratorio", catalog = "bddcorpepn", schema = "`Laboratorios`")
-@NamedQuery(name="LaboratorioLab.findAll", query="SELECT l FROM LaboratorioLab l")
+@NamedQuery(name = "LaboratorioLab.findAll", query = "SELECT l FROM LaboratorioLab l")
 public class LaboratorioLab implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@SequenceGenerator(name = "LABORATORIO_IDLABORATORIO_GENERATOR", sequenceName = "secuencia_laboratorio", allocationSize = 1, catalog = "bddcorpepn", schema = "`Laboratorios`")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "LABORATORIO_IDLABORATORIO_GENERATOR")
-	@Column(name="id_laboratorio")
+	@Column(name = "id_laboratorio")
 	private int idLaboratorio;
 
-	@Column(name="centrocosto_l")
+	@Column(name = "centrocosto_l")
 	private String centrocostoL;
 
-	@Column(name="direccion_l")
+	@Column(name = "direccion_l")
 	private String direccionL;
 
-	@Column(name="email_l")
+	@Column(name = "email_l")
 	private String emailL;
 
-	@Column(name="fax_l")
+	@Column(name = "fax_l")
 	private String faxL;
 
-	@Column(name="leyenda_ot_l")
+	@Column(name = "leyenda_ot_l")
 	private String leyendaOtL;
 
-	@Column(name="leyendaprof_l")
+	@Column(name = "leyendaprof_l")
 	private String leyendaprofL;
 
-	@Column(name="nombre_l")
+	@Column(name = "nombre_l")
 	private String nombreL;
 
-	@Column(name="responsable_l")
+	@Column(name = "responsable_l")
 	private String responsableL;
 
-	@Column(name="telefono_l")
+	@Column(name = "telefono_l")
 	private String telefonoL;
 
-	//bi-directional many-to-one association to Unidad
+	@Column(name = "path")
+	private String path;
+
+	@Column(name = "nota1")
+	private String nota1;
+
+	@Column(name = "nota2")
+	private String nota2;
+
+	@Column(name = "nota3")
+	private String nota3;
+
+	// bi-directional many-to-one association to Unidad
 	@ManyToOne
-	@JoinColumn(name="id_unidad")
+	@JoinColumn(name = "id_unidad")
 	private UnidadLabo unidad;
 
-	//bi-directional many-to-one association to Servicio
-	@OneToMany(mappedBy="laboratorio")
+	// bi-directional many-to-one association to Servicio
+	@OneToMany(mappedBy = "laboratorio")
 	private List<Servicio> servicios;
 
 	public LaboratorioLab() {
@@ -168,5 +179,37 @@ public class LaboratorioLab implements Serializable {
 		servicio.setLaboratorio(null);
 
 		return servicio;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
+
+	public String getNota1() {
+		return nota1;
+	}
+
+	public void setNota1(String nota1) {
+		this.nota1 = nota1;
+	}
+
+	public String getNota2() {
+		return nota2;
+	}
+
+	public void setNota2(String nota2) {
+		this.nota2 = nota2;
+	}
+
+	public String getNota3() {
+		return nota3;
+	}
+
+	public void setNota3(String nota3) {
+		this.nota3 = nota3;
 	}
 }

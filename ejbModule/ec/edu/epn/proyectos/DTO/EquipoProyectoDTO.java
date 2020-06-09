@@ -6,6 +6,7 @@ import java.util.Date;
 public class EquipoProyectoDTO implements Serializable {
 
 	/**
+	 * AUTOR ROBERTO GARCIA
 	 * 
 	 */
 	private static final long serialVersionUID = 2149162640476118740L;

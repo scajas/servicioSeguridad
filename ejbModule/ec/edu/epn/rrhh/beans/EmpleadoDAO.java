@@ -19,6 +19,8 @@ import ec.edu.epn.rrhh.entities.Emp;
 public interface EmpleadoDAO extends DaoGenerico<Emp> {
 
 	List<Emp> listaEmpleadoXCedula(String cedula) throws Exception;
+	
+	List<Emp> listaEmpleadoXCedulaActivo(String cedula) throws Exception;
 
 	List<Emp> findempByParams(String cedula, String apellidos, String nombre);
 	

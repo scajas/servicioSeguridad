@@ -32,13 +32,19 @@ public class CompraDAOImplement extends DaoGenericoImplement<Compra> implements 
 	}
 
 	@Override
-	public List<Compra> getParametrosCompra(String fechaInicio, String fechaFin) {
+	public List<Compra> getParametrosCompra(String fechaInicio, String fechaFin, int idUnidad) {
 
-		setConsulta("SELECT c FROM Compra c, ProveedorLab pv " + "WHERE c.proveedor.idProveedor = pv.idProveedor "
-				+ "AND c.fechaCo BETWEEN '" + fechaInicio + "' AND '" + fechaFin + "'");
-
-		System.out.println("FECHA DESDE: " + fechaInicio + " HASTA: " + fechaFin);
-		System.out.println("Consulta: " + getConsulta());
+		setConsulta(
+				"SELECT DISTINCT (c) FROM Compra c, ProveedorLab pv, UnidadLabo u, Bodega b, Ordeninventario oi, Movimientosinventario mo, Existencia e "
+						+ "WHERE c.unidad.idUnidad = u.idUnidad AND " 
+						+ "b.idUnidad = u.idUnidad AND "
+						+ "c.proveedor.idProveedor = pv.idProveedor AND " 
+						+ "c.idCompra = oi.compra.idCompra AND "
+						+ "oi.idOrdeninventario = mo.ordeninventario.idOrdeninventario AND "
+						+ "mo.idExistencia = e.idExistencia AND " 
+						+ "e.bodega.idBodega = b.idBodega AND "
+						+ "c.unidad.idUnidad = " + idUnidad + " AND c.fechaCo BETWEEN '" + fechaInicio + "' AND '"
+						+ fechaFin + "' ORDER BY c.idCompra");
 
 		StringBuilder queryString = new StringBuilder(getConsulta());
 		Query query = getEntityManager().createQuery(queryString.toString());
@@ -72,7 +78,7 @@ public class CompraDAOImplement extends DaoGenericoImplement<Compra> implements 
 		String[] parts = fecha.split("-");
 
 		String anio = parts[0];
-		System.out.println("Este es el anio: " + anio);
+		System.out.println("Este es el año: " + anio);
 
 		StringBuilder queryString = new StringBuilder("SELECT max(c.idCompra) FROM Compra c where c.unidad.idUnidad = ?"
 				+ "AND c.idCompra like '%" + anio + "%'");
@@ -128,3 +134,4 @@ public class CompraDAOImplement extends DaoGenericoImplement<Compra> implements 
 	}
 
 }
+

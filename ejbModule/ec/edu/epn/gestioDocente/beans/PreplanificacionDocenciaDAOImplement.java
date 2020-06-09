@@ -81,7 +81,7 @@ public class PreplanificacionDocenciaDAOImplement extends DaoGenericoImplement<P
 			q.setParameter(1, nombre);
 			q.setParameter(2, idPensum);
 			q.setParameter(3, estado);
-			q.setParameter(4, dep);
+			q.setParameter(4, dep == "" ? "%%" : dep);
 
 		} else {
 			q = getEntityManager().createQuery(
