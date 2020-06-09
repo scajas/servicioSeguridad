@@ -46,8 +46,7 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 				+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%SIN IMPRESION' "
 				+ " and fam.accionP.subtipoAccion.nombreSubaccion not like 'ACTUALIZACI_N%' "
 				+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%INSUBSISTENCIA%' "
-				+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%ESTAD_A EN %' "
-				+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%REGISTRO SIN ACCI_N%' "
+
 				+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%LICENCIA%'"
 				+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%COMISI_N%'"
 				+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%FINALIZACI_%'"
@@ -62,7 +61,7 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 				+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%MULTA%'"
 				+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%PERMISO%'"
 				+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%SAB_TICO%'"
-				+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%AJUSTE DE REM%'"
+
 				+ " and fam.accionP.subtipoAccion.nombreSubaccion not like '%CUMPLIMIENTO DE SERVICIOS%'"
 				+ " and fam.id.idHist not in (select histo.id.idHist from HistoriaLaboral histo where "
 				+ " trim(histo.id.estado) = 'Insubsistente' or trim(histo.id.estado) = 'Anulado' "
@@ -417,6 +416,7 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		query.setParameter(3, "Insubsistente");
 		query.setParameter(4, "Anulado");
 
+
 		HistoriaLaboral resultado = null;
 		HistoriaLaboral ultimoContrato = null;
 		HistoriaLaboral mostRecentNombramiento = this.getMostRecentCualquierNombramientoByEmp(emp);
@@ -612,10 +612,12 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 				+ " ((?3 between hl.fechaRige and hl.fechaFin) " + " or (?4 between hl.fechaRige and hl.fechaFin)) and "
 				+ " hl.id.idHist not in (select histo.id.idHist from HistoriaLaboral histo "
 				+ " where (histo.id.estado = 'Anulado' or histo.id.estado = 'Insubsistente') and"
+
 				+ " histo.emp.nced = ?1 and  histo.accionP.subtipoAccion.tipoAccion.nombreAccion = ?2 ) "
 				+ " and hl.id.fechaI = (select max(fam.id.fechaI) from HistoriaLaboral fam where fam.emp.nced = ?1 "
 				+ " and (fam.id.estado = 'Legalizado' or fam.id.estado = 'Finalizado' or fam.id.estado = "
 				+ "'Elaborado' ) and fam.id.idHist = hl.id.idHist)" );
+
 
 		Query query = getEntityManager().createQuery(queryString.toString());
 		query.setParameter(1, emp.getNced());
@@ -624,7 +626,6 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		query.setParameter(4, fechaFin);
 
 		long count = (long) query.getSingleResult();
-
 
 		if (count == 0) {
 			return false;
@@ -1907,14 +1908,18 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 				+ " and fam.id.idHist not in (Select histo.id.idHist from HistoriaLaboral histo "
 				+ " where (histo.id.estado= ?2 or histo.id.estado=?3)  and histo.emp.nced = :cedula "
 				+ " and  histo.accionP.subtipoAccion.tipoAccion.idTpa in (4,19,24, 26,29,30) ) "
+
 				+ " and fam.id.fechaI = (Select max(hist.id.fechaI) from HistoriaLaboral hist where "
 				+ " hist.emp.nced = :cedula  and hist.accionP.subtipoAccion.tipoAccion.idTpa in (4,19,24, 26,29,30) "
 				+ " and hist.id.idHist=fam.id.idHist)");
+
 
 		Query query = getEntityManager().createQuery(queryString.toString());
 		query.setParameter(1, "Legalizado");
 		query.setParameter(2, "Anulado");
 		query.setParameter(3, "Insubsistente");
+
+
 		query.setParameter("cedula", nced);
 
 		if (firstResult > 0) {
@@ -1937,6 +1942,7 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		String countSelect = "SELECT count(fam) from HistoriaLaboral fam  ";
 		String normalSelect = "SELECT fam from HistoriaLaboral fam ";
 		String queryPredicate = "where " + " fam.emp.apel like  '" + apel.toUpperCase() + "' "
+
 				+ " and  fam.accionP.subtipoAccion.tipoAccion.idTpa in (4,19,24, 26,29,30)  "
 				+ " and fam.fechaFin is NULL and (fam.id.estado is ?1 or fam.id.estado is 'Legalizada' or "
 				+ " fam.id.estado is 'Finalizado' ) " + "and fam.fechaRige >= '01/01/2014' "
@@ -1947,6 +1953,7 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 				+ " and fam.id.fechaI = (Select max(hist.id.fechaI) from HistoriaLaboral hist where "
 				+ " hist.emp.apel like '" + apel.toUpperCase() + "' and hist.accionP.subtipoAccion.tipoAccion.idTpa in (4,19,24, 26,29,30) "
 				+ " and hist.id.idHist=fam.id.idHist ) ";
+
 		if (isOnlyCount) {
 			queryString.append(countSelect);
 
@@ -1958,7 +1965,9 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		query.setParameter(1, "Legalizado");
 		query.setParameter(2, "Anulado");
 		query.setParameter(3, "Insubsistente");
+
 		
+
 		if (firstResult > 0) {
 			query.setFirstResult(firstResult);
 		}
@@ -2031,14 +2040,18 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 				+ " and fam.id.idHist not in (Select histo.id.idHist from HistoriaLaboral histo "
 				+ " where (histo.id.estado= ?2 or histo.id.estado=?3) "
 				+ " and  histo.accionP.subtipoAccion.tipoAccion.idTpa in (4,19,24, 26,29,30) ) "
+
 				+ " and fam.id.fechaI = (Select max(hist.id.fechaI) from HistoriaLaboral hist where "
 				+ " hist.accionP.subtipoAccion.tipoAccion.idTpa in (4,19,24, 26,29,30) and"
 				+ " hist.id.idHist=fam.id.idHist ) ");
+
 
 		Query query = getEntityManager().createQuery(queryString.toString());
 		query.setParameter(1, "Legalizado");
 		query.setParameter(2, "Anulado");
 		query.setParameter(3, "Insubsistente");
+
+
 
 		long count = (long) query.getSingleResult();
 
@@ -2053,15 +2066,18 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 				+ " fam.id.estado is 'Finalizado' ) " + "and fam.fechaRige >= '01/01/2014' "
 				+ " and fam.id.idHist not in (Select histo.id.idHist from HistoriaLaboral histo "
 				+ " where (histo.id.estado= ?2 or histo.id.estado=?3) and histo.emp.nced = :cedula "
+
 				+ " and   histo.accionP.subtipoAccion.tipoAccion.idTpa in (4,19,24, 26,29,30)  ) "
 				+ " and fam.id.fechaI = (Select max(hist.id.fechaI) from HistoriaLaboral hist where "
 				+ " hist.accionP.subtipoAccion.tipoAccion.idTpa in (4,19,24, 26,29,30) and"
 				+ " hist.id.idHist=fam.id.idHist ) ");
 
+
 		Query query = getEntityManager().createQuery(queryString.toString());
 		query.setParameter(1, "Legalizado");
 		query.setParameter(2, "Anulado");
 		query.setParameter(3, "Insubsistente");
+
 		query.setParameter("cedula", nced);
 
 		long count = (long) query.getSingleResult();
@@ -2079,15 +2095,18 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 				+ " and fam.id.idHist not in (Select histo.id.idHist from HistoriaLaboral histo "
 				+ " where (histo.id.estado= ?2 or histo.id.estado=?3) "
 				+ " and histo.accionP.subtipoAccion.tipoAccion.idTpa in (4,19,24, 26,29,30) ) "
+
 				+ " and fam.id.fechaI = (Select max(hist.id.fechaI) from HistoriaLaboral hist where "
 				+ " hist.accionP.subtipoAccion.tipoAccion.idTpa in (4,19,24, 26,29,30) and"
 				+ " hist.id.idHist=fam.id.idHist ) ");
+
 
 		Query query = getEntityManager().createQuery(queryString.toString());
 		query.setParameter(1, "Legalizado");
 		query.setParameter(2, "Anulado");
 		query.setParameter(3, "Insubsistente");
-		
+
+
 		if (firstResult > 0) {
 			query.setFirstResult(firstResult);
 		}

@@ -23,8 +23,8 @@ public class Pensum implements Serializable {
 	@Column(name = "id_pensum")
 	private Integer idPensum;
 
-	@Column(name = "año_pensum")
-	private String añoPensum;
+	@Column(name = "aÃ±o_pensum")
+	private String aÃ±oPensum;
 
 	@Column(name = "id_pensum_anterior")
 	private Integer idPensumAnterior;
@@ -78,12 +78,12 @@ public class Pensum implements Serializable {
 	public Pensum() {
 	}
 	
-	public String getAñoPensum() {
-		return añoPensum;
+	public String getAÃ±oPensum() {
+		return aÃ±oPensum;
 	}
 
-	public void setAñoPensum(String añoPensum) {
-		this.añoPensum = añoPensum;
+	public void setAÃ±oPensum(String aÃ±oPensum) {
+		this.aÃ±oPensum = aÃ±oPensum;
 	}
 
 	public Integer getIdPensum() {

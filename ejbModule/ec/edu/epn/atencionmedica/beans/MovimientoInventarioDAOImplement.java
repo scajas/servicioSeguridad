@@ -5,8 +5,6 @@ import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import ec.edu.epn.atencionmedica.entities.Catalogo;
@@ -33,7 +31,7 @@ public class MovimientoInventarioDAOImplement extends DaoGenericoImplement<Movim
 				movimientoinventario.getIdMovimientoinv());
 
 		try {
-			// Movimiento....actualizar despacho de insumos médicos
+			// Movimiento....actualizar despacho de insumos medicos
 			movimientoinventario.setCatalogotipoestadomov((Catalogo) getEntityManager().find(Catalogo.class, 28));
 			movimientoinventario
 					.setMotivoMov(movimientoinventario.getMotivoMov().trim() + " DESPACHADO POR "
@@ -59,7 +57,7 @@ public class MovimientoInventarioDAOImplement extends DaoGenericoImplement<Movim
 
 			val = true;
 		} catch (Exception e) {
-			System.out.println("----Service Bean ------------actualizar despacho de insumos médicos - ERROR");
+			System.out.println("----Service Bean ------------actualizar despacho de insumos medicos - ERROR");
 			e.printStackTrace();
 			val = false;
 		}
@@ -148,7 +146,7 @@ public class MovimientoInventarioDAOImplement extends DaoGenericoImplement<Movim
 			listaMovimientoInventarioEncontradas = query.getResultList();
 
 		} else if (movimiento.getIdMovimientoinv() != 0) {
-			// obtener la atencion mèdica por id de atencion medica
+			// obtener la atencion medica por id de atencion medica
 		}
 		return listaMovimientoInventarioEncontradas.get(0);
 	}

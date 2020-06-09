@@ -94,3 +94,4 @@ public interface OrdenTrabajoDAO extends DaoGenerico<OrdenTrabajo> {
 	TransferenciaInterna buscarTransferenciaById(String id);
 
 }
+

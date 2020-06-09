@@ -1,8 +1,5 @@
 package ec.edu.epn.atencionmedica.beans;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -58,7 +55,7 @@ public class AtencionMedicaConDespachoIMDAOImplement extends DaoGenericoImplemen
 				getEntityManager().getTransaction().rollback();
 			} catch (IllegalStateException | SecurityException ex) {
 				//ex.printStackTrace();
-				System.out.println("/************** ERRROR AL REVERTIR: GUARDAR ATENCIÓN MÉDICA ************/");
+				System.out.println("/************** ERRROR AL REVERTIR: GUARDAR ATENCION MEDICA ************/");
 			}
 			val = false;
 		}
@@ -138,7 +135,7 @@ public class AtencionMedicaConDespachoIMDAOImplement extends DaoGenericoImplemen
 				getEntityManager().getTransaction().rollback();
 			} catch (IllegalStateException | SecurityException ex) {
 				//ex.printStackTrace();
-				System.out.println("/************** ERRROR AL REVERTIR: GUARDAR ATENCIÓN MÉDICA ************/");
+				System.out.println("/************** ERRROR AL REVERTIR: GUARDAR ATENCION MEDICA ************/");
 			}
 			val = false;
 		}

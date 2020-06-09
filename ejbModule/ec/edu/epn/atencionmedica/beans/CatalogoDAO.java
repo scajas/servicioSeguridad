@@ -22,7 +22,7 @@ public interface CatalogoDAO {
 	public List<Catalogo> obtenerListaTipoPersonalMedico();
 	public List<Catalogo> obtenerListaTipoProcedimientos();
 
-	/*Tipo de Insumos Médicos  */
+	/*Tipo de Insumos Medicos  */
 	public boolean guardarTipoInsumoM(Catalogo catalog, String operacion);
 	public Catalogotipo  obtenerCatalogoTipo(String criterio);
 	public boolean eliminarTipoInsumoM(Catalogo catalog, String operacion);
@@ -30,7 +30,7 @@ public interface CatalogoDAO {
 	public boolean ActivarDesactivarTipoInsumoM(Catalogo catalog, String operacion);
 	
 	
-	/*Tipo Presentacion de Insumos Médicos  */
+	/*Tipo Presentacion de Insumos Medicos  */
 	public List<Catalogo> obtenerListaTipoPresentacionIM(String criterio);
 	public boolean guardarTipoPresentacionIM(Catalogo catalog, String operacion);
 	public boolean eliminarTipoPresentacionIM(Catalogo catalog, String operacion);

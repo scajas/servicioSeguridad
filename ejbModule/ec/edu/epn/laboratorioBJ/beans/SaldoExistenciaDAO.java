@@ -10,6 +10,6 @@ import ec.edu.epn.laboratorioBJ.entities.SaldoExistencia;
 @Local
 public interface SaldoExistenciaDAO extends DaoGenerico<SaldoExistencia>{
 
-	List<SaldoExistencia> listaSaldoExistenciaAñoActual();
+	List<SaldoExistencia> listaSaldoExistenciaAnioActual();
 
 }

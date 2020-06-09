@@ -23,3 +23,4 @@ public interface ConvenioDAO extends DaoGenerico<Convenio>{
 	List<Convenio> consultaconvenioAntesde(Date fecha);
 
 }
+

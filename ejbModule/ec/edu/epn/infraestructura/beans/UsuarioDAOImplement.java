@@ -28,6 +28,7 @@ public class UsuarioDAOImplement extends DaoGenericoImplement<Usuario> implement
 	}
 	
 	@SuppressWarnings("unchecked")
+	@Override
 	public List<UsuarioDTO> listUsuarioXEstado (Integer activo){
 		List<UsuarioDTO> listUsrDTO = new ArrayList<UsuarioDTO>();
 		List<Usuario> listUsr= new ArrayList<Usuario>();

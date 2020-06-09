@@ -49,7 +49,7 @@ public class ConsultaReportesDAOImplement extends DaoGenericoImplement<Reporte2>
 			fechaCorte = new Date();
 		}
 		
-//		 Coonstrucción del query
+//		 CoonstrucciOn del query
 		switch (reporte) {
 		
 			// PACIENTES ATENDIDOS ( 5 ) - RANGO FECHA
@@ -74,7 +74,7 @@ public class ConsultaReportesDAOImplement extends DaoGenericoImplement<Reporte2>
 				rangoQuery = TIPO_QUERY_CON_RANGO;
 				break;
 				
-			case 4: //------> SEGÙN MEDICO POR MESES
+			case 4: //------> SEGUN MEDICO POR MESES
 				
 				q.append("SELECT NEW ec.edu.epn.atencionmedica.entities.Reporte2(1 , 'mes' "); //CONTADOR
 				q.append(" , per.apellido1Prs || ' ' || COALESCE(per.nombre1Prs,'') "); q.append(" , '' "); q.append(" , ' - ' "); q.append(" , ce.descripcionCat "); q.append(" , '' "); 	//var1				
@@ -107,9 +107,9 @@ public class ConsultaReportesDAOImplement extends DaoGenericoImplement<Reporte2>
 					 //------------------------------------------------------------------------------------------------------------->
 				
 				break;
-			case 5: //------> SEGÙN MEDICO POR AÑOS
+			case 5: //------> SEGUN MEDICO POR anioS
 				
-				q.append("SELECT NEW ec.edu.epn.atencionmedica.entities.Reporte2(1 , 'año' "); //CONTADOR
+				q.append("SELECT NEW ec.edu.epn.atencionmedica.entities.Reporte2(1 , 'anio' "); //CONTADOR
 				q.append(" , per.apellido1Prs || ' ' || COALESCE(per.nombre1Prs,'') "); q.append(" , '' "); q.append(" , ' - ' "); q.append(" , ce.descripcionCat "); q.append(" , '' "); 	//var1
 				q.append(" , a.fechahoraAtm "); q.append(" , a.fechahoraAtm "); q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); 	//var2
 				q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); 	//var3
@@ -129,7 +129,7 @@ public class ConsultaReportesDAOImplement extends DaoGenericoImplement<Reporte2>
 				rangoQuery = TIPO_QUERY_CON_RANGO;
 
 				break;
-			case 6: //------> SEGÚN MÉDICO POR ESPECIALIDAD*	
+			case 6: //------> SEGUN MEDICO POR ESPECIALIDAD*	
 				
 				q.append("SELECT NEW ec.edu.epn.atencionmedica.entities.Reporte2(1 "); //CONTADOR
 				q.append(" , per.apellido1Prs || ' ' || COALESCE(per.nombre1Prs,'') "); q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); 	//var1
@@ -150,7 +150,7 @@ public class ConsultaReportesDAOImplement extends DaoGenericoImplement<Reporte2>
 				tipoQuery = TIPO_QUERY_TYPED;
 				rangoQuery = TIPO_QUERY_CON_RANGO;
 				break;
-			case 7: //------> SEGÚN MÉDICO POR TIPO DE ATENCIÓN MÉDICA*
+			case 7: //------> SEGUN MEDICO POR TIPO DE ATENCION MEDICA*
 				
 				q.append("SELECT NEW ec.edu.epn.atencionmedica.entities.Reporte2(1 "); //CONTADOR
 				q.append(" , per.apellido1Prs || ' ' || COALESCE(per.nombre1Prs,'') "); q.append(" , '' "); q.append(" , ' - ' "); q.append(" , ce.descripcionCat "); q.append(" , '' "); 	//var1
@@ -173,7 +173,7 @@ public class ConsultaReportesDAOImplement extends DaoGenericoImplement<Reporte2>
 				rangoQuery = TIPO_QUERY_CON_RANGO;
 				break;
 			// CASOS ATENDIDOS ( 3 ) - RANGO FECHA
-			case 10: //------> SEGÚN DIAGNÓSTICO POR SEXO
+			case 10: //------> SEGUN DIAGNOSTICO POR SEXO
 				//QUERY 10
 				q.append("SELECT NEW ec.edu.epn.atencionmedica.entities.Reporte2(1 "); //CONTADOR
 				//q.append(" , tp.codigoTop "); q.append(" , tp.nombreTop "); q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); 	//var1
@@ -195,7 +195,7 @@ public class ConsultaReportesDAOImplement extends DaoGenericoImplement<Reporte2>
 				tipoQuery = TIPO_QUERY_TYPED;
 				rangoQuery = TIPO_QUERY_CON_RANGO;
 				break;
-			case 11: //------> SEGÚN DIAGNÓSTICO POR TIPO DE PACIENTE
+			case 11: //------> SEGUN DIAGNOSTICO POR TIPO DE PACIENTE
 				//QUERY 11
 				q.append("SELECT NEW ec.edu.epn.atencionmedica.entities.Reporte2(1 "); //CONTADOR
 				//q.append(" , tp.codigoTop "); q.append(" , ' - ' ");	 q.append(" , tp.nombreTop "); q.append(" , '' "); q.append(" , '' "); //var1
@@ -217,7 +217,7 @@ public class ConsultaReportesDAOImplement extends DaoGenericoImplement<Reporte2>
 				tipoQuery = TIPO_QUERY_TYPED;
 				rangoQuery = TIPO_QUERY_CON_RANGO;
 				break;
-			case 12: //------> SEGÚN DIAGNÓSTICO POR EDADES
+			case 12: //------> SEGUN DIAGNOSTICO POR EDADES
 				
 				q.append(" SELECT NEW ec.edu.epn.atencionmedica.entities.Reporte2( 1 , 'edad' "); //CONTADOR
 				//q.append(" , tp.codigoTop "); q.append(" , ' - ' ");	 q.append(" , tp.nombreTop "); q.append(" , '' "); q.append(" , '' "); //var1
@@ -293,7 +293,7 @@ public class ConsultaReportesDAOImplement extends DaoGenericoImplement<Reporte2>
 				rangoNombreQuery = "m.fechahoraMov";
 
 				break;
-			case 50: //------> Según insumos médicos por ingreso (Insumos méd.)
+			case 50: //------> SegUn insumos mEdicos por ingreso (Insumos mEd.)
 				q.append(" SELECT NEW ec.edu.epn.atencionmedica.entities.Reporte2( d.cantidadDet "); //CONTADOR
 				q.append(" , i.nombreIsm "); q.append(" , i.formafarmaceuticaIsm ");	 q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); 
 				q.append(" , cm.descripcionCat "); q.append(" , '' ");	 q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); //var2
@@ -316,7 +316,7 @@ public class ConsultaReportesDAOImplement extends DaoGenericoImplement<Reporte2>
 				rangoNombreQuery = "m.fechahoraMov";
 				
 				break;
-			case 51: //------> Según insumos médicos por egreso (Insumos méd.)
+			case 51: //------> SegUn insumos mEdicos por egreso (Insumos mEd.)
 				q.append(" SELECT NEW ec.edu.epn.atencionmedica.entities.Reporte2( d.cantidadDet "); //CONTADOR
 				q.append(" , i.nombreIsm "); q.append(" , i.formafarmaceuticaIsm ");	 q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); 
 				q.append(" , cm.descripcionCat "); q.append(" , '' ");	 q.append(" , '' "); q.append(" , '' "); q.append(" , '' "); //var2
@@ -349,23 +349,23 @@ public class ConsultaReportesDAOImplement extends DaoGenericoImplement<Reporte2>
 			case 18: //------> SUMINISTRADOS SEGUN MEDICAMENTO POR TIPO DE PACIENTE
 
 				break;
-			case 20: //------> SEGÚN DESPACHO POR TIPO DE PACIENTE
+			case 20: //------> SEGUN DESPACHO POR TIPO DE PACIENTE
 
 				break;
-			case 21: //------> SEGÚN ESPECIALIDAD POR TIPO DE PACIENTE
+			case 21: //------> SEGUN ESPECIALIDAD POR TIPO DE PACIENTE
 
 				break;
-			case 22: //------> SEGÚN TIPO DE ATENCIÓN POR TIPO DE PACIENTE
+			case 22: //------> SEGUN TIPO DE ATENCION POR TIPO DE PACIENTE
 
 				break;
 			//MEDICAMENTOS ( 4 )
-			case 25: //------> SEGÚN TIPO DE PRESENTACIÓN * 
+			case 25: //------> SEGUN TIPO DE PRESENTACION * 
 
 				break;
-			case 26: //------> SEGÚN TIPO DE MEDICAMENTO *
+			case 26: //------> SEGUN TIPO DE MEDICAMENTO *
 
 				break;
-			case 27: //------> Todo (agrupado por tipo de presentación)
+			case 27: //------> Todo (agrupado por tipo de presentaciOn)
 				
 			
 				q.append(" SELECT NEW ec.edu.epn.atencionmedica.entities.Reporte2( 0, 0 "); //CONTADOR1, CONTADOR2 
@@ -387,7 +387,7 @@ public class ConsultaReportesDAOImplement extends DaoGenericoImplement<Reporte2>
 				rangoQuery = TIPO_QUERY_SIN_RANGO;
 				
 				break;
-			case 28: //------> Todo (agrupado por tipo de insumo médico)
+			case 28: //------> Todo (agrupado por tipo de insumo mEdico)
 
 
 				q.append(" SELECT NEW ec.edu.epn.atencionmedica.entities.Reporte2( 0, 0 "); //CONTADOR1, CONTADOR2 
@@ -409,7 +409,7 @@ public class ConsultaReportesDAOImplement extends DaoGenericoImplement<Reporte2>
 				rangoQuery = TIPO_QUERY_SIN_RANGO;
 				
 				break;
-			case 29: //------> Bajo saldo de re-orden (agrupado por tipo de presentación)
+			case 29: //------> Bajo saldo de re-orden (agrupado por tipo de presentaciOn)
 				
 				
 				q.append(" SELECT NEW ec.edu.epn.atencionmedica.entities.Reporte2( 0, 0 "); //CONTADOR1, CONTADOR2 
@@ -432,7 +432,7 @@ public class ConsultaReportesDAOImplement extends DaoGenericoImplement<Reporte2>
 				rangoQuery = TIPO_QUERY_SIN_RANGO;
 				
 				break;
-			case 30: //------> Bajo saldo de re-orden (agrupado por tipo de insumo médico)
+			case 30: //------> Bajo saldo de re-orden (agrupado por tipo de insumo mEdico)
 
 				
 				q.append(" SELECT NEW ec.edu.epn.atencionmedica.entities.Reporte2( 0, 0 "); //CONTADOR1, CONTADOR2 
@@ -455,22 +455,22 @@ public class ConsultaReportesDAOImplement extends DaoGenericoImplement<Reporte2>
 				rangoQuery = TIPO_QUERY_SIN_RANGO;
 				break;
 			//LISTAS*
-			case 32: //------> INSUMOS MÉDICOS
+			case 32: //------> INSUMOS MEDICOS
 
 				break;
-			case 33: //------> PERSONAL MÉDICO
+			case 33: //------> PERSONAL MEDICO
 				
 				break;
-			case 34: //------> TIPOS DE INSUMO MÉDICO
+			case 34: //------> TIPOS DE INSUMO MEDICO
 				
 				break;
-			case 35: //------> TIPOS DE PRESENTACIÓN DE I.M.
+			case 35: //------> TIPOS DE PRESENTACION DE I.M.
 				
 				break;
 			case 36: //------> TIPOS DE PACIENTES
 				
 				break;
-			case 37: //------> TIPOS DE ATENCIÓN MÉDICA
+			case 37: //------> TIPOS DE ATENCION MEDICA
 				
 				break;
 			case 38: //------> PACIENTES

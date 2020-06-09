@@ -112,3 +112,4 @@ public class ServicioDAOImplement extends DaoGenericoImplement<Servicio> impleme
 		this.consulta = consulta;
 	}
 }
+

@@ -66,7 +66,7 @@ public class Reporte2 extends util implements Serializable{
 	}
 	
 
-	// Constructor por defecto para la mayoría de reportes que no tienen tipos de dato Date
+	// Constructor por defecto para la mayoria de reportes que no tienen tipos de dato Date
 	public Reporte2 (int contador
 			, String aux11, String aux12, String aux13, String aux14, String aux15
 			, String aux21, String aux22, String aux23, String aux24, String aux25
@@ -112,7 +112,7 @@ public class Reporte2 extends util implements Serializable{
 		Calendar cal=Calendar.getInstance();	//Date to Calendar
 		
 		switch (operacion) {
-		case "año":
+		case "anio":
 			cal.setTime(aux21);
 			this.contador = contador ;
 			this.var1 = (aux11.trim() + " "+ aux12.trim() + " "+ aux13.trim() + " "+ aux14.trim() + " "+ aux15.trim() ).trim().toUpperCase();
@@ -123,7 +123,7 @@ public class Reporte2 extends util implements Serializable{
 			break;
 		case "mes":
 			cal.setTime(aux21);
-			int mes=cal.get(Calendar.MONTH) + 1; //Mes de la atención médica.
+			int mes=cal.get(Calendar.MONTH) + 1; //Mes de la atencion medica.
 			
 			
 			if (mes == 1) this.var2 = "01";

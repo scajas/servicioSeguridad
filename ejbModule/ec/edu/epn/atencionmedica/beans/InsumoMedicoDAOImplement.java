@@ -20,7 +20,7 @@ public class InsumoMedicoDAOImplement extends DaoGenericoImplement<Insumomedico>
 	public StringBuilder queryString = null;
 
 	/**
-	 * Método que devuelve la lista de Objetos según el criterio.
+	 * Metodo que devuelve la lista de Objetos segun el criterio.
 	 * 
 	 * @return Lista<Catalogo>
 	 */
@@ -49,7 +49,7 @@ public class InsumoMedicoDAOImplement extends DaoGenericoImplement<Insumomedico>
 	}
 
 	/**
-	 * Método que devuelve el Objeto según el criterio.
+	 * Metodo que devuelve el Objeto segun el criterio.
 	 * 
 	 * @return Lista<Objeto>
 	 */
@@ -102,7 +102,7 @@ public class InsumoMedicoDAOImplement extends DaoGenericoImplement<Insumomedico>
 	}
 
 	/**
-	 * Método para realizar los inserts
+	 * Metodo para realizar los inserts
 	 * 
 	 * @return void
 	 */
@@ -119,7 +119,7 @@ public class InsumoMedicoDAOImplement extends DaoGenericoImplement<Insumomedico>
 	}
 
 	/**
-	 * Método para eliminar un registro
+	 * Metodo para eliminar un registro
 	 * 
 	 * @return void
 	 */

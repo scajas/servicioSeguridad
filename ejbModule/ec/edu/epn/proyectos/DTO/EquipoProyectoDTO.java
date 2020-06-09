@@ -78,3 +78,4 @@ public class EquipoProyectoDTO implements Serializable {
 	
 	
 }
+

@@ -12,7 +12,7 @@ public interface SubCapituloPEADAO extends DaoGenerico<SubcapituloPea>{
 
 	List<SubcapituloPea> consultarSubCapitulosExiste(Integer idpea, String num, Integer idcapitulo);
 
-	List<SubcapituloPea> consultarSubcapitlosdeCapítulo(Integer idcapitulo);
+	List<SubcapituloPea> consultarSubcapitlosdeCapitulo(Integer idcapitulo);
 
 	void eliminar(Integer idsubcapitulo);
 
