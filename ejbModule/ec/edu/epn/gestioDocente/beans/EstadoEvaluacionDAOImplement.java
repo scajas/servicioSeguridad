@@ -3,6 +3,9 @@
  */
 package ec.edu.epn.gestioDocente.beans;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
@@ -34,6 +37,37 @@ public class EstadoEvaluacionDAOImplement extends DaoGenericoImplement<EstadoEva
 		return (EstadoEvaluacion) q.getSingleResult();
 		} catch (NoResultException e) {
 			return null;
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<EstadoEvaluacion> listEstaodEval(){
+		try {			
+			Query q = getEntityManager()
+					.createQuery(
+							"SELECT e FROM EstadoEvaluacion e WHERE e.nombre NOT LIKE '%PRE%' ");
+			
+			
+			return q.getResultList();
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<EstadoEvaluacion> listEstaodEvalPreplanif(){
+		try {			
+			Query q = getEntityManager()
+					.createQuery(
+							"SELECT e FROM EstadoEvaluacion e WHERE e.nombre LIKE '%PRE%' ");
+			
+			
+			return q.getResultList();
 		} catch (Exception e) {
 			return null;
 		}

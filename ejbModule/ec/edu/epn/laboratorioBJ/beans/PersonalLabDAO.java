@@ -6,6 +6,7 @@ import javax.ejb.Local;
 
 import ec.edu.epn.generic.DAO.DaoGenerico;
 import ec.edu.epn.laboratorioBJ.entities.PersonalLab;
+import ec.edu.epn.laboratorioBJ.entities.Servicio;
 import ec.edu.epn.laboratorioBJ.entities.UnidadLabo;
 
 @Local
@@ -14,5 +15,6 @@ public interface PersonalLabDAO extends DaoGenerico<PersonalLab> {
 	String maxIdPersonal(int id);
 	List<PersonalLab> listarPersonalById(int id);
 	UnidadLabo buscarUnidadById(int id);
+	List<PersonalLab> listarPersonalByServ(Servicio s, int id);
 
 }

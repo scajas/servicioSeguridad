@@ -36,6 +36,8 @@ public interface DependenciaDAO extends DaoGenerico<Dependencia> {
 
 	List<Dependencia> findDependenciaActivaByTipoEmpleadoMigrado(String tipoEmpleado);
 
+	List<Dependencia> listaDepXFacultad();
+
 	
 
 }

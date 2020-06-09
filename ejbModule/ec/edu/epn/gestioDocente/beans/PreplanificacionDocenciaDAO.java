@@ -6,6 +6,7 @@ import javax.ejb.Local;
 
 import ec.edu.epn.contratos.entities.Pedido;
 import ec.edu.epn.generic.DAO.DaoGenerico;
+import ec.edu.epn.gestionDocente.DTO.PreplanifDTO;
 import ec.edu.epn.gestionDocente.entities.PreplanificacionDocencia;
 import ec.edu.epn.rrhh.DTO.DocenteDTO;
 import ec.edu.epn.rrhh.movimientos.Dependencia;
@@ -39,6 +40,11 @@ public interface PreplanificacionDocenciaDAO extends DaoGenerico<Preplanificacio
 			throws Exception;
 
 	Pedido findPedidoPreplanif(String nced, Integer idPensum, Integer idEstado);
+
+	
+	List<PreplanifDTO> listPreplanificacionesReporte(String dep, String estado, Integer idPensum);
+
+	List<PreplanifDTO> listPreplanificacionesEstados(String nombre, String apellido, Integer idPensum);
 
 
 

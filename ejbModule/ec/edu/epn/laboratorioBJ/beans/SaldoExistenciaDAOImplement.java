@@ -36,7 +36,8 @@ public class SaldoExistenciaDAOImplement extends DaoGenericoImplement<SaldoExist
 		String m = parts[1];
 
 		StringBuilder queryString = new StringBuilder(
-				"SELECT s FROM SaldoExistencia s where s.id.anio like '%" + anio + "%' and s.id.mes like'%" + m + "%'");
+				"SELECT s FROM SaldoExistencia s where s.id.anio = " + anio + " AND s.id.mes = " + m );
+		
 		Query query = getEntityManager().createQuery(queryString.toString());
 
 		List<SaldoExistencia> resultados = query.getResultList();
@@ -56,21 +57,21 @@ public class SaldoExistenciaDAOImplement extends DaoGenericoImplement<SaldoExist
 
 		if (dia.equals("31")) {
 			calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH) - 1);
-			// System.out.println("Fecha de hoy restada un dia: " +
-			// sdf.format(calendar.getTime()));
+			 System.out.println("Fecha de hoy restada un dia: " +
+			 sdf.format(calendar.getTime()));
 
 			calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH) - 1);
 			System.out.println("Fecha de hoy restado el mes: " + sdf.format(calendar.getTime()));
 
 		} else {
 			calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH) - 1);
-			// System.out.println(
-			// "Fecha de hoy restado el mes sin tomar en cuenta el dia: " +
-			// sdf.format(calendar.getTime()));
+			 System.out.println(
+			 "Fecha de hoy restado el mes sin tomar en cuenta el diass: " +
+			 sdf.format(calendar.getTime()));
 		}
-
-		// System.out.println("Fecha restada: " +
-		// sdf.format(calendar.getTime()));
+	 System.out.println("Fecha restada: " +
+		 sdf.format(calendar.getTime()));
+	
 
 		String fecha = sdf.format(calendar.getTime());
 

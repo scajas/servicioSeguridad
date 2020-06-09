@@ -2218,7 +2218,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 
 				String carrera = "";
 				for (Proyectocarrera car : carreras) {
-					carrera += car.getNombre() + "  ";
+					carrera += car.getNombre() + ",  ";
 				}
 				cell = new PdfPCell(new Phrase(carrera, fuenteContenido));
 				cell.setColspan(3);
@@ -2362,11 +2362,11 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				cell.setBackgroundColor(new BaseColor(217, 217, 217));
 				tablaEstud.addCell(cell);
 
-				cell = new PdfPCell(new Phrase("Horas Planificadas\n" + periodo.getMeses(), fuente));
+				cell = new PdfPCell(new Phrase("Horas Semestre\nPlanificadas\n" + periodo.getMeses(), fuente));
 				cell.setBackgroundColor(new BaseColor(197, 217, 241));
 				tablaEstud.addCell(cell);
 
-				cell = new PdfPCell(new Phrase("Horas Reportadas\n" + periodo.getMeses(), fuente));
+				cell = new PdfPCell(new Phrase("Horas Semestre\nReportadas\n" + periodo.getMeses(), fuente));
 				cell.setBackgroundColor(new BaseColor(197, 217, 241));
 				tablaEstud.addCell(cell);
 
@@ -2445,7 +2445,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			PdfPTable tablaObjEsp = new PdfPTable(4);
 
 			tablaObjEsp.setWidthPercentage(100);
-			float[] columnWidthObjEsp = new float[] { 5f, 40f, 45f, 10f };
+			float[] columnWidthObjEsp = new float[] { 5f, 40f, 35f, 20f };
 			tablaObjEsp.setWidths(columnWidthObjEsp);
 
 			cell = new PdfPCell(new Phrase("N°", fuente));
@@ -5111,7 +5111,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 
 				String carrera = "";
 				for (Proyectocarrera car : carreras) {
-					carrera += car.getNombre() + "  ";
+					carrera += car.getNombre() + ",  ";
 				}
 				cell = new PdfPCell(new Phrase(carrera, fuenteContenido));
 				cell.setColspan(3);
@@ -5255,11 +5255,11 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				cell.setBackgroundColor(new BaseColor(217, 217, 217));
 				tablaEstud.addCell(cell);
 
-				cell = new PdfPCell(new Phrase("Horas Planificadas\n" + periodo.getMeses(), fuente));
+				cell = new PdfPCell(new Phrase("Horas Semestre\nPlanificadas\n" + periodo.getMeses(), fuente));
 				cell.setBackgroundColor(new BaseColor(197, 217, 241));
 				tablaEstud.addCell(cell);
 
-				cell = new PdfPCell(new Phrase("Horas Reportadas\n" + periodo.getMeses(), fuente));
+				cell = new PdfPCell(new Phrase("Horas Semestre\nReportadas\n" + periodo.getMeses(), fuente));
 				cell.setBackgroundColor(new BaseColor(197, 217, 241));
 				tablaEstud.addCell(cell);
 
@@ -5338,7 +5338,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			PdfPTable tablaObjEsp = new PdfPTable(4);
 
 			tablaObjEsp.setWidthPercentage(100);
-			float[] columnWidthObjEsp = new float[] { 5f, 40f, 45f, 10f };
+			float[] columnWidthObjEsp = new float[] { 5f, 40f, 35f, 20f };
 			tablaObjEsp.setWidths(columnWidthObjEsp);
 
 			cell = new PdfPCell(new Phrase("N°", fuente));
@@ -6643,7 +6643,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 
 				String carrera = "";
 				for (Proyectocarrera car : carreras) {
-					carrera += car.getNombre() + "  ";
+					carrera += car.getNombre() + ",  ";
 				}
 				cell = new PdfPCell(new Phrase(carrera, fuenteContenido));
 				cell.setColspan(3);
@@ -6779,7 +6779,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				cell.setBackgroundColor(new BaseColor(217, 217, 217));
 				tablaEstud.addCell(cell);
 
-				cell = new PdfPCell(new Phrase("Horas Dedicación", fuente));
+				cell = new PdfPCell(new Phrase("Horas semestre dedicación", fuente));
 				cell.setBackgroundColor(new BaseColor(197, 217, 241));
 				tablaEstud.addCell(cell);
 
@@ -6857,7 +6857,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			PdfPTable tablaObjEsp = new PdfPTable(4);
 
 			tablaObjEsp.setWidthPercentage(100);
-			float[] columnWidthObjEsp = new float[] { 5f, 40f, 45f, 10f };
+			float[] columnWidthObjEsp = new float[] { 5f, 40f, 35f, 20f };
 			tablaObjEsp.setWidths(columnWidthObjEsp);
 
 			cell = new PdfPCell(new Phrase("N°", fuente));
@@ -7682,7 +7682,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 
 				String carrera = "";
 				for (Proyectocarrera car : carreras) {
-					carrera += car.getNombre() + "  ";
+					carrera += car.getNombre() + ",  ";
 				}
 				cell = new PdfPCell(new Phrase(carrera, fuenteContenido));
 				cell.setColspan(3);
@@ -7817,7 +7817,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 				cell.setBackgroundColor(new BaseColor(217, 217, 217));
 				tablaEstud.addCell(cell);
 
-				cell = new PdfPCell(new Phrase("Horas Dedicación", fuente));
+				cell = new PdfPCell(new Phrase("Horas semestre dedicación", fuente));
 				cell.setBackgroundColor(new BaseColor(197, 217, 241));
 				tablaEstud.addCell(cell);
 
@@ -7895,7 +7895,7 @@ public class GeneracionPDFRevalorizacion implements Serializable {
 			PdfPTable tablaObjEsp = new PdfPTable(4);
 
 			tablaObjEsp.setWidthPercentage(100);
-			float[] columnWidthObjEsp = new float[] { 5f, 40f, 45f, 10f };
+			float[] columnWidthObjEsp = new float[] { 5f, 40f, 35f, 20f };
 			tablaObjEsp.setWidths(columnWidthObjEsp);
 
 			cell = new PdfPCell(new Phrase("N°", fuente));

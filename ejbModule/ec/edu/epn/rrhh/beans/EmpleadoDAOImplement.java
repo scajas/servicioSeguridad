@@ -77,7 +77,8 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 
 		return query.getResultList();
 	}
-
+	
+	
 	@Override
 	public Emp buscaremp(String nced) throws Exception {
 		Connection con = null;
@@ -91,23 +92,23 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 
 			empleado = (Emp) query.getSingleResult();
 
-			con = dataSource.getConnection();
-			if (empleado != null && con != null) {
-				String qry = "SELECT "
-						+ "CASE cod_tiporelacionlab WHEN 1 THEN (SELECT MAX(p.cargo) FROM \"Rrhh\".nomb_temp n, \"Rrhh\".partind p WHERE n.cod_pind= p.cod_pind AND n.frige_nomb = (SELECT MAX(frige_nomb) FROM \"Rrhh\".nomb_temp WHERE nced=e.nced) AND n.nced=e.nced) "
-						+ "WHEN 2 THEN (SELECT MAX(cargoc) FROM \"Rrhh\".cont c WHERE c.frige_cont=  (SELECT MAX(frige_cont) FROM \"Rrhh\".cont WHERE nced = e.nced) AND c.nced = e.nced) END "
-						+ "FROM \"Rrhh\".EMP E " + "WHERE e.nced like ?  ";
-
-				ps = con.prepareStatement(qry);
-				ps.setString(1, empleado.getNced());
-
-				ResultSet rs = ps.executeQuery();
-
-				while (rs.next()) {
-
-					empleado.setCargook(rs.getString(1));
-				}
-			}
+//			con = dataSource.getConnection();
+//			if (empleado != null && con != null) {
+//				String qry = "SELECT "
+//						+ "CASE cod_tiporelacionlab WHEN 1 THEN (SELECT MAX(p.cargo) FROM \"Rrhh\".nomb_temp n, \"Rrhh\".partind p WHERE n.cod_pind= p.cod_pind AND n.frige_nomb = (SELECT MAX(frige_nomb) FROM \"Rrhh\".nomb_temp WHERE nced=e.nced) AND n.nced=e.nced) "
+//						+ "WHEN 2 THEN (SELECT MAX(cargoc) FROM \"Rrhh\".cont c WHERE c.frige_cont=  (SELECT MAX(frige_cont) FROM \"Rrhh\".cont WHERE nced = e.nced) AND c.nced = e.nced) END "
+//						+ "FROM \"Rrhh\".EMP E " + "WHERE e.nced like ?  ";
+//
+//				ps = con.prepareStatement(qry);
+//				ps.setString(1, empleado.getNced());
+//
+//				ResultSet rs = ps.executeQuery();
+//
+//				while (rs.next()) {
+//
+//					empleado.setCargook(rs.getString(1));
+//				}
+//			}
 
 			return empleado;
 
@@ -2565,13 +2566,17 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 		List<DocenteDTO> listDoc = new ArrayList<DocenteDTO>();
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		Query query = null;
-		query = getEntityManager().createNativeQuery("SELECT  * FROM \"Rrhh\".bi_reportecargodeprrhh(?,?,?,?,?);");
+		query = getEntityManager().createNativeQuery("SELECT  * FROM \"Rrhh\".bi_reportecargodeprrhh(?,?,?,?,?) "
+														+ "sp left join \"Rrhh\".bi_reportelicenperiodonomb(?) licen on sp.nced = licen.ncedlic "
+														+ "left join \"Rrhh\".bi_reporteperiodocontratonomb(?) cont on sp.nced = cont.ncedcont;");
 
 		query.setParameter(1, idPensum);
 		query.setParameter(2, nced);
 		query.setParameter(3, apel);
 		query.setParameter(4, nom);
 		query.setParameter(5, dep);
+		query.setParameter(6, idPensum);
+		query.setParameter(7, idPensum);
 
 		List<?> lists = query.getResultList();
 
@@ -2630,6 +2635,42 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 					val.setPathContrato(null);
 					val.setPresentacion(false);
 				}
+				
+				
+				if (col[13] != null && col[13].toString().length() != 0) {
+					String dato = null;
+					dato = (col[13] == null ? "" : col[13].toString());
+					val.setLicencia(dato);
+
+				}
+				
+				if (col[14] != null && col[14].toString().length() != 0) {
+					String dato = null;
+					dato = (col[14] == null ? "" : col[14].toString());
+					val.setFechaIniLic(dato);;
+
+				}
+				
+				if (col[15] != null && col[15].toString().length() != 0) {
+					String dato = null;
+					dato = (col[15] == null ? "" : col[15].toString());
+					val.setFechaReintegro(dato);
+
+				}
+				
+				if (col[17] != null && col[17].toString().length() != 0) {
+					String dato = null;
+					dato = (col[17] == null ? "" : col[17].toString());
+					val.setFechaIniContrato(dato);
+
+				}
+				
+				if (col[18] != null && col[18].toString().length() != 0) {
+					String dato = null;
+					dato = (col[18] == null ? "" : col[18].toString());
+					val.setFechaFinContrato(dato);
+
+				}
 
 				listDoc.add(val);
 			}
@@ -2651,6 +2692,8 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 		}
 
 		return this.ordenar(listDoc);
+		
+		
 
 	}
 

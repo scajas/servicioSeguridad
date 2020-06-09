@@ -3,6 +3,7 @@
  */
 package ec.edu.epn.gestioDocente.beans;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,6 +18,8 @@ import ec.edu.epn.contratos.beans.PensumDAO;
 import ec.edu.epn.contratos.entities.Pedido;
 import ec.edu.epn.contratos.entities.Pensum;
 import ec.edu.epn.generic.DAO.DaoGenericoImplement;
+import ec.edu.epn.gestionDocente.DTO.PreplanifDTO;
+import ec.edu.epn.gestionDocente.entities.CalculoHorasExigible;
 import ec.edu.epn.gestionDocente.entities.EstadoEvaluacion;
 import ec.edu.epn.gestionDocente.entities.PreplanificacionDocencia;
 import ec.edu.epn.rrhh.DTO.DocenteDTO;
@@ -43,6 +46,9 @@ public class PreplanificacionDocenciaDAOImplement extends DaoGenericoImplement<P
 
 	@EJB(lookup = "java:global/ServiciosSeguridadEPN/EmpleadoDAOImplement!ec.edu.epn.rrhh.beans.EmpleadoDAO")
 	private EmpleadoDAO empDAO;
+	
+	@EJB(lookup = "java:global/ServiciosSeguridadEPN/CalculoHorasExigibleDAOImplement!ec.edu.epn.gestioDocente.beans.CalculoHorasExigibleDAO")
+	private CalculoHorasExigibleDAO calculoHorasExigibleDAO;
 
 	@Override
 	public Long countPreplanifXPeriodo(String nced, String nombre, Integer idPensum, String estado, String dep)
@@ -76,12 +82,12 @@ public class PreplanificacionDocenciaDAOImplement extends DaoGenericoImplement<P
 		Query q = null;
 		if (nced == "" || nced == null) {
 			q = getEntityManager().createQuery(
-					"SELECT p FROM PreplanificacionDocencia p WHERE p.nced is null AND p.nombre like ? AND p.idPensum= ? AND p.estado like ? AND p.codDep = ?");
+					"SELECT p FROM PreplanificacionDocencia p WHERE p.nced is null AND p.nombre like ? AND p.idPensum= ? AND p.estado like ? AND p.codDep like ?");
 
 			q.setParameter(1, nombre);
 			q.setParameter(2, idPensum);
 			q.setParameter(3, estado);
-			q.setParameter(4, dep);
+			q.setParameter(4, dep == "" ? "%%" : dep);
 
 		} else {
 			q = getEntityManager().createQuery(
@@ -109,7 +115,7 @@ public class PreplanificacionDocenciaDAOImplement extends DaoGenericoImplement<P
 		List<PreplanificacionDocencia> listPreplanif = new ArrayList<PreplanificacionDocencia>();
 		List<DocenteDTO> listaDocenteDTO = new ArrayList<DocenteDTO>();
 		Query q = getEntityManager().createQuery(
-				"SELECT p FROM PreplanificacionDocencia p WHERE  p.nombreAnterior like ? AND p.idPensum= ? AND p.codDep=? AND p.nced IS null ");
+				"SELECT p FROM PreplanificacionDocencia p WHERE  p.nombreAnterior like ? AND p.idPensum like ? AND p.codDep like ? AND p.nced IS null ");
 
 		q.setParameter(1, nombre);
 		q.setParameter(2, idPensum);
@@ -368,4 +374,171 @@ public class PreplanificacionDocenciaDAOImplement extends DaoGenericoImplement<P
 			return null;
 		} 
 	}
+	
+	@Override
+	public List<PreplanifDTO> listPreplanificacionesReporte (String dep, String estado, Integer idPensum){
+		
+		List<PreplanifDTO> listPrepDTO= new ArrayList<PreplanifDTO>();
+		List<PreplanificacionDocencia> listPreplanificacion= new ArrayList<PreplanificacionDocencia>();
+		
+		try {
+			StringBuilder queryString = new StringBuilder();
+			queryString.append(" SELECT p from PreplanificacionDocencia p WHERE p.codDep like ? AND p.estado like ? AND p.idPensum= ?");
+			Query query = getEntityManager().createQuery(queryString.toString());
+			query.setParameter(1, "%" + (dep.equals("0")?"":dep) + "%");
+			query.setParameter(2, "%" + estado + "%");
+			query.setParameter(3, idPensum);
+			
+			try {
+				
+				
+				listPreplanificacion = query.getResultList();
+			
+			} catch (Exception e) {
+				listPreplanificacion= null;
+			}
+			
+			
+			if(listPreplanificacion!=null){
+				if(!listPreplanificacion.isEmpty()){
+					for(PreplanificacionDocencia preplanificacion: listPreplanificacion){
+						Dependencia dependencia= new Dependencia();
+						dependencia= (Dependencia) dependenciaDAO.getById(Dependencia.class, preplanificacion.getCodDep());
+						PreplanifDTO dto = new PreplanifDTO();
+						
+						if(dependencia!=null){
+							dto.setDepartamento(dependencia.getNomDep());
+						}else{
+							dto.setDepartamento("");
+						}
+						
+						dto.setCedula(preplanificacion.getNced());
+						dto.setNombre(preplanificacion.getApellido() + " " + preplanificacion.getNombre());
+						dto.setActaDep(preplanificacion.getActaConsejoDep());
+						dto.setActaFac(preplanificacion.getActaConsejoFac());
+						dto.setIdPrepalinifcacion(preplanificacion.getIdPreplanif());
+						
+						SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+						 sdf.format(new Date());
+						
+						if(preplanificacion.getFechaInicio()!=null && preplanificacion.getFechaFin()!=null){
+							dto.setFechaInicio(sdf.format(preplanificacion.getFechaInicio()));
+							dto.setFechaFin(sdf.format(preplanificacion.getFechaFin()));
+						}
+						
+						Pensum pensum= new Pensum();
+						pensum= pensumDAO.obtenerPensumById(idPensum);
+						
+						dto.setPeriodo(pensum.getMeses());
+						
+						
+						if(preplanificacion.getNced()==null){
+							dto.setDedicacion(preplanificacion.getDedicacion());
+							dto.setTipo(preplanificacion.getRelacionLab());
+						}else{
+							List<DocenteDTO> docenteDTO= new ArrayList<DocenteDTO>();
+							docenteDTO= empDAO.presentarCargoDedicacionRelLab(idPensum, "%%" + preplanificacion.getNced() + "%%", "%%", "%%", "%" + dep + "%");
+							if(!docenteDTO.isEmpty()){
+								dto.setDedicacion(docenteDTO.get(0).getDedicacion());
+								dto.setTipo(preplanificacion.getRelacionLab());
+							}							
+						}
+						
+						
+						CalculoHorasExigible calculoHorasExigible= new CalculoHorasExigible();
+						calculoHorasExigible= calculoHorasExigibleDAO.calculoHorasXPensum(idPensum);
+						
+						if(calculoHorasExigible!=null && dto.getDedicacion()!=null){					
+							dto.setTotalHoras(dto.getDedicacion().equals("TC")? calculoHorasExigible.getHorasSemanatc():preplanificacion.getHrsSemanaTp());
+						}else{
+							dto.setTotalHoras(calculoHorasExigible.getHorasSemanatc());
+						}
+						
+						listPrepDTO.add(dto);
+					}
+					
+				}
+			}
+			
+			return listPrepDTO;
+			
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
+	
+	
+	
+	
+	@Override
+	public List<PreplanifDTO> listPreplanificacionesEstados (String nombre, String apellido, Integer idPensum){
+		
+		List<PreplanifDTO> listPrepDTO= new ArrayList<PreplanifDTO>();
+		List<PreplanificacionDocencia> listPreplanificacion= new ArrayList<PreplanificacionDocencia>();
+		
+		try {
+			StringBuilder queryString = new StringBuilder();
+			queryString.append(" SELECT p from PreplanificacionDocencia p WHERE (UPPER(p.nombre) like ? OR UPPER(p.apellido) like ?) AND p.idPensum= ?");
+			Query query = getEntityManager().createQuery(queryString.toString());
+			query.setParameter(1, "%" + nombre + "%");
+			query.setParameter(2, "%" + apellido + "%");
+			query.setParameter(3, idPensum);
+			
+			try {
+				
+				
+				listPreplanificacion = query.getResultList();
+			
+			} catch (Exception e) {
+				listPreplanificacion= null;
+			}
+			
+			
+			if(listPreplanificacion!=null){
+				if(!listPreplanificacion.isEmpty()){
+					for(PreplanificacionDocencia preplanificacion: listPreplanificacion){
+						Dependencia dependencia= new Dependencia();
+						dependencia= (Dependencia) dependenciaDAO.getById(Dependencia.class, preplanificacion.getCodDep());
+						PreplanifDTO dto = new PreplanifDTO();
+						
+						if(dependencia!=null){
+							dto.setDepartamento(dependencia.getNomDep());
+						}else{
+							dto.setDepartamento("");
+						}
+						
+						dto.setCedula(preplanificacion.getNced());
+						dto.setNombre((preplanificacion.getApellido()==null?"":preplanificacion.getApellido()) + " " + preplanificacion.getNombre());
+						dto.setActaDep(preplanificacion.getActaConsejoDep());
+						dto.setActaFac(preplanificacion.getActaConsejoFac());
+						dto.setIdPrepalinifcacion(preplanificacion.getIdPreplanif());
+						
+						EstadoEvaluacion estadoEvaluacion= new EstadoEvaluacion();
+						estadoEvaluacion= (EstadoEvaluacion) estadoEvaluacionDAO.estadoEvalXNombre(preplanificacion.getEstado());
+						
+						dto.setEstado(estadoEvaluacion.getDescripcion());
+						
+						
+						Pensum pensum= new Pensum();
+						pensum= pensumDAO.obtenerPensumById(idPensum);
+						
+						dto.setPeriodo(pensum.getMeses());
+						
+						
+						listPrepDTO.add(dto);
+					}
+					
+				}
+			}
+			
+			return listPrepDTO;
+			
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
+	
+	
 }

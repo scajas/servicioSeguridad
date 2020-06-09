@@ -101,7 +101,8 @@ public class SubTipoAccionDAOImplement extends DaoGenericoImplement<SubtipoAccio
 	@Override
 	public SubtipoAccion  findSubTipoAccionPorNombreYTipo(String nombreSubTipoAccion, String tipoAccion) {
 		StringBuilder queryString = new StringBuilder("Select sta from SubtipoAccion "
-				+ "sta where sta.nombreSubaccion like ?1" + " and sta.tipoAccion.nombreAccion = ?2");
+				+ "sta where TRIM(sta.nombreSubaccion) = ?1" + " and TRIM(sta.tipoAccion.nombreAccion) = ?2 "
+						+ "and sta.plantillaMotivo is not null ");
 		Query query = getEntityManager().createQuery(queryString.toString());
 		query.setParameter(1, nombreSubTipoAccion);
 		query.setParameter(2, tipoAccion);

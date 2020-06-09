@@ -17,56 +17,80 @@ import ec.edu.epn.generic.DAO.DaoGenericoImplement;
 @LocalBean
 public class ConvenioDAOImplement extends DaoGenericoImplement<Convenio> implements ConvenioDAO {
 
-	
-	
-	
-	
 	@Override
-	public List<Convenio> consultaconvenioFechas1(Date fechaDesde,
-			Date fechaHasta) {
+	public List<Convenio> consultaconvenioFechas1(Date fechaDesde, Date fechaHasta) {
 
-		String codConv = "%";
-		System.out.println("Entraaaaaaaaa la consulta de la busquedaaaaaaaaaa");
+		try {
 
-		StringBuilder queryString = new StringBuilder(
-				"select conv from Convenio conv where conv.idConv like ?0 ");
+			String codConv = "%";
+			System.out.println("Entraaaaaaaaa la consulta de la busquedaaaaaaaaaa");
 
-		if (fechaDesde == null & fechaHasta == null) {
-			// System.out.println("RETORNA NULL");
+			StringBuilder queryString = new StringBuilder("select conv from Convenio conv where conv.idConv like ?0 ");
+
+
+			if (fechaDesde != null & fechaHasta != null) {
+				queryString.append(" and conv.finTentativo BETWEEN ?1 AND ?2 ");
+			}
+
+			queryString.append("ORDER BY conv.idConv ");
+
+			Query query = getEntityManager().createQuery(queryString.toString());
+
+			query.setParameter(0, "%" + codConv + "%");
+
+			if (fechaDesde != null & fechaHasta != null) {
+				query.setParameter(1, fechaDesde);
+				query.setParameter(2, fechaHasta);
+
+			}
+
+			System.out.println("Saleeeee de  la consulta de la busquedaaaaaaaaaa");
+			return query.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
 			return null;
 		}
-
-		if (fechaDesde != null & fechaHasta != null) {
-			queryString.append(" and conv.finTentativo BETWEEN ?1 AND ?2 ");
-		}
-		
-		
-		queryString.append("ORDER BY conv.idConv ");
-
-		Query query = getEntityManager().createQuery(queryString.toString());
-
-		query.setParameter(0, "%" + codConv + "%");
-
-		if (fechaDesde != null & fechaHasta != null) {
-			query.setParameter(1, fechaDesde);
-			query.setParameter(2, fechaHasta);
-
-		}
-		
-		
-
-
-		System.out.println("Saleeeee de  la consulta de la busquedaaaaaaaaaa");
-		return query.getResultList();
 	}
 	
+	@Override
+	public List<Convenio> consultaconvenioAntesde(Date fecha) {
+
+		try {
+
+			String codConv = "%";
+			
+
+			StringBuilder queryString = new StringBuilder("select conv from Convenio conv where conv.idConv like ?0 ");
+
+
+			if (fecha != null ) {
+				queryString.append(" and conv.fechaFirma > ?1  ");
+			}
+
+			queryString.append("ORDER BY conv.idConv ");
+
+			Query query = getEntityManager().createQuery(queryString.toString());
+
+			query.setParameter(0, "%" + codConv + "%");
+
+			if (fecha != null ) {
+				query.setParameter(1, fecha);
+				
+
+			}
+
+		
+			return query.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
-	
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Convenio> consultaconvenioFechas(Date fechaDesde,
-			Date fechaHasta, int idorg) {
+	public List<Convenio> consultaconvenioFechas(Date fechaDesde, Date fechaHasta, int idorg) {
 
 		String codConv = "%";
 		System.out.println("Entraaaaaaaaa la consulta de la busquedaaaaaaaaaa");
@@ -82,9 +106,8 @@ public class ConvenioDAOImplement extends DaoGenericoImplement<Convenio> impleme
 		if (fechaDesde != null & fechaHasta != null) {
 			queryString.append(" and conv.finTentativo BETWEEN ?1 AND ?2 ");
 		}
-		
-		if(idorg != 0)
-		{
+
+		if (idorg != 0) {
 			queryString.append(" and org.organizacion.idOrganizacion = ?3 ");
 		}
 
@@ -99,28 +122,24 @@ public class ConvenioDAOImplement extends DaoGenericoImplement<Convenio> impleme
 			query.setParameter(2, fechaHasta);
 
 		}
-		
-		if(idorg != 0)
-		{
+
+		if (idorg != 0) {
 			query.setParameter(3, idorg);
 		}
-
 
 		System.out.println("Saleeeee de  la consulta de la busquedaaaaaaaaaa");
 		return query.getResultList();
 	}
-	
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Convenio> consultaconveniobyparams(String codigo,
-			String titulo, String Objeto, int idAplicacion, int idAutoridad,
-			String estado, String vigencia, int idDepartamento,
-			String localidad, int idtipo, Date fechaDesde, Date fechaHasta, int idorganizacion,
-			String tesis, String pasantias, String investigacion, String sprofesionales, String varios, String tipo) {
+	public List<Convenio> consultaconveniobyparams(String codigo, String titulo, String Objeto, int idAplicacion,
+			int idAutoridad, String estado, String vigencia, int idDepartamento, String localidad, int idtipo,
+			Date fechaDesde, Date fechaHasta, int idorganizacion, String tesis, String pasantias, String investigacion,
+			String sprofesionales, String varios, String tipo) {
 
-		System.out.println("Desde"+fechaDesde);
-		System.out.println("Hasta"+fechaHasta);
+		System.out.println("Desde" + fechaDesde);
+		System.out.println("Hasta" + fechaHasta);
 		String observaciones = "%";
 		System.out.println("Entraaaaaaaaa la consulta de la busquedaaaaaaaaaa");
 
@@ -138,8 +157,6 @@ public class ConvenioDAOImplement extends DaoGenericoImplement<Convenio> impleme
 		if (Objeto != null) {
 			queryString.append(" and conv.objetivoC like ?3 ");
 		}
-
-		
 
 		if (idAutoridad != 0) {
 			queryString.append(" and conv.autoridad.idAutoridad = ?5 ");
@@ -168,37 +185,34 @@ public class ConvenioDAOImplement extends DaoGenericoImplement<Convenio> impleme
 		if (fechaDesde != null & fechaHasta != null) {
 			queryString.append(" and conv.fechaFirma BETWEEN ?11 AND ?12 ");
 		}
-		
+
 		if (idorganizacion != 0) {
-			queryString.append(" and  org.organizacion.idOrganizacion = ?13 " );
+			queryString.append(" and  org.organizacion.idOrganizacion = ?13 ");
 		}
-		
-		
+
 		if (tesis != null) {
 			queryString.append(" and conv.tesis like ?14 ");
 		}
-		
+
 		if (pasantias != null) {
 			queryString.append(" and conv.pasantias like ?15 ");
 		}
-		
+
 		if (investigacion != null) {
 			queryString.append(" and conv.investigacion like ?16 ");
 		}
-		
+
 		if (sprofesionales != null) {
 			queryString.append(" and conv.sprofesionales like ?17 ");
 		}
-		
+
 		if (varios != null) {
 			queryString.append(" and conv.varios like ?18 ");
 		}
-		
+
 		if (tipo != null) {
 			queryString.append(" and org.organizacion.tipo like ?19 ");
 		}
-
-	
 
 		queryString.append("ORDER BY conv.idConv ");
 
@@ -207,25 +221,23 @@ public class ConvenioDAOImplement extends DaoGenericoImplement<Convenio> impleme
 		query.setParameter(0, "%" + observaciones + "%");
 
 		if (codigo != null) {
-			query.setParameter(1, "%"+codigo+"%");
+			query.setParameter(1, "%" + codigo + "%");
 		}
 
 		if (titulo != null) {
-			query.setParameter(2, "%"+titulo+"%");
+			query.setParameter(2, "%" + titulo + "%");
 		}
 
 		if (Objeto != null) {
-			query.setParameter(3, "%"+Objeto+"%");
+			query.setParameter(3, "%" + Objeto + "%");
 		}
-
-		
 
 		if (idAutoridad != 0) {
 			query.setParameter(5, idAutoridad);
 		}
 
 		if (estado != null) {
-			query.setParameter(6, "%"+estado.trim()+"%");
+			query.setParameter(6, "%" + estado.trim() + "%");
 		}
 
 		if (vigencia != null) {
@@ -249,41 +261,37 @@ public class ConvenioDAOImplement extends DaoGenericoImplement<Convenio> impleme
 			query.setParameter(12, fechaHasta);
 
 		}
-		
+
 		if (idorganizacion != 0) {
 			query.setParameter(13, idorganizacion);
 		}
-		
-		
+
 		if (tesis != null) {
-			query.setParameter(14, "%"+tesis+"%");
-		}
-		
-		if (pasantias != null) {
-			query.setParameter(15, "%"+pasantias+"%");
-		}
-		
-		if (investigacion != null) {
-			query.setParameter(16,"%"+ investigacion+"%");
-		}
-		
-		if (sprofesionales != null) {
-			query.setParameter(17, "%"+sprofesionales+"%");
-		}
-		
-		if (varios != null) {
-			query.setParameter(18,"%"+ varios+"%");
-		}
-		
-		if (tipo != null) {
-			query.setParameter(19,"%" +tipo+"%");
+			query.setParameter(14, "%" + tesis + "%");
 		}
 
-		
+		if (pasantias != null) {
+			query.setParameter(15, "%" + pasantias + "%");
+		}
+
+		if (investigacion != null) {
+			query.setParameter(16, "%" + investigacion + "%");
+		}
+
+		if (sprofesionales != null) {
+			query.setParameter(17, "%" + sprofesionales + "%");
+		}
+
+		if (varios != null) {
+			query.setParameter(18, "%" + varios + "%");
+		}
+
+		if (tipo != null) {
+			query.setParameter(19, "%" + tipo + "%");
+		}
 
 		System.out.println("Saleeeee de  la consulta de la busquedaaaaaaaaaa");
 		return query.getResultList();
 	}
-	
 
 }

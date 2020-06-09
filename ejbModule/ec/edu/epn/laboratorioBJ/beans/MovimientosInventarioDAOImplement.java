@@ -10,7 +10,6 @@ import javax.persistence.Query;
 
 import ec.edu.epn.generic.DAO.DaoGenericoImplement;
 import ec.edu.epn.laboratorioBJ.entities.Existencia;
-import ec.edu.epn.laboratorioBJ.entities.Hidratacion;
 import ec.edu.epn.laboratorioBJ.entities.Movimientosinventario;
 import ec.edu.epn.laboratorioBJ.entities.SaldoExistencia;
 
@@ -25,6 +24,8 @@ public class MovimientosInventarioDAOImplement extends DaoGenericoImplement<Movi
 	/**
 	 * Default constructor.
 	 */
+	private String consulta;
+
 	public MovimientosInventarioDAOImplement() {
 		// TODO Auto-generated constructor stub
 	}
@@ -33,7 +34,8 @@ public class MovimientosInventarioDAOImplement extends DaoGenericoImplement<Movi
 	public List<Existencia> listarExistenciaById(int id) {
 
 		System.out.println("idUnidad: " + id);
-		StringBuilder queryString = new StringBuilder("SELECT e FROM Existencia e where e.idUnidad = ?1 ORDER BY e.producto.nombrePr ASC ");
+		StringBuilder queryString = new StringBuilder(
+				"SELECT e FROM Existencia e where e.idUnidad = ?1 ORDER BY e.producto.nombrePr ASC ");
 		Query query = getEntityManager().createQuery(queryString.toString());
 		query.setParameter(1, id);
 
@@ -41,14 +43,14 @@ public class MovimientosInventarioDAOImplement extends DaoGenericoImplement<Movi
 		return resultados;
 
 	}
-	
+
 	@Override
 	public Existencia buscarExistenciaById(String id) {
-		
+
 		StringBuilder querys = new StringBuilder("SELECT e FROM Existencia e where e.idExistencia = ?0");
 		Query query = getEntityManager().createQuery(querys.toString());
 		query.setParameter(0, id);
-		query.setMaxResults(1); //fsaf
+		query.setMaxResults(1); // fsaf
 
 		try {
 			Existencia existencia = (Existencia) query.getSingleResult();
@@ -60,16 +62,16 @@ public class MovimientosInventarioDAOImplement extends DaoGenericoImplement<Movi
 		}
 
 	}
-	
+
 	@Override
 	public SaldoExistencia validarSaldoExistencia(String fecha) {
-		
+
 		String[] parts = fecha.split("-");
-		
+
 		String anio = parts[0];
 		String mes = parts[1];
 		
-		System.out.println("Este es el anio: " + anio + " y este es el mes: " + mes);
+		System.out.println("Este es el a�o: " + anio + " y este es el mes: " + mes);
 		
 		StringBuilder querys = new StringBuilder("SELECT s FROM SaldoExistencia s where s.Id.mes like '%" + mes + "%'");
 		Query query = getEntityManager().createQuery(querys.toString());
@@ -77,7 +79,7 @@ public class MovimientosInventarioDAOImplement extends DaoGenericoImplement<Movi
 
 		try {
 			SaldoExistencia saldoExistencia = (SaldoExistencia) query.getSingleResult();
-			
+
 			return saldoExistencia;
 		} catch (NoResultException nre) {
 			return null;
@@ -86,6 +88,28 @@ public class MovimientosInventarioDAOImplement extends DaoGenericoImplement<Movi
 		}
 
 	}
-	
 
+	@Override
+	public List<Movimientosinventario> parametrosMovInv(String idExistencia, String fechaInicio, String fechaFin) {
+
+		setConsulta("SELECT m FROM Movimientosinventario m WHERE m.idExistencia like '%" + idExistencia
+				+ "%' AND m.fechaMi BETWEEN '" + fechaInicio + "' " + "AND '" + fechaFin + "'");
+
+		StringBuilder queryString = new StringBuilder(getConsulta());
+		Query query = getEntityManager().createQuery(queryString.toString());
+
+		List<Movimientosinventario> resultados = query.getResultList();
+
+		return resultados;
+	}
+
+	public String getConsulta() {
+		return consulta;
+	}
+
+	public void setConsulta(String consulta) {
+		this.consulta = consulta;
+	}
+
+	
 }
