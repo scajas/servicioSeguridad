@@ -134,6 +134,15 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 		return query.getResultList();
 	}
 	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Emp> listaEmpleadoXCedulaActivo(String cedula) {
+		StringBuilder queryString = new StringBuilder("SELECT e FROM Emp e where e.nced =?1 and (e.estemp.codEst != '2' and e.estemp.codEst != '8' and e.estemp.codEst != '10')" );
+		Query query = getEntityManager().createQuery(queryString.toString());
+		query.setParameter(1, cedula);
+		return query.getResultList();
+	}
+	
 	@Override
 	public List<Emp> listaEmpleadonoContrato(int firstResult, int maxResults) {
 		StringBuilder queryString = new StringBuilder("SELECT e FROM Emp e where (e.estemp = '1') "

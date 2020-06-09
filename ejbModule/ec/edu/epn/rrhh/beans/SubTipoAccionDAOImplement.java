@@ -142,3 +142,4 @@ public class SubTipoAccionDAOImplement extends DaoGenericoImplement<SubtipoAccio
 
 
 }
+

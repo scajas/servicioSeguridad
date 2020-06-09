@@ -1,6 +1,3 @@
-/**
- * 
- */
 package ec.edu.epn.proyectos.beans;
 
 import java.sql.Connection;
@@ -246,7 +243,7 @@ public class ProyectoPDAOImplement extends DaoGenericoImplement<ProyectoP> imple
 						"SELECT p.id_proy, p.codigo_pr, p.nombre_pr, rp.rol_proy, p.fechaini, (p.fechaf -p.fechaini) AS estimado "
 								+ "FROM \"Proyectos\".proyecto p, \"Proyectos\".recursoh_pr r, \"Proyectos\".rol_proyecto rp "
 								+ "WHERE p.id_proy= r.id_proy " + "AND r.id_rol_proy=rp.id_rol_proy "
-								+ "AND p.estado IN ('En ejecución', 'Prórroga Ordinaria', 'Prórroga Extraordinaria','Proceso de cierre','Suspendido') "
+								+ "AND p.estado IN ('En ejecución', 'Prórroga Ordinaria', 'Prórroga Extraordinaria','Proceso de cierre','Suspendido','Prórroga Técnica') "
 								+ "AND r.nced=? ");
 
 				ps.setString(1, cedula);
@@ -354,7 +351,7 @@ public class ProyectoPDAOImplement extends DaoGenericoImplement<ProyectoP> imple
 		}
 
 		queryString.append(
-				" where pr.estado IN ('En ejecución', 'Prórroga Ordinaria', 'Prórroga Extraordinaria','Proceso de cierre','Suspendido') ");
+				" where pr.estado IN ('En ejecución', 'Prórroga Ordinaria', 'Prórroga Extraordinaria','Proceso de cierre','Suspendido','Prórroga Técnica') and pr.tipoProyecto.idTipoProy != 12 ");
 
 		if (cedula != null) {
 			queryString.append(" and rp.proyecto.idProy = pr.idProy   ");
@@ -397,3 +394,4 @@ public class ProyectoPDAOImplement extends DaoGenericoImplement<ProyectoP> imple
 	}
 
 }
+

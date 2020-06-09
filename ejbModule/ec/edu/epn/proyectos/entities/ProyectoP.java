@@ -99,6 +99,10 @@ public class ProyectoP implements Serializable {
 	private Date factafin;
 	@Temporal(TemporalType.DATE)
 	private Date fnotificafin;
+	
+	
+	@Temporal(TemporalType.DATE)
+	private Date ffinreiniciosuspension;
 
 	private String numresolaprprord, numresolprogextra, convenio, tieneconv, tipoorg;
 
@@ -1270,5 +1274,16 @@ public class ProyectoP implements Serializable {
 	public void setFfinprogtec(Date ffinprogtec) {
 		this.ffinprogtec = ffinprogtec;
 	}
+
+	public Date getFfinreiniciosuspension() {
+		return ffinreiniciosuspension;
+	}
+
+	public void setFfinreiniciosuspension(Date ffinreiniciosuspension) {
+		this.ffinreiniciosuspension = ffinreiniciosuspension;
+	}
+	
+	
+
 
 }

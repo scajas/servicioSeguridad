@@ -25,3 +25,4 @@ public interface CompraDAO extends DaoGenerico<Compra> {
 
 
 }
+

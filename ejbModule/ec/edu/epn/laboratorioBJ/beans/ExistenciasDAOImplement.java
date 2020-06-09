@@ -435,3 +435,4 @@ public class ExistenciasDAOImplement extends DaoGenericoImplement<Existencia> im
 	}
 
 }
+

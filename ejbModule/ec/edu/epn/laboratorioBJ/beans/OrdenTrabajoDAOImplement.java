@@ -714,3 +714,4 @@ public class OrdenTrabajoDAOImplement extends DaoGenericoImplement<OrdenTrabajo>
 	}
 
 }
+

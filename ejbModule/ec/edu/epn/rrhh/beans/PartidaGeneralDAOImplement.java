@@ -61,3 +61,4 @@ public class PartidaGeneralDAOImplement extends DaoGenericoImplement<PartidaGene
 		}
 	}
 }
+
