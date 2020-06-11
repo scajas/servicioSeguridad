@@ -7,7 +7,7 @@ import java.util.Date;
 
 
 /**
- * The persistent class for the movimientosinventario database table.
+ * The persistent class for the movimientosinventario database table
  * 
  */
 @Entity
@@ -27,7 +27,7 @@ public class Movimientosinventario implements Serializable {
 	private String aux2;
 
 	@Column(name="cantidad_dmt", unique = true, nullable = false)
-	private Integer cantidadDmt;
+	private float cantidadDmt;
 
 	@Column(name="cantidad_mov")
 	private BigDecimal cantidadMov;
@@ -92,11 +92,11 @@ public class Movimientosinventario implements Serializable {
 		this.aux2 = aux2;
 	}
 
-	public Integer getCantidadDmt() {
+	public float getCantidadDmt() {
 		return this.cantidadDmt;
 	}
 
-	public void setCantidadDmt(Integer cantidadDmt) {
+	public void setCantidadDmt(float cantidadDmt) {
 		this.cantidadDmt = cantidadDmt;
 	}
 
