@@ -1621,7 +1621,7 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 						+ "or fam.accionP.subtipoAccion.nombreSubaccion like ?5 )"
 						+ "and (fam.id.estado <> ?6 and fam.id.estado <> ?7 and fam.id.estado <> ?8) "
 						+ "and (fam.designacion.estado <> ?9 and fam.designacion.estado <> ?10"
-						+ " and fam.designacion.estado <> ?10) and t.emp.nced = ?1" + " group by fam.id.idHist)");
+						+ " and fam.designacion.estado <> ?11) and t.emp.nced = ?1" + " group by fam.id.idHist)");
 
 		Query query = getEntityManager().createQuery(queryString.toString());
 
@@ -1635,7 +1635,7 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		query.setParameter(8, "Ejecucion");
 		query.setParameter(9, "Terminado");
 		query.setParameter(10, "Finalizando");
-
+		query.setParameter(11, "Terminada");
 		count = (long) query.getSingleResult();
 
 		return count;
@@ -1649,9 +1649,9 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 				+ "or fam.accionP.subtipoAccion.nombreSubaccion like ?3 "
 				+ "or fam.accionP.subtipoAccion.nombreSubaccion like ?4 "
 				+ "or fam.accionP.subtipoAccion.nombreSubaccion like ?5 )"
-				+ "and (fam.id.estado <> ?6 and fam.id.estado <> ?7 and fam.id.estado <> ?8) "
-				+ "and (fam.designacion.estado <> ?9 and fam.designacion.estado <> ?10"
-				+ " and fam.designacion.estado <> ?11) " + " and t.emp.nced = ?1 group by fam.id.idHist)");
+				+ "and (fam.id.estado != ?6 and fam.id.estado != ?7 and fam.id.estado != ?8) "
+				+ "and (fam.designacion.estado != ?9 and fam.designacion.estado != ?10"
+				+ " and fam.designacion.estado != ?11 and fam.designacion.estado != ?12) " + " and t.emp.nced = ?1 group by fam.id.idHist)");
 
 		Query query = getEntityManager().createQuery(queryString.toString());
 
@@ -1666,6 +1666,7 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 		query.setParameter(9, "Terminado");
 		query.setParameter(10, "Anulado");
 		query.setParameter(11, "Finalizando");
+		query.setParameter(12, "Terminada");
 		List<HistoriaLaboral> resultados = query.getResultList();
 
 		StringBuilder queryString2 = new StringBuilder("SELECT " + "fam FROM HistoriaLaboral fam where "
