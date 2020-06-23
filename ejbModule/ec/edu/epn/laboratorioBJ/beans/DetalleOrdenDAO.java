@@ -28,4 +28,6 @@ public interface DetalleOrdenDAO extends DaoGenerico<Detalleorden> {
 
 	TipoJustificacion findTipoJustificacionById(String id);
 
+	List<Detalleorden> listarDetalleOrdenByUsuarioNoActivo(int id, String idUnidad);
+
 }
