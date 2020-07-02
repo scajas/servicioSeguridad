@@ -66,7 +66,19 @@ public class AutorizacionEmergencia implements Serializable
     @JoinColumn(name = "horario")
     private HorarioEmergencia horario;
     
-    public Integer getIdAutorizacion() {
+    @ManyToOne
+    @JoinColumn(name="tipo_autorizacion")
+	private TipoAutorizacion tipoAutorizacion;
+
+    public TipoAutorizacion getTipoAutorizacion() {
+		return tipoAutorizacion;
+	}
+
+	public void setTipoAutorizacion(TipoAutorizacion tipoAutorizacion) {
+		this.tipoAutorizacion = tipoAutorizacion;
+	}
+
+	public Integer getIdAutorizacion() {
         return this.idAutorizacion;
     }
     

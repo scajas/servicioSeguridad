@@ -9,17 +9,19 @@ import ec.edu.epn.generic.DAO.DaoGenerico;
 @Remote
 public interface AutorizacionEmergenciaDAO extends DaoGenerico<AutorizacionEmergencia>
 {
-    List<AutorizacionEmergencia> findAutorizaciones();
+    public List<AutorizacionEmergencia> findAutorizaciones();
     
-    Integer getMaxId();
+    public Integer getMaxId();
     
-    List<AutorizacionEmergencia> findAutorizacionesXCedula(final String p0);
+    public List<AutorizacionEmergencia> findAutorizacionesXCedula(final String p0);
     
-    List<AutorizacionEmergencia> findAutorizacionesXCedulaXFechaDesdexFechaHasta(final String p0, final Date p1, final Date p2);
+    public List<AutorizacionEmergencia> findAutorizacionesXCedulaXFechaDesdexFechaHasta(final String p0, final Date p1, final Date p2);
     
-    List<AutorizacionEmergencia> findAutorizacionesXExpiradoAutorizado(final Date p0);
+    public List<AutorizacionEmergencia> findAutorizacionesXExpiradoAutorizado(final Date p0);
     
-    List<AutorizacionEmergencia> findAutorizacionesXEstadoCalendarizado(final Date p0);
+    public List<AutorizacionEmergencia> findAutorizacionesXEstadoCalendarizado(final Date p0);
     
-    List<AutorizacionEmergencia> findAutorizacionesXEstadoPersona(final String p0);
+    public List<AutorizacionEmergencia> findAutorizacionesXEstadoPersona(final String p0);
+    
+    public List<AutorizacionEmergencia> findAutorizacionesXCedulaXFechaDesdexFechaHastaxTipoEmp(String cedula, final Date fechaDesde, final Date fechaHasta, String tipoEmp);
 }

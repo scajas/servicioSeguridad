@@ -62,6 +62,38 @@ public class AutorizacionEmergenciaDAOImplement extends DaoGenericoImplement<Aut
         return (List<AutorizacionEmergencia>)q.getResultList();
     }
     
+    
+    public List<AutorizacionEmergencia> findAutorizacionesXCedulaXFechaDesdexFechaHastaxTipoEmp(String cedula, final Date fechaDesde, final Date fechaHasta, String tipoEmp) {
+        final StringBuilder query = new StringBuilder("Select dep from AutorizacionEmergencia dep ");
+        query.append("where dep.tipoPersona like :tipoEmp ");
+        
+        if (cedula != null && !cedula.equals("")) {
+            cedula = String.valueOf(cedula) + "%";
+            query.append("and dep.nced like :cedula ");
+        }
+        if (fechaDesde != null) {
+           
+            query.append("and dep.fechaHasta >= :fechaDesde ");
+        }
+        if (fechaHasta != null) {
+            
+            query.append("and dep.fechaDesde <= :fechaHasta ");
+        }
+        query.append("order by dep.fechaDesde ASC");
+        final Query q = this.getEntityManager().createQuery(query.toString());
+        if (cedula != null && !cedula.equals("")) {
+            q.setParameter("cedula", (Object)cedula);
+        }
+        if (fechaHasta != null) {
+            q.setParameter("fechaHasta", (Object)fechaHasta);
+        }
+        if (fechaDesde != null) {
+            q.setParameter("fechaDesde", (Object)fechaDesde);
+        }
+        q.setParameter("tipoEmp",tipoEmp);
+        return (List<AutorizacionEmergencia>)q.getResultList();
+    }
+    
     public List<AutorizacionEmergencia> findAutorizacionesXExpiradoAutorizado(final Date fechaActual) {
         final StringBuilder query = new StringBuilder("Select dep from AutorizacionEmergencia dep where dep.fechaHasta < :fechaActual and dep.estado.idEstado = 1");
         final Query q = this.getEntityManager().createQuery(query.toString());
