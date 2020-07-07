@@ -148,13 +148,15 @@ public class DetalleOrdenDAOImplement extends DaoGenericoImplement<Detalleorden>
 		StringBuilder queryString = new StringBuilder("SELECT d FROM Detalleorden d, Usuario u "
 				+ "WHERE d.estadoDot = 'PENDIENTE' "
 				+ "AND d.ordenTrabajo.estadoOt = 'GENERADA' "
+				+ "AND d.ordenTrabajo.idUsuario = u.id "
 				+ "AND d.ordenTrabajo.idOrden like '%" + idUnidad + "%' "
 				+ "AND u.activo = 'NO'" 
 				+ " ORDER BY d.ordenTrabajo.idOrden ASC");
+		
 		Query query = getEntityManager().createQuery(queryString.toString());
 		
 		List<Detalleorden> resultados = query.getResultList();
-		System.out.println("Resultados Obtenidos" + resultados.size());
+		System.out.println("Resultados Obtenidos: " + resultados.size());
 		return resultados;
 	}
 
