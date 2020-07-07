@@ -28,8 +28,7 @@ public class LaboratoryDAOImplement extends DaoGenericoImplement<laboratory> imp
 	public List<laboratory> ListarBodegaById(int id) {
 
 		StringBuilder queryString = new StringBuilder(
-				"SELECT DISTINCT (l) FROM laboratory l,  BodegaUsuario b WHERE l.idBodega = b.id.idBodega "
-				+ "AND l.idUsuario = b.id.idUsuario "
+				"SELECT DISTINCT (l) FROM laboratory l,  BodegaUsuario b WHERE l.idUsuario = b.id.idUsuario "
 				+ "AND l.idUsuario = " + id +" ORDER BY l.nombreBg");
 		Query query = getEntityManager().createQuery(queryString.toString());
 
