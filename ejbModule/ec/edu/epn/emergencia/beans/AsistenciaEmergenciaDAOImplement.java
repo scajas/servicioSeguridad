@@ -3,6 +3,7 @@
  */
 package ec.edu.epn.emergencia.beans;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -29,6 +30,39 @@ public class AsistenciaEmergenciaDAOImplement extends DaoGenericoImplement<Asist
 				"Select dep from AsistenciaEmergencia dep ");
 
 		return q.getResultList();
+	}
+
+	@Override
+	public List<AsistenciaEmergencia> getAsistenciasByDate(Date fechaDesde, Date fechaHasta, String nced, 
+			char tipoPersona) {
+		String queryPredicate = "";
+		if(tipoPersona!='T') {
+			queryPredicate = " and asist.autorizacion.tipoPersona = '" + tipoPersona +"'";
+		}
+		
+		StringBuilder queryString = null;
+		if(nced!=null) {
+			queryString = new StringBuilder(
+					"   SELECT asist "
+					+ " from AsistenciaEmergencia asist where asist.autorizacion.nced = :cedula "
+					+ " and asist.fechaIngreso BETWEEN :fechaDesde and :fechaHasta ");
+			
+		}else {
+			queryString = new StringBuilder(
+					"   SELECT asist "
+					+ " from AsistenciaEmergencia asist "
+					+ " where asist.fechaIngreso BETWEEN :fechaDesde and :fechaHasta ");
+		}
+		queryString.append(queryPredicate);			
+		Query query = getEntityManager().createQuery(queryString.toString());
+		if(nced!=null) {
+			query.setParameter("cedula", nced);	
+		}	
+		query.setParameter("fechaDesde", fechaDesde);
+		query.setParameter("fechaHasta", fechaHasta);
+		List<AsistenciaEmergencia> resultados = query.getResultList();
+		return 	resultados;
+		
 	}
 
 }

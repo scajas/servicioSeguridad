@@ -1,5 +1,6 @@
 package ec.edu.epn.emergencia.beans;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Local;
@@ -16,5 +17,7 @@ import ec.edu.epn.rrhh.entities.Ecivil;
 public interface AsistenciaEmergenciaDAO extends DaoGenerico<AsistenciaEmergencia> {
 
 	List<AsistenciaEmergencia> findAsistencia();
+	
+	List<AsistenciaEmergencia> getAsistenciasByDate(Date fechaDesde, Date fechaHasta, String nced, char tipoPersona);
 
 }

@@ -10,6 +10,12 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
+import ec.edu.epn.rrhh.entities.Emp;
+
 import javax.persistence.Entity;
 import java.io.Serializable;
 
@@ -42,7 +48,8 @@ public class AutorizacionEmergencia implements Serializable
     private Timestamp fechaRegistro;
     @Column(name = "motivo_autorizacion")
     private String motivoAutorizacion;
-    private String nced;
+    @Column(name = "nced")
+    private String cedula;
     @Column(name = "nombre_usuario_registro")
     private String nombreUsuarioRegistro;
     private String nombres;
@@ -64,7 +71,11 @@ public class AutorizacionEmergencia implements Serializable
     private String estadoPersona;
     @ManyToOne
     @JoinColumn(name = "horario")
-    private HorarioEmergencia horario;
+    private HorarioEmergencia horario;   
+    @JoinColumn(name = "nced", referencedColumnName = "nced", insertable=false, updatable=false)
+    @NotFound(action = NotFoundAction.IGNORE)
+	@ManyToOne
+	private Emp empleado;
     
     public Integer getIdAutorizacion() {
         return this.idAutorizacion;
@@ -139,11 +150,11 @@ public class AutorizacionEmergencia implements Serializable
     }
     
     public String getNced() {
-        return this.nced;
+        return this.cedula;
     }
     
     public void setNced(final String nced) {
-        this.nced = nced;
+        this.cedula = nced;
     }
     
     public String getNombreUsuarioRegistro() {
@@ -277,4 +288,14 @@ public class AutorizacionEmergencia implements Serializable
     public void setObservaciones(final String observaciones) {
         this.observaciones = observaciones;
     }
+
+	public Emp getEmpleado() {
+		return empleado;
+	}
+
+	public void setEmpleado(Emp empleado) {
+		this.empleado = empleado;
+	}
+    
+    
 }
