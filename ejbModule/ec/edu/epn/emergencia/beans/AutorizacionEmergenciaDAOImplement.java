@@ -19,7 +19,7 @@ public class AutorizacionEmergenciaDAOImplement extends DaoGenericoImplement<Aut
     }
     
     public List<AutorizacionEmergencia> findAutorizacionesXCedula(final String cedula) {
-        final Query q = this.getEntityManager().createQuery("Select dep from AutorizacionEmergencia dep where dep.nced = :cedula order by fechaDesde ASC");
+        final Query q = this.getEntityManager().createQuery("Select dep from AutorizacionEmergencia dep where dep.cedula = :cedula order by fechaDesde ASC");
         q.setParameter("cedula", (Object)cedula);
         return (List<AutorizacionEmergencia>)q.getResultList();
     }
@@ -28,7 +28,7 @@ public class AutorizacionEmergenciaDAOImplement extends DaoGenericoImplement<Aut
         final StringBuilder query = new StringBuilder("Select dep from AutorizacionEmergencia dep ");
         if (cedula != null && !cedula.equals("")) {
             cedula = String.valueOf(cedula) + "%";
-            query.append("where dep.nced like :cedula ");
+            query.append("where dep.cedula like :cedula ");
         }
         if (fechaDesde != null) {
             if (cedula != null && !cedula.equals("")) {
@@ -69,7 +69,7 @@ public class AutorizacionEmergenciaDAOImplement extends DaoGenericoImplement<Aut
         
         if (cedula != null && !cedula.equals("")) {
             cedula = String.valueOf(cedula) + "%";
-            query.append("and dep.nced like :cedula ");
+            query.append("and dep.cedula like :cedula ");
         }
         if (fechaDesde != null) {
            

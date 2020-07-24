@@ -35,5 +35,13 @@ public class AutoridadeDAOImplement extends DaoGenericoImplement<Autoridade> imp
 	
 	
 	
+	@Override
+	public Autoridade findAutoridadxCedula(String identificacion) {
+		Query q = getEntityManager().createQuery(
+				"Select dep from Autoridade dep where identificacion = :identificacion");
+		q.setParameter("identificacion", identificacion);
+		return (Autoridade) q.getSingleResult();
+	}
+	
 
 }

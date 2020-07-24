@@ -76,8 +76,22 @@ public class AutorizacionEmergencia implements Serializable
     @NotFound(action = NotFoundAction.IGNORE)
 	@ManyToOne
 	private Emp empleado;
+
+	@Column(name="fecha_ultima_actualizacion")
+	private Date fechaUltimaActualizacion;
+	
+	@Column(name="usuario_actualiza")
+	private String usuarioActualza;
     
-    @ManyToOne
+    public String getUsuarioActualza() {
+		return usuarioActualza;
+	}
+
+	public void setUsuarioActualza(String usuarioActualza) {
+		this.usuarioActualza = usuarioActualza;
+	}
+
+	@ManyToOne
     @JoinColumn(name="tipo_autorizacion")
 	private TipoAutorizacion tipoAutorizacion;
 
@@ -307,6 +321,22 @@ public class AutorizacionEmergencia implements Serializable
 
 	public void setEmpleado(Emp empleado) {
 		this.empleado = empleado;
+	}
+
+	public String getCedula() {
+		return cedula;
+	}
+
+	public void setCedula(String cedula) {
+		this.cedula = cedula;
+	}
+
+	public Date getFechaUltimaActualizacion() {
+		return fechaUltimaActualizacion;
+	}
+
+	public void setFechaUltimaActualizacion(Date fechaUltimaActualizacion) {
+		this.fechaUltimaActualizacion = fechaUltimaActualizacion;
 	}
     
     
