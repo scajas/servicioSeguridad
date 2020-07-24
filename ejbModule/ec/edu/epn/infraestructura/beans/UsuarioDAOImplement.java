@@ -57,4 +57,15 @@ public class UsuarioDAOImplement extends DaoGenericoImplement<Usuario> implement
 		}
 		
 	}
+	
+	@Override
+	public Usuario consultaXCedula(String nced) {
+		Query q = getEntityManager().createQuery("Select user from Usuario user where user.cedula = :nced");
+		q.setParameter("nced", nced);
+		List<Usuario> usuarios = q.getResultList();
+		if(usuarios!=null && !usuarios.isEmpty())
+			return usuarios.get(0);
+		
+		return null;
+	}
 }

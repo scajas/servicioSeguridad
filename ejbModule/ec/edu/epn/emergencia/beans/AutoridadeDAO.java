@@ -17,5 +17,7 @@ public interface AutoridadeDAO extends DaoGenerico<Autoridade> {
 
 	public List<Autoridade> findAutorizaciones();
 
+	public Autoridade findAutoridadxCedula(String identificacion);
+
 
 }

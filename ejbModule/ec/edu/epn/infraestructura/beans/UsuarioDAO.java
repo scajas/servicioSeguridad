@@ -14,4 +14,6 @@ public interface UsuarioDAO extends DaoGenerico<Usuario> {
 	Usuario consultaXidUsuario(long idUsuario);
 
 	List<UsuarioDTO> listUsuarioXEstado(Integer activo);
+
+	Usuario consultaXCedula(String nced);
 }

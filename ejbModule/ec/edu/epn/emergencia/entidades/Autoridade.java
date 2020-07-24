@@ -27,6 +27,8 @@ public class Autoridade implements Serializable {
 	@Column(name="nombre_autoridad")
 	private String nombreAutoridad;
 
+	private String identificacion;
+	
 	public Autoridade() {
 	}
 
@@ -62,4 +64,12 @@ public class Autoridade implements Serializable {
 		this.nombreAutoridad = nombreAutoridad;
 	}
 
+	public String getIdentificacion() {
+		return identificacion;
+	}
+
+	public void setIdentificacion(String identificacion) {
+		this.identificacion = identificacion;
+	}
+	
 }
