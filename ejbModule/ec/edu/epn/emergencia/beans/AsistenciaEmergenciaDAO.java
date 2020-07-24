@@ -19,5 +19,7 @@ public interface AsistenciaEmergenciaDAO extends DaoGenerico<AsistenciaEmergenci
 	List<AsistenciaEmergencia> findAsistencia();
 	
 	List<AsistenciaEmergencia> getAsistenciasByDate(Date fechaDesde, Date fechaHasta, String nced, char tipoPersona);
+	
+	List<Object[]> getAforoByDate(Date[] aforoDateHours);
 
 }
