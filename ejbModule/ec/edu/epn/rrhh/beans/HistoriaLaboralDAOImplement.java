@@ -1739,6 +1739,30 @@ public class HistoriaLaboralDAOImplement extends DaoGenericoImplement<HistoriaLa
 
 		return resultado;
 	}
+	
+	@Override
+	public Date getFechaElaboracionAccion(Emp emp, String nroDocumento) {
+		StringBuilder queryString  = new StringBuilder(" Select hist from HistoriaLaboral hist "
+				+ " where hist.emp.nced= ?1 and trim(hist.nroDocumento) = ?2 and "
+				+ " hist.id.fechaI in (Select max(histo.id.fechaI) from HistoriaLaboral histo "
+				+ " where histo.emp.nced=?1 and trim(histo.nroDocumento)=?2"
+				+ " and hist.id.idHist=histo.id.idHist and"
+				+ " (trim(histo.id.estado)= 'Ejecucion' or trim(histo.id.estado)='Elaborado' or trim(histo.id.estado)='Elaborada' "
+				+ " or trim(histo.id.estado)='En revision')) "
+				+ " and hist.id.idHist not in (Select i.id.idHist from HistoriaLaboral i where (i.id.estado = 'Anulado' or i.id.estado='Duplicado') and i.emp.nced=?1)"
+				+ " order by hist.id.fechaI asc ");
+		Query query = getEntityManager().createQuery(queryString.toString());
+		query.setParameter(1, emp.getNced());
+		query.setParameter(2, nroDocumento.trim());
+		List<HistoriaLaboral> resultados = query.getResultList();
+		if(!resultados.isEmpty()) {
+			return resultados.get(0).getId().getFechaI();
+		}else {
+			return null;
+		}
+	}
+	
+	
 
 	@Override
 	public List<HistoriaLaboral> getAnyDesignacionActivaByEmpFinalizacion(Emp emp, String nroDocumentoAFinalizar) {
