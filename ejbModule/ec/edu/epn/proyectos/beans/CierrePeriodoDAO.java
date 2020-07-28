@@ -31,4 +31,6 @@ public interface CierrePeriodoDAO extends DaoGenerico<CierrePeriodo> {
 
 	Double consultarMaxReporte(Integer id_proy, String tipo);
 
+	CierrePeriodo consultarMaxCierre(Integer idproy);
+
 }

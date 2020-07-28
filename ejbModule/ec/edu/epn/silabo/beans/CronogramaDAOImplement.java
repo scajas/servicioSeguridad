@@ -50,6 +50,23 @@ public class CronogramaDAOImplement extends DaoGenericoImplement<CronogramaDesar
 	
 	
 	@Override
+	public List<CronogramaDesarrollo> consultarCronogramaExisteHorarios	(Integer idsilado,Date fecha, String hora1, String hora2) {
+
+		StringBuilder querys = new StringBuilder(
+				"SELECT e From CronogramaDesarrollo e where e.silabo.idSilabo = ?1 and e.fechaCrono = ?2 and trim(e.hora1) = ?3 and trim(e.hora2) = ?4  order by e.fechaCrono ASC");
+
+		Query query = getEntityManager().createQuery(querys.toString());
+		query.setParameter(1, idsilado);
+		query.setParameter(2, fecha);
+		query.setParameter(3, hora1);
+		query.setParameter(4, hora2);
+
+		return query.getResultList();
+
+	}
+	
+	
+	@Override
 	public CronogramaDesarrollo consultarCronogramaById(Integer idcrono) {
 
 		StringBuilder querys = new StringBuilder(

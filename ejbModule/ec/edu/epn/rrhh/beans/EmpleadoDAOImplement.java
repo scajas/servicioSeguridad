@@ -51,8 +51,9 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Emp> findempByParams(String cedula, String apellidos, String nombre) {
+		
 
-		StringBuilder queryString = new StringBuilder("SELECT emp FROM Emp emp where emp.nced like ?0 ");
+		StringBuilder queryString = new StringBuilder("SELECT emp FROM Emp emp where emp.nced like ?0 and (emp.estemp.codEst != '2' and emp.estemp.codEst != '8' and emp.estemp.codEst != '10') ");
 
 		if (apellidos != null) {
 			queryString.append(" AND emp.apel like ?1 ");
