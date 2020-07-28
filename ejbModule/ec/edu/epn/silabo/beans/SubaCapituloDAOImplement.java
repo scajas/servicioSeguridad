@@ -69,11 +69,10 @@ public class SubaCapituloDAOImplement  extends DaoGenericoImplement<Subcapitulo>
 	}
 	
 	@Override
-	public List<Subcapitulo> consultarSubcapitlosdeCapítulo(Integer idcapitulo) {
+	public List<Subcapitulo> consultarSubcapitlosdeCapitulo(Integer idcapitulo) {
 
 		StringBuilder querys = new StringBuilder("SELECT e From Subcapitulo e where e.capitulo.idCapitulo = ?1 order by e.numeroCp " );
 
-	
 		Query query = getEntityManager().createQuery(querys.toString());
 		query.setParameter(1, idcapitulo);
 

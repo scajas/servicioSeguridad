@@ -1,6 +1,3 @@
-/**
- * 
- */
 package ec.edu.epn.proyectos.beans;
 
 import java.sql.Connection;
@@ -397,3 +394,4 @@ public class ProyectoPDAOImplement extends DaoGenericoImplement<ProyectoP> imple
 	}
 
 }
+

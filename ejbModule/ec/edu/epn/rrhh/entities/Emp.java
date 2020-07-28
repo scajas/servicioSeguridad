@@ -2,6 +2,10 @@ package ec.edu.epn.rrhh.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import ec.edu.epn.emergencia.entidades.AsistenciaEmergencia;
+import ec.edu.epn.emergencia.entidades.AutorizacionEmergencia;
+
 import java.util.Date;
 import java.sql.Timestamp;
 import java.util.List;
@@ -272,6 +276,8 @@ public class Emp implements Serializable {
 	private String cambiodept;
 	private Integer idusuariolog;
 	private Date fechacambiodept;
+	@Column(name="codigo_biometrico")
+	private Integer codigoBiometrico;
 	
 	
 	private String cambiorel ;
@@ -381,9 +387,10 @@ public class Emp implements Serializable {
 	//bi-directional many-to-one association to Vaca
 	@OneToMany(mappedBy="emp")
 	private List<Vaca> vacas;
-
 	
-
+	@OneToMany(mappedBy = "empleado")
+    private List<AutorizacionEmergencia> autorizaciones;
+	
 	public Emp() {
 	}
 
@@ -1744,5 +1751,24 @@ public class Emp implements Serializable {
 	public void setSemaforocovid(String semaforocovid) {
 		this.semaforocovid = semaforocovid;
 	}
+
+	public Integer getCodigoBiometrico() {
+		return codigoBiometrico;
+	}
+
+	public void setCodigoBiometrico(Integer codigoBiometrico) {
+		this.codigoBiometrico = codigoBiometrico;
+	}
+
+	public List<AutorizacionEmergencia> getAsistencias() {
+		return autorizaciones;
+	}
+
+	public void setAsistencias(List<AutorizacionEmergencia> asistencias) {
+		this.autorizaciones = asistencias;
+	}
+	
+	
+	
 
 }

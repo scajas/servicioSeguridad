@@ -107,7 +107,7 @@ public class DetalleMovimientoDAOImplement extends DaoGenericoImplement<Detallem
 					cantidad += it.next().getCantidadDet();
 				}
 			} catch (Exception e) {
-				System.out.println("==================ERROR EN LA BÚSQUEDA: =====" + criterio);
+				System.out.println("==================ERROR EN LA BUSQUEDA: =====" + criterio);
 				cantidad = 0;
 			}
 			return cantidad;

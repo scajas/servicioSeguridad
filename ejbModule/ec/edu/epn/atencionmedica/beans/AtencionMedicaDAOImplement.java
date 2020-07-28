@@ -9,7 +9,6 @@ import javax.persistence.Query;
 
 import ec.edu.epn.atencionmedica.entities.Atencionmedica;
 import ec.edu.epn.atencionmedica.entities.Movimientoinventario;
-import ec.edu.epn.contratos.DTO.PedidosContratosDTO;
 import ec.edu.epn.generic.DAO.DaoGenericoImplement;
 
 @Stateless(mappedName = "AtencionMedicaDAOImplement")
@@ -97,7 +96,7 @@ public class AtencionMedicaDAOImplement extends DaoGenericoImplement<Atencionmed
 	public Atencionmedica obtenerAtencionMedica(Atencionmedica atencion) {
 		// TODO Auto-generated method stub
 		List<Atencionmedica> listaAtencionesEncontradas = new ArrayList<Atencionmedica>();
-		// obtener la atencion mèdica por id de atencion medica
+		// obtener la atencion medica por id de atencion medica
 		if (atencion.getIdAtencionmed() != 0) {
 			q = "SELECT c FROM Atencionmedica c WHERE c.idAtencionmed = ?0 ";
 			queryString = new StringBuilder(q);

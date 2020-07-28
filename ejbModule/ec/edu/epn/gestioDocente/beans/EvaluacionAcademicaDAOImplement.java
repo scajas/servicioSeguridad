@@ -562,24 +562,27 @@ public class EvaluacionAcademicaDAOImplement extends DaoGenericoImplement<Evalua
 			con = dataSource.getConnection();
 			if (con != null) {				
 				
-				String qry = "SELECT DISTINCT MAX(e.NCED), e.nom, e.apel, " +
-								"CASE cod_tiporelacionlab WHEN 1 THEN (SELECT p.cargo FROM \"Rrhh\".nomb_temp n, \"Rrhh\".partind p WHERE n.cod_pind= p.cod_pind AND n.frige_nomb = (SELECT MAX(frige_nomb) FROM \"Rrhh\".nomb_temp WHERE nced=e.nced) AND n.nced=e.nced) "+ 
-								"WHEN 2 THEN (SELECT MAX(cargoc) FROM \"Rrhh\".cont c WHERE c.frige_cont=  (SELECT MAX(frige_cont) FROM \"Rrhh\".cont WHERE nced = e.nced) AND c.nced = e.nced) END, "+
-								"d.nom_dep, id_periodo, eval.val_final_auto, eval.val_final_coe, eval.val_final_hetero, eval.estado, eval.id_eval_acad, est.descripcion  "+																							
-								"FROM \"Rrhh\".EMP E, \"Rrhh\".dep d,  \"GestionDocente\".evaluacion_academica eval, \"GestionDocente\".periodo p, \"GestionDocente\".estado_evaluacion EST "+								 
-								"WHERE E.COD_DEP = D.COD_DEP "+ 								
-								"AND eval.nced= E.nced "+ 
-								"AND COD_EST IN ('1', '3', '4', '5', '6', '7', '2') "+ 
-								"AND e.cod_clase = '1' "+ 
+				String qry = "SELECT DISTINCT MAX(e.NCED), e.nom, e.apel, ' ' ," +
+								/*"CASE cod_tiporelacionlab WHEN 1 THEN (SELECT p.cargo FROM \"Rrhh\".nomb_temp n, \"Rrhh\".partind p WHERE n.cod_pind= p.cod_pind AND n.frige_nomb = (SELECT MAX(frige_nomb) FROM \"Rrhh\".nomb_temp WHERE nced=e.nced) AND n.nced=e.nced) "+ 
+								"WHEN 2 THEN (SELECT MAX(cargoc) FROM \"Rrhh\".cont c WHERE c.frige_cont=  (SELECT MAX(frige_cont) FROM \"Rrhh\".cont WHERE nced = e.nced) AND c.nced = e.nced) END, "+*/
+								//"d.nom_dep, id_periodo, eval.val_final_auto, eval.val_final_coe, eval.val_final_hetero, eval.estado, eval.id_eval_acad, est.descripcion  "+																							
+								"' ' , id_periodo, eval.val_final_auto, eval.val_final_coe, eval.val_final_hetero, eval.estado, eval.id_eval_acad, est.descripcion  "+
+								"FROM \"Rrhh\".EMP E,"+
+								//"\"Rrhh\".dep d,  "+
+								"\"GestionDocente\".evaluacion_academica eval, \"GestionDocente\".periodo p, \"GestionDocente\".estado_evaluacion EST "+								 
+								//"WHERE E.COD_DEP = D.COD_DEP "+ 								
+								"WHERE eval.nced= E.nced "+ 
+								//"AND COD_EST IN ('1', '3', '4', '5', '6', '7', '2') "+ 
+							//	"AND e.cod_clase = '1' "+ 
 								"AND p.id_pensum= eval.id_pensum "+								
 								"AND e.nced LIKE ? "+
 								"AND e.nom LIKE ? "+ 
 								"AND e.apel LIKE ? "+ 
-								"AND D.COD_DEP LIKE ? "+ 
+								"AND E.COD_DEP LIKE ? "+ 
 								"AND eval.id_pensum = ? "+
 								"AND (e.cod_tiporelacionlab = ? or 0=?) "+
 								"AND eval.estado= est.nombre "+
-								"GROUP BY  e.nom, e.apel, e.cod_tiporelacionlab, d.nom_dep, e.nced,  id_periodo, eval.val_final_auto, eval.val_final_coe, eval.val_final_hetero, eval.estado , eval.id_eval_acad, est.descripcion "+
+								"GROUP BY  e.nom, e.apel, e.cod_tiporelacionlab, e.nced,  id_periodo, eval.val_final_auto, eval.val_final_coe, eval.val_final_hetero, eval.estado , eval.id_eval_acad, est.descripcion "+
 								"ORDER BY e.apel";
 
 				ps = con.prepareStatement(qry);
@@ -1145,28 +1148,24 @@ public class EvaluacionAcademicaDAOImplement extends DaoGenericoImplement<Evalua
 		try {
 			
 			PreplanificacionDocencia preplanificacion= new PreplanificacionDocencia();
-			List<Pedido> listPedidos= new ArrayList<Pedido>();
+			Pedido pedidoPreplanif= new Pedido();
 			PreplanificacionDocencia preplanificacionAp= new PreplanificacionDocencia();
-			preplanificacion= preplanificacionDocenciaDAO.preplanifXPeriodo(evaluacionAcademica.getNced(), "", evaluacionAcademica.getIdPensum(), "PREPLANIF");
+			preplanificacion= preplanificacionDocenciaDAO.preplanifXPeriodo(evaluacionAcademica.getNced(), "", evaluacionAcademica.getIdPensum(), "PREPLANIF", "");
 			
 			
 			if(preplanificacion==null){
 				preplanificacion= new PreplanificacionDocencia();
-				listPedidos= pedidoDAO.buscarListaXCedula(evaluacionAcademica.getNced());
+				pedidoPreplanif= preplanificacionDocenciaDAO.findPedidoPreplanif(evaluacionAcademica.getNced(), evaluacionAcademica.getIdPensum(), 12);
 				
-				if(!listPedidos.isEmpty()){
-					for(Pedido ped: listPedidos){
-						if(ped.getPensum().getIdPensum().equals(evaluacionAcademica.getIdPensum())){
-							preplanificacion= preplanificacionDocenciaDAO.findByPedido(ped.getIdPedido());
+				if(pedidoPreplanif!=null){				
+						
+							preplanificacion= preplanificacionDocenciaDAO.findByPedido(pedidoPreplanif.getIdPedido());
 							
 							if(preplanificacion!=null && preplanificacion.getEstado().equals("PREPLANIF")){
 								preplanificacionAp= preplanificacion;
 							}else{
 								preplanificacionAp= null;
 							}
-							
-						}
-					}
 				}
 				
 			}else{
@@ -1174,6 +1173,12 @@ public class EvaluacionAcademicaDAOImplement extends DaoGenericoImplement<Evalua
 			}
 			
 			if(preplanificacionAp!=null){
+				if(evaluacionAcademica.getTotalHorasPlanificadas()==0){
+					evaluacionAcademica.setTotalHorasPlanificadas(preplanificacionAp.getHorasExigibles());
+					super.update(evaluacionAcademica);
+				}
+					
+				
 			
 				List<ActividadPreplanificacion> listActvPrep= new ArrayList<ActividadPreplanificacion>();			
 				List<SubactividadPreplanificacion> listSUbAcPrep= new ArrayList<SubactividadPreplanificacion>();

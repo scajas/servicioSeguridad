@@ -32,7 +32,7 @@ public class Pedido implements Serializable {
 	@Column(name = "adenda")
 	private String adenda;
 
-	@OneToOne(mappedBy = "pedido")
+	/*@OneToOne(mappedBy = "pedido")
 	private PreplanificacionDocencia prePlanifDocencia;
 
 	public PreplanificacionDocencia getPrePlanifDocencia() {
@@ -41,7 +41,7 @@ public class Pedido implements Serializable {
 
 	public void setPrePlanifDocencia(PreplanificacionDocencia prePlanifDocencia) {
 		this.prePlanifDocencia = prePlanifDocencia;
-	}
+	}*/
 
 	public String getAdenda() {
 		return adenda;

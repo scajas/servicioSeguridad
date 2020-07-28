@@ -11,25 +11,25 @@ import ec.edu.epn.atencionmedica.entities.PersonalAtencion;
 public interface PersonalDAO {
 
 	/**
-	 * Método que devuelve la lista de objetos según el criterio. 
+	 * Metodo que devuelve la lista de objetos segun el criterio. 
 	 * @return Lista<Catalogo>
 	 */
 	public List<PersonalAtencion> obtenerListaPersonal(String criterio);
 	
 	/**
-	 * Método para realizar los inserts
+	 * Metodo para realizar los inserts
 	 * @return void
 	 */
 	public boolean guardarPersonal(PersonalAtencion personal, String operacion);
 	
 	/**
-	 * Método para eliminar un registro
+	 * Metodo para eliminar un registro
 	 * @return void
 	 */
 	public boolean eliminarPersonal(PersonalAtencion personal, String operacion);
 
 	/**
-	 * Método que devuelve el objeto según el criterio. 
+	 * Metodo que devuelve el objeto segun el criterio. 
 	 * @return Lista<Catalogo>
 	 */
 	public PersonalAtencion obtenerPersonal(String criterio);

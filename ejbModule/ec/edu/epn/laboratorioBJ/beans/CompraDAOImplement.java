@@ -134,3 +134,5 @@ public class CompraDAOImplement extends DaoGenericoImplement<Compra> implements 
 	}
 
 }
+
+

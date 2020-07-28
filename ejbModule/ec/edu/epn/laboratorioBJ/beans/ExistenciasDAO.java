@@ -72,3 +72,4 @@ public interface ExistenciasDAO extends DaoGenerico<Existencia> {
 	List<Existencia> existenciasByParametros(String nombreTP, String caracteristica);
 
 }
+

@@ -154,7 +154,7 @@ public class ReglamentoEvaluacionDAOImplement extends DaoGenericoImplement<Regla
 						+ "AND e.nced like ? "
 						+ "AND e.apel like ? "
 						+ "AND e.nom like ? "
-						+ "AND d.cod_dep like ? ORDER BY e.nced ";
+						+ "AND (d.cod_dep like ? OR '0'= ?) ORDER BY e.nced ";
 
 				ps = con.prepareStatement(qry);
 
@@ -163,6 +163,7 @@ public class ReglamentoEvaluacionDAOImplement extends DaoGenericoImplement<Regla
 				ps.setString(3, apel);
 				ps.setString(4, nom);
 				ps.setString(5, codDep);
+				ps.setString(6, codDep);
 
 				ResultSet rs = ps.executeQuery();
 

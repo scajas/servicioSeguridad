@@ -157,7 +157,7 @@ public class OrdenInventarioDAOImplement extends DaoGenericoImplement<Ordeninven
 		String[] parts = fecha.split("-");
 
 		String anio = parts[0];
-		System.out.println("Este es el año: " + anio);
+		System.out.println("Este es el anio: " + anio);
 
 		StringBuilder queryString = new StringBuilder(
 				"SELECT max(o.idOrdeninventario) FROM Ordeninventario o where o.unidad.idUnidad = ?"

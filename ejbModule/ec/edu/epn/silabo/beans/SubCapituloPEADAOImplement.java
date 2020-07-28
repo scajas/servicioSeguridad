@@ -34,7 +34,7 @@ public class SubCapituloPEADAOImplement extends DaoGenericoImplement<Subcapitulo
 	
 	
 	@Override
-	public List<SubcapituloPea> consultarSubcapitlosdeCapítulo(Integer idcapitulo) {
+	public List<SubcapituloPea> consultarSubcapitlosdeCapitulo(Integer idcapitulo) {
 
 		StringBuilder querys = new StringBuilder("SELECT e From SubcapituloPea e where e.capituloPea.idCapitulo = ?1 order by e.numeroCp " );
 

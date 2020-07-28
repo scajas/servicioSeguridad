@@ -34,7 +34,7 @@ public class TopografiacieDAOImplement extends DaoGenericoImplement<Topografiaci
 
 			queryString = new StringBuilder(q);
 			query = getEntityManager().createQuery(queryString.toString());
-		} //busqueda por=AGRUPADO. Cuando ya se seleccionó un grupo, salen los subsitios
+		} //busqueda por=AGRUPADO. Cuando ya se selecciono un grupo, salen los subsitios
 		else if (!criterio.isEmpty() && busquedaPor.equals("AGRUPADO")) { 
 			
 			q = "SELECT top FROM Topografiacie top "

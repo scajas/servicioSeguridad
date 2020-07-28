@@ -377,9 +377,9 @@ public class Paciente implements Serializable {
 	 */
 	public String removerTildesYcaracteres(String input) {
 	    // Cadena de caracteres original a sustituir.
-	    String original = "באהג×ÁÀÂÄיטכךÉÈÊËםלןמÍÌÏÎףעצפÓÒÖÔתשüûÚÙÛÜnNחÇ\\¨÷-~#@|!,·$%&/()?¡¿[^`]+}{¨´>< ;,:.";
+	    String original = "\\¨÷-~#@|!,·$%&/()?¡¿[^`]+}{¨´>< ;,:.";
 	    // Cadena de caracteres ASCII que reemplazarן¿½n los originales.
-	    String    ascii = "aaaaaAAAAeeeeEEEEiiiiIIIIooooOOOOuuuuUUUUnNcC                                     ";
+	    String    ascii = "                                     ";
 	    String output = input;
 	    for (int i=0; i<original.length(); i++) {
 	        // Reemplazamos los caracteres especiales.

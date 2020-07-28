@@ -234,7 +234,7 @@ public class SilaboDAOImplement extends DaoGenericoImplement<Silabo> implements 
 				
 				
 				String qry = "select s.id_silabo, e.nced, CONCAT(COALESCE(apel, ' '), ' ', COALESCE(nom, ' ') )as nombres, p.meses_pensem, facultad, carrera, asignatura, titulo, autor, editorial, ano, edicion, isbn, "
-						+ " (case when tipob = '1' then 'Básica' when tipob = '2' then 'Complementaria' else '' end) as tipo, codigo, id_bibliografia "
+						+ " (case when tipob = '1' then 'BASICA' when tipob = '2' then 'COMPLEMENTARIA' else '' end) as tipo, codigo, id_bibliografia "
 						+ " from  \"Silabo\".silabo s, \"Rrhh\".emp e, \"Silabo\".bibliografia b, \"Contratos\".pensum p "
 						+ " where e.nced = s.cedula " + " and s.id_silabo = b.id_silabo "
 						+ " and s.id_pensum = p.id_pensum " + " and facultad like ? "

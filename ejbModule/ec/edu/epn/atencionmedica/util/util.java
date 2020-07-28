@@ -22,14 +22,10 @@ public abstract class util {
 	 */
 	public String removerTildesYcaracteres(String input) {
 	    // Cadena de caracteres original a sustituir.
-	    String original = "áàäâªÁÀÂÄéèëêÉÈÊËíìïîÍÌÏÎóòöôÓÒÖÔúùüûÚÙÛÜnNçÇ\\¨º-~#@|!,·$%&/()?¡¿[^`]+}{¨´>< ;,:.";
-	    // Cadena de caracteres ASCII que reemplazarï¿½n los originales.
-	    String    ascii = "aaaaaAAAAeeeeEEEEiiiiIIIIooooOOOOuuuuUUUUnNcC                                     ";
-	    String output = input;
-	    for (int i=0; i<original.length(); i++) {
-	       
-	        output = output.replace(original.charAt(i), ascii.charAt(i));
-	    }
+	    
+	    String output = "";
+	    output= input.replaceAll("[^\\p{ASCII}(N\u0303)(n\u0303)(\u00A1)(\u00BF)(\u00B0)(U\u0308)(u\u0308)]", "");
+	    
 	    return output;
 	}
 	
@@ -64,7 +60,7 @@ public abstract class util {
 		if(aa%4 !=0)
 			esBisiesto=false;
 		
-		//Máximo días mes
+		//Máximo dias mes
 		if(cm%2 == 0 && cm!=2 )
 			md=30;
 		else if(cm==2 && esBisiesto)
@@ -100,10 +96,10 @@ public abstract class util {
 		}
 
 		if (ae==1){
-			edad.append(ae + " año ");
+			edad.append(ae + " a\u00f1o ");
 		}
 		else if (ae>1){
-			edad.append(ae + " años ");
+			edad.append(ae + " a\u00f1os ");
 		}
 		if (me==1){
 			edad.append(me + " mes ");
@@ -153,7 +149,7 @@ public abstract class util {
 		if(aa%4 !=0)
 			esBisiesto=false;
 		
-		//Máximo días mes
+		//Máximo dias mes
 		if(cm%2 == 0 && cm!=2 )
 			md=30;
 		else if(cm==2 && esBisiesto)
@@ -189,10 +185,10 @@ public abstract class util {
 		}
 
 		if (ae==1){
-			edad.append(ae + " año ");
+			edad.append(ae + " a\u00f1o ");
 		}
 		else if (ae>1){
-			edad.append(ae + " años ");
+			edad.append(ae + " a\u00f1os ");
 		}
 		if (me==1){
 			edad.append(me + " mes ");
@@ -204,11 +200,11 @@ public abstract class util {
 			edad.append(de + " dia ");
 		}
 		else if (de>1){
-			edad.append(de + " días ");
+			edad.append(de + " dias ");
 		}
 		
 		return ae +"";
-		//Thks Grace M. 31-03-2015
+		
 	}
 	
 	

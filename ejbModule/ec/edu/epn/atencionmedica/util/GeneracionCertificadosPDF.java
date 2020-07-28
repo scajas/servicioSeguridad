@@ -9,7 +9,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.FontFactory;
@@ -94,7 +93,7 @@ public class GeneracionCertificadosPDF {
             datosTituloCertificado.getDefaultCell().setBorder(0);
             
             datosTituloCertificado.addCell(this.createLabelCell3(            		
-					"CERTIFICADO MÉDICO" +
+					"CERTIFICADO MEDICO" +
 					"\n\n\n"));
             
             
@@ -133,7 +132,7 @@ public class GeneracionCertificadosPDF {
             	  calendar.setTime(new Date());
             	  calendar.add(Calendar.DAY_OF_YEAR, atencionmedica.getReposoAtmDias());
             	  String fechaHasta= formatoFecha.format(calendar.getTime());
-            	  reposo= atencionmedica.getReposoAtmDias() + " días, Desde " + fechaActual + " Hasta " + fechaHasta;
+            	  reposo= atencionmedica.getReposoAtmDias() + " dias, Desde " + fechaActual + " Hasta " + fechaHasta;
             }            
             
             Paragraph p;
@@ -142,7 +141,7 @@ public class GeneracionCertificadosPDF {
 						"\n\n" +		
 						"Presenta: " + diagnostico +
 						"\n\n" +
-						"Por lo cual requiere tratamiento médico: " + atencionmedica.getTratamientoAtm() + ", con reposo de: " + reposo +
+						"Por lo cual requiere tratamiento medico: " + atencionmedica.getTratamientoAtm() + ", con reposo de: " + reposo +
 						"\n\n\n\n\n\n\n\n" +
 						"Atentamente:");
             

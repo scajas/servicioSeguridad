@@ -296,3 +296,5 @@ public class ProformaDAOImplement extends DaoGenericoImplement<Proforma> impleme
 	}
 
 }
+
+

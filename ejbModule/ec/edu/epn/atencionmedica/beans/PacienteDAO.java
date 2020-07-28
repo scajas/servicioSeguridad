@@ -10,25 +10,25 @@ import ec.edu.epn.atencionmedica.entities.Paciente;
 public interface PacienteDAO {
 
 	/**
-	 * Método que devuelve la lista de pacientes según el criterio. 
+	 * Metodo que devuelve la lista de pacientes segun el criterio. 
 	 * @return Lista<Catalogo>
 	 */
 	public List<Paciente> obtenerListaPacientes(String criterio);
 
 	/**
-	 * Método que devuelve el paciente según el criterio. 
+	 * Metodo que devuelve el paciente segun el criterio. 
 	 * @return Lista<Catalogo>
 	 */
 	public Paciente obtenerPaciente(String criterio);
 	
 	/**
-	 * Método para realizar los inserts
+	 * Metodo para realizar los inserts
 	 * @return void
 	 */
 	public boolean guardarPaciente(Paciente paciente, String operacion);	
 	
 	/**
-	 * Método para eliminar un registro
+	 * Metodo para eliminar un registro
 	 * @return void
 	 */
 	public boolean eliminarPaciente(Paciente paciente, String operacion);

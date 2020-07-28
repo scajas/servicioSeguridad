@@ -29,7 +29,7 @@ public class CertificadoMedicoDto {
 	private String varReticulositos;
 	private String varHematozoario;
 	private String varCelula;
-	private String varIndicesHemáticos;
+	private String varIndicesHematicos;
 	private String varTProtrombina;
 	private String varTiempoTParcial;
 	private String varDrepanocitos;
@@ -90,7 +90,7 @@ public class CertificadoMedicoDto {
 		super();
 	}
 	
-	//Constructor para generar el certificado médico
+	//Constructor para generar el certificado medico
 	public CertificadoMedicoDto(String varPaciente, String varCedula, String varDiagnostico, String varCIE,
 			Integer varHoras, Date varDesde, Date varHasta, String varNombreMedico, String varCodigoMsp, String varCedulaMedico) {
 		super();
@@ -106,7 +106,7 @@ public class CertificadoMedicoDto {
 		this.varCedulaMedico= varCedulaMedico;
 	}
 
-	//Constructor para generar el certificado médico
+	//Constructor para generar el certificado medico
 	public CertificadoMedicoDto(String varPaciente, String varCedula, String varDiagnostico, String varCIE,
 			Integer varHoras, Date varDesde, String varNombreMedico, String varCodigoMsp, String varCedulaMedico) {
 		super();
@@ -122,7 +122,7 @@ public class CertificadoMedicoDto {
 	}
 		
 	
-	//Constructor para generar el pedido de exámen
+	//Constructor para generar el pedido de examen
 	public CertificadoMedicoDto(String varCedula, Integer varHistoriaClinica,  String varApellidos,
 			String varNombres, Date varDesde,  String varEspecialidad, String varNombreMedico, String varPedidoExamen, String varOtros, String varCodigoMsp, String varCedulaMedico) {
 		super();
@@ -139,10 +139,10 @@ public class CertificadoMedicoDto {
 		this.varCedulaMedico= varCedulaMedico;
 	}
 	
-	//Constructor para generar el pedido de exámen
+	//Constructor para generar el pedido de examen
 	public CertificadoMedicoDto(String varCedula, Integer varHistoriaClinica,  String varApellidos,
 			String varNombres, Date varDesde,  String varEspecialidad, String varNombreMedico, String varBiometriaHematica, String varPlaquetas,
-			String varGrupoRh, String varReticulositos, String varHematozoario, String varCelula, String varIndicesHemáticos, String varTProtrombina,
+			String varGrupoRh, String varReticulositos, String varHematozoario, String varCelula, String varIndicesHematicos, String varTProtrombina,
 			String varTiempoTParcial, String varDrepanocitos, String varCoombsDirecto, String varCoombsIndirecto,
 			String varGlucosaEnAyunas, String varGlucosa2Horas, String varUrea, String varCreatinina, String varAcidoUrico, String varBilirrubinas,
 			String varProteinas, String varTransaminadaPiruvica, String varTransaminsaOxalacetica, String varFosfatasaAlcalina, String varColesterolTotal,
@@ -165,7 +165,7 @@ public class CertificadoMedicoDto {
 		this.varReticulositos = varReticulositos;
 		this.varHematozoario = varHematozoario;
 		this.varCelula = varCelula;
-		this.varIndicesHemáticos = varIndicesHemáticos;
+		this.varIndicesHematicos = varIndicesHematicos;
 		this.varTProtrombina = varTProtrombina;
 		this.varTiempoTParcial = varTiempoTParcial;
 		this.varDrepanocitos = varDrepanocitos;
@@ -476,12 +476,12 @@ public class CertificadoMedicoDto {
 		this.varCelula = varCelula;
 	}
 
-	public String getVarIndicesHemáticos() {
-		return varIndicesHemáticos;
+	public String getVarIndicesHematicos() {
+		return varIndicesHematicos;
 	}
 
-	public void setVarIndicesHemáticos(String varIndicesHemáticos) {
-		this.varIndicesHemáticos = varIndicesHemáticos;
+	public void setVarIndicesHematicos(String varIndicesHematicos) {
+		this.varIndicesHematicos = varIndicesHematicos;
 	}
 
 	public String getVarTProtrombina() {

@@ -19,6 +19,7 @@ import ec.edu.epn.laboratorioBJ.entities.OrdenTrabajo;
 import ec.edu.epn.laboratorioBJ.entities.PersonalLab;
 import ec.edu.epn.laboratorioBJ.entities.Proforma;
 import ec.edu.epn.laboratorioBJ.entities.Servicio;
+import ec.edu.epn.laboratorioBJ.entities.Tipordeninv;
 
 @Local
 public interface OrdenTrabajoDAO extends DaoGenerico<OrdenTrabajo> {
@@ -92,5 +93,7 @@ public interface OrdenTrabajoDAO extends DaoGenerico<OrdenTrabajo> {
 	String maxIdOTT(String id, String fecha);
 
 	TransferenciaInterna buscarTransferenciaById(String id);
+
+	Tipordeninv findTipoInvById(String id);
 
 }
