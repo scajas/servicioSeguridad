@@ -81,7 +81,7 @@ public class RecursoProyectoDAOImplement extends DaoGenericoImplement<RecursohPr
 	@Override
 	public List<RecursohPr> findrecProyExiste(Integer idproy, Integer idtipoRec) {
 		Query qUsuario = getEntityManager().createQuery("select rec from RecursohPr rec where rec.proyecto.idProy = ?1 "
-				+ " and rec.rolProyecto.idRolProy = ?2");
+				+ " and rec.rolProyecto.idRolProy = ?2 order by rec.estadoPr DESC ,rec.rolProyecto.idRolProy");
 		qUsuario.setParameter(1, idproy);
 		qUsuario.setParameter(2, idtipoRec);
 		return qUsuario.getResultList();
@@ -109,6 +109,15 @@ public class RecursoProyectoDAOImplement extends DaoGenericoImplement<RecursohPr
 	}
 
 	@Override
+	public List<RecursohPr> findrecProyREG(Integer idproy) {
+		Query qUsuario = getEntityManager().createQuery(
+				"select rec from RecursohPr rec where rec.proyecto.idProy = ?1  order by rec.estadoPr DESC ,rec.rolProyecto.idRolProy");
+		qUsuario.setParameter(1, idproy);
+		return qUsuario.getResultList();
+
+	}
+
+	@Override
 	public List<RecursohPr> findAllDirectores() {
 		Query qUsuario = getEntityManager().createQuery(
 				"select reh from RecursohPr reh where  reh.rolProyecto.idRolProy = ?1 and reh.estadoPr = ?2 order by reh.apellidoPersonalPr");
@@ -126,26 +135,33 @@ public class RecursoProyectoDAOImplement extends DaoGenericoImplement<RecursohPr
 		}
 
 	}
-	
-	
+
 	@Override
 	public List<RecursohPr> findrecProyFaltante(Integer idproy, Integer idpensum, String tipo) {
 		Query qUsuario = getEntityManager().createQuery(
 				"select rec from RecursohPr rec where rec.proyecto.idProy = ?1 and rec.estadoPr = 'VINCULADO'   "
-				+ " and rec.idRhPr NOT IN (SELECT a.recurso.idRhPr  FROM Recursoavance a where a.idpensum  = ?2 and a.tipo = ?3 )"
-				+ "order by rec.rolProyecto.idRolProy");
+						+ " and rec.idRhPr NOT IN (SELECT a.recurso.idRhPr  FROM Recursoavance a where a.idpensum  = ?2 and a.tipo = ?3 )"
+						+ "order by rec.rolProyecto.idRolProy");
 		qUsuario.setParameter(1, idproy);
 		qUsuario.setParameter(2, idpensum);
 		qUsuario.setParameter(3, tipo);
 		return qUsuario.getResultList();
 
 	}
-	
+
 	@Override
 	public List<RecursohPr> findrecProyEPN(Integer idproy) {
 		Query qUsuario = getEntityManager().createQuery(
 				"select rec from RecursohPr rec where rec.proyecto.idProy = ?1 and rec.externo is null order by rec.rolProyecto.idRolProy");
 		qUsuario.setParameter(1, idproy);
+		return qUsuario.getResultList();
+
+	}
+
+	@Override
+	public List<RecursohPr> findRecursosByCedula(String nced) {
+		Query qUsuario = getEntityManager().createQuery("select rec from RecursohPr rec where rec.nced = ?1  ");
+		qUsuario.setParameter(1, nced);
 		return qUsuario.getResultList();
 
 	}

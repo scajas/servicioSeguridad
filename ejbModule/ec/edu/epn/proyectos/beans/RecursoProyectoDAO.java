@@ -29,6 +29,10 @@ public interface RecursoProyectoDAO extends DaoGenerico<RecursohPr> {
 	List<RecursohPr> findrecProyFaltante(Integer idproy, Integer idpensum, String tipo);
 
 	List<RecursohPr> findrecProyEPN(Integer idproy);
+
+	List<RecursohPr> findrecProyREG(Integer idproy);
+
+	List<RecursohPr> findRecursosByCedula(String nced);
 	
 	
 

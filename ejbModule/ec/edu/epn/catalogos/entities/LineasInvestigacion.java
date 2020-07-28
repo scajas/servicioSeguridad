@@ -29,6 +29,8 @@ public class LineasInvestigacion implements Serializable {
 
 	@Column(name="nom_linin")
 	private String nomLinin;
+	
+	private String codigo;
 
 	//bi-directional many-to-one association to Departamento
 	@ManyToOne
@@ -84,6 +86,14 @@ public class LineasInvestigacion implements Serializable {
 
 	public void setDepartamento(Departamento departamento) {
 		this.departamento = departamento;
+	}
+
+	public String getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
 	}
 
 }

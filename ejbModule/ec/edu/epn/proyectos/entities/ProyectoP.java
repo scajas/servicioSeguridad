@@ -39,7 +39,7 @@ public class ProyectoP implements Serializable {
 	@Column(name = "codigo_pr")
 	private String codigoPr;
 
-	private String estado;
+	private String estado,unidad;
 
 	private double extra;
 
@@ -123,9 +123,9 @@ public class ProyectoP implements Serializable {
 	@Column(name = "observaciones_jefedept")
 	private String observacionesJefedept;
 
-	private String observfinal;
+	private String observfinal,observacierre;
 
-	private Integer serial;
+	private Integer serial,numbenefi;
 	private Integer anio;
 
 	@Column(name = "path__final")
@@ -1281,6 +1281,30 @@ public class ProyectoP implements Serializable {
 
 	public void setFfinreiniciosuspension(Date ffinreiniciosuspension) {
 		this.ffinreiniciosuspension = ffinreiniciosuspension;
+	}
+
+	public String getUnidad() {
+		return unidad;
+	}
+
+	public void setUnidad(String unidad) {
+		this.unidad = unidad;
+	}
+
+	public Integer getNumbenefi() {
+		return numbenefi;
+	}
+
+	public void setNumbenefi(Integer numbenefi) {
+		this.numbenefi = numbenefi;
+	}
+
+	public String getObservacierre() {
+		return observacierre;
+	}
+
+	public void setObservacierre(String observacierre) {
+		this.observacierre = observacierre;
 	}
 	
 	

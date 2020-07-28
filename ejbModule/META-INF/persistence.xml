@@ -325,6 +325,7 @@
 		<class>ec.edu.epn.laboratorioBJ.entities.EliminacionServicio</class>
 		<class>ec.edu.epn.silabo.entities.HorariosTutoria</class>
 		<class>ec.edu.epn.silabo.entities.SesionVirtual</class>
+		<class>ec.edu.epn.proyectos.entities.AuditoriaProy</class>
 		
 
 
