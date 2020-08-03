@@ -278,6 +278,30 @@ public class CierrePeriodoDAOImplement extends DaoGenericoImplement<CierrePeriod
 		return numero;
 	}
 	
+	@Override
+	public CierrePeriodo consultarMaxCierre(Integer idproy) {
+
+		try {
+
+			StringBuilder querys = new StringBuilder("SELECT e From CierrePeriodo e where e.proyecto.idProy = ?1 and e.tipo = 'R' and e.idPensum = (select max(c.idPensum) from CierrePeriodo c where c.proyecto.idProy = e.proyecto.idProy and c.tipo = 'R')  ");
+			Query query = getEntityManager().createQuery(querys.toString());
+			query.setParameter(1, idproy);
+
+			
+			return (CierrePeriodo) query.getSingleResult();
+
+		} catch (NoResultException e) {
+			return null;
+		}
+
+		catch (NonUniqueResultException e) {
+			return null;
+		} catch (Exception e) {
+			return null;
+		}
+
+	}
+	
 	
 	
 

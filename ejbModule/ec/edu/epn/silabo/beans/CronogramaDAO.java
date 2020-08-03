@@ -29,6 +29,9 @@ public interface CronogramaDAO extends DaoGenerico<CronogramaDesarrollo> {
 	List<CronogramaDesarrollo> consultarCronogramaUpdate(Integer idsilado);
 
 	int maxNumCronoIndiceID(Integer idsilado);
+
+	List<CronogramaDesarrollo> consultarCronogramaExisteHorarios(Integer idsilado, Date fecha, String hora1,
+			String hora2);
 	
 	
 	

@@ -16,8 +16,10 @@ public class laboratory implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@SequenceGenerator(name="BODEGA_IDBODEGA_GENERATOR", sequenceName="secuencia_bodega",allocationSize=1, catalog="bddcorpepn",schema="`Laboratorios`")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="BODEGA_IDBODEGA_GENERATOR")
 	@Column(name="id_bodega")
-	private String idBodega;
+	private int idBodega;
 
 	@Column(name="descr_bg")
 	private String descrBg;
@@ -48,11 +50,11 @@ public class laboratory implements Serializable {
 	public laboratory() {
 	}
 
-	public String getIdBodega() {
-		return this.idBodega;
+	public int getIdBodega() {
+		return idBodega;
 	}
 
-	public void setIdBodega(String idBodega) {
+	public void setIdBodega(int idBodega) {
 		this.idBodega = idBodega;
 	}
 

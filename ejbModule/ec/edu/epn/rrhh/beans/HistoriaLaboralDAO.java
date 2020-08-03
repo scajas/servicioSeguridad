@@ -100,6 +100,8 @@ public interface HistoriaLaboralDAO extends DaoGenerico<HistoriaLaboral> {
 	public List<HistoriaLaboral> findAccionesNoLicenciaFinalizables(Emp emp);
 
 	public HistoriaLaboral findHistoriaByNroDocumentoEmpYEstado(Emp emp, String nroDocumento, String estado);
+	
+	public Date getFechaElaboracionAccion(Emp emp, String nroDocumento);
 
 	public List<HistoriaLaboral> getDesignacionesActivasByEmpFinalizacion(Emp emp, String nroDocumentoAFinalizar);
 

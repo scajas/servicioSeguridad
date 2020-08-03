@@ -2,8 +2,7 @@ package ec.edu.epn.emergencia.entidades;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.sql.Timestamp;
-
+import java.util.Date;
 
 /**
  * The persistent class for the asistencia database table.
@@ -11,94 +10,117 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name = "asistencia", catalog = "bddcorpepn", schema = "\"Emergencia\"")
-@NamedQuery(name="AsistenciaEmergencia.findAll", query="SELECT a FROM AsistenciaEmergencia a")
+@NamedQuery(name = "AsistenciaEmergencia.findAll", query = "SELECT a FROM AsistenciaEmergencia a")
 public class AsistenciaEmergencia implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="id_asistencia")
+	@Basic(optional = false)
+	@Column(name = "id_asistencia")
 	private Integer idAsistencia;
-
-	@Column(name="fecha_ingreso")
-	private Timestamp fechaIngreso;
-
-	@Column(name="fecha_salida")
-	private Timestamp fechaSalida;
-
-	private Integer temperatura;
-
-	//bi-directional many-to-one association to Autorizacion
+	
+	@Column(name = "fecha_ingreso")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date fechaIngreso;
+	
+	@Column(name = "temperatura")
+	private Double temperatura;
+	
+	@Column(name = "fecha_salida")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date fechaSalida;
+	
+	@Column(name = "observaciones")
+	private String observaciones;
+	
+	@Column(name = "q1")
+	private Boolean q1;
+	
+	@Column(name = "q2")
+	private Boolean q2;
+	
+	@Column(name = "q3")
+	private Boolean q3;
+	
+	@JoinColumn(name = "id_autorizacion", referencedColumnName = "id_autorizacion")
 	@ManyToOne
-	@JoinColumn(name="id_autorizacion")
 	private AutorizacionEmergencia autorizacion;
-
-	//bi-directional many-to-one association to Estado
+	
+	@JoinColumn(name = "id_estado", referencedColumnName = "id_estado")
 	@ManyToOne
-	@JoinColumn(name="id_estado")
 	private EstadoEmergencia estado;
-
-	//bi-directional many-to-one association to Guardia
+	
+	@JoinColumn(name = "id_guardia", referencedColumnName = "id_guardia")
 	@ManyToOne
-	@JoinColumn(name="id_guardia")
 	private Guardia guardia;
-
-	public AsistenciaEmergencia() {
-	}
-
+	
+	
 	public Integer getIdAsistencia() {
-		return this.idAsistencia;
+		return idAsistencia;
 	}
-
 	public void setIdAsistencia(Integer idAsistencia) {
 		this.idAsistencia = idAsistencia;
 	}
-
-	public Timestamp getFechaIngreso() {
-		return this.fechaIngreso;
+	public Date getFechaIngreso() {
+		return fechaIngreso;
 	}
-
-	public void setFechaIngreso(Timestamp fechaIngreso) {
+	public void setFechaIngreso(Date fechaIngreso) {
 		this.fechaIngreso = fechaIngreso;
 	}
-
-	public Timestamp getFechaSalida() {
-		return this.fechaSalida;
+	public Double getTemperatura() {
+		return temperatura;
 	}
-
-	public void setFechaSalida(Timestamp fechaSalida) {
-		this.fechaSalida = fechaSalida;
-	}
-
-	public Integer getTemperatura() {
-		return this.temperatura;
-	}
-
-	public void setTemperatura(Integer temperatura) {
+	public void setTemperatura(Double temperatura) {
 		this.temperatura = temperatura;
 	}
-
-	public AutorizacionEmergencia getAutorizacionEmergencia() {
-		return this.autorizacion;
+	public Date getFechaSalida() {
+		return fechaSalida;
 	}
-
-	public void setAutorizacionEmergencia(AutorizacionEmergencia autorizacion) {
-		this.autorizacion = autorizacion;
+	public void setFechaSalida(Date fechaSalida) {
+		this.fechaSalida = fechaSalida;
 	}
-
-	public EstadoEmergencia getEstado() {
-		return this.estado;
+	public String getObservaciones() {
+		return observaciones;
 	}
-
-	public void setEstado(EstadoEmergencia estado) {
-		this.estado = estado;
+	public void setObservaciones(String observaciones) {
+		this.observaciones = observaciones;
 	}
-
-	public Guardia getGuardia() {
-		return this.guardia;
+	public Boolean getQ1() {
+		return q1;
 	}
-
-	public void setGuardia(Guardia guardia) {
-		this.guardia = guardia;
+	public void setQ1(Boolean q1) {
+		this.q1 = q1;
 	}
-
+	public Boolean getQ2() {
+		return q2;
+	}
+	public void setQ2(Boolean q2) {
+		this.q2 = q2;
+	}
+	public Boolean getQ3() {
+		return q3;
+	}
+	public void setQ3(Boolean q3) {
+		this.q3 = q3;
+	}
+	public AutorizacionEmergencia getIdAutorizacion() {
+		return autorizacion;
+	}
+	public void setAutorizacionEmergencia(AutorizacionEmergencia idAutorizacion) {
+		this.autorizacion = idAutorizacion;
+	}
+	public EstadoEmergencia getIdEstado() {
+		return estado;
+	}
+	public void setEstado(EstadoEmergencia idEstado) {
+		this.estado = idEstado;
+	}
+	public Guardia getIdGuardia() {
+		return guardia;
+	}
+	public void setGuardia(Guardia idGuardia) {
+		this.guardia = idGuardia;
+	}
+	
+	
 }

@@ -35,6 +35,7 @@ import ec.edu.epn.laboratorioBJ.entities.OrdenTrabajo;
 import ec.edu.epn.laboratorioBJ.entities.PersonalLab;
 import ec.edu.epn.laboratorioBJ.entities.Proforma;
 import ec.edu.epn.laboratorioBJ.entities.Servicio;
+import ec.edu.epn.laboratorioBJ.entities.Tipordeninv;
 
 /**
  * Session Bean implementation class OrdenTrabajoDAOImplement
@@ -485,7 +486,7 @@ public class OrdenTrabajoDAOImplement extends DaoGenericoImplement<OrdenTrabajo>
 		StringBuilder queryString = new StringBuilder("SELECT max(o.idOrden) FROM OrdenTrabajo o WHERE "
 				+ "(o.tipoOt = 'Externa Transf.' OR o.tipoOt = 'Externa Factura') " + "AND o.idOrden like '%" + id
 				+ "%' AND o.idOrden like '%" + anio + "%'");
-		// new StringBuilder("SELECT b FROM Servicio b where id_Unidad = ?1 ");
+		// new StringBuilder("SELECT b FROM Servicio b where id_Unidad = ?1 ");s
 		Query query = getEntityManager().createQuery(queryString.toString());
 
 		try {
@@ -637,6 +638,24 @@ public class OrdenTrabajoDAOImplement extends DaoGenericoImplement<OrdenTrabajo>
 		}
 
 	}
+	
+	@Override
+	public Tipordeninv findTipoInvById(String id) {
+		StringBuilder querys = new StringBuilder("SELECT t FROM Tipordeninv t where t.idTipordeninv = '" + id + "'");
+		Query query = getEntityManager().createQuery(querys.toString());
+		query.setMaxResults(1);
+
+		try {
+			Tipordeninv tipordeninv = (Tipordeninv) query.getSingleResult();
+			return tipordeninv;
+		} catch (NoResultException nre) {
+			return null;
+		} catch (NonUniqueResultException nure) {
+			return null;
+		}
+
+	}
+
 
 	@Override
 	public Muestra muestraDefault() {
@@ -714,4 +733,3 @@ public class OrdenTrabajoDAOImplement extends DaoGenericoImplement<OrdenTrabajo>
 	}
 
 }
-

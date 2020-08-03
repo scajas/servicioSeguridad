@@ -38,6 +38,8 @@ public interface DependenciaDAO extends DaoGenerico<Dependencia> {
 
 	List<Dependencia> listaDepXFacultad();
 
+	Dependencia findDepByCodigo(String coddep);
+
 	
 
 }
