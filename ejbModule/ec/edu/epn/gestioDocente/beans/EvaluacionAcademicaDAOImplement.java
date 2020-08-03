@@ -4,9 +4,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.annotation.Resource;
 import javax.ejb.EJB;
@@ -21,6 +26,7 @@ import ec.edu.epn.contratos.beans.PensumDAO;
 import ec.edu.epn.contratos.entities.Pedido;
 import ec.edu.epn.contratos.entities.Pensum;
 import ec.edu.epn.generic.DAO.DaoGenericoImplement;
+import ec.edu.epn.gestionDocente.DTO.HorasPeriodoAcademicoDTO;
 import ec.edu.epn.gestionDocente.entities.ActAcademica;
 import ec.edu.epn.gestionDocente.entities.ActividadEvaluacion;
 import ec.edu.epn.gestionDocente.entities.ActividadPreplanificacion;
@@ -72,6 +78,10 @@ public class EvaluacionAcademicaDAOImplement extends DaoGenericoImplement<Evalua
 	
 	@EJB(lookup = "java:global/ServiciosSeguridadEPN/PensumDAOImplement!ec.edu.epn.contratos.beans.PensumDAO")
 	private PensumDAO pensumDAO;
+	
+	
+	@EJB(lookup = "java:global/ServiciosSeguridadEPN/DescansoObligatorioDAOImplement!ec.edu.epn.gestioDocente.beans.DescansoObligatorioDAO")
+	private DescansoObligatorioDAO descansoObligatorioDAO;
 	
 	@Resource(mappedName = "java:jboss/datasources/SeguridadEPNDS")
 	private DataSource dataSource;
@@ -1265,6 +1275,174 @@ public class EvaluacionAcademicaDAOImplement extends DaoGenericoImplement<Evalua
 			return null;
 		}
 	}
+	
+	
+	@Override
+	public HorasPeriodoAcademicoDTO datosDocenteEvaluacionHorasPeriodo(Integer idPensum, String nced) throws Exception {
+
+		HorasPeriodoAcademicoDTO datosDocente = new HorasPeriodoAcademicoDTO();		
+		Query query = null;
+		query = getEntityManager().createNativeQuery("SELECT  * FROM \"Rrhh\".bi_reportecargodeprrhh(?,?,?,?,?) "
+														+ "sp LEFT JOIN \"Rrhh\".bi_reportelicenperiodonomb(?) licen on sp.nced = licen.ncedlic "
+														+ "LEFT JOIN \"Rrhh\".bi_reporteperiodocontratonomb(?) cont on sp.nced = cont.ncedcont "
+														+ "LEFT JOIN \"Rrhh\".bi_reportejubilados(?) jub on jub.ncedjub = sp.nced;");
+
+		query.setParameter(1, idPensum);
+		query.setParameter(2, nced);
+		query.setParameter(3, "%%");
+		query.setParameter(4, "%%");
+		query.setParameter(5, "%%");
+		query.setParameter(6, idPensum);
+		query.setParameter(7, idPensum);
+		query.setParameter(8, idPensum);
+
+		List<?> lists = query.getResultList();
+		
+		SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");  
+		
+		
+		Pensum pensum= new Pensum();
+		pensum= pensumDAO.obtenerPensumById(idPensum);
+
+		if (!lists.isEmpty()) {
+			for (Object list : lists) {
+				HorasPeriodoAcademicoDTO val = new HorasPeriodoAcademicoDTO();
+				Object[] col = (Object[]) list;
+
+				if (col[0] != null && col[0].toString().length() != 0)
+					val.setnCed(col[0] == null ? "" : col[0].toString());
+
+				
+
+				if (col[5] != null && col[5].toString().length() != 0) {
+					String dato = null;
+					dato = (col[5] == null ? "" : col[5].toString());
+					val.setDedicacion(dato);
+				}
+
+				if (col[6] != null && col[6].toString().length() != 0) {
+					String dato = null;
+					dato = (col[6] == null ? "" : col[6].toString());
+					val.setTipo(dato);
+				}
+
+				
+				if (col[17] != null && col[17].toString().length() != 0) {
+					String dato = null;
+					dato = col[17].toString();
+					val.setFechaInicioPeriodo(format.parse(dato));
+
+				}else{
+					val.setFechaInicioPeriodo(null);
+				}
+				
+				if (col[18] != null && col[18].toString().length() != 0) {
+					String dato = null;
+					dato = col[18].toString();
+					val.setFechaFinPeriodo(format.parse(dato));
+
+				}else{
+					val.setFechaFinPeriodo(null);
+				}
+
+				datosDocente= val;
+			}
+			
+			datosDocente.setDiasPermiso(0);
+			datosDocente.setDiasVacacion(0);
+			datosDocente.setHorasPeriodoAcademico(0.0);			
+			Date fechaInicio= datosDocente.getFechaInicioPeriodo();
+			Date fechaFin= datosDocente.getFechaFinPeriodo();
+			
+			if((datosDocente.getDedicacion().trim().equals("TC") || datosDocente.getDedicacion().trim().equals("TP")) 
+											&& datosDocente.getTipo().trim().toUpperCase().equals("NOMBRAMIENTO")){
+				if(fechaInicio==null && fechaFin==null){
+					fechaInicio= pensum.getFechaInicioEval();
+					fechaFin= pensum.getFechaFinEval();
+				}
+			}else if((datosDocente.getDedicacion().trim().equals("TC") || datosDocente.getDedicacion().trim().equals("TP")) 
+					&& datosDocente.getTipo().trim().toUpperCase().equals("CONTRATO")){
+				if(fechaInicio!=null && fechaFin!=null){
+					if(fechaInicio.compareTo(pensum.getFechaInicioEval())==-1){
+						fechaInicio= pensum.getFechaInicioEval();
+					}
+					
+					
+					if(fechaFin.compareTo(pensum.getFechaFinEval())==1){
+						fechaFin= pensum.getFechaFinEval();
+					}
+				}
+			}
+			
+			
+			datosDocente.setFechaInicioPeriodo(fechaInicio);
+			datosDocente.setFechaFinPeriodo(fechaFin);
+			Calendar calendarI = Calendar.getInstance();			
+			calendarI.setTime(fechaInicio);
+			
+			Calendar calendarF = Calendar.getInstance();				
+			calendarF.setTime(fechaFin);
+				
+			int l=this.diasHabiles(calendarI, calendarF);				
+			datosDocente.setDiasLaborables(l);				
+			datosDocente.setDiasDescanso(descansoObligatorioDAO.diasDescansoObligatorio(datosDocente.getFechaInicioPeriodo(), datosDocente.getFechaFinPeriodo()));
+				
+			datosDocente.setDiasLabDesc(datosDocente.getDiasLaborables() - datosDocente.getDiasDescanso());
+			
+			
+			if((datosDocente.getTipo().trim().toUpperCase().equals("NOMBRAMIENTO") || datosDocente.getTipo().trim().toUpperCase().equals("CONTRATO")) 
+					&& datosDocente.getDedicacion().trim().equals("TP")){
+				
+				datosDocente.setDedicacionTP(true);
+				datosDocente.setHorasDedicacion(0);
+				datosDocente.setPromedioHorasDiaria(0.00);
+			}else{
+				datosDocente.setDedicacionTP(false);
+				datosDocente.setHorasDedicacion(40);
+				datosDocente.setPromedioHorasDiaria(8.00);
+			}
+			
+			
+
+		} else {
+			datosDocente = new HorasPeriodoAcademicoDTO();
+		}
+		
+		
+		
+		
+
+		return datosDocente;
+	}
+	
+	
+	
+	
+	public int diasHabiles(Calendar fechaInicial, Calendar fechaFinal) {
+		int diffDays = 0;
+		boolean diaHabil = false;
+		// mientras la fecha inicial sea menor o igual que la fecha final se
+		// cuentan los dias
+		while (fechaInicial.before(fechaFinal) || fechaInicial.equals(fechaFinal)) {
+
+			if (fechaInicial.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY
+					&& fechaInicial.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY) {
+				// se aumentan los dias de diferencia entre min y max
+				diffDays++;
+			}
+
+			if (diaHabil == true) {
+				diffDays++;
+			}
+			// se suma 1 dia para hacer la validacion del siguiente dia.
+			fechaInicial.add(Calendar.DATE, 1);
+		}
+		return diffDays;
+	}
+	
+
+		
+
 }
 
 

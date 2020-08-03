@@ -153,6 +153,7 @@ public class DocenteDTO implements Serializable {
 	private String fechaReintegro;
 	private String fechaIniContrato;
 	private String fechaFinContrato;
+	private String fechaJubilicacion;
 	
 	
 	
@@ -1475,6 +1476,20 @@ public class DocenteDTO implements Serializable {
 	 */
 	public void setFechaFinContrato(String fechaFinContrato) {
 		this.fechaFinContrato = fechaFinContrato;
+	}
+
+	/**
+	 * @return the fechaJubilicacion
+	 */
+	public String getFechaJubilicacion() {
+		return fechaJubilicacion;
+	}
+
+	/**
+	 * @param fechaJubilicacion the fechaJubilicacion to set
+	 */
+	public void setFechaJubilicacion(String fechaJubilicacion) {
+		this.fechaJubilicacion = fechaJubilicacion;
 	}
 
 	

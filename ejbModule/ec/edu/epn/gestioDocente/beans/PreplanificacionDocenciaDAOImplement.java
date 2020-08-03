@@ -215,7 +215,7 @@ public class PreplanificacionDocenciaDAOImplement extends DaoGenericoImplement<P
 					if (!listaDocenteAux.isEmpty()) {
 						for (DocenteDTO dto : listaDocenteAux) {
 							PreplanificacionDocencia p = new PreplanificacionDocencia();
-							p = this.preplanifXPeriodo(dto.getnCed(), "", idPensum, "PREPLANIF", "");
+							p = this.preplanifXPeriodo(dto.getnCed(), "", idPensum, "PREPLANIF", "%%");
 							if (p != null) {
 								listConCedula.add(p);
 							}
@@ -240,7 +240,7 @@ public class PreplanificacionDocenciaDAOImplement extends DaoGenericoImplement<P
 
 			return listTotal;
 
-		} catch (Exception e) {
+		} catch (Exception e) {			
 			return null;
 		}
 

@@ -50,7 +50,7 @@ public class RecorridoEvaluacionDAOImplement extends DaoGenericoImplement<Recorr
 		try {
 			
 			Query q = getEntityManager().createQuery(
-					"Select rec from RecorridoEvaluacion rec where rec.idEvalAcad = ?1 ");
+					"Select rec from RecorridoEvaluacion rec where rec.idEvalAcad = ?1 ORDER BY idRecorridoEval ");
 			q.setParameter(1, idEvaluacion );
 			
 			listRecorrido= q.getResultList();

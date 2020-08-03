@@ -20,7 +20,7 @@ import ec.edu.epn.generic.DAO.DaoGenericoImplement;
 public class PensumDAOImplement extends DaoGenericoImplement<Pensum> implements PensumDAO {
 	@Override
 	public int consultarId() {
-		Query q = getEntityManager().createQuery("SELECT MAX(act.idPensum) FROM Pensum pen");
+		Query q = getEntityManager().createQuery("SELECT MAX(pen.idPensum) FROM Pensum pen");
 		Integer idReq = null;
 		try {
 			idReq = (Integer) q.setMaxResults(1).getSingleResult();

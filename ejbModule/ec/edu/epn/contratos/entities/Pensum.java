@@ -74,6 +74,19 @@ public class Pensum implements Serializable {
 	@Temporal(TemporalType.DATE)
 	@Column(name = "fecha_preplanif")
 	private Date fechaPreplanif;
+	
+	
+	@Temporal(TemporalType.DATE)
+	@Column(name = "fecha_inicio_eval")
+	private Date fechaInicioEval;
+	
+	
+	@Temporal(TemporalType.DATE)
+	@Column(name = "fecha_fin_eval")
+	private Date fechaFinEval;
+	
+	
+
 
 	public Pensum() {
 	}
@@ -248,6 +261,34 @@ public class Pensum implements Serializable {
 
 	public void setFechaPreplanif(Date fechaPreplanif) {
 		this.fechaPreplanif = fechaPreplanif;
+	}
+
+	/**
+	 * @return the fechaInicioEval
+	 */
+	public Date getFechaInicioEval() {
+		return fechaInicioEval;
+	}
+
+	/**
+	 * @return the fechaFinEval
+	 */
+	public Date getFechaFinEval() {
+		return fechaFinEval;
+	}
+
+	/**
+	 * @param fechaInicioEval the fechaInicioEval to set
+	 */
+	public void setFechaInicioEval(Date fechaInicioEval) {
+		this.fechaInicioEval = fechaInicioEval;
+	}
+
+	/**
+	 * @param fechaFinEval the fechaFinEval to set
+	 */
+	public void setFechaFinEval(Date fechaFinEval) {
+		this.fechaFinEval = fechaFinEval;
 	}
 
 }

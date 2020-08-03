@@ -7,6 +7,7 @@ import java.util.List;
 import javax.ejb.Local;
 
 import ec.edu.epn.generic.DAO.DaoGenerico;
+import ec.edu.epn.gestionDocente.DTO.HorasPeriodoAcademicoDTO;
 import ec.edu.epn.gestionDocente.entities.EvaluacionAcademica;
 import ec.edu.epn.rrhh.DTO.DocenteDTO;
 import ec.edu.epn.rrhh.DTO.DocentesEvaluacionDTO;
@@ -62,6 +63,8 @@ public interface EvaluacionAcademicaDAO extends DaoGenerico<EvaluacionAcademica>
 	void generaPlanifXPreplanif(EvaluacionAcademica evaluacionAcademica, Integer idUsuarioLog);
 
 	EvaluacionAcademica evalXAnioPensum(String cedula, String anioPensum, String numeroPensum);
+
+	HorasPeriodoAcademicoDTO datosDocenteEvaluacionHorasPeriodo(Integer idPensum, String nced) throws Exception;
 
 	
 	
