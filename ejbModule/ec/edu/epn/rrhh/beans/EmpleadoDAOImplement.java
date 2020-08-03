@@ -2575,9 +2575,10 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 		List<DocenteDTO> listDoc = new ArrayList<DocenteDTO>();
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		Query query = null;
-		query = getEntityManager().createNativeQuery("SELECT  * FROM \"Rrhh\".bi_reportecargodeprrhh(?,?,?,?,?) "
-														+ "sp left join \"Rrhh\".bi_reportelicenperiodonomb(?) licen on sp.nced = licen.ncedlic "
-														+ "left join \"Rrhh\".bi_reporteperiodocontratonomb(?) cont on sp.nced = cont.ncedcont;");
+		query = getEntityManager().createNativeQuery("SELECT * FROM (SELECT  * ,row_number() over (partition by nced order by fecha_ini_licen desc) as rn FROM \"Rrhh\".bi_reportecargodeprrhh(?,?,?,?,?) "
+														+ "sp LEFT JOIN \"Rrhh\".bi_reportelicenperiodonomb(?) licen on sp.nced = licen.ncedlic "
+														+ "LEFT JOIN \"Rrhh\".bi_reporteperiodocontratonomb(?) cont on sp.nced = cont.ncedcont "
+														+ "LEFT JOIN \"Rrhh\".bi_reportejubilados(?) jub on jub.ncedjub = sp.nced) t WHERE  rn= 1;");
 
 		query.setParameter(1, idPensum);
 		query.setParameter(2, nced);
@@ -2586,6 +2587,7 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 		query.setParameter(5, dep);
 		query.setParameter(6, idPensum);
 		query.setParameter(7, idPensum);
+		query.setParameter(8, idPensum);
 
 		List<?> lists = query.getResultList();
 
@@ -2678,6 +2680,14 @@ public class EmpleadoDAOImplement extends DaoGenericoImplement<Emp> implements E
 					String dato = null;
 					dato = (col[18] == null ? "" : col[18].toString());
 					val.setFechaFinContrato(dato);
+
+				}
+				
+				
+				if (col[22] != null && col[22].toString().length() != 0) {
+					String dato = null;
+					dato = (col[22] == null ? "" : col[22].toString());
+					val.setFechaJubilicacion(dato);
 
 				}
 

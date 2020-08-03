@@ -124,7 +124,7 @@ public class CorteEvaluacionDocenteDAOImplement extends DaoGenericoImplement<Cor
 			
 			Date fechaActual= new Date();
 			StringBuilder sbQuery = new StringBuilder();
-			sbQuery.append(" SELECT MAX(c) FROM CorteEvaluacionDocente c WHERE c.idPensum = ? AND c.nced= ? AND c.estadoEval= ? AND c.fechaCierre> ?");
+			sbQuery.append(" SELECT MAX(c) FROM CorteEvaluacionDocente c WHERE c.idPensum = ? AND c.nced= ? AND c.estadoEval= ? AND c.fechaCierre>= ?");
 		
 			Query q = getEntityManager().createQuery(sbQuery.toString());
 			q.setParameter(1, idPensum);
